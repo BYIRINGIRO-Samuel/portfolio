@@ -1,108 +1,167 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import React, { useState } from 'react';
+import { motion } from "framer-motion";
 
-const skillCategories = [
+const milestones = [
   {
-    title: "Frontend",
-    tag: "UI",
-    skills: [
-      { name: "React / Next.js", level: 95 },
-      { name: "TypeScript", level: 92 },
-      { name: "Tailwind CSS", level: 90 },
-      { name: "Framer Motion", level: 88 },
-      { name: "Svelte", level: 75 },
-    ],
+    id: "01",
+    title: "Frontend_Eng",
+    skills: ["React", "Next.js", "TS", "Framer"],
+    pos: { top: "18%", left: "10%" },
+    align: "text-left",
+    progress: 0
   },
   {
-    title: "Backend",
-    tag: "API",
-    skills: [
-      { name: "Node.js", level: 90 },
-      { name: "Python / FastAPI", level: 88 },
-      { name: "PostgreSQL", level: 85 },
-      { name: "GraphQL", level: 82 },
-      { name: "Docker / K8s", level: 80 },
-    ],
+    id: "02",
+    title: "Logic_&_AI",
+    skills: ["PyTorch", "LLMs", "Vision"],
+    pos: { top: "28%", left: "38%" },
+    align: "text-left",
+    progress: 33
   },
   {
-    title: "AI / ML",
-    tag: "INT",
-    skills: [
-      { name: "PyTorch", level: 90 },
-      { name: "TensorFlow", level: 85 },
-      { name: "LLMs / NLP", level: 88 },
-      { name: "Computer Vision", level: 82 },
-      { name: "MLOps", level: 78 },
-    ],
+    id: "03",
+    title: "Data_Core",
+    skills: ["Node.js", "SQL", "Redis", "Docker"],
+    pos: { top: "54%", left: "62%" },
+    align: "text-right",
+    progress: 66
   },
   {
-    title: "3D Modeling",
-    tag: "3D",
-    skills: [
-      { name: "Three.js / R3F", level: 88 },
-      { name: "WebGL / GLSL", level: 80 },
-      { name: "Blender", level: 75 },
-      { name: "Unity", level: 82 },
-      { name: "Blender Python", level: 70 },
-    ],
-  },
+    id: "04",
+    title: "Creative_Tech",
+    skills: ["Blender", "WebGL", "Unity"],
+    pos: { top: "78%", right: "10%" },
+    align: "text-right",
+    progress: 100
+  }
 ];
 
 const SkillsSection = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="skills" className="bg-white py-32 px-6" ref={ref}>
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
+    <section id="skills" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans">
+      <div className="relative w-full max-w-7xl bg-[#080808] rounded-2xl text-white shadow-2xl z-10 h-[550px] overflow-hidden group">
+        
+        {/* The Digital Highway (SVG Road) */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+          <path
+            id="main-road"
+            d="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
+            fill="none"
+            stroke="white"
+            strokeWidth="1"
+            className="opacity-10"
+            strokeDasharray="10 10"
+          />
+          
+          <motion.path
+            d="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
+            fill="none"
+            stroke="white"
+            strokeWidth="2"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: milestones[activeStep].progress / 100 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className="opacity-40"
+          />
+
+          {[0, 1, 2].map((i) => (
+            <motion.circle key={i} r="2" fill="white" className="opacity-20">
+              <animateMotion
+                dur={`${4 + i}s`}
+                repeatCount="indefinite"
+                path="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
+              />
+            </motion.circle>
+          ))}
+        </svg>
+
+        {/* The Interactive Vehicle (Car) */}
+        <motion.div 
+          className="absolute z-30 pointer-events-none"
+          initial={false}
+          animate={{ 
+            offsetDistance: `${milestones[activeStep].progress}%`,
+          }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+          style={{ 
+            offsetPath: 'path("M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420")',
+            offsetRotate: "auto 90deg"
+          }}
         >
-          <span className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground mb-4 block">
-            // Tech Stack
-          </span>
-          <h2 className="text-4xl text-black sm:text-5xl font-bold tracking-tight text-foreground mb-16">
-            Skills & Tools
-          </h2>
+          <div className="relative">
+             <div className="w-6 h-3 bg-white shadow-[0_0_15px_white] rounded-sm transform -translate-x-1/2 -translate-y-1/2" />
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border border-white/20 animate-ping" />
+          </div>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {skillCategories.map((cat, ci) => (
-            <motion.div
-              key={cat.title}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + ci * 0.1, duration: 0.6 }}
-              className="glass rounded-xl p-8 group hover:border-foreground/20 transition-all duration-500"
+        <div className="relative h-full w-full p-10">
+          
+          <div className="flex items-center justify-between mb-12 relative z-20">
+             <div>
+                <div className="flex items-center gap-3 mb-2">
+                   <div className="w-4 h-[1px] bg-white/40" />
+                   <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30 truncate">Technical_Roadmap // SYSTEM_DRIVE</span>
+                </div>
+                <h2 className="text-4xl font-black uppercase tracking-tighter">Skill<span className="text-white/20">Road</span>.</h2>
+             </div>
+             <div className="hidden md:block text-right">
+                <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">Active_Segment:</div>
+                <div className="text-sm font-bold text-white tracking-widest uppercase">SECTION_{milestones[activeStep].id}</div>
+             </div>
+          </div>
+
+          {milestones.map((m, idx) => (
+            <div 
+              key={m.id} 
+              className={`absolute z-20 transition-all duration-700 ${activeStep === idx ? 'scale-110 opacity-100' : 'opacity-40 hover:opacity-70'}`}
+              style={{ ...m.pos }}
+              onClick={() => setActiveStep(idx)}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg text-black font-semibold text-foreground">{cat.title}</h3>
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground border border-border rounded-full px-3 py-1">
-                  {cat.tag}
-                </span>
-              </div>
-              <div className="space-y-4">
-                {cat.skills.map((skill, si) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-1.5">
-                      <span className="font-mono text-xs text-muted-foreground">{skill.name}</span>
-                      <span className="font-mono text-[10px] text-muted-foreground">{skill.level}%</span>
-                    </div>
-                    <div className="h-1 bg-secondary rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={isInView ? { width: `${skill.level}%` } : {}}
-                        transition={{ delay: 0.4 + ci * 0.1 + si * 0.05, duration: 0.8, ease: "easeOut" }}
-                        className="h-full bg-foreground/60 rounded-full"
-                      />
-                    </div>
+              <div className={`flex flex-col cursor-pointer ${m.align === 'text-right' ? 'items-end text-right' : 'items-start text-left'}`}>
+                <div className={`flex items-center gap-4 mb-4 ${m.align === 'text-right' ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <div className="relative w-10 h-10 flex items-center justify-center">
+                    <div className={`absolute inset-0 rotate-45 border transition-all duration-500 ${activeStep === idx ? 'bg-white border-white' : 'bg-transparent border-white/20'}`} />
+                    <span className={`relative text-xs font-black transition-colors ${activeStep === idx ? 'text-black' : 'text-white'}`}>{m.id}</span>
                   </div>
-                ))}
+                  
+                  <div>
+                    <div className="text-[8px] font-mono text-white/20 tracking-tighter">PHASE_{m.id}</div>
+                    <div className="text-xs font-black uppercase tracking-widest leading-none">{m.title}</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2 bg-black/40 backdrop-blur-md p-3 rounded border border-white/5">
+                   {m.skills.map((s, sIdx) => (
+                     <div key={sIdx} className={`flex items-center gap-3 ${m.align === 'text-right' ? 'flex-row-reverse' : ''}`}>
+                        <div className="w-1.5 h-1.5 rounded-full bg-white/10" />
+                        <span className="text-[11px] font-bold tracking-tight text-gray-400 group-hover/text-white">{s}</span>
+                     </div>
+                   ))}
+                </div>
               </div>
-            </motion.div>
+            </div>
           ))}
+
+          <div className="absolute bottom-10 left-10 flex items-center gap-8 border-t border-white/5 pt-6 w-[80%]">
+             <div className="flex flex-col gap-1">
+                <div className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Navigation_Target</div>
+                <div className="text-[10px] font-bold text-white uppercase">{milestones[activeStep].title}</div>
+             </div>
+             <div className="flex-grow h-[1px] bg-white/5 relative overflow-hidden">
+                <motion.div 
+                  initial={{ x: 0 }}
+                  animate={{ x: [`${milestones[activeStep].progress}%`, '100%'] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="absolute top-0 left-0 w-8 h-full bg-white opacity-20"
+                />
+             </div>
+             <div className="text-[10px] font-mono text-white/40 tracking-widest">
+                POS: {milestones[activeStep].progress}.00%
+             </div>
+          </div>
+
         </div>
       </div>
     </section>
