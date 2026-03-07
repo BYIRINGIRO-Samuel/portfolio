@@ -35,10 +35,10 @@ const HeroSection = () => {
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
               Contact Us
               {/* Four + crosshairs sitting exactly on the geometrical corners */}
-              <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
-              <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
-              <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
-              <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
+              <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
+              <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
+              <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
+              <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
             </a>
           </header>
 
