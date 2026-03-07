@@ -6,19 +6,53 @@ const AboutSection = () => {
       <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 px-8 py-12 md:px-16 lg:py-16">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
-          <div className="relative w-full max-w-[400px] mx-auto aspect-square flex items-center justify-center">
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-[15%] -translate-y-[15%] z-0" />
-            <div className="absolute bottom-10 right-0 w-24 h-24 bg-gray-400 rounded-full translate-x-[20%] translate-y-[20%] z-20" />
+          <div className="relative w-full max-w-[420px] mx-auto aspect-square flex items-center justify-center">
+            <div className="absolute inset-0 bg-white/5 rounded-full blur-3xl" />
             
-            <div className="relative w-full h-full rounded-full border-[6px] border-white p-2 z-10 shadow-2xl">
-              <div className="w-full h-full rounded-full overflow-hidden bg-[#1a1a1a] flex items-center justify-center border border-white/10">
+            <div className="absolute -left-6 top-[20%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-bounce" style={{ animationDuration: '3s' }}>
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">JS</div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">React</span>
+                <span className="text-white text-xs font-bold">Expert</span>
+              </div>
+            </div>
+
+            <div className="absolute -right-4 top-[35%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-pulse">
+              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-xs">TS</div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">System</span>
+                <span className="text-white text-xs font-bold">Type Safe</span>
+              </div>
+            </div>
+
+            <div className="absolute -left-2 bottom-[15%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-pulse">
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">DB</div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">SQL</span>
+                <span className="text-white text-xs font-bold">Postgres</span>
+              </div>
+            </div>
+
+            <div className="absolute -right-8 bottom-[20%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-bounce" style={{ animationDuration: '4s' }}>
+              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-black font-bold text-xs">UX</div>
+              <div className="flex flex-col">
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Design</span>
+                <span className="text-white text-xs font-bold">Responsive</span>
+              </div>
+            </div>
+
+            <div className="absolute right-[10%] top-4 z-20 bg-white shadow-lg rounded-2xl px-3 py-1.5 flex items-center gap-2 transform rotate-3">
+              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center text-white text-[10px] font-black">S</div>
+              <span className="text-[10px] text-black font-bold">Hello World!</span>
+            </div>
+            
+            <div className="relative w-[85%] h-[85%] rounded-full border border-white/10 p-4 z-10 overflow-hidden bg-gradient-to-b from-white/10 to-transparent flex items-center justify-center backdrop-blur-sm">
                  <img 
                    src="/hero-character.png" 
                    alt="Samuel" 
-                   className="w-[85%] h-auto object-contain translate-y-8"
+                   className="w-[90%] h-auto object-contain translate-y-6"
                    draggable="false"
                  />
-              </div>
             </div>
           </div>
 
