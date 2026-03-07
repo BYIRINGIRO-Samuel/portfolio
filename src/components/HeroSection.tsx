@@ -20,16 +20,22 @@ const HeroSection = () => {
           
           {/* Top Navigation inside card */}
           <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-8 relative z-20 gap-6 md:gap-0">
-            <div className="font-bold text-2xl tracking-tighter flex items-center gap-1">
-              Samuel<span className="text-gray-500">@Portfolio</span>
+            {/* Logo */}
+            <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
+              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+              <span className="text-white group-hover:text-gray-300 transition-colors">Samuel</span>
+              <span className="text-[10px] uppercase tracking-widest px-2 py-1 rounded-full border border-white/20 text-gray-400 bg-white/5 group-hover:bg-white/10 transition-colors">
+                Portfolio
+              </span>
             </div>
             
-            <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-gray-400">
-              <a href="#" className="text-white transition-colors">Home</a>
-              <a href="#about" className="hover:text-white transition-colors">About</a>
-              <a href="#services" className="hover:text-white transition-colors">Services</a>
-              <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
-              <a href="#resources" className="hover:text-white transition-colors">Resources</a>
+            {/* Glassmorphism Navigation Pill */}
+            <nav className="hidden lg:flex items-center gap-1 text-sm font-medium bg-white/5 border border-white/10 backdrop-blur-md px-2 py-1.5 rounded-full shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+              <a href="#" className="px-5 py-2 bg-white text-black rounded-full transition-colors shadow-sm font-bold">Home</a>
+              <a href="#about" className="px-5 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-all">About</a>
+              <a href="#services" className="px-5 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-all">Services</a>
+              <a href="#pricing" className="px-5 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-all">Pricing</a>
+              <a href="#resources" className="px-5 py-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-full transition-all">Resources</a>
             </nav>
 
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
