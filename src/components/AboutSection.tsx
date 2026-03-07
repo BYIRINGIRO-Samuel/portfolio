@@ -60,8 +60,13 @@ const AboutSection = () => {
           </div>
 
           <div className="flex flex-col items-start text-left z-10">
-            <div className="mb-6 px-5 py-1.5 border border-white/20 rounded-full text-white text-sm font-semibold tracking-wide flex items-center justify-center">
-              About Me
+            <div className="mb-10 relative px-6 py-2 border border-white/10 w-fit">
+              <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2 h-2 text-white/40" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2 h-2 text-white/40" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2 h-2 text-white/40" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2 h-2 text-white/40" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60">About Me</span>
             </div>
 
             <h2 className="text-[2rem] md:text-4xl lg:text-[2.75rem] font-bold text-white leading-[1.15] mb-5 tracking-tight">
