@@ -10,40 +10,43 @@ const AboutSection = () => {
             <div className="absolute inset-0 bg-white/5 rounded-full blur-3xl" />
             
             <div className="absolute -left-6 top-[20%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-bounce" style={{ animationDuration: '3s' }}>
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">JS</div>
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">40+</div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">React</span>
-                <span className="text-white text-xs font-bold">Expert</span>
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Projects</span>
+                <span className="text-white text-xs font-bold">Successfully Live</span>
               </div>
             </div>
 
             <div className="absolute -right-4 top-[35%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-pulse">
-              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-xs">TS</div>
+              <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-black font-bold text-xs">5.0</div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">System</span>
-                <span className="text-white text-xs font-bold">Type Safe</span>
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Rating</span>
+                <span className="text-white text-xs font-bold">Client Satisfaction</span>
               </div>
             </div>
 
             <div className="absolute -left-2 bottom-[15%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-pulse">
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">DB</div>
+              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center text-black font-bold text-xs">AI</div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">SQL</span>
-                <span className="text-white text-xs font-bold">Postgres</span>
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Innovation</span>
+                <span className="text-white text-xs font-bold">AI Integration</span>
               </div>
             </div>
 
             <div className="absolute -right-8 bottom-[20%] z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-2 flex items-center gap-3 shadow-xl animate-bounce" style={{ animationDuration: '4s' }}>
-              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-black font-bold text-xs">UX</div>
+              <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-black font-bold text-xs">24/7</div>
               <div className="flex flex-col">
-                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Design</span>
-                <span className="text-white text-xs font-bold">Responsive</span>
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-tighter">Support</span>
+                <span className="text-white text-xs font-bold">Global Ready</span>
               </div>
             </div>
 
-            <div className="absolute right-[10%] top-4 z-20 bg-white shadow-lg rounded-2xl px-3 py-1.5 flex items-center gap-2 transform rotate-3">
-              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center text-white text-[10px] font-black">S</div>
-              <span className="text-[10px] text-black font-bold">Hello World!</span>
+            <div className="absolute right-[10%] top-4 z-20 bg-white shadow-lg rounded-2xl px-3 py-1.5 flex items-center gap-2 transform rotate-3 scale-110">
+              <div className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              </div>
+              <span className="text-[10px] text-black font-bold">Open for Collaboration</span>
             </div>
             
             <div className="relative w-[85%] h-[85%] rounded-full border border-white/10 p-4 z-10 overflow-hidden bg-gradient-to-b from-white/10 to-transparent flex items-center justify-center backdrop-blur-sm">
@@ -90,15 +93,21 @@ const AboutSection = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
-              <a href="#contact" className="px-8 py-3.5 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors flex items-center gap-2.5 text-sm w-full sm:w-auto justify-center">
+            <div className="flex flex-col sm:flex-row items-center gap-8 w-full sm:w-auto mt-4">
+              <a href="#contact" className="relative px-10 py-4 bg-white text-black text-sm font-black hover:bg-gray-200 transition-colors group w-full sm:w-auto text-center">
                 Contact me
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
               </a>
               
-              <a href="/resume.pdf" className="px-8 py-3.5 bg-transparent border border-white/20 text-white font-bold rounded-full hover:border-white hover:bg-white/5 transition-colors flex items-center gap-2.5 text-sm w-full sm:w-auto justify-center">
+              <a href="/resume.pdf" className="relative px-10 py-4 bg-transparent border border-white text-white text-sm font-black hover:bg-white/5 transition-colors group w-full sm:w-auto text-center">
                 Download my resume
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
               </a>
             </div>
 

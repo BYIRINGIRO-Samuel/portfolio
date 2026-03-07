@@ -22,10 +22,10 @@ const HeroSection = () => {
             
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
               Contact Us
-              <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
-              <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
-              <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
-              <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" d="M12 4v16M4 12h16" /></svg>
+              <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
             </a>
           </header>
 
