@@ -97,12 +97,13 @@ const HeroSection = () => {
             {/* Left Content */}
             <div className="w-full lg:w-[55%] flex flex-col pt-0 text-center lg:text-left items-center lg:items-start">
               
-              {/* Star Rating */}
-              <div className="flex items-center gap-3 mb-4 bg-white/5 pr-4 pl-3 py-1.5 rounded-full border border-white/10">
-                <div className="flex text-white text-sm tracking-widest">
-                  ★★★★★
+              {/* Availability Badge */}
+              <div className="flex items-center gap-3 mb-5 bg-white/5 pr-4 pl-3 py-1.5 rounded-full border border-white/10 w-fit backdrop-blur-sm shadow-[0_0_15px_rgba(34,197,94,0.1)]">
+                <div className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.8)]"></span>
                 </div>
-                <span className="text-xs font-medium text-gray-300">100% Client Satisfaction</span>
+                <span className="text-xs font-bold text-gray-200 uppercase tracking-widest">Available For Work</span>
               </div>
 
               {/* Headline */}
