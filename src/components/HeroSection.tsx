@@ -46,9 +46,9 @@ const HeroSection = () => {
             <div className="flex flex-col items-center gap-6 w-full">
               {/* Fake Window Controls */}
               <div className="flex gap-1.5 pt-2">
-                <div className="w-2 h-2 rounded-full bg-white/20"></div>
-                <div className="w-2 h-2 rounded-full bg-white/20"></div>
-                <div className="w-2 h-2 rounded-full bg-white/20"></div>
+                <div className="w-2 h-2 rounded-full bg-[#ff5f56]"></div>
+                <div className="w-2 h-2 rounded-full bg-[#ffbd2e]"></div>
+                <div className="w-2 h-2 rounded-full bg-[#27c93f]"></div>
               </div>
 
               {/* Top Logo/Icon */}
@@ -58,7 +58,7 @@ const HeroSection = () => {
 
               {/* Nav Links */}
               <div className="flex flex-col items-center gap-2 w-full">
-                {/* Active Link */}
+                {/* Active Link: Home */}
                 <a href="#" className="relative w-12 h-12 flex items-center justify-center text-white bg-white/10 rounded-xl transition-all group">
                   {/* Active Indicator Line */}
                   <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white rounded-r-full shadow-[0_0_10px_white]"></div>
@@ -66,24 +66,28 @@ const HeroSection = () => {
                 </a>
                 
                 {/* Inactive Links */}
+                {/* About (User Icon) */}
                 <a href="#about" className="relative w-12 h-12 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
                   <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white hidden group-hover:block rounded-r-full opacity-50"></div>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 </a>
 
-                <a href="#services" className="relative w-12 h-12 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
-                  <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white hidden group-hover:block rounded-r-full opacity-50"></div>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                </a>
-
+                {/* Projects (Layers/Grid Icon) */}
                 <a href="#projects" className="relative w-12 h-12 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
                   <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white hidden group-hover:block rounded-r-full opacity-50"></div>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                 </a>
 
-                <a href="#resources" className="relative w-12 h-12 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
+                {/* Services (Briefcase Icon) */}
+                <a href="#services" className="relative w-12 h-12 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
+                  <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white hidden group-hover:block rounded-r-full opacity-50"></div>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </a>
+
+                {/* Contact (Mail Message Icon) */}
+                <a href="#contact" className="relative w-12 h-12 flex items-center justify-center text-gray-500 hover:text-white hover:bg-white/5 rounded-xl transition-all group">
                    <div className="absolute -left-2 top-1/2 -translate-y-1/2 w-1 h-4 bg-white hidden group-hover:block rounded-r-full opacity-50"></div>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
               </div>
             </div>
