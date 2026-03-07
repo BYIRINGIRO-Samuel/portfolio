@@ -5,10 +5,10 @@ const HeroSection = () => {
     <section className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-2 md:pt-3 lg:pt-4 flex justify-center font-sans overflow-hidden min-h-screen">
       
       {/* Outer wrapper to contain the layered cards */}
-      <div className="relative w-full max-w-7xl pb-24">
+      <div className="relative w-full max-w-7xl pb-12">
         
         {/* Shadow / Bottom Gray Layer */}
-        <div className="absolute inset-x-0 top-0 bottom-24 bg-[#e5e5e5] rounded-xl md:rounded-2xl translate-y-4 md:translate-y-8 pointer-events-none">
+        <div className="absolute inset-x-0 top-0 bottom-12 bg-[#e5e5e5] rounded-xl md:rounded-2xl translate-y-4 md:translate-y-6 pointer-events-none">
           {/* Gray Tab at bottom center */}
           <svg className="absolute left-1/2 bottom-0 translate-y-[99%] -translate-x-1/2 w-[180px] md:w-[240px] h-[36px] md:h-[48px] text-[#e5e5e5]" viewBox="0 0 200 40" preserveAspectRatio="none">
             <path d="M0,0 Q40,0 60,20 Q80,40 100,40 Q120,40 140,20 Q160,0 200,0 Z" fill="currentColor" />
@@ -16,10 +16,10 @@ const HeroSection = () => {
         </div>
 
         {/* Main Black Foreground Container */}
-        <div className="relative w-full bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 pb-16 md:pb-0 min-h-[85vh] flex flex-col justify-center">
+        <div className="relative w-full bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 pb-8 md:pb-0 min-h-[77vh] flex flex-col justify-center">
           
           {/* Header Area (Only Logo and Contact button) */}
-          <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-8 relative z-20 gap-6 md:gap-0">
+          <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-5 relative z-20 gap-4 md:gap-0">
             {/* Logo */}
             <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
@@ -107,13 +107,13 @@ const HeroSection = () => {
           </nav>
 
           {/* Hero Content */}
-          <div className="flex flex-col lg:flex-row items-center px-8 md:px-16 lg:pl-32 pb-12 pt-4 relative z-20">
+          <div className="flex flex-col lg:flex-row items-center px-8 md:px-16 lg:pl-32 pb-7 pt-4 relative z-20">
             
             {/* Left Content */}
-            <div className="w-full lg:w-[55%] flex flex-col pt-4 lg:pt-8 text-center lg:text-left items-center lg:items-start">
+            <div className="w-full lg:w-[55%] flex flex-col pt-0 text-center lg:text-left items-center lg:items-start">
               
               {/* Star Rating */}
-              <div className="flex items-center gap-3 mb-6 bg-white/5 pr-4 pl-3 py-1.5 rounded-full border border-white/10">
+              <div className="flex items-center gap-3 mb-4 bg-white/5 pr-4 pl-3 py-1.5 rounded-full border border-white/10">
                 <div className="flex text-white text-sm tracking-widest">
                   ★★★★★
                 </div>
@@ -121,22 +121,22 @@ const HeroSection = () => {
               </div>
 
               {/* Headline */}
-              <h1 className="text-[2.5rem] sm:text-6xl lg:text-[76px] font-bold leading-[1.1] mb-8 tracking-tight">
+              <h1 className="text-[2.5rem] sm:text-6xl lg:text-[72px] font-bold leading-[1.05] mb-5 tracking-tight">
                 Building The<br className="hidden sm:block" />
                 Future Of<br className="hidden sm:block" />
-                Software.<span className="text-[2.5rem] sm:text-6xl lg:text-[76px] inline-block ml-2 text-gray-500 hover:text-white transition-colors cursor-default">✦</span>
+                Software.<span className="text-[2.5rem] sm:text-6xl lg:text-[72px] inline-block ml-2 text-gray-500 hover:text-white transition-colors cursor-default">✦</span>
               </h1>
 
               {/* Vertical line + description */}
-              <div className="relative pl-0 lg:pl-6 mb-12 flex flex-col items-center lg:items-start max-w-lg">
+              <div className="relative pl-0 lg:pl-6 mb-7 flex flex-col items-center lg:items-start max-w-lg">
                 <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-white to-gray-500" />
-                <p className="text-gray-400 text-lg leading-relaxed font-medium">
+                <p className="text-gray-400 text-base lg:text-lg leading-snug lg:leading-relaxed font-medium">
                   I craft robust, scalable, and intuitive digital solutions. Let's turn your complex problems into elegant web experiences.
                 </p>
               </div>
 
               {/* Stats Footer */}
-              <div className="flex items-center justify-center lg:justify-start gap-8 sm:gap-12 md:gap-16 text-white w-full border-t border-white/10 lg:border-none pt-8 lg:pt-0">
+              <div className="flex items-center justify-center lg:justify-start gap-8 sm:gap-12 md:gap-16 text-white w-full border-t border-white/10 lg:border-none pt-7 lg:pt-0">
                 <div>
                   <div className="text-3xl md:text-4xl font-black mb-2">5+</div>
                   <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider leading-relaxed">Years of<br />Experience</div>
@@ -156,9 +156,9 @@ const HeroSection = () => {
             </div>
 
             {/* Right Content / Image Area */}
-            <div className="w-full lg:w-[45%] flex items-center justify-center mt-12 lg:mt-0 relative aspect-square lg:aspect-auto lg:h-[650px]">
+            <div className="w-full lg:w-[45%] flex items-center justify-center mt-7 lg:mt-0 relative aspect-square lg:aspect-auto lg:h-[520px]">
               {/* Decorative Circle Background */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-white/5 rounded-full blur-[2px] flex items-center justify-center z-0">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[285px] sm:w-[360px] h-[285px] sm:h-[360px] bg-white/5 rounded-full blur-[2px] flex items-center justify-center z-0">
                  <div className="absolute inset-[10%] border border-dashed border-white/20 rounded-full animate-[spin_60s_linear_infinite]" />
               </div>
               
