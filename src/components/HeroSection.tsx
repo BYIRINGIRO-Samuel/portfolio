@@ -24,9 +24,6 @@ const HeroSection = () => {
             <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
               <span className="text-white group-hover:text-gray-300 transition-colors">Samuel</span>
-              <span className="text-[10px] uppercase tracking-widest px-2 py-1 rounded-full border border-white/20 text-gray-400 bg-white/5 group-hover:bg-white/10 transition-colors">
-                Portfolio
-              </span>
             </div>
             
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
