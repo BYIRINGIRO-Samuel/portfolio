@@ -37,7 +37,7 @@ const HeroSection = () => {
           </header>
 
           {/* Floating Vertical Navigation Bar */}
-          <nav className="hidden lg:flex flex-col items-center py-6 bg-[#121212]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] absolute left-8 top-1/2 -translate-y-1/2 z-30 shadow-2xl w-16 h-[70vh] min-h-[500px] max-h-[700px] justify-between">
+          <nav className="hidden lg:flex flex-col items-center py-6 bg-[#121212]/80 backdrop-blur-2xl border border-white/10 rounded-2xl absolute left-8 top-1/2 -translate-y-1/2 z-30 shadow-2xl w-16 h-[70vh] min-h-[500px] max-h-[700px] justify-between">
             
             {/* Top Section */}
             <div className="flex flex-col items-center gap-6 w-full">
