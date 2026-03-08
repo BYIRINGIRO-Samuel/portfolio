@@ -66,27 +66,60 @@ const SkillsSection = () => {
       <div className="relative w-full max-w-7xl bg-[#080808] rounded-2xl text-white shadow-2xl z-10 h-[550px] overflow-hidden group">
         
         <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
-          <path
-            id="main-road"
-            d="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
+          <defs>
+            <path
+              id="road-geometry"
+              d="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
+            />
+          </defs>
+          
+          {/* Broad Road Surface (Asphalt) */}
+          <use
+            href="#road-geometry"
+            fill="none"
+            stroke="white"
+            strokeWidth="42"
+            className="opacity-[0.03]"
+          />
+
+          {/* Solid Edge Lines (Shoulders) */}
+          <use
+            href="#road-geometry"
+            fill="none"
+            stroke="white"
+            strokeWidth="40"
+            className="opacity-10"
+          />
+          <use
+            href="#road-geometry"
+            fill="none"
+            stroke="#080808"
+            strokeWidth="38"
+          />
+
+          {/* Dashed Center Line */}
+          <use
+            href="#road-geometry"
             fill="none"
             stroke="white"
             strokeWidth="1"
-            className="opacity-10"
+            className="opacity-20"
             strokeDasharray="10 10"
           />
           
+          {/* Active Path Highlight */}
           <motion.path
             d="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
             fill="none"
             stroke="white"
-            strokeWidth="2"
+            strokeWidth="1.5"
             initial={{ pathLength: 0 }}
             animate={{ pathLength: milestones[activeStep].progress / 100 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
             className="opacity-40"
           />
 
+          {/* Animated Data Packets */}
           {[0, 1, 2].map((i) => (
             <motion.circle key={i} r="2" fill="white" className="opacity-20">
               <animateMotion
