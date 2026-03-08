@@ -3,23 +3,44 @@ import { motion } from "framer-motion";
 
 const DataVehicle = () => (
   <div className="relative transform -rotate-90">
-    <svg width="48" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_12px_rgba(255,255,255,0.6)]">
-      {/* Main Chassis */}
-      <path d="M4 12C4 10 6 6 14 5C22 4 34 4 40 8C46 12 46 12 40 16C34 20 22 20 14 19C6 18 4 14 4 12Z" fill="white" />
-      {/* Windshield / Cockpit */}
-      <path d="M16 7C16 7 20 5.5 28 5.5C36 5.5 38 7 38 7V17C38 17 36 18.5 28 18.5C20 18.5 16 17 16 17V7Z" fill="#080808" fillOpacity="0.9" />
-      {/* Headlights (Xenon Glow) */}
-      <rect x="42" y="7" width="2" height="2" rx="1" fill="white" className="animate-pulse" />
-      <rect x="42" y="15" width="2" height="2" rx="1" fill="white" className="animate-pulse" />
-      {/* Tail Lights */}
-      <rect x="4" y="9" width="1" height="2" fill="#333" />
-      <rect x="4" y="13" width="1" height="2" fill="#333" />
-      {/* Panel Lines */}
-      <line x1="14" y1="5" x2="14" y2="19" stroke="#080808" strokeWidth="0.5" opacity="0.1" />
-      <line x1="34" y1="5" x2="34" y2="19" stroke="#080808" strokeWidth="0.5" opacity="0.1" />
+    <svg width="56" height="26" viewBox="0 0 56 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+      {/* Main Luxury Chassis - Stately & Boxy Silhouette */}
+      <path d="M2 13C2 8 4 4 10 4H50C54 4 54 8 54 13C54 18 54 22 50 22H10C4 22 2 18 2 13Z" fill="white" />
+      
+      {/* Imposing Bonnet (Hood) Section */}
+      <rect x="36" y="5" width="16" height="16" rx="1" fill="white" stroke="#080808" strokeWidth="0.2" opacity="0.3" />
+      
+      {/* Signature Front Grille Detail */}
+      <rect x="52" y="7" width="2" height="12" rx="0.5" fill="#e5e5e5" />
+      <line x1="53" y1="8" x2="53" y2="18" stroke="#080808" strokeWidth="0.2" strokeDasharray="1 1" />
+
+      {/* Spirit of Ecstasy (Front Ornament - Symbolic Dot) */}
+      <circle cx="53" cy="13" r="0.8" fill="white" />
+
+      {/* Structured Passenger Cabin / Cockpit */}
+      <path d="M16 6.5C16 6.5 20 5.5 28 5.5C36 5.5 38 6.5 38 7.5V18.5C38 19.5 36 20.5 28 20.5C20 20.5 16 19.5 16 19.5V6.5Z" fill="#080808" />
+      
+      {/* Roof Panel Detail */}
+      <rect x="20" y="8" width="14" height="10" rx="1" fill="#151515" />
+      
+      {/* Dual Luxury Headlights */}
+      <rect x="48" y="6" width="3" height="3" rx="0.5" fill="white" className="animate-pulse" />
+      <rect x="48" y="17" width="3" height="3" rx="0.5" fill="white" className="animate-pulse" />
+
+      {/* Side Coachline (Accent Pinstripe) */}
+      <line x1="10" y1="4.5" x2="50" y2="4.5" stroke="#080808" strokeWidth="0.3" opacity="0.2" />
+      <line x1="10" y1="21.5" x2="50" y2="21.5" stroke="#080808" strokeWidth="0.3" opacity="0.2" />
+
+      {/* Slim Tail Lights */}
+      <rect x="2" y="8" width="1" height="3" rx="0.3" fill="#333" />
+      <rect x="2" y="15" width="1" height="3" rx="0.3" fill="#333" />
+
+      {/* Side Mirrors */}
+      <rect x="38" y="3" width="3" height="1.5" rx="0.5" fill="white" />
+      <rect x="38" y="21.5" width="3" height="1.5" rx="0.5" fill="white" />
     </svg>
-    {/* Underglow Ping */}
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full border border-white/10 animate-ping" />
+    {/* Underglow - Refined for Luxury Feel */}
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full border border-white/5 animate-ping" />
   </div>
 );
 
