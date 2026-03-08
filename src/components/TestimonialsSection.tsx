@@ -38,8 +38,8 @@ const Testimonials = () => {
       <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 px-8 py-12 md:px-16 lg:py-20 overflow-hidden">
         
         <div className="max-w-3xl mx-auto">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/40 mb-4 italic">Happy Clients</p>
-          <h2 className="text-4xl md:text-5xl font-black italic tracking-tighter uppercase leading-none mb-12 max-w-lg">
+          <p className="text-[9px] font-black uppercase tracking-[0.4em] text-white/30 mb-2 italic">Testimonials // FEEDBACK</p>
+          <h2 className="text-2xl md:text-4xl font-black italic tracking-tighter uppercase leading-none mb-8 max-w-lg">
             Beautiful words from <br/> <span className="text-white/20">clients I've worked with</span>
           </h2>
 
