@@ -70,13 +70,13 @@ const Testimonials = () => {
               <div className="flex gap-2">
                 <button
                   onClick={prev}
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:bg-white hover:text-black"
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:bg-white hover:text-black"
                 >
                   <ChevronLeft size={16} />
                 </button>
                 <button
                   onClick={next}
-                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:bg-white hover:text-black"
+                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all hover:bg-white hover:text-black"
                 >
                   <ChevronRight size={16} />
                 </button>
