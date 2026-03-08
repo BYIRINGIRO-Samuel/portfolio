@@ -132,18 +132,26 @@ const ContactSection = () => {
                     </div>
 
                     <motion.button 
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                       type="submit" 
-                      className="relative w-fit px-12 bg-white text-black py-5 font-black uppercase italic tracking-[0.4em] text-[10px] flex items-center justify-center gap-4 hover:bg-gray-200 transition-colors shadow-2xl mx-auto"
+                      className="group relative w-72 h-16 bg-black flex items-center justify-center overflow-hidden border border-white/20 mx-auto transition-all hover:border-white shadow-[0_0_20px_rgba(255,255,255,0.05)]"
                     >
-                      SEND_MESSAGE <Send className="w-4 h-4" />
-                      
-                      {/* Technical Corner Brackets */}
-                      <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-                      <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-                      <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-                      <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                      {/* Pattern Background */}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:16px_16px] opacity-20" />
+
+                      <div className="relative z-10 flex items-center gap-4 text-white">
+                        <span className="text-[10px] font-black uppercase tracking-[0.6em] italic group-hover:tracking-[0.7em] transition-all">
+                          SEND_MESSAGE
+                        </span>
+                        <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </div>
+
+                      {/* Technical Mechanical Corners */}
+                      <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-white translate-x-[-1px] translate-y-[-1px]" />
+                      <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-white translate-x-[1px] translate-y-[-1px]" />
+                      <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-white translate-x-[-1px] translate-y-[1px]" />
+                      <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-white translate-x-[1px] translate-y-[1px]" />
                     </motion.button>
                   </motion.form>
                 )}
