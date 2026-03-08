@@ -20,7 +20,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans">
-      <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 px-6 py-8 md:px-12 md:py-12 overflow-hidden group">
+      <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 px-6 py-10 md:px-12 md:py-16 overflow-hidden group">
         
         {/* BACKGROUND DECOR: TECH GRID */}
         <div className="absolute inset-0 opacity-[0.02] pointer-events-none">
@@ -32,41 +32,41 @@ const ContactSection = () => {
            </div>
         </div>
 
-        <div className="relative z-20 max-w-5xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-16">
+        <div className="relative z-20 max-w-5xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24">
            
-           {/* LEFT SIDE: INITIATION HUD */}
+           {/* LEFT SIDE: CONTACT HUD */}
            <div className="lg:w-1/2 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-3">
                  <div className="w-5 h-[1.5px] bg-white opacity-40 shadow-[0_0_10px_white]" />
-                 <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/30 italic">Communications // UPLINK</span>
+                 <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/30 italic">Communications // CONTACT</span>
               </div>
 
               <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase leading-none mb-6">
-                INITIATE<br/><span className="text-white/20">A_PROJECT</span>.
+                GET_IN<br/><span className="text-white/20">TOUCH_NOW</span>.
               </h2>
 
-              <p className="text-gray-400 text-sm leading-relaxed italic mb-8 max-w-md font-medium">
-                "Bridge the gap between vision and deployment. Send a transmission to start the technical consultation."
+              <p className="text-gray-400 text-sm leading-relaxed italic mb-12 max-w-md font-medium">
+                "Have a question, a project idea, or just want to chat? Send me a message and I'll respond as soon as I can."
               </p>
 
               {/* Status HUD Chips - More Compact */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
                  <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-3 rounded-xl w-fit">
                     <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Server: ONLINE</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Status: AVAILABLE</span>
                  </div>
                  <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-3 rounded-xl w-fit">
                     <Activity className="w-3.5 h-3.5 text-white/20" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Sync: &lt; 24HR</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Response: FAST</span>
                  </div>
                  <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-3 rounded-xl w-fit">
                     <ShieldCheck className="w-3.5 h-3.5 text-white/20" />
-                    <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Logic: OPTIMIZED</span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-white/50">Support: GLOBAL</span>
                  </div>
               </div>
            </div>
 
-           {/* RIGHT SIDE: TRANSMISSION MODULE */}
+           {/* RIGHT SIDE: MESSAGE MODULE */}
            <div className="lg:w-1/2 relative">
               <AnimatePresence mode="wait">
                 {submitted ? (
@@ -78,24 +78,24 @@ const ContactSection = () => {
                     <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-6 shadow-[0_0_20px_white]">
                        <Send className="w-6 h-6 text-black" />
                     </div>
-                    <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Transmission_OK</h3>
-                    <p className="text-white/40 text-xs italic font-medium">Log recorded. Syncing...</p>
+                    <h3 className="text-2xl font-black italic tracking-tighter uppercase mb-2">Message_Sent</h3>
+                    <p className="text-white/40 text-xs italic font-medium">I'll get back to you shortly.</p>
                   </motion.div>
                 ) : (
                   <motion.form 
                     onSubmit={handleSubmit}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="space-y-4"
+                    className="space-y-6"
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                        <div className="group relative">
-                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Registry_Name</label>
+                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Your_Name</label>
                           <div className="relative">
                              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
                              <input
                                type="text"
-                               placeholder="IDENT_SAMUEL"
+                               placeholder="SAMUEL_B"
                                value={form.name}
                                onChange={(e) => setForm({ ...form, name: e.target.value })}
                                required
@@ -104,12 +104,12 @@ const ContactSection = () => {
                           </div>
                        </div>
                        <div className="group relative">
-                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Uplink_Email</label>
+                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Your_Email</label>
                           <div className="relative">
                              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
                              <input
                                type="email"
-                               placeholder="USER@UPLINK.COM"
+                               placeholder="YOU@DOMAIN.COM"
                                value={form.email}
                                onChange={(e) => setForm({ ...form, email: e.target.value })}
                                required
@@ -121,12 +121,12 @@ const ContactSection = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                        <div className="group relative">
-                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Network_Domain</label>
+                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Subject / Website</label>
                           <div className="relative">
                              <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
                              <input
                                type="url"
-                               placeholder="HTTP://REF.IO"
+                               placeholder="HTTP://DOMAIN.COM"
                                value={form.website}
                                onChange={(e) => setForm({ ...form, website: e.target.value })}
                                className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-xs font-black uppercase tracking-widest outline-none focus:border-white focus:bg-white/10 transition-all placeholder:text-white/10"
@@ -134,7 +134,7 @@ const ContactSection = () => {
                           </div>
                        </div>
                        <div className="group relative">
-                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Resource_Capacity</label>
+                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Topic_of_Interest</label>
                           <div className="relative">
                              <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
                              <select
@@ -142,8 +142,8 @@ const ContactSection = () => {
                                onChange={(e) => setForm({ ...form, budget: e.target.value })}
                                className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-xs font-black uppercase tracking-widest outline-none focus:border-white focus:bg-white/10 transition-all appearance-none cursor-pointer"
                              >
-                               <option value="" className="bg-[#0f0f0f]">SELECT_RES</option>
-                               {budgetOptions.map((b) => (
+                               <option value="" className="bg-[#0f0f0f]">SELECT_TOPIC</option>
+                               {['Design', 'Development', 'AI Solutions', 'Other'].map((b) => (
                                  <option key={b} value={b} className="bg-[#0f0f0f]">{b.toUpperCase()}</option>
                                ))}
                              </select>
@@ -152,16 +152,16 @@ const ContactSection = () => {
                     </div>
 
                     <div className="group relative">
-                       <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Mission_Log</label>
+                       <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Your_Message</label>
                        <div className="relative">
                           <MessageSquare className="absolute left-4 top-5 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
                           <textarea
-                            placeholder="CORE_DATA_STREAM..."
+                            placeholder="TELL_ME_EVERYTHING..."
                             value={form.message}
                             onChange={(e) => setForm({ ...form, message: e.target.value })}
                             rows={3}
                             required
-                            className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-4 text-xs font-black uppercase tracking-widest outline-none focus:border-white focus:bg-white/10 transition-all resize-none placeholder:text-white/10 min-h-[100px]"
+                            className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-4 text-xs font-black uppercase tracking-widest outline-none focus:border-white focus:bg-white/10 transition-all resize-none placeholder:text-white/10 min-h-[120px]"
                           />
                        </div>
                     </div>
@@ -170,9 +170,15 @@ const ContactSection = () => {
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       type="submit" 
-                      className="w-full bg-white text-black py-4.5 rounded-full font-black uppercase italic tracking-[0.4em] text-[10px] flex items-center justify-center gap-3 hover:bg-gray-200 transition-colors shadow-2xl"
+                      className="relative w-fit px-12 bg-white text-black py-5 font-black uppercase italic tracking-[0.4em] text-[10px] flex items-center justify-center gap-4 hover:bg-gray-200 transition-colors shadow-2xl mx-auto"
                     >
-                      SEND_UPLINK <Send className="w-3.5 h-3.5" />
+                      SEND_MESSAGE <Send className="w-4 h-4" />
+                      
+                      {/* Technical Corner Brackets */}
+                      <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                      <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                      <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                      <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
                     </motion.button>
                   </motion.form>
                 )}
@@ -182,7 +188,7 @@ const ContactSection = () => {
         </div>
 
         {/* HUD FOOTER: COMPACT */}
-        <div className="mt-12 flex items-center justify-between opacity-20">
+        <div className="mt-16 flex items-center justify-between opacity-20">
            <div className="flex items-center gap-4">
               <ShieldCheck className="w-3 h-3" />
               <span className="text-[8px] font-black tracking-widest uppercase italic">Encryption: SECURE</span>
