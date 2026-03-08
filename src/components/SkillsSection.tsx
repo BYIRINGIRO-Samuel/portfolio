@@ -130,42 +130,61 @@ const SkillsSection = () => {
             </motion.circle>
           ))}
 
-          {/* Road Lights (Street Lamps) */}
+          {/* Road Lights (Street Lamps) - Both Sides */}
           {[
-            { x: 180, y: 100, section: 0 },
-            { x: 400, y: 180, section: 1 },
-            { x: 620, y: 250, section: 1 },
-            { x: 840, y: 340, section: 2 },
-            { x: 1060, y: 420, section: 3 }
+            { x: 180, y: 95, section: 0, offL: {x: 0, y: -28}, offR: {x: 0, y: 28} },
+            { x: 400, y: 195, section: 1, offL: {x: -22, y: -22}, offR: {x: 22, y: 22} },
+            { x: 620, y: 245, section: 1, offL: {x: 0, y: -30}, offR: {x: 0, y: 30} },
+            { x: 840, y: 360, section: 2, offL: {x: -22, y: -22}, offR: {x: 22, y: 22} },
+            { x: 1060, y: 415, section: 3, offL: {x: 0, y: -30}, offR: {x: 0, y: 30} }
           ].map((lamp, i) => (
-            <g key={i}>
-              {/* Lamp Pole */}
-              <line x1={lamp.x} y1={lamp.y - 40} x2={lamp.x} y2={lamp.y - 12} stroke="white" strokeWidth="1" className="opacity-20" />
-              <path d={`M ${lamp.x} ${lamp.y - 40} Q ${lamp.x + 10} ${lamp.y - 45} ${lamp.x + 15} ${lamp.y - 35}`} fill="none" stroke="white" strokeWidth="0.5" className="opacity-30" />
-              
-              {/* Light Source */}
-              <motion.circle 
-                cx={lamp.x + 15} 
-                cy={lamp.y - 35} 
-                r="1.5" 
-                fill="white"
-                animate={{ 
-                  opacity: activeStep >= lamp.section ? [0.6, 1, 0.8, 1] : 0.2,
-                  scale: activeStep >= lamp.section ? [1, 1.2, 1.1, 1.2] : 1
-                }}
-                transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
-              />
+            <React.Fragment key={i}>
+              {/* Left Side Lamp */}
+              <g>
+                <line 
+                  x1={lamp.x + lamp.offL.x} y1={lamp.y + lamp.offL.y - 45} 
+                  x2={lamp.x + lamp.offL.x} y2={lamp.y + lamp.offL.y} 
+                  stroke="white" strokeWidth="1" className="opacity-20" 
+                />
+                <path 
+                  d={`M ${lamp.x + lamp.offL.x} ${lamp.y + lamp.offL.y - 45} Q ${lamp.x + lamp.offL.x + 8} ${lamp.y + lamp.offL.y - 50} ${lamp.x + lamp.offL.x + 12} ${lamp.y + lamp.offL.y - 38}`} 
+                  fill="none" stroke="white" strokeWidth="0.5" className="opacity-30" 
+                />
+                <motion.circle 
+                  cx={lamp.x + lamp.offL.x + 12} cy={lamp.y + lamp.offL.y - 38} r="1.5" fill="white"
+                  animate={{ opacity: activeStep >= lamp.section ? [0.6, 1, 0.8, 1] : 0.2, scale: activeStep >= lamp.section ? [1, 1.2, 1.1, 1.2] : 1 }}
+                  transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                />
+                <motion.path
+                  d={`M ${lamp.x + lamp.offL.x + 12} ${lamp.y + lamp.offL.y - 38} L ${lamp.x + lamp.offL.x - 5} ${lamp.y + lamp.offL.y} L ${lamp.x + lamp.offL.x + 20} ${lamp.y + lamp.offL.y} Z`}
+                  fill="url(#lightGradient)"
+                  animate={{ opacity: activeStep >= lamp.section ? 0.3 : 0.05 }}
+                />
+              </g>
 
-              {/* Light Beam / Glow */}
-              <motion.path
-                d={`M ${lamp.x + 15} ${lamp.y - 35} L ${lamp.x + 5} ${lamp.y - 10} L ${lamp.x + 25} ${lamp.y - 10} Z`}
-                fill="url(#lightGradient)"
-                initial={false}
-                animate={{ 
-                  opacity: activeStep >= lamp.section ? 0.3 : 0.05 
-                }}
-              />
-            </g>
+              {/* Right Side Lamp */}
+              <g>
+                <line 
+                  x1={lamp.x + lamp.offR.x} y1={lamp.y + lamp.offR.y - 45} 
+                  x2={lamp.x + lamp.offR.x} y2={lamp.y + lamp.offR.y} 
+                  stroke="white" strokeWidth="1" className="opacity-20" 
+                />
+                <path 
+                  d={`M ${lamp.x + lamp.offR.x} ${lamp.y + lamp.offR.y - 45} Q ${lamp.x + lamp.offR.x - 8} ${lamp.y + lamp.offR.y - 50} ${lamp.x + lamp.offR.x - 12} ${lamp.y + lamp.offR.y - 38}`} 
+                  fill="none" stroke="white" strokeWidth="0.5" className="opacity-30" 
+                />
+                <motion.circle 
+                  cx={lamp.x + lamp.offR.x - 12} cy={lamp.y + lamp.offR.y - 38} r="1.5" fill="white"
+                  animate={{ opacity: activeStep >= lamp.section ? [0.6, 1, 0.8, 1] : 0.2, scale: activeStep >= lamp.section ? [1, 1.2, 1.1, 1.2] : 1 }}
+                  transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                />
+                <motion.path
+                  d={`M ${lamp.x + lamp.offR.x - 12} ${lamp.y + lamp.offR.y - 38} L ${lamp.x + lamp.offR.x + 5} ${lamp.y + lamp.offR.y} L ${lamp.x + lamp.offR.x - 20} ${lamp.y + lamp.offR.y} Z`}
+                  fill="url(#lightGradient)"
+                  animate={{ opacity: activeStep >= lamp.section ? 0.3 : 0.05 }}
+                />
+              </g>
+            </React.Fragment>
           ))}
 
           <defs>
