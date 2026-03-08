@@ -129,6 +129,55 @@ const SkillsSection = () => {
               />
             </motion.circle>
           ))}
+
+          {/* Road Lights (Street Lamps) */}
+          {[
+            { x: 180, y: 100, section: 0 },
+            { x: 400, y: 180, section: 1 },
+            { x: 620, y: 250, section: 1 },
+            { x: 840, y: 340, section: 2 },
+            { x: 1060, y: 420, section: 3 }
+          ].map((lamp, i) => (
+            <g key={i}>
+              {/* Lamp Pole */}
+              <line x1={lamp.x} y1={lamp.y - 40} x2={lamp.x} y2={lamp.y - 12} stroke="white" strokeWidth="1" className="opacity-20" />
+              <path d={`M ${lamp.x} ${lamp.y - 40} Q ${lamp.x + 10} ${lamp.y - 45} ${lamp.x + 15} ${lamp.y - 35}`} fill="none" stroke="white" strokeWidth="0.5" className="opacity-30" />
+              
+              {/* Light Source */}
+              <motion.circle 
+                cx={lamp.x + 15} 
+                cy={lamp.y - 35} 
+                r="1.5" 
+                fill="white"
+                animate={{ 
+                  opacity: activeStep >= lamp.section ? [0.6, 1, 0.8, 1] : 0.2,
+                  scale: activeStep >= lamp.section ? [1, 1.2, 1.1, 1.2] : 1
+                }}
+                transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+              />
+
+              {/* Light Beam / Glow */}
+              <motion.path
+                d={`M ${lamp.x + 15} ${lamp.y - 35} L ${lamp.x + 5} ${lamp.y - 10} L ${lamp.x + 25} ${lamp.y - 10} Z`}
+                fill="url(#lightGradient)"
+                initial={false}
+                animate={{ 
+                  opacity: activeStep >= lamp.section ? 0.3 : 0.05 
+                }}
+              />
+            </g>
+          ))}
+
+          <defs>
+            <radialGradient id="lightGradient" cx="50%" cy="0%" r="100%">
+              <stop offset="0%" stopColor="white" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="white" stopOpacity="0" />
+            </radialGradient>
+            <path
+              id="road-geometry"
+              d="M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420"
+            />
+          </defs>
         </svg>
 
         {/* The Interactive Stealth Vehicle */}
