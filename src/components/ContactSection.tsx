@@ -1,16 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mail, User, Globe, DollarSign, MessageSquare, ShieldCheck, Activity, Terminal } from 'lucide-react';
+import { Send, Mail, User, MessageSquare, ShieldCheck, Activity, Terminal } from 'lucide-react';
 
-const budgetOptions = [
-  'Under $1,000',
-  '$1,000 - $5,000',
-  '$5,000 - $10,000',
-  '$10,000+',
-];
+
 
 const ContactSection = () => {
-  const [form, setForm] = useState({ name: '', email: '', website: '', budget: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -119,37 +114,7 @@ const ContactSection = () => {
                        </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                       <div className="group relative">
-                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Subject / Website</label>
-                          <div className="relative">
-                             <Globe className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
-                             <input
-                               type="url"
-                               placeholder="HTTP://DOMAIN.COM"
-                               value={form.website}
-                               onChange={(e) => setForm({ ...form, website: e.target.value })}
-                               className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-xs font-black uppercase tracking-widest outline-none focus:border-white focus:bg-white/10 transition-all placeholder:text-white/10"
-                             />
-                          </div>
-                       </div>
-                       <div className="group relative">
-                          <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Topic_of_Interest</label>
-                          <div className="relative">
-                             <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/20 group-focus-within:text-white transition-colors" />
-                             <select
-                               value={form.budget}
-                               onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                               className="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-xs font-black uppercase tracking-widest outline-none focus:border-white focus:bg-white/10 transition-all appearance-none cursor-pointer"
-                             >
-                               <option value="" className="bg-[#0f0f0f]">SELECT_TOPIC</option>
-                               {['Design', 'Development', 'AI Solutions', 'Other'].map((b) => (
-                                 <option key={b} value={b} className="bg-[#0f0f0f]">{b.toUpperCase()}</option>
-                               ))}
-                             </select>
-                          </div>
-                       </div>
-                    </div>
+
 
                     <div className="group relative">
                        <label className="text-[7px] font-black uppercase tracking-widest text-white/20 mb-1.5 block ml-1">Your_Message</label>
