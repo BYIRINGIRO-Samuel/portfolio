@@ -154,7 +154,6 @@ html.light-mode {
   --lm-border: rgba(0,0,0,0.08);
   --lm-text: #0f0f0f;
   --lm-text-muted: #555;
-  --lm-accent: #0f0f0f;
 }
 
 html.light-mode body {
@@ -162,54 +161,121 @@ html.light-mode body {
   color: var(--lm-text);
 }
 
-/* Outer section wrappers (bg-white) */
+/* ── Outer section wrappers ──────────────────────────── */
 html.light-mode section.bg-white {
   background: var(--lm-bg) !important;
 }
 
-/* Main dark cards → white cards */
+/* ── Main dark cards → light cards ───────────────────── */
 html.light-mode .bg-\[\#0f0f0f\] {
   background: var(--lm-card) !important;
   color: var(--lm-text) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
 }
 html.light-mode .bg-\[\#151515\] {
-  background: var(--lm-card-secondary) !important;
+  background: #f0f0ec !important;
 }
 html.light-mode .bg-\[\#1a1a1a\] {
-  background: #e0e0e0 !important;
+  background: #e4e4e0 !important;
 }
 html.light-mode .bg-\[\#1c1c1c\] {
-  background: #d8d8d8 !important;
+  background: #e8e8e4 !important;
 }
 
-/* Text overrides inside dark cards */
-html.light-mode .bg-\[\#0f0f0f\] .text-white {
+/* ── Text colors ──────────────────────────────────────── */
+html.light-mode .text-white {
   color: var(--lm-text) !important;
 }
-html.light-mode .bg-\[\#0f0f0f\] .text-white\/20,
-html.light-mode .bg-\[\#0f0f0f\] .text-white\/30,
-html.light-mode .bg-\[\#0f0f0f\] .text-white\/40,
-html.light-mode .bg-\[\#0f0f0f\] .text-white\/50 {
+html.light-mode .text-white\/20,
+html.light-mode .text-white\/25,
+html.light-mode .text-white\/30,
+html.light-mode .text-white\/40,
+html.light-mode .text-white\/50,
+html.light-mode .text-white\/60 {
   color: var(--lm-text-muted) !important;
 }
-html.light-mode .bg-\[\#0f0f0f\] .text-gray-400 {
+html.light-mode .text-gray-400,
+html.light-mode .text-gray-500 {
   color: #444 !important;
 }
 
-/* Border overrides */
+/* ── Borders ──────────────────────────────────────────── */
 html.light-mode .border-white\/5,
 html.light-mode .border-white\/10,
 html.light-mode .border-white\/20 {
   border-color: var(--lm-border) !important;
 }
 
-/* Nav sidebar in light mode */
-html.light-mode nav.bg-white\/\[0\.02\] {
-  background: rgba(255,255,255,0.8) !important;
-  border-color: rgba(0,0,0,0.07) !important;
+/* ── Navbar sidebar ───────────────────────────────────── */
+html.light-mode nav {
+  background: rgba(255,255,255,0.92) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.06) !important;
+}
+/* Fix icon color: white icons on white bg → make them dark */
+html.light-mode nav svg {
+  stroke: #333 !important;
+  color: #333 !important;
+}
+html.light-mode nav a {
+  color: #333 !important;
+}
+html.light-mode nav a:hover {
+  color: #000 !important;
+  background: rgba(0,0,0,0.05) !important;
+}
+/* The active (home) nav icon yellow glow */
+html.light-mode nav a svg[stroke="#ffbd2e"] {
+  stroke: #c49a00 !important;
+}
+/* Traffic light dots on nav */
+html.light-mode nav .bg-\[\#ff5f56\],
+html.light-mode nav .bg-\[\#ffbd2e\],
+html.light-mode nav .bg-\[\#27c93f\] {
+  opacity: 0.7;
+}
+/* The "S" avatar */
+html.light-mode nav .bg-white\/10 {
+  background: rgba(0,0,0,0.07) !important;
+}
+html.light-mode nav .text-white {
+  color: #111 !important;
 }
 
-/* Light mode scrollbar */
+/* ── SkillsSection specific ───────────────────────────── */
+/* Main section outer bg */
+html.light-mode section#skills {
+  background: var(--lm-bg) !important;
+}
+/* The inner dark card wrapper of SkillsSection */
+html.light-mode #skills .bg-\[\#080808\],
+html.light-mode .bg-\[\#080808\] {
+  background: #deded8 !important;
+}
+/* bg-black/40 skill boxes */
+html.light-mode .bg-black\/40 {
+  background: rgba(0,0,0,0.05) !important;
+}
+html.light-mode .bg-black\/60 {
+  background: rgba(0,0,0,0.07) !important;
+}
+/* SVG road — invert strokes slightly */
+html.light-mode #skills svg line,
+html.light-mode #skills svg path,
+html.light-mode #skills svg use {
+  filter: invert(0.85);
+}
+/* Milestone diamonds */
+html.light-mode .border-white\/20.bg-transparent {
+  border-color: rgba(0,0,0,0.15) !important;
+}
+/* Skill card bg */
+html.light-mode .bg-black\/40.backdrop-blur-sm {
+  background: rgba(255,255,255,0.6) !important;
+  border-color: rgba(0,0,0,0.08) !important;
+}
+
+/* ── Scrollbar in light mode ──────────────────────────── */
 html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.15);
 }
@@ -217,12 +283,12 @@ html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.25);
 }
 
-/* Gray background shadow section */
+/* ── Marquee / SkillsMarquee ──────────────────────────── */
 html.light-mode .bg-\[\#e5e5e5\] {
-  background: #d0d0cc !important;
+  background: #d4d4d0 !important;
 }
 
-/* Smooth transition for theme switch */
+/* ── Smooth theme transition ──────────────────────────── */
 *, *::before, *::after {
-  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
