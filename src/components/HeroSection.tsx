@@ -1,4 +1,4 @@
-import React from 'react';
+import { motion } from 'framer-motion';
 
 const HeroSection = () => {
   return (
@@ -17,7 +17,7 @@ const HeroSection = () => {
           <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-5 relative z-20 gap-4 md:gap-0">
             <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span className="text-green-800 group-hover:text-gray-300 transition-colors">B.Samuel</span>
+              <span className="text-gray-200 group-hover:text-gray-300 transition-colors uppercase italic font-black text-xl tracking-[0.2em]">S.Samuel</span>
             </div>
             
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
@@ -118,24 +118,80 @@ const HeroSection = () => {
 
             </div>
 
-            <div className="w-full lg:w-[45%] flex items-center justify-center mt-7 lg:mt-0 relative aspect-square lg:aspect-auto lg:h-[520px]">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[285px] sm:w-[360px] h-[285px] sm:h-[360px] bg-white/5 rounded-full blur-[2px] flex items-center justify-center z-0">
-                 <div className="absolute inset-[10%] border border-dashed border-white/20 rounded-full animate-[spin_60s_linear_infinite]" />
-              </div>
-              
-              <div className="absolute top-[20%] left-[10%] text-white animate-bounce">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2 7h7l-5.5 4 2 7-5.5-4-5.5 4 2-7-5.5-4h7z"/></svg>
-              </div>
-              <div className="absolute bottom-[30%] right-[15%] text-white/50 animate-pulse">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2 7h7l-5.5 4 2-7-5.5-4-5.5 4 2-7-5.5-4h7z"/></svg>
-              </div>
+            <div className="w-full lg:w-[45%] flex items-center justify-center mt-7 lg:mt-0 relative aspect-square lg:aspect-auto lg:h-[580px]">
+              {/* Innovative Profile Frame */}
+              <div className="relative w-[320px] sm:w-[440px] h-[320px] sm:h-[440px] flex items-center justify-center">
+                
+                {/* Background Glows */}
+                <div className="absolute inset-0 bg-white/5 rounded-full blur-[80px]" />
+                <div className="absolute inset-[15%] bg-white/10 rounded-full blur-[40px]" />
 
-              <img 
-                src="/hero-character.png" 
-                alt="3D Character" 
-                className="relative z-10 w-[85%] max-w-[450px] object-contain drop-shadow-2xl translate-y-[-2rem] lg:translate-x-4"
-                draggable="false"
-              />
+                {/* Rotating HUD Rings */}
+                <motion.div 
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 border border-dashed border-white/10 rounded-full"
+                />
+                
+                <motion.div 
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-[6%] border-2 border-white/5 rounded-full"
+                >
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
+                </motion.div>
+
+                {/* Inner Tech Frame */}
+                <div className="absolute inset-[10%] rounded-full border border-white/20 p-2 backdrop-blur-[2px] shadow-[inset_0_0_30px_rgba(255,255,255,0.05)]">
+                   <div className="absolute inset-x-0 top-0 h-1/2 border-t border-white/20 rounded-t-full opacity-50" />
+                </div>
+
+                {/* Rounded Profile Image Container */}
+                <div className="relative w-[82%] h-[82%] rounded-full overflow-hidden border border-white/10 bg-[#151515] group/profile shadow-2xl">
+                  <img 
+                    src="/hero-character.png" 
+                    alt="B. Samuel Profile" 
+                    className="w-full h-full object-cover transition-all duration-700 group-hover/profile:scale-110 filter brightness-90 group-hover/profile:brightness-110"
+                    draggable="false"
+                  />
+                  
+                  {/* Subtle Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/60 via-transparent to-white/5 pointer-events-none" />
+                  
+                  {/* Scanning Line Animation */}
+                  <motion.div 
+                    animate={{ top: ['-100%', '200%'] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-x-0 h-[2px] bg-white/20 blur-[3px]"
+                  />
+                </div>
+
+                {/* Innovative HUD Labels */}
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                   <div className="px-4 py-1.5 bg-white text-black text-[9px] font-black uppercase tracking-[0.4em] rounded-full z-20 shadow-[0_10px_20px_rgba(255,255,255,0.2)]">
+                    PRIMARY_UPLINK
+                  </div>
+                  <div className="w-[1px] h-4 bg-white/20 mt-1" />
+                </div>
+                
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                   <div className="w-[1px] h-4 bg-white/20 mb-1" />
+                   <div className="px-4 py-1.5 bg-black border border-white/20 text-white text-[9px] font-black uppercase tracking-[0.4em] rounded-full z-20 backdrop-blur-md">
+                    UID: BYI_SAMUEL_01
+                  </div>
+                </div>
+
+                {/* Asymmetric HUD Details */}
+                <div className="absolute top-[20%] -left-12 flex flex-col items-end opacity-30 select-none">
+                   <span className="text-[8px] font-black uppercase tracking-widest mb-1 italic">Scan: Active</span>
+                   <div className="w-16 h-[1.5px] bg-gradient-to-l from-white to-transparent" />
+                </div>
+
+                <div className="absolute bottom-[25%] -right-16 flex flex-col items-start opacity-30 select-none">
+                   <span className="text-[8px] font-black uppercase tracking-widest mb-1 italic">Sync_State: 100%</span>
+                   <div className="w-20 h-[1.5px] bg-gradient-to-r from-white to-transparent" />
+                </div>
+              </div>
             </div>
 
           </div>
