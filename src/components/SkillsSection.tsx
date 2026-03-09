@@ -173,15 +173,36 @@ const TrafficLight = () => (
   </div>
 );
 
-const CityBuilding = ({ h = 80, w = 30 }) => (
-  <div className="relative group/building opacity-10 hover:opacity-20 transition-opacity" style={{ width: w, height: h }}>
-    <div className="absolute inset-0 bg-white/80 rounded-t-sm" />
-    <div className="grid grid-cols-2 gap-1 p-1">
-      {[...Array(8)].map((_, i) => (
-        <div key={i} className="h-1 bg-black/60 rounded-[0.5px]" />
+const CityBuilding = ({ h = 80, w = 30, delay = 0 }) => (
+  <div className="relative group/building opacity-20 hover:opacity-40 transition-all duration-700" style={{ width: w, height: h }}>
+    {/* Main Structure */}
+    <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent border-t border-x border-white/10 rounded-t-sm backdrop-blur-[2px]" />
+    
+    {/* Rooftop Details (Antennas/Comms) */}
+    <div className="absolute -top-6 left-1/4 w-[1px] h-6 bg-white/20">
+       <motion.div 
+         animate={{ opacity: [0.2, 1, 0.2] }}
+         transition={{ duration: 2, repeat: Infinity, delay: delay }}
+         className="absolute top-0 -left-0.5 w-1 h-1 rounded-full bg-red-500 shadow-[0_0_5px_red]"
+       />
+    </div>
+    <div className="absolute -top-3 right-1/4 w-[2px] h-3 bg-white/10" />
+
+    {/* Window Grid System */}
+    <div className="absolute inset-0 p-2 grid grid-cols-3 gap-1.5 overflow-hidden">
+      {[...Array(24)].map((_, i) => (
+        <motion.div 
+          key={i} 
+          initial={{ opacity: 0.1 }}
+          animate={{ opacity: Math.random() > 0.7 ? [0.1, 0.8, 0.1] : 0.15 }}
+          transition={{ duration: 3 + Math.random() * 5, repeat: Infinity }}
+          className="h-1.5 bg-white/60 rounded-[0.5px] shadow-[0_0_2px_rgba(255,255,255,0.2)]" 
+        />
       ))}
     </div>
-    <div className="absolute top-0 right-0 w-2 h-4 bg-white/40 translate-x-1" />
+
+    {/* Vertical Architectural Lines */}
+    <div className="absolute inset-0 border-x border-white/5 m-1" />
   </div>
 );
 
@@ -398,15 +419,16 @@ const SkillsSection = () => {
         </motion.div>
 
         {/* Urban Scene Elements */}
-        {/* Background Building Silhouettes for Depth */}
-        <div className="absolute top-[5%] left-[10%] z-0 flex gap-4 pointer-events-none">
-          <CityBuilding h={120} w={40} />
-          <CityBuilding h={180} w={50} />
-          <CityBuilding h={90} w={35} />
+        {/* HQ Skyscrapers Silhouettes for Depth */}
+        <div className="absolute top-[3%] left-[10%] z-0 flex items-end gap-3 pointer-events-none">
+          <CityBuilding h={140} w={45} delay={0.5} />
+          <CityBuilding h={200} w={60} delay={0.2} />
+          <CityBuilding h={110} w={35} delay={0.8} />
         </div>
-        <div className="absolute top-[8%] right-[5%] z-0 flex gap-6 items-end pointer-events-none">
-          <CityBuilding h={140} w={45} />
-          <CityBuilding h={200} w={60} />
+        <div className="absolute top-[5%] right-[5%] z-0 flex items-end gap-5 pointer-events-none">
+          <CityBuilding h={160} w={50} delay={1.2} />
+          <CityBuilding h={240} w={70} delay={0} />
+          <CityBuilding h={130} w={40} delay={0.4} />
         </div>
 
         {/* Scattered Realistic Grass Clumps */}
