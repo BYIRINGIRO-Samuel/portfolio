@@ -199,11 +199,55 @@ html.light-mode .text-gray-500 {
   color: #444 !important;
 }
 
-/* ── Borders ──────────────────────────────────────────── */
-html.light-mode .border-white\/5,
-html.light-mode .border-white\/10,
+/* ── Borders — more visible in light mode ─────────────── */
+html.light-mode .border-white\/5 {
+  border-color: rgba(0,0,0,0.12) !important;
+}
+html.light-mode .border-white\/10 {
+  border-color: rgba(0,0,0,0.18) !important;
+}
 html.light-mode .border-white\/20 {
-  border-color: var(--lm-border) !important;
+  border-color: rgba(0,0,0,0.25) !important;
+}
+
+/* ── Contact form inputs ──────────────────────────────── */
+html.light-mode .bg-white\/5 {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.18) !important;
+}
+html.light-mode input,
+html.light-mode textarea {
+  color: #111 !important;
+}
+html.light-mode input::placeholder,
+html.light-mode textarea::placeholder {
+  color: rgba(0,0,0,0.25) !important;
+}
+html.light-mode input:focus,
+html.light-mode textarea:focus {
+  border-color: rgba(0,0,0,0.5) !important;
+  background: rgba(0,0,0,0.06) !important;
+}
+
+/* ── Send button — keep bg-black dark, text stays white ── */
+html.light-mode button.bg-black {
+  background: #0f0f0f !important;
+}
+html.light-mode button.bg-black .text-white,
+html.light-mode button.bg-black span,
+html.light-mode button.bg-black svg {
+  color: #fff !important;
+  stroke: #fff !important;
+}
+/* Corner brackets stay white */
+html.light-mode button.bg-black .border-white {
+  border-color: #fff !important;
+}
+
+/* ── Status chips on contact left ─────────────────────── */
+html.light-mode .bg-white\/5.border.border-white\/10 {
+  background: rgba(0,0,0,0.04) !important;
+  border-color: rgba(0,0,0,0.15) !important;
 }
 
 /* ── Navbar sidebar ───────────────────────────────────── */
