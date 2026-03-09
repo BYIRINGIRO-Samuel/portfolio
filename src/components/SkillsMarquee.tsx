@@ -29,14 +29,14 @@ import {
 import { FaJava, FaCss3 } from "react-icons/fa";
 
 const skills = [
-  "arduino", "bootstrap", "c", "cplusplus", "css3", "docker", "express", "figma", "firebase", "git", "html5", "java", "javascript", "mariadb", "mongodb", "nodejs", "php", "postgresql", "postman", "python", "react", "reactnative", "redis", "redux", "spring", "tailwind", "typescript"
+  "arduino", "bootstrap", "c", "c++", "css3", "docker", "express", "figma", "firebase", "git", "html5", "java", "javascript", "mariadb", "mongodb", "nodejs", "php", "postgresql", "postman", "python", "react", "reactnative", "redis", "redux", "spring", "tailwind", "typescript"
 ];
 
 const iconMap = {
   "arduino": SiArduino,
   "bootstrap": SiBootstrap,
   "c": SiC,
-  "cplusplus": SiCplusplus,
+  "c++": SiCplusplus,
   "css3": FaCss3,
   "docker": SiDocker,
   "express": SiExpress,

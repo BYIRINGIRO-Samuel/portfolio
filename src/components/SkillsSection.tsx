@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
 
 const DataVehicle = () => (
@@ -82,61 +82,208 @@ const RealisticGrassClump = ({ scale = 1, opacity = 0.3 }) => (
   </div>
 );
 
-const RoadBillboard = ({ 
-  title = "SYSTEM_STATS", 
-  sub = "0.02ms_LATENCY", 
-  skills = [], 
-  isActive = false, 
-  onClick = () => {} 
-}) => (
-  <div 
-    className="relative group/billboard flex flex-col items-center cursor-pointer transition-all duration-300"
-    onClick={(e) => { e.stopPropagation(); onClick(); }}
-  >
-    <div className={`relative overflow-hidden rounded-lg border transition-all duration-500 ${isActive ? 'border-white w-44 bg-white/5' : 'border-white/20 w-36 bg-black/60'} backdrop-blur-md p-2.5 shadow-[0_15px_40px_rgba(0,0,0,0.6)]`}>
-      <div className="absolute inset-0 bg-white/[0.02] border border-white/10 m-[1px] pointer-events-none" />
-      <div className="relative z-10">
-        <div className="flex justify-between items-center mb-1.5 opacity-30">
-          <div className="flex gap-0.5">
-            <div className={`w-1 h-1 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-white'}`} />
-            <div className="w-1 h-1 rounded-full bg-white" />
+const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
+  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
+  const [currentScene, setCurrentScene] = useState(0);
+  
+  const skillScenes = {
+    "Leadership": [
+      { 
+        title: "LEADING THE TEAM",
+        character: "👨‍💼",
+        action: "Guiding team members through complex challenges",
+        bgColor: "from-blue-900/20 to-purple-900/20"
+      },
+      {
+        title: "STRATEGIC VISION", 
+        character: "🎯",
+        action: "Setting clear goals and inspiring others",
+        bgColor: "from-purple-900/20 to-blue-900/20"
+      }
+    ],
+    "Communication": [
+      {
+        title: "CLEAR MESSAGING",
+        character: "💬", 
+        action: "Articulating ideas with precision and clarity",
+        bgColor: "from-green-900/20 to-teal-900/20"
+      },
+      {
+        title: "ACTIVE LISTENING",
+        character: "👂",
+        action: "Understanding stakeholder needs deeply", 
+        bgColor: "from-teal-900/20 to-green-900/20"
+      }
+    ],
+    "Teamwork": [
+      {
+        title: "COLLABORATION",
+        character: "🤝",
+        action: "Building synergy across diverse teams",
+        bgColor: "from-orange-900/20 to-red-900/20"
+      },
+      {
+        title: "SUPPORT NETWORK",
+        character: "🌐", 
+        action: "Creating inclusive team environments",
+        bgColor: "from-red-900/20 to-orange-900/20"
+      }
+    ],
+    "Problem_Solving": [
+      {
+        title: "ANALYTICAL MIND",
+        character: "🧠",
+        action: "Breaking down complex problems systematically", 
+        bgColor: "from-indigo-900/20 to-violet-900/20"
+      },
+      {
+        title: "CREATIVE SOLUTIONS",
+        character: "💡",
+        action: "Finding innovative approaches to challenges",
+        bgColor: "from-violet-900/20 to-indigo-900/20"
+      }
+    ],
+    "Critical_Thinking": [
+      {
+        title: "DEEP ANALYSIS", 
+        character: "🔍",
+        action: "Evaluating information from multiple angles",
+        bgColor: "from-cyan-900/20 to-blue-900/20"
+      },
+      {
+        title: "LOGICAL REASONING",
+        character: "⚡",
+        action: "Making data-driven decisions confidently", 
+        bgColor: "from-blue-900/20 to-cyan-900/20"
+      }
+    ]
+  };
+
+  const currentSkill = skills[currentSkillIndex] || "Leadership";
+  const scenes = skillScenes[currentSkill] || skillScenes["Leadership"];
+  const currentSceneData = scenes[currentScene];
+
+  useEffect(() => {
+    if (!isActive) return;
+    
+    const sceneInterval = setInterval(() => {
+      setCurrentScene(prev => {
+        const nextScene = (prev + 1) % scenes.length;
+        // If we've completed all scenes for this skill, move to next skill
+        if (nextScene === 0) {
+          setTimeout(() => {
+            setCurrentSkillIndex(prevSkill => (prevSkill + 1) % skills.length);
+          }, 100);
+        }
+        return nextScene;
+      });
+    }, 3000);
+    
+    return () => clearInterval(sceneInterval);
+  }, [isActive, scenes.length, skills.length, currentSkillIndex]);
+
+  return (
+    <div className="relative group/billboard flex flex-col items-center transition-all duration-300">
+      {/* TV Screen */}
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="relative w-44 h-32 bg-black/90 rounded-lg border-2 border-gray-700 overflow-hidden shadow-2xl"
+      >
+        {/* TV Frame Details */}
+        <div className="absolute inset-0 border border-gray-600 rounded-md m-1" />
+        
+        {/* Screen */}
+        <div className={`absolute inset-3 rounded-md overflow-hidden bg-gradient-to-br ${currentSceneData.bgColor}`}>
+          {/* Scan Lines */}
+          <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.03)_1px,rgba(255,255,255,0.03)_2px)] pointer-events-none" />
+          
+          {/* Content */}
+          <div className="relative h-full flex flex-col items-center justify-center p-3 text-center">
+            {/* Skill Title */}
+            <div className="text-[8px] font-mono text-white/60 uppercase tracking-widest mb-1">
+              {currentSkill.replace('_', ' ')}
+            </div>
+            
+            {/* Character Animation */}
+            <motion.div
+              key={`${currentSkillIndex}-${currentScene}`}
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, type: "spring" }}
+              className="text-3xl mb-2"
+            >
+              {currentSceneData.character}
+            </motion.div>
+            
+            {/* Scene Title */}
+            <motion.div
+              key={`title-${currentSkillIndex}-${currentScene}`}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-[8px] font-bold text-white/90 uppercase tracking-wider mb-2"
+            >
+              {currentSceneData.title}
+            </motion.div>
+            
+            {/* Action Description */}
+            <motion.div
+              key={`action-${currentSkillIndex}-${currentScene}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-[6px] text-white/70 leading-tight font-medium"
+            >
+              {currentSceneData.action}
+            </motion.div>
+            
+            {/* Progress Indicators */}
+            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+              {skills.map((_, i) => (
+                <div
+                  key={i}
+                  className={`w-1 h-1 rounded-full transition-all ${
+                    i === currentSkillIndex ? 'bg-white' : 'bg-white/30'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-          <span className="text-[6px] font-black uppercase tracking-widest text-white italic">{isActive ? 'SYSTEM_EXPANDED' : 'Live_Feed_01'}</span>
-        </div>
-        
-        <div className="text-[10px] font-black text-white tracking-[0.2em] uppercase leading-none mb-2 italic">{title}</div>
-        
-        <div className="h-[2px] w-full bg-white/10 relative overflow-hidden mb-2">
-          <motion.div 
-            animate={{ x: ['-100%', '100%'] }} 
-            transition={{ duration: isActive ? 1.5 : 2.5, repeat: Infinity, ease: "linear" }}
-            className={`absolute inset-0 ${isActive ? 'bg-green-400' : 'bg-white/40'} shadow-[0_0_8px_white]`}
+          
+          {/* Static/Noise Effect */}
+          <motion.div
+            animate={{ opacity: [0, 0.1, 0] }}
+            transition={{ duration: 0.1, repeat: Infinity, repeatType: "reverse" }}
+            className="absolute inset-0 bg-white/5 mix-blend-overlay"
           />
         </div>
-
-        {isActive ? (
-          <motion.div 
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            className="flex flex-col gap-1.5 pt-1 pb-1 max-h-32 overflow-y-auto pr-1 scrollbar-thin"
-          >
-             {skills.map((s, i) => (
-               <div key={i} className="flex items-center gap-2">
-                  <div className="w-1 h-1 rounded-full bg-white/30" />
-                  <span className="text-[8px] font-bold text-white/80 uppercase tracking-widest italic">{s}</span>
-               </div>
-             ))}
-          </motion.div>
-        ) : (
-          <div className="text-[7px] font-black text-white/40 uppercase tracking-widest italic">{sub}</div>
-        )}
-      </div>
-      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,white_2px,white_3px)]" />
+        
+        {/* TV Controls */}
+        <div className="absolute bottom-2 right-2 flex gap-1">
+          <div className="w-1.5 h-1.5 bg-red-500 rounded-full opacity-60" />
+          <div className="w-1.5 h-1.5 bg-green-500 rounded-full opacity-60" />
+        </div>
+        
+        {/* Power Indicator */}
+        <motion.div
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute top-2 right-2 w-1.5 h-1.5 bg-blue-400 rounded-full"
+        />
+        
+        {/* Brand Label */}
+        <div className="absolute top-1 left-2 text-[6px] font-mono text-white/40 uppercase">
+          SOFT_SKILLS_TV
+        </div>
+      </motion.div>
+      
+      {/* TV Stand */}
+      <div className="w-2 h-16 bg-white/10 border-x border-white/5" />
+      <div className="w-12 h-2 bg-white/20 rounded-t-full" />
     </div>
-    <div className={`w-1.5 transition-all duration-500 ${isActive ? 'h-8' : 'h-16'} bg-white/10 border-x border-white/5`} />
-    <div className="w-8 h-1 bg-white/20 rounded-t-full" />
-  </div>
-);
+  );
+};
 
 const TrafficLight = ({ state = 'GREEN' }) => (
   <div className="flex flex-col items-center">
@@ -236,7 +383,6 @@ const softSkills = ["Leadership", "Communication", "Teamwork", "Problem_Solving"
 
 const SkillsSection = () => {
   const [activeStep, setActiveStep] = useState(0);
-  const [showSoftSkills, setShowSoftSkills] = useState(false);
   const [lightState, setLightState] = useState('GREEN');
 
   // Traffic Light Cycle
@@ -266,7 +412,6 @@ const SkillsSection = () => {
     <section id="skills" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans">
       <div 
         className="relative w-full max-w-7xl bg-[#080808] rounded-2xl text-white shadow-2xl z-10 h-[550px] overflow-hidden group"
-        onClick={() => setShowSoftSkills(false)}
       >
         
         <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
@@ -431,15 +576,9 @@ const SkillsSection = () => {
           </div>
         ))}
 
-        {/* City Infrastructure: Road TV (Billboard) */}
+        {/* Single Animated TV Screen - Soft Skills Display */}
         <div className="absolute bottom-[42%] right-[10%] z-[40]">
-          <RoadBillboard 
-            title="SOFT_SKILLS" 
-            sub="HUMAN_CORE_V1" 
-            skills={softSkills}
-            isActive={showSoftSkills}
-            onClick={() => setShowSoftSkills(!showSoftSkills)}
-          />
+          <AnimatedTVScreen skills={softSkills} isActive={true} />
         </div>
 
         {/* Traffic Light */}
