@@ -417,7 +417,7 @@ const SkillsSection = () => {
         ))}
 
         {/* City Infrastructure: Road TVs (Billboards) */}
-        <div className="absolute top-[3%] left-[32%] z-20">
+        <div className="absolute top-[3%] left-[32%] z-[40]">
           <RoadBillboard 
             title="SOFT_SKILLS" 
             sub="HUMAN_CORE_V1" 
@@ -426,15 +426,12 @@ const SkillsSection = () => {
             onClick={() => setShowSoftSkills(!showSoftSkills)}
           />
         </div>
-        <div className="absolute bottom-[42%] right-[10%] z-20">
+        <div className="absolute bottom-[42%] right-[10%] z-[40]">
           <RoadBillboard title="X_SYSTEM" sub="UPLINK_SECURE" />
         </div>
 
         {/* Traffic Lights */}
         <div className="absolute top-[28%] left-[45%] z-20">
-          <TrafficLight />
-        </div>
-        <div className="absolute bottom-[35%] left-[55%] z-20">
           <TrafficLight />
         </div>
 
