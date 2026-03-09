@@ -16,6 +16,7 @@ export default {
       fontFamily: {
         sans: ["Space Grotesk", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
+        orbitron: ["Orbitron", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",

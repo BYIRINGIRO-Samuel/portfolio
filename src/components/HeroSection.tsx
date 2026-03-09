@@ -19,7 +19,7 @@ const HeroSection = () => {
           <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-5 relative z-20 gap-4 md:gap-0">
             <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span className="text-gray-200 group-hover:text-gray-300 transition-colors uppercase italic font-black text-xl tracking-[0.2em]">B.Samuel</span>
+              <span className="text-blue-400 group-hover:text-blue-300 transition-colors uppercase italic font-extrabold text-xl tracking-[0.2em] font-orbitron">B.Samuel</span>
             </div>
             
             {/* Theme Toggle + Contact */}
@@ -119,7 +119,7 @@ const HeroSection = () => {
               </h1>
 
               <div className="relative pl-0 lg:pl-6 mb-7 flex flex-col items-center lg:items-start max-w-lg">
-                <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-white to-gray-500" />
+                <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[3px] bg-white" />
                 <p className="text-gray-400 text-base lg:text-lg leading-snug lg:leading-relaxed font-medium">
                   Where imagination meets logic,  
                   and code is not just written but crafted,  
