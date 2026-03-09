@@ -82,31 +82,58 @@ const RealisticGrassClump = ({ scale = 1, opacity = 0.3 }) => (
   </div>
 );
 
-const RoadBillboard = ({ title = "SYSTEM_STATS", sub = "0.02ms_LATENCY" }) => (
-  <div className="relative group/billboard flex flex-col items-center">
-    <div className="relative overflow-hidden rounded-lg border border-white/20 bg-black/60 backdrop-blur-md p-2.5 w-36 shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
+const RoadBillboard = ({ 
+  title = "SYSTEM_STATS", 
+  sub = "0.02ms_LATENCY", 
+  skills = [], 
+  isActive = false, 
+  onClick = () => {} 
+}) => (
+  <div 
+    className="relative group/billboard flex flex-col items-center cursor-pointer transition-all duration-300"
+    onClick={(e) => { e.stopPropagation(); onClick(); }}
+  >
+    <div className={`relative overflow-hidden rounded-lg border transition-all duration-500 ${isActive ? 'border-white w-44 bg-white/5' : 'border-white/20 w-36 bg-black/60'} backdrop-blur-md p-2.5 shadow-[0_15px_40px_rgba(0,0,0,0.6)]`}>
       <div className="absolute inset-0 bg-white/[0.02] border border-white/10 m-[1px] pointer-events-none" />
       <div className="relative z-10">
         <div className="flex justify-between items-center mb-1.5 opacity-30">
           <div className="flex gap-0.5">
-            <div className="w-1 h-1 rounded-full bg-white" />
+            <div className={`w-1 h-1 rounded-full ${isActive ? 'bg-green-500 animate-pulse' : 'bg-white'}`} />
             <div className="w-1 h-1 rounded-full bg-white" />
           </div>
-          <span className="text-[6px] font-black uppercase tracking-widest text-white italic">Live_Feed_01</span>
+          <span className="text-[6px] font-black uppercase tracking-widest text-white italic">{isActive ? 'SYSTEM_EXPANDED' : 'Live_Feed_01'}</span>
         </div>
+        
         <div className="text-[10px] font-black text-white tracking-[0.2em] uppercase leading-none mb-2 italic">{title}</div>
+        
         <div className="h-[2px] w-full bg-white/10 relative overflow-hidden mb-2">
           <motion.div 
             animate={{ x: ['-100%', '100%'] }} 
-            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 bg-white/40 shadow-[0_0_8px_white]"
+            transition={{ duration: isActive ? 1.5 : 2.5, repeat: Infinity, ease: "linear" }}
+            className={`absolute inset-0 ${isActive ? 'bg-green-400' : 'bg-white/40'} shadow-[0_0_8px_white]`}
           />
         </div>
-        <div className="text-[7px] font-black text-white/40 uppercase tracking-widest italic">{sub}</div>
+
+        {isActive ? (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="flex flex-col gap-1.5 pt-1 pb-1"
+          >
+             {skills.map((s, i) => (
+               <div key={i} className="flex items-center gap-2">
+                  <div className="w-1 h-1 rounded-full bg-white/30" />
+                  <span className="text-[8px] font-bold text-white/80 uppercase tracking-widest italic">{s}</span>
+               </div>
+             ))}
+          </motion.div>
+        ) : (
+          <div className="text-[7px] font-black text-white/40 uppercase tracking-widest italic">{sub}</div>
+        )}
       </div>
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,white_2px,white_3px)]" />
     </div>
-    <div className="w-1.5 h-16 bg-white/10 border-x border-white/5" />
+    <div className={`w-1.5 transition-all duration-500 ${isActive ? 'h-8' : 'h-16'} bg-white/10 border-x border-white/5`} />
     <div className="w-8 h-1 bg-white/20 rounded-t-full" />
   </div>
 );
@@ -187,12 +214,18 @@ const milestones = [
   }
 ];
 
+const softSkills = ["Leadership", "Communication", "Teamwork", "Problem_Solving", "Critical_Thinking"];
+
 const SkillsSection = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [showSoftSkills, setShowSoftSkills] = useState(false);
 
   return (
     <section id="skills" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans">
-      <div className="relative w-full max-w-7xl bg-[#080808] rounded-2xl text-white shadow-2xl z-10 h-[550px] overflow-hidden group">
+      <div 
+        className="relative w-full max-w-7xl bg-[#080808] rounded-2xl text-white shadow-2xl z-10 h-[550px] overflow-hidden group"
+        onClick={() => setShowSoftSkills(false)}
+      >
         
         <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
           <defs>
@@ -365,7 +398,13 @@ const SkillsSection = () => {
 
         {/* City Infrastructure: Road TVs (Billboards) */}
         <div className="absolute top-[15%] left-[32%] z-20">
-          <RoadBillboard title="MOD_LOGIC" sub="CORE_V4_INIT" />
+          <RoadBillboard 
+            title="SOFT_SKILLS" 
+            sub="HUMAN_CORE_V1" 
+            skills={softSkills}
+            isActive={showSoftSkills}
+            onClick={() => setShowSoftSkills(!showSoftSkills)}
+          />
         </div>
         <div className="absolute bottom-[25%] right-[10%] z-20">
           <RoadBillboard title="X_SYSTEM" sub="UPLINK_SECURE" />
