@@ -2,8 +2,8 @@ import React from 'react';
 
 const AboutSection = () => {
   return (
-    <section id="about" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans overflow-hidden">
-      <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 px-8 py-12 md:px-16 lg:py-16">
+    <section id="about" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-2 flex justify-center font-sans overflow-hidden">
+      <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl text-white shadow-2xl z-10 px-8 py-8 md:px-16 lg:py-12">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           
           <div className="relative w-full max-w-[420px] mx-auto aspect-square flex items-center justify-center">
@@ -68,6 +68,11 @@ const AboutSection = () => {
               
               <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60">About Me</span>
             </div>
+
+            <blockquote className="text-xs md:text-sm italic mb-5 border-l-2 border-white/20 pl-4">
+              "Excellence is not in what you show, but in the impact your work leaves behind."<br />
+              <cite className="text-blue-400 font-medium">— B.Samuel</cite>
+            </blockquote>
 
             <h2 className="text-[2rem] md:text-4xl lg:text-[2.75rem] font-bold text-white leading-[1.15] mb-5 tracking-tight">
               Building robust software solutions that make a lasting impact!!!

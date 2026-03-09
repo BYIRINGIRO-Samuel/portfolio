@@ -6,7 +6,7 @@ const HeroSection = () => {
   return (
     <section className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-2 md:pt-3 lg:pt-4 flex justify-center font-sans overflow-hidden min-h-screen">
       
-      <div className="relative w-full max-w-7xl pb-12">
+      <div className="relative w-full max-w-7xl pb-16">
         
         <div className="absolute inset-x-0 top-0 bottom-12 bg-[#e5e5e5] rounded-xl md:rounded-2xl translate-y-4 md:translate-y-6 pointer-events-none">
           <svg className="absolute left-1/2 bottom-0 translate-y-[99%] -translate-x-1/2 w-[180px] md:w-[240px] h-[36px] md:h-[48px] text-[#e5e5e5]" viewBox="0 0 200 40" preserveAspectRatio="none">
@@ -115,24 +115,27 @@ const HeroSection = () => {
               <h1 className="text-[2.5rem] sm:text-6xl lg:text-[72px] font-bold leading-[1.05] mb-5 tracking-tight">
                 Building The<br className="hidden sm:block" />
                 Future Of<br className="hidden sm:block" />
-                Software.<span className="text-[2.5rem] sm:text-6xl lg:text-[72px] inline-block ml-2 text-gray-500 hover:text-white transition-colors cursor-default">✦</span>
+                Software.
               </h1>
 
               <div className="relative pl-0 lg:pl-6 mb-7 flex flex-col items-center lg:items-start max-w-lg">
                 <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-white to-gray-500" />
                 <p className="text-gray-400 text-base lg:text-lg leading-snug lg:leading-relaxed font-medium">
-                  Frontend Developer specializing in React, TypeScript & pixel-perfect UI. I build fast, scalable, and beautiful web experiences from concept to code.
+                  Where imagination meets logic,  
+                  and code is not just written but crafted,  
+                  turning abstract ideas into dynamic, intelligent solutions  
+                  that redefine what software can do.
                 </p>
               </div>
 
               <div className="flex items-center justify-center lg:justify-start gap-8 sm:gap-12 md:gap-16 text-white w-full border-t border-white/10 lg:border-none pt-7 lg:pt-0">
                 <div>
-                  <div className="text-3xl md:text-4xl font-black mb-2">5+</div>
+                  <div className="text-3xl md:text-4xl font-black mb-2">2+</div>
                   <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider leading-relaxed">Years of<br />Experience</div>
                 </div>
                 <div className="hidden sm:block w-px h-12 bg-white/20" />
                 <div>
-                  <div className="text-3xl md:text-4xl font-black mb-2">50+</div>
+                  <div className="text-3xl md:text-4xl font-black mb-2">20+</div>
                   <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider leading-relaxed">Projects<br />Completed</div>
                 </div>
                 <div className="hidden sm:block w-px h-12 bg-white/20" />
