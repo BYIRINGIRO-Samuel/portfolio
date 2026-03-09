@@ -25,25 +25,36 @@ const ChatBot: React.FC = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-      if (isTyping && currentIndex < text.length) {
-        const timer = setTimeout(() => {
-          setDisplayedText(prev => prev + text[currentIndex]);
-          setCurrentIndex(prev => prev + 1);
-        }, 25);
-        return () => clearTimeout(timer);
-      } else if (!isTyping) {
+      // Reset when starting new typing
+      if (isTyping && currentIndex === 0 && displayedText === '') {
+        setDisplayedText('');
+        setCurrentIndex(0);
+      }
+    }, [isTyping]);
+
+    useEffect(() => {
+      if (!isTyping) {
         setDisplayedText(text);
         setCurrentIndex(text.length);
+        return;
+      }
+
+      if (currentIndex < text.length) {
+        const timer = setTimeout(() => {
+          setDisplayedText(text.substring(0, currentIndex + 1));
+          setCurrentIndex(prev => prev + 1);
+        }, 40);
+        return () => clearTimeout(timer);
       }
     }, [currentIndex, text, isTyping]);
 
+    // Reset when text changes
     useEffect(() => {
-      // Reset when text changes
       if (isTyping) {
         setDisplayedText('');
         setCurrentIndex(0);
       }
-    }, [text, isTyping]);
+    }, [text]);
 
     return (
       <span className="font-mono text-sm leading-relaxed">
@@ -51,7 +62,7 @@ const ChatBot: React.FC = () => {
         {isTyping && currentIndex < text.length && (
           <motion.span
             animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.8, repeat: Infinity }}
+            transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
             className="inline-block w-0.5 h-4 bg-white/60 ml-1"
           />
         )}
@@ -173,7 +184,7 @@ const ChatBot: React.FC = () => {
 
   const handleSendMessage = async (messageText?: string) => {
     const textToSend = messageText || inputValue;
-    if (!textToSend.trim()) return;
+    if (!textToSend.trim() || isTyping || typingMessageId !== null) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -187,7 +198,7 @@ const ChatBot: React.FC = () => {
     setShowQuickActions(false);
     
     // Scroll to show user message
-    setTimeout(() => scrollToBottom(), 100);
+    setTimeout(() => scrollToBottom(), 50);
     
     // Start thinking animation
     setIsTyping(true);
@@ -210,17 +221,17 @@ const ChatBot: React.FC = () => {
       setTypingMessageId(botMessageId);
       
       // Scroll to show bot response
-      setTimeout(() => scrollToBottom(), 200);
+      setTimeout(() => scrollToBottom(), 100);
       
-      // Start typing animation
-      const typingDuration = responseText.length * 25 + 500;
+      // Start typing animation with proper timing
+      const typingDuration = responseText.length * 40 + 800;
       setTimeout(() => {
         setTypingMessageId(null);
         setMessages(prev => prev.map(msg => 
           msg.id === botMessageId ? { ...msg, isTyping: false } : msg
         ));
       }, typingDuration);
-    }, 1200);
+    }, 1500);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -371,7 +382,7 @@ const ChatBot: React.FC = () => {
                 </motion.div>
               ))}
               
-              {/* Enhanced Thinking Animation */}
+              {/* Cool Matrix-Style Thinking Animation */}
               {isTyping && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -386,102 +397,126 @@ const ChatBot: React.FC = () => {
                         alt="AI" 
                         className="w-full h-full object-cover"
                       />
-                      {/* Thinking overlay */}
+                      {/* Scanning line effect */}
                       <motion.div
-                        animate={{ opacity: [0.3, 0.7, 0.3] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="absolute inset-0 bg-white/10"
+                        animate={{ y: ['-100%', '200%'] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-x-0 h-0.5 bg-white/40 blur-sm"
                       />
                     </div>
                   </div>
-                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-sm backdrop-blur-sm relative overflow-hidden">
-                    {/* Neural network thinking animation */}
-                    <div className="flex items-center space-x-3">
-                      <div className="relative">
-                        {/* Pulsing brain icon */}
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-sm backdrop-blur-sm relative overflow-hidden min-w-[120px]">
+                    {/* Matrix rain effect */}
+                    <div className="absolute inset-0 overflow-hidden">
+                      {[0, 1, 2, 3, 4].map((i) => (
                         <motion.div
-                          animate={{ 
-                            scale: [1, 1.1, 1],
-                            opacity: [0.6, 1, 0.6]
+                          key={i}
+                          animate={{ y: ['-100%', '200%'] }}
+                          transition={{ 
+                            duration: 1.5 + Math.random() * 0.5, 
+                            repeat: Infinity, 
+                            ease: "linear",
+                            delay: i * 0.2
                           }}
-                          transition={{ duration: 1.2, repeat: Infinity }}
-                          className="w-6 h-6 flex items-center justify-center"
+                          className="absolute w-0.5 h-8 bg-gradient-to-b from-transparent via-white/30 to-transparent"
+                          style={{ left: `${20 + i * 15}%` }}
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Main content */}
+                    <div className="relative z-10 flex items-center space-x-3">
+                      {/* Hexagonal loading spinner */}
+                      <div className="relative w-6 h-6">
+                        <motion.div
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                          className="absolute inset-0"
                         >
-                          <svg viewBox="0 0 24 24" className="w-5 h-5 text-white/60">
-                            <path fill="currentColor" d="M21.33 12.91c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L19 10.5l2.33-1.75c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L19 6.34l2.33-1.75c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L19 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L16.5 4.5 14.75 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L12.25 4.5 10.5 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L7.5 4.5 5.75 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L3.25 4.5 1.5 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L.5 2.5c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 4.91.5 6.66c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 9.07.5 10.82c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 13.23.5 14.98c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 17.39.5 19.14c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 21.55.5 23.3c-.09.09-.15.2-.15.33s.06.24.15.33l.34.34c.09.09.2.15.33.15s.24-.06.33-.15L3.25 22.5 5 24.82c.09.09.2.15.33.15s.24-.06.33-.15L7.5 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15L12.25 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15L16.5 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15L21.25 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15l.34-.34c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 21.55 24 19.8c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 17.39 24 15.64c.09-.09.15-.2-.15-.33s-.06-.24-.15-.33L21.67 13.23 24 11.48c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 9.07 24 7.32c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 4.91 24 3.16c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 0.75 24 -1c.09-.09.15-.2.15-.33s-.06-.24-.15-.33l-.34-.34c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L21.25 0.5 19.5 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L16.5 0.5 14.75 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L12.25 0.5 10.5 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L7.5 0.5 5.75 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L3.25 0.5 1.5 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L.5 0.5c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 2.91.5 4.66c-.09.09-.15.2-.15.33s.06.24.15.33z"/>
+                          <svg viewBox="0 0 24 24" className="w-6 h-6 text-white/60">
+                            <polygon 
+                              points="12,2 22,8.5 22,15.5 12,22 2,15.5 2,8.5" 
+                              fill="none" 
+                              stroke="currentColor" 
+                              strokeWidth="1.5"
+                              strokeDasharray="4 2"
+                            />
                           </svg>
                         </motion.div>
                         
-                        {/* Orbiting dots */}
-                        {[0, 1, 2].map((i) => (
-                          <motion.div
-                            key={i}
-                            animate={{ rotate: 360 }}
-                            transition={{ 
-                              duration: 2 + i * 0.5, 
-                              repeat: Infinity, 
-                              ease: "linear",
-                              delay: i * 0.3
-                            }}
-                            className="absolute inset-0 w-6 h-6"
-                          >
-                            <div 
-                              className="absolute w-1 h-1 bg-white/40 rounded-full"
-                              style={{
-                                top: `${10 + i * 5}%`,
-                                left: '50%',
-                                transform: 'translateX(-50%)'
-                              }}
-                            />
-                          </motion.div>
-                        ))}
+                        {/* Inner rotating element */}
+                        <motion.div
+                          animate={{ rotate: -360 }}
+                          transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                          className="absolute inset-2"
+                        >
+                          <div className="w-full h-full border border-white/40 rounded-full" />
+                        </motion.div>
+                        
+                        {/* Center dot */}
+                        <motion.div
+                          animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1, repeat: Infinity }}
+                          className="absolute inset-0 flex items-center justify-center"
+                        >
+                          <div className="w-1 h-1 bg-white rounded-full" />
+                        </motion.div>
                       </div>
                       
-                      {/* Animated text */}
+                      {/* Animated text with typewriter effect */}
                       <div className="flex flex-col">
-                        <motion.span 
-                          animate={{ opacity: [0.5, 1, 0.5] }}
-                          transition={{ duration: 1.5, repeat: Infinity }}
-                          className="text-xs text-white/70 font-mono"
-                        >
-                          Processing...
-                        </motion.span>
-                        <div className="flex space-x-1 mt-1">
-                          {[0, 1, 2, 3, 4].map((i) => (
+                        <motion.div className="flex items-center space-x-1">
+                          <span className="text-xs text-white/70 font-mono">ANALYZING</span>
+                          {[0, 1, 2].map((i) => (
+                            <motion.span
+                              key={i}
+                              animate={{ opacity: [0, 1, 0] }}
+                              transition={{ 
+                                duration: 1.5, 
+                                repeat: Infinity, 
+                                delay: i * 0.2 
+                              }}
+                              className="text-xs text-white/70 font-mono"
+                            >
+                              .
+                            </motion.span>
+                          ))}
+                        </motion.div>
+                        
+                        {/* Binary-style progress bar */}
+                        <div className="flex space-x-0.5 mt-1">
+                          {Array.from({ length: 8 }).map((_, i) => (
                             <motion.div
                               key={i}
                               animate={{ 
-                                scale: [1, 1.4, 1],
-                                opacity: [0.3, 1, 0.3]
+                                opacity: [0.2, 1, 0.2],
+                                scaleY: [0.5, 1, 0.5]
                               }}
                               transition={{ 
-                                duration: 1, 
+                                duration: 0.8, 
                                 repeat: Infinity, 
                                 delay: i * 0.1 
                               }}
-                              className="w-1 h-1 bg-white/50 rounded-full"
+                              className="w-0.5 h-2 bg-white/50 rounded-full"
                             />
                           ))}
                         </div>
                       </div>
                     </div>
                     
-                    {/* Background neural network effect */}
+                    {/* Glitch effect overlay */}
                     <motion.div
-                      animate={{ opacity: [0.1, 0.3, 0.1] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                      className="absolute inset-0 pointer-events-none"
-                    >
-                      <svg className="w-full h-full" viewBox="0 0 100 50">
-                        <line x1="10" y1="25" x2="30" y2="15" stroke="white" strokeWidth="0.5" opacity="0.2" />
-                        <line x1="30" y1="15" x2="50" y2="25" stroke="white" strokeWidth="0.5" opacity="0.2" />
-                        <line x1="50" y1="25" x2="70" y2="35" stroke="white" strokeWidth="0.5" opacity="0.2" />
-                        <line x1="70" y1="35" x2="90" y2="25" stroke="white" strokeWidth="0.5" opacity="0.2" />
-                        <circle cx="30" cy="15" r="1" fill="white" opacity="0.3" />
-                        <circle cx="50" cy="25" r="1" fill="white" opacity="0.3" />
-                        <circle cx="70" cy="35" r="1" fill="white" opacity="0.3" />
-                      </svg>
-                    </motion.div>
+                      animate={{ 
+                        opacity: [0, 0.1, 0],
+                        x: [0, 2, -1, 0]
+                      }}
+                      transition={{ 
+                        duration: 3, 
+                        repeat: Infinity,
+                        times: [0, 0.1, 0.2, 1]
+                      }}
+                      className="absolute inset-0 bg-white/5 mix-blend-overlay"
+                    />
                   </div>
                 </motion.div>
               )}
@@ -528,7 +563,7 @@ const ChatBot: React.FC = () => {
                   disabled={!inputValue.trim() || isTyping || typingMessageId !== null}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-gray-200 disabled:hover:bg-white"
+                  className="w-8 h-8 bg-white text-black rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-gray-200 disabled:hover:bg-white"
                 >
                   <Send className="w-4 h-4 text-black" />
                 </motion.button>
