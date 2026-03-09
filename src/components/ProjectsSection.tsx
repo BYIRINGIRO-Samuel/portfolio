@@ -21,7 +21,7 @@ const allProjects: Project[] = [
     category: "AI_NODE",
     shortDesc: "Sub-50ms inference on multi-region edge nodes. Optimized for low-latency neural processing in distributed environments.",
     tech: ["PyTorch", "CUDA"],
-    image: "https://images.unsplash.com/photo-1551288049-bbbda536ad79?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=800&auto=format&fit=crop",
     accent: "#ffffff",
     github: "#",
     demo: "#"
