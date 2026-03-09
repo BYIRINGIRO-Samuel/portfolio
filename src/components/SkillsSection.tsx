@@ -330,9 +330,6 @@ const SkillsSection = () => {
           {/* Road Lights (Street Lamps) - Both Sides */}
           {[
             { x: 180, y: 95, section: 0, offL: {x: 0, y: -28}, offR: {x: 0, y: 28} },
-            { x: 400, y: 175, section: 1, offL: {x: -22, y: -22}, offR: {x: 22, y: 22} },
-            { x: 620, y: 245, section: 1, offL: {x: 0, y: -30}, offR: {x: 0, y: 30} },
-            { x: 840, y: 315, section: 2, offL: {x: -22, y: -22}, offR: {x: 22, y: 22} },
             { x: 1060, y: 415, section: 3, offL: {x: 0, y: -30}, offR: {x: 0, y: 30} }
           ].map((lamp, i) => (
             <React.Fragment key={i}>
