@@ -327,9 +327,66 @@ html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.25);
 }
 
-/* ── Marquee / SkillsMarquee ──────────────────────────── */
+/* ── Marquee / SkillsMarquee strip ────────────────────── */
 html.light-mode .bg-\[\#e5e5e5\] {
   background: #d4d4d0 !important;
+}
+/* bg-black marquee node boxes → light grey */
+html.light-mode .bg-black {
+  background: #1a1a1a !important;
+}
+/* bg-[#080808] inner marquee stream */
+html.light-mode .bg-\[\#080808\] {
+  background: #222 !important;
+}
+/* Keep marquee text readable — already white on dark bg, so fine */
+/* But the border-y on the nodes needs to be visible */
+html.light-mode .border-white\/5 {
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* ── Scroll chevron at the bottom of hero ─────────────── */
+html.light-mode .animate-bounce.text-white {
+  color: #333 !important;
+}
+
+/* ── Profile bottom label ("Samuel Byiringiro") ────────── */
+/* It uses bg-black + border-white/20 — keep it dark + white text */
+html.light-mode .rounded-full.bg-black {
+  background: #111 !important;
+  color: #fff !important;
+}
+html.light-mode .rounded-full.bg-black * {
+  color: #fff !important;
+}
+
+/* ── Career Logbook — vertical spine & nodes ──────────── */
+/* The central spine line: bg-white/10 */
+html.light-mode .bg-white\/10 {
+  background: rgba(0,0,0,0.12) !important;
+}
+/* The animated progress line on the spine: bg-white */
+html.light-mode .bg-white.shadow-\[0_0_12px_white\] {
+  background: #111 !important;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2) !important;
+}
+/* Connection node outer diamond bg-[#0f0f0f] rotate-45 */
+html.light-mode .bg-\[\#0f0f0f\].rotate-45 {
+  background: #fff !important;
+  border-color: rgba(0,0,0,0.25) !important;
+}
+/* Connection node inner dot bg-white */
+html.light-mode .bg-white.shadow-\[0_0_8px_white\] {
+  background: #111 !important;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25) !important;
+}
+/* Metric sidecar left border */
+html.light-mode .border-l.border-white\/20 {
+  border-color: rgba(0,0,0,0.2) !important;
+}
+/* Period separator line */
+html.light-mode .bg-white\/10 {
+  background: rgba(0,0,0,0.1) !important;
 }
 
 /* ── Smooth theme transition ──────────────────────────── */
