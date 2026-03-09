@@ -330,13 +330,35 @@ const SkillsSection = () => {
             </motion.circle>
           ))}
 
-          {/* Road Lights (Street Lamps) - Both Sides */}
           {[
-            { x: 180, y: 95, section: 0, offR: {x: 0, y: 28} },
-            { x: 1060, y: 415, section: 3, offR: {x: 0, y: 30} }
+            { x: 180, y: 95, section: 0, offL: {x: 0, y: -28}, offR: {x: 0, y: 28} },
+            { x: 1060, y: 415, section: 3, offL: {x: 0, y: -30}, offR: {x: 0, y: 30} }
           ].map((lamp, i) => (
             <React.Fragment key={i}>
-              {/* Right Side Lamp Only */}
+              {/* Left Side Lamp */}
+              <g>
+                <line 
+                  x1={lamp.x + lamp.offL.x} y1={lamp.y + lamp.offL.y - 45} 
+                  x2={lamp.x + lamp.offL.x} y2={lamp.y + lamp.offL.y} 
+                  stroke="white" strokeWidth="1" className="opacity-20" 
+                />
+                <path 
+                  d={`M ${lamp.x + lamp.offL.x} ${lamp.y + lamp.offL.y - 45} Q ${lamp.x + lamp.offL.x + 8} ${lamp.y + lamp.offL.y - 50} ${lamp.x + lamp.offL.x + 12} ${lamp.y + lamp.offL.y - 38}`} 
+                  fill="none" stroke="white" strokeWidth="0.5" className="opacity-30" 
+                />
+                <motion.circle 
+                  cx={lamp.x + lamp.offL.x + 12} cy={lamp.y + lamp.offL.y - 38} r="1.5" fill="white"
+                  animate={{ opacity: activeStep >= lamp.section ? [0.6, 1, 0.8, 1] : 0.2, scale: activeStep >= lamp.section ? [1, 1.2, 1.1, 1.2] : 1 }}
+                  transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
+                />
+                <motion.path
+                  d={`M ${lamp.x + lamp.offL.x + 12} ${lamp.y + lamp.offL.y - 38} L ${lamp.x + lamp.offL.x - 5} ${lamp.y + lamp.offL.y} L ${lamp.x + lamp.offL.x + 20} ${lamp.y + lamp.offL.y} Z`}
+                  fill="url(#lightGradient)"
+                  animate={{ opacity: activeStep >= lamp.section ? 0.3 : 0.05 }}
+                />
+              </g>
+
+              {/* Right Side Lamp */}
               <g>
                 <line 
                   x1={lamp.x + lamp.offR.x} y1={lamp.y + lamp.offR.y - 45} 
@@ -416,7 +438,7 @@ const SkillsSection = () => {
         </div>
 
         {/* Traffic Light */}
-        <div className="absolute top-[28%] left-[45%] z-20">
+        <div className="absolute top-[12%] left-[50%] z-20">
           <TrafficLight />
         </div>
 
