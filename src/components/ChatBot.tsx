@@ -75,7 +75,7 @@ const ChatBot: React.FC = () => {
     if (isOpen && messages.length === 0) {
       const welcomeMessage: Message = {
         id: 'welcome',
-        text: "Hello! I'm Samuel's AI assistant. I can help you learn about his skills, projects, and experience. What would you like to know?",
+        text: "Hello! I'm Samy, Samuel's AI assistant. I can help you learn about his skills, projects, and experience. What would you like to know?",
         isBot: true,
         timestamp: new Date(),
         isTyping: true
@@ -173,7 +173,7 @@ const ChatBot: React.FC = () => {
     } else if (lowerInput.includes('about') || lowerInput.includes('who') || lowerInput.includes('samuel') || lowerInput.includes('tell me')) {
       responseCategory = 'about';
     } else if (lowerInput.includes('hello') || lowerInput.includes('hi') || lowerInput.includes('hey')) {
-      return "Hello! Great to meet you! I'm Samuel's AI assistant, here to help you learn more about his professional journey. What specific area interests you most - his skills, projects, or experience?";
+      return "Hello! Great to meet you! I'm Samy, Samuel's AI assistant, here to help you learn more about his professional journey. What specific area interests you most - his skills, projects, or experience?";
     } else if (lowerInput.includes('thanks') || lowerInput.includes('thank you')) {
       return "You're welcome! I'm happy to help you learn more about Samuel. Is there anything else you'd like to know about his work or background?";
     }
@@ -273,7 +273,7 @@ const ChatBot: React.FC = () => {
         <div className="relative z-10 w-12 h-12 rounded-full overflow-hidden border-2 border-white/30">
           <img 
             src="/hero-character.png" 
-            alt="Samuel's AI Assistant" 
+            alt="Samy - Samuel's AI Assistant" 
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-white/5" />
@@ -295,7 +295,7 @@ const ChatBot: React.FC = () => {
 
         {/* Tooltip */}
         <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-black/80 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-          Ask me anything about Samuel!
+          Ask Samy anything about Samuel!
         </div>
       </motion.button>
 
@@ -316,7 +316,7 @@ const ChatBot: React.FC = () => {
                   <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/20">
                     <img 
                       src="/hero-character.png" 
-                      alt="Samuel's AI Assistant" 
+                      alt="Samy - Samuel's AI Assistant" 
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-white/5" />
@@ -326,7 +326,7 @@ const ChatBot: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-sm">AI Tutor</h3>
+                  <h3 className="text-white font-bold text-sm">Samy</h3>
                   <p className="text-white/60 text-xs">Samuel's Assistant</p>
                 </div>
               </div>
@@ -353,7 +353,7 @@ const ChatBot: React.FC = () => {
                       <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20">
                         <img 
                           src="/hero-character.png" 
-                          alt="AI" 
+                          alt="Samy" 
                           className="w-full h-full object-cover"
                         />
                       </div>
@@ -394,7 +394,7 @@ const ChatBot: React.FC = () => {
                     <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 relative">
                       <img 
                         src="/hero-character.png" 
-                        alt="AI" 
+                        alt="Samy" 
                         className="w-full h-full object-cover"
                       />
                       {/* Scanning line effect */}
