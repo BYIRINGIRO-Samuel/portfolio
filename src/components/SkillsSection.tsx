@@ -140,13 +140,33 @@ const RoadBillboard = ({
 
 const TrafficLight = () => (
   <div className="flex flex-col items-center">
-    <div className="bg-black/80 border border-white/20 p-2 rounded-full w-fit shadow-2xl flex flex-col gap-1.5">
-      <div className="w-3 h-3 rounded-full bg-red-500/20 shadow-[0_0_5px_rgba(239,68,68,0.2)]" />
-      <div className="w-3 h-3 rounded-full bg-yellow-500/20 shadow-[0_0_5px_rgba(234,179,8,0.2)]" />
+    <div className="bg-black/90 border border-white/20 p-1.5 rounded-full w-fit shadow-2xl flex flex-col gap-1.5 backdrop-blur-sm">
+      {/* Red Light */}
       <motion.div 
-        animate={{ opacity: [0.4, 1, 0.4] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-        className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]" 
+        animate={{ 
+          backgroundColor: ["rgba(239,68,68,0.1)", "rgba(239,68,68,1)", "rgba(239,68,68,0.1)", "rgba(239,68,68,0.1)"],
+          boxShadow: ["0 0 0px transparent", "0 0 10px rgba(239,68,68,0.5)", "0 0 0px transparent", "0 0 0px transparent"]
+        }}
+        transition={{ duration: 7, repeat: Infinity, times: [0, 0.4, 0.5, 1] }}
+        className="w-3 h-3 rounded-full" 
+      />
+      {/* Yellow Light */}
+      <motion.div 
+        animate={{ 
+          backgroundColor: ["rgba(234,179,8,0.1)", "rgba(234,179,8,0.1)", "rgba(234,179,8,1)", "rgba(234,179,8,0.1)"],
+          boxShadow: ["0 0 0px transparent", "0 0 0px transparent", "0 0 10px rgba(234,179,8,0.5)", "0 0 0px transparent"]
+        }}
+        transition={{ duration: 7, repeat: Infinity, times: [0, 0.5, 0.6, 1] }}
+        className="w-3 h-3 rounded-full" 
+      />
+      {/* Green Light */}
+      <motion.div 
+        animate={{ 
+          backgroundColor: ["rgba(34,197,94,1)", "rgba(34,197,94,0.1)", "rgba(34,197,94,0.1)", "rgba(34,197,94,1)"],
+          boxShadow: ["0 0 15px rgba(34,197,94,0.6)", "0 0 0px transparent", "0 0 0px transparent", "0 0 15px rgba(34,197,94,0.6)"]
+        }}
+        transition={{ duration: 7, repeat: Infinity, times: [0, 0.4, 0.6, 1] }}
+        className="w-3 h-3 rounded-full" 
       />
     </div>
     <div className="w-1 h-24 bg-white/10 border-x border-white/5" />
@@ -397,7 +417,7 @@ const SkillsSection = () => {
         ))}
 
         {/* City Infrastructure: Road TVs (Billboards) */}
-        <div className="absolute top-[15%] left-[32%] z-20">
+        <div className="absolute top-[3%] left-[32%] z-20">
           <RoadBillboard 
             title="SOFT_SKILLS" 
             sub="HUMAN_CORE_V1" 
@@ -406,7 +426,7 @@ const SkillsSection = () => {
             onClick={() => setShowSoftSkills(!showSoftSkills)}
           />
         </div>
-        <div className="absolute bottom-[25%] right-[10%] z-20">
+        <div className="absolute bottom-[42%] right-[10%] z-20">
           <RoadBillboard title="X_SYSTEM" sub="UPLINK_SECURE" />
         </div>
 
@@ -414,7 +434,7 @@ const SkillsSection = () => {
         <div className="absolute top-[28%] left-[45%] z-20">
           <TrafficLight />
         </div>
-        <div className="absolute bottom-[35%] right-[32%] z-20">
+        <div className="absolute bottom-[35%] left-[55%] z-20">
           <TrafficLight />
         </div>
 
