@@ -138,36 +138,17 @@ const RoadBillboard = ({
   </div>
 );
 
-const TrafficLight = () => (
+const TrafficLight = ({ state = 'GREEN' }) => (
   <div className="flex flex-col items-center">
     <div className="bg-black/90 border border-white/20 p-1.5 rounded-full w-fit shadow-2xl flex flex-col gap-1.5 backdrop-blur-sm">
       {/* Red Light */}
-      <motion.div 
-        animate={{ 
-          backgroundColor: ["rgba(239,68,68,0.1)", "rgba(239,68,68,1)", "rgba(239,68,68,0.1)", "rgba(239,68,68,0.1)"],
-          boxShadow: ["0 0 0px transparent", "0 0 10px rgba(239,68,68,0.5)", "0 0 0px transparent", "0 0 0px transparent"]
-        }}
-        transition={{ duration: 7, repeat: Infinity, times: [0, 0.4, 0.5, 1] }}
-        className="w-3 h-3 rounded-full" 
-      />
+      <div className={`w-3 h-3 rounded-full transition-all duration-500 ${state === 'RED' ? 'bg-red-500 shadow-[0_0_15px_rgba(239,68,68,0.6)]' : 'bg-red-500/10'}`} />
+      
       {/* Yellow Light */}
-      <motion.div 
-        animate={{ 
-          backgroundColor: ["rgba(234,179,8,0.1)", "rgba(234,179,8,0.1)", "rgba(234,179,8,1)", "rgba(234,179,8,0.1)"],
-          boxShadow: ["0 0 0px transparent", "0 0 0px transparent", "0 0 10px rgba(234,179,8,0.5)", "0 0 0px transparent"]
-        }}
-        transition={{ duration: 7, repeat: Infinity, times: [0, 0.5, 0.6, 1] }}
-        className="w-3 h-3 rounded-full" 
-      />
+      <div className={`w-3 h-3 rounded-full transition-all duration-500 ${state === 'YELLOW' ? 'bg-yellow-500 shadow-[0_0_15px_rgba(234,179,8,0.6)]' : 'bg-yellow-500/10'}`} />
+      
       {/* Green Light */}
-      <motion.div 
-        animate={{ 
-          backgroundColor: ["rgba(34,197,94,1)", "rgba(34,197,94,0.1)", "rgba(34,197,94,0.1)", "rgba(34,197,94,1)"],
-          boxShadow: ["0 0 15px rgba(34,197,94,0.6)", "0 0 0px transparent", "0 0 0px transparent", "0 0 15px rgba(34,197,94,0.6)"]
-        }}
-        transition={{ duration: 7, repeat: Infinity, times: [0, 0.4, 0.6, 1] }}
-        className="w-3 h-3 rounded-full" 
-      />
+      <div className={`w-3 h-3 rounded-full transition-all duration-500 ${state === 'GREEN' ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]' : 'bg-green-500/10'}`} />
     </div>
     <div className="w-1 h-24 bg-white/10 border-x border-white/5" />
   </div>
@@ -256,6 +237,30 @@ const softSkills = ["Leadership", "Communication", "Teamwork", "Problem_Solving"
 const SkillsSection = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [showSoftSkills, setShowSoftSkills] = useState(false);
+  const [lightState, setLightState] = useState('GREEN');
+
+  // Traffic Light Cycle
+  React.useEffect(() => {
+    const cycle = async () => {
+      while(true) {
+        setLightState('GREEN'); await new Promise(r => setTimeout(r, 5000));
+        setLightState('YELLOW'); await new Promise(r => setTimeout(r, 1500));
+        setLightState('RED'); await new Promise(r => setTimeout(r, 4000));
+      }
+    };
+    cycle();
+  }, []);
+
+  // Auto-progression logic
+  React.useEffect(() => {
+    let interval;
+    if (lightState === 'GREEN') {
+      interval = setInterval(() => {
+        setActiveStep((prev) => (prev + 1) % milestones.length);
+      }, 4000); // Move to next milestone every 4 seconds while green
+    }
+    return () => clearInterval(interval);
+  }, [lightState, activeStep]);
 
   return (
     <section id="skills" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans">
@@ -439,7 +444,7 @@ const SkillsSection = () => {
 
         {/* Traffic Light */}
         <div className="absolute top-[12%] left-[50%] z-20">
-          <TrafficLight />
+          <TrafficLight state={lightState} />
         </div>
 
 
