@@ -72,16 +72,69 @@ const CityBench = ({ occupants = 2 }) => (
 const RealisticGrassClump = ({ scale = 1, opacity = 0.3 }) => (
   <div className="pointer-events-none transition-all duration-300 group-hover:scale-110" style={{ transform: `scale(${scale})` }}>
     <svg width="30" height="20" viewBox="0 0 30 20" fill="none">
-      {/* 3-4 Curved blades per clump */}
       <path d="M15 20 Q 12 10 8 5" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity={opacity} />
       <path d="M15 20 Q 15 5 15 2" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity={opacity * 0.8} />
       <path d="M15 20 Q 18 10 22 5" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity={opacity} />
       <path d="M15 20 Q 10 15 5 12" stroke="white" strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.6} />
       <path d="M15 20 Q 20 15 25 12" stroke="white" strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.6} />
-      
-      {/* Soft ground highlight */}
       <circle cx="15" cy="20" r="8" fill="white" fillOpacity="0.03" filter="blur(2px)" />
     </svg>
+  </div>
+);
+
+const RoadBillboard = ({ title = "SYSTEM_STATS", sub = "0.02ms_LATENCY" }) => (
+  <div className="relative group/billboard flex flex-col items-center">
+    <div className="relative overflow-hidden rounded-lg border border-white/20 bg-black/60 backdrop-blur-md p-2.5 w-36 shadow-[0_15px_30px_rgba(0,0,0,0.5)]">
+      <div className="absolute inset-0 bg-white/[0.02] border border-white/10 m-[1px] pointer-events-none" />
+      <div className="relative z-10">
+        <div className="flex justify-between items-center mb-1.5 opacity-30">
+          <div className="flex gap-0.5">
+            <div className="w-1 h-1 rounded-full bg-white" />
+            <div className="w-1 h-1 rounded-full bg-white" />
+          </div>
+          <span className="text-[6px] font-black uppercase tracking-widest text-white italic">Live_Feed_01</span>
+        </div>
+        <div className="text-[10px] font-black text-white tracking-[0.2em] uppercase leading-none mb-2 italic">{title}</div>
+        <div className="h-[2px] w-full bg-white/10 relative overflow-hidden mb-2">
+          <motion.div 
+            animate={{ x: ['-100%', '100%'] }} 
+            transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
+            className="absolute inset-0 bg-white/40 shadow-[0_0_8px_white]"
+          />
+        </div>
+        <div className="text-[7px] font-black text-white/40 uppercase tracking-widest italic">{sub}</div>
+      </div>
+      <div className="absolute inset-0 opacity-10 pointer-events-none bg-[repeating-linear-gradient(0deg,transparent,transparent_2px,white_2px,white_3px)]" />
+    </div>
+    <div className="w-1.5 h-16 bg-white/10 border-x border-white/5" />
+    <div className="w-8 h-1 bg-white/20 rounded-t-full" />
+  </div>
+);
+
+const TrafficLight = () => (
+  <div className="flex flex-col items-center">
+    <div className="bg-black/80 border border-white/20 p-2 rounded-full w-fit shadow-2xl flex flex-col gap-1.5">
+      <div className="w-3 h-3 rounded-full bg-red-500/20 shadow-[0_0_5px_rgba(239,68,68,0.2)]" />
+      <div className="w-3 h-3 rounded-full bg-yellow-500/20 shadow-[0_0_5px_rgba(234,179,8,0.2)]" />
+      <motion.div 
+        animate={{ opacity: [0.4, 1, 0.4] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+        className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]" 
+      />
+    </div>
+    <div className="w-1 h-24 bg-white/10 border-x border-white/5" />
+  </div>
+);
+
+const CityBuilding = ({ h = 80, w = 30 }) => (
+  <div className="relative group/building opacity-10 hover:opacity-20 transition-opacity" style={{ width: w, height: h }}>
+    <div className="absolute inset-0 bg-white/80 rounded-t-sm" />
+    <div className="grid grid-cols-2 gap-1 p-1">
+      {[...Array(8)].map((_, i) => (
+        <div key={i} className="h-1 bg-black/60 rounded-[0.5px]" />
+      ))}
+    </div>
+    <div className="absolute top-0 right-0 w-2 h-4 bg-white/40 translate-x-1" />
   </div>
 );
 
@@ -292,14 +345,41 @@ const SkillsSection = () => {
         </motion.div>
 
         {/* Urban Scene Elements */}
-        {/* Realistic Grass Clumps Scattered Everywhere */}
+        {/* Background Building Silhouettes for Depth */}
+        <div className="absolute top-[5%] left-[10%] z-0 flex gap-4 pointer-events-none">
+          <CityBuilding h={120} w={40} />
+          <CityBuilding h={180} w={50} />
+          <CityBuilding h={90} w={35} />
+        </div>
+        <div className="absolute top-[8%] right-[5%] z-0 flex gap-6 items-end pointer-events-none">
+          <CityBuilding h={140} w={45} />
+          <CityBuilding h={200} w={60} />
+        </div>
+
+        {/* Scattered Realistic Grass Clumps */}
         {grassPositions.map((pos, i) => (
           <div key={i} className="absolute z-10" style={pos}>
             <RealisticGrassClump scale={0.5 + Math.random() * 0.5} opacity={0.2 + Math.random() * 0.3} />
           </div>
         ))}
 
-        {/* City Benches */}
+        {/* City Infrastructure: Road TVs (Billboards) */}
+        <div className="absolute top-[15%] left-[32%] z-20">
+          <RoadBillboard title="MOD_LOGIC" sub="CORE_V4_INIT" />
+        </div>
+        <div className="absolute bottom-[25%] right-[10%] z-20">
+          <RoadBillboard title="X_SYSTEM" sub="UPLINK_SECURE" />
+        </div>
+
+        {/* Traffic Lights */}
+        <div className="absolute top-[28%] left-[45%] z-20">
+          <TrafficLight />
+        </div>
+        <div className="absolute bottom-[35%] right-[32%] z-20">
+          <TrafficLight />
+        </div>
+
+        {/* City Benches with Pedestrians */}
         <div className="absolute top-[8%] left-[12%] z-10">
           <CityBench occupants={1} />
         </div>
@@ -308,11 +388,11 @@ const SkillsSection = () => {
           <CityBench occupants={2} />
         </div>
 
-        <div className="absolute top-[50%] right-[3%] z-10">
+        <div className="absolute top-[52%] right-[5%] z-10">
           <CityBench occupants={1} />
         </div>
 
-        <div className="absolute bottom-[12%] right-[22%] z-10">
+        <div className="absolute bottom-[10%] right-[22%] z-10">
           <CityBench occupants={2} />
         </div>
 
