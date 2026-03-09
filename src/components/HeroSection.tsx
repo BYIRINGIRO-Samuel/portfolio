@@ -17,7 +17,7 @@ const HeroSection = () => {
           <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-5 relative z-20 gap-4 md:gap-0">
             <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span className="text-gray-200 group-hover:text-gray-300 transition-colors uppercase italic font-black text-xl tracking-[0.2em]">S.Samuel</span>
+              <span className="text-gray-200 group-hover:text-gray-300 transition-colors uppercase italic font-black text-xl tracking-[0.2em]">B.Samuel</span>
             </div>
             
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
@@ -166,29 +166,31 @@ const HeroSection = () => {
                   />
                 </div>
 
-                {/* Innovative HUD Labels */}
+                {/* Top Label */}
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                   <div className="px-4 py-1.5 bg-white text-black text-[9px] font-black uppercase tracking-[0.4em] rounded-full z-20 shadow-[0_10px_20px_rgba(255,255,255,0.2)]">
-                    PRIMARY_UPLINK
+                   <div className="px-4 py-1.5 bg-white text-black text-[9px] font-black uppercase tracking-[0.4em] rounded-full z-20 shadow-[0_10px_20px_rgba(255,255,255,0.2)] whitespace-nowrap">
+                    Full-Stack Engineer
                   </div>
                   <div className="w-[1px] h-4 bg-white/20 mt-1" />
                 </div>
                 
+                {/* Bottom Label */}
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
                    <div className="w-[1px] h-4 bg-white/20 mb-1" />
-                   <div className="px-4 py-1.5 bg-black border border-white/20 text-white text-[9px] font-black uppercase tracking-[0.4em] rounded-full z-20 backdrop-blur-md">
-                    UID: BYI_SAMUEL_01
+                   <div className="px-4 py-1.5 bg-black border border-white/20 text-white text-[9px] font-black uppercase tracking-[0.4em] rounded-full z-20 backdrop-blur-md whitespace-nowrap">
+                    Samuel Byiringiro
                   </div>
                 </div>
 
-                {/* Asymmetric HUD Details */}
-                <div className="absolute top-[20%] -left-12 flex flex-col items-end opacity-30 select-none">
-                   <span className="text-[8px] font-black uppercase tracking-widest mb-1 italic">Scan: Active</span>
+                {/* Left Detail */}
+                <div className="absolute top-[20%] -left-14 flex flex-col items-end opacity-40 select-none">
+                   <span className="text-[8px] font-black uppercase tracking-widest mb-1">Open to Work</span>
                    <div className="w-16 h-[1.5px] bg-gradient-to-l from-white to-transparent" />
                 </div>
 
-                <div className="absolute bottom-[25%] -right-16 flex flex-col items-start opacity-30 select-none">
-                   <span className="text-[8px] font-black uppercase tracking-widest mb-1 italic">Sync_State: 100%</span>
+                {/* Right Detail */}
+                <div className="absolute bottom-[25%] -right-20 flex flex-col items-start opacity-40 select-none">
+                   <span className="text-[8px] font-black uppercase tracking-widest mb-1">Kigali, Rwanda</span>
                    <div className="w-20 h-[1.5px] bg-gradient-to-r from-white to-transparent" />
                 </div>
               </div>
