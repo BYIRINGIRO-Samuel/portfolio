@@ -207,14 +207,11 @@ const CityBuilding = ({ h = 80, w = 30, delay = 0 }) => (
 );
 
 const grassPositions = [
-  // Curated scattering - away from road start (10/18) and end (90/78)
-  { top: '5%', left: '35%' }, { top: '15%', left: '42%' }, { top: '6%', left: '55%' },
-  { top: '10%', left: '68%' }, { top: '4%', left: '82%' }, { top: '14%', left: '92%' },
-  { top: '35%', left: '5%' }, { top: '48%', left: '12%' }, { top: '65%', left: '8%' },
-  { top: '82%', left: '25%' }, { top: '92%', left: '35%' }, { top: '85%', left: '48%' }, 
-  { top: '95%', left: '62%' }, { top: '62%', left: '82%' }, { top: '50%', left: '72%' },
-  { top: '40%', left: '62%' }, { top: '32%', left: '48%' }, { top: '28%', left: '64%' }, 
-  { top: '38%', left: '30%' }, { top: '22%', left: '55%' }
+  // Minimalist scattering for a clean city look
+  { top: '8%', left: '40%' }, { top: '5%', left: '75%' },
+  { top: '45%', left: '15%' }, { top: '75%', left: '5%' },
+  { top: '92%', left: '45%' }, { top: '88%', left: '85%' },
+  { top: '35%', left: '65%' }, { top: '55%', left: '50%' }
 ];
 
 const milestones = [
