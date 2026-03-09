@@ -17,7 +17,7 @@ const HeroSection = () => {
           <header className="flex flex-col md:flex-row items-center justify-between px-8 md:px-12 py-5 relative z-20 gap-4 md:gap-0">
             <div className="font-bold text-2xl tracking-tighter flex items-center gap-2 group cursor-pointer">
               <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-              <span className="text-white group-hover:text-gray-300 transition-colors">Samuel</span>
+              <span className="text-green-800 group-hover:text-gray-300 transition-colors">B.Samuel</span>
             </div>
             
             <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
@@ -29,7 +29,7 @@ const HeroSection = () => {
             </a>
           </header>
 
-          <nav className="hidden lg:flex flex-col items-center py-6 bg-[#121212]/80 backdrop-blur-2xl border border-white/10 rounded-2xl absolute left-8 top-1/2 -translate-y-1/2 z-30 shadow-2xl w-16 h-[70vh] min-h-[500px] max-h-[700px] justify-between">
+          <nav className="hidden lg:flex flex-col items-center py-6 bg-white/[0.02] backdrop-blur-[15px] border border-white/10 rounded-3xl absolute left-8 top-1/2 -translate-y-1/2 z-30 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] w-16 h-[70vh] min-h-[500px] max-h-[700px] justify-between saturate-[180%] ring-1 ring-inset ring-white/10">
             
             <div className="flex flex-col items-center gap-6 w-full">
               <div className="flex gap-1.5 pt-2">
@@ -38,8 +38,8 @@ const HeroSection = () => {
                 <div className="w-2 h-2 rounded-full bg-[#27c93f]"></div>
               </div>
 
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center mb-4">
-                <span className="text-black font-black text-sm cursor-pointer">S</span>
+              <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                <span className="text-white font-black text-sm cursor-pointer">S</span>
               </div>
 
               <div className="flex flex-col items-center gap-2 w-full">
@@ -49,24 +49,24 @@ const HeroSection = () => {
                     <path d="M 40 0 L 40 15 C 40 21.6, 33.4 27, 28 27 C 12.5 27, 0 39.5, 0 55 C 0 70.5, 12.5 83, 28 83 C 33.4 83, 40 88.4, 40 95 L 40 110" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
                   </svg>
                   
-                  <a href="#" className="absolute right-[-10px] z-10 w-[44px] h-[44px] flex items-center justify-center bg-[#18181b] rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.1),_0_4px_10px_rgba(0,0,0,0.6)] border border-black/50 transition-transform hover:scale-105">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#ffbd2e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] drop-shadow-[0_0_8px_rgba(255,189,46,0.2)]"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                  <a href="#" className="absolute right-[-10px] z-10 w-[44px] h-[44px] flex items-center justify-center bg-[#ffbd2e]/20 backdrop-blur-xl rounded-full shadow-[0_10px_30px_rgba(255,189,46,0.2),_inset_0_1px_2px_rgba(255,255,255,0.4)] border border-[#ffbd2e]/40 transition-all duration-300 hover:scale-110 group/active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#ffbd2e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px] drop-shadow-[0_0_10px_rgba(255,189,46,0.6)]"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                   </a>
                 </div>
                 
-                <a href="#about" className="relative w-12 h-12 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-all group hover:scale-105">
+                <a href="#about" className="relative w-12 h-12 flex items-center justify-center text-white/25 hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300 group/icon hover:scale-110">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 </a>
 
-                <a href="#projects" className="relative w-12 h-12 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-all group hover:scale-105">
+                <a href="#projects" className="relative w-12 h-12 flex items-center justify-center text-white/25 hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300 group/icon hover:scale-110">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
                 </a>
 
-                <a href="#services" className="relative w-12 h-12 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-all group hover:scale-105">
+                <a href="#services" className="relative w-12 h-12 flex items-center justify-center text-white/25 hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300 group/icon hover:scale-110">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 </a>
 
-                <a href="#contact" className="relative w-12 h-12 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 rounded-full transition-all group hover:scale-105">
+                <a href="#contact" className="relative w-12 h-12 flex items-center justify-center text-white/25 hover:text-white hover:bg-white/5 rounded-2xl transition-all duration-300 group/icon hover:scale-110">
                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
               </div>

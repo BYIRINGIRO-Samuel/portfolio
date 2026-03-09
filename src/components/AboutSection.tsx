@@ -89,7 +89,7 @@ const AboutSection = () => {
                 </div>
                 <div>
                   <span className="text-white font-bold text-sm block mb-1.5">Email:</span>
-                  <span className="text-gray-400 font-medium text-sm">example@domain.com</span>
+                  <span className="text-gray-400 font-medium text-sm">byiringirosamuel533@gmail.com</span>
                 </div>
                 <div>
                   <span className="text-white font-bold text-sm block mb-1.5">GitHub:</span>
