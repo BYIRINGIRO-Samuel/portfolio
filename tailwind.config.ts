@@ -119,7 +119,7 @@ export default {
         "float": "float 6s ease-in-out infinite",
         "rotate-slow": "rotate-slow 20s linear infinite",
         "code-blink": "code-blink 1s step-end infinite",
-        "marquee": "marquee 30s linear infinite",
+        "marquee": "marquee 60s linear infinite",
       },
     },
   },
