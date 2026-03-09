@@ -118,7 +118,7 @@ const RoadBillboard = ({
           <motion.div 
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
-            className="flex flex-col gap-1.5 pt-1 pb-1"
+            className="flex flex-col gap-1.5 pt-1 pb-1 max-h-32 overflow-y-auto pr-1 scrollbar-thin"
           >
              {skills.map((s, i) => (
                <div key={i} className="flex items-center gap-2">
@@ -501,11 +501,11 @@ const SkillsSection = () => {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2 bg-black/40 backdrop-blur-sm p-3 rounded border border-white/5">
+                <div className="flex flex-col gap-2 bg-black/40 backdrop-blur-sm p-3 rounded border border-white/5 max-h-[120px] overflow-y-auto pr-2 scrollbar-thin">
                    {m.skills.map((s, sIdx) => (
                      <div key={sIdx} className={`flex items-center gap-3 ${m.align === 'text-right' ? 'flex-row-reverse' : ''}`}>
                         <div className="w-1.5 h-1.5 rounded-full bg-white/10" />
-                        <span className="text-[11px] font-bold tracking-tight text-gray-400 group-hover/text-white">{s}</span>
+                        <span className="text-[11px] font-bold tracking-tight text-gray-400 group-hover/text-white whitespace-nowrap">{s}</span>
                      </div>
                    ))}
                 </div>
