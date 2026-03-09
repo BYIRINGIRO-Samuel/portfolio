@@ -19,9 +19,9 @@ const allProjects: Project[] = [
     id: "01",
     name: "NEURAL_SYNTH",
     category: "AI_NODE",
-    shortDesc: "Sub-50ms inference on multi-region edge nodes.",
+    shortDesc: "Sub-50ms inference on multi-region edge nodes. Optimized for low-latency neural processing in distributed environments.",
     tech: ["PyTorch", "CUDA"],
-    image: "/sentinel.png",
+    image: "https://images.unsplash.com/photo-1551288049-bbbda536ad79?q=80&w=800&auto=format&fit=crop",
     accent: "#ffffff",
     github: "#",
     demo: "#"
@@ -30,9 +30,9 @@ const allProjects: Project[] = [
     id: "02",
     name: "QUANTUM_MESH",
     category: "NETWORK",
-    shortDesc: "Real-time state sync for distributed clusters.",
+    shortDesc: "Real-time state sync for distributed clusters. Features advanced mesh networking protocols and quantum-encrypted channels.",
     tech: ["React", "Redis"],
-    image: "/sentinel.png",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
     accent: "#ffffff",
     github: "#",
     demo: "#"
@@ -41,14 +41,89 @@ const allProjects: Project[] = [
     id: "03",
     name: "CODE_OMEGA",
     category: "SECURITY",
-    shortDesc: "Context-aware architectural auditing tool.",
+    shortDesc: "Context-aware architectural auditing tool. Provides deep stack analysis and comprehensive vulnerability scanning for modern cloud infra.",
     tech: ["Python", "Rust"],
-    image: "/sentinel.png",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop",
     accent: "#ffffff",
     github: "#",
     demo: "#"
   },
 ];
+
+const ProjectCard = ({ p }: { p: Project }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <div className="w-full bg-[#151515] rounded-[20px] p-2.5 pb-5 border border-white/5 relative overflow-hidden transition-all duration-500 shadow-2xl">
+        <div className="w-full flex justify-end items-start pt-2 pr-3 mb-2">
+          <div className="flex flex-col items-end">
+            <span className="text-[8px] text-white/20 font-black uppercase tracking-widest">Classification</span>
+            <span className="text-[11px] font-black text-white leading-none mt-1 italic tracking-widest">{p.category}</span>
+          </div>
+        </div>
+
+        <div className="relative mx-auto w-[94%] aspect-square rounded-[10px] rounded-tr-[36px] rounded-bl-[36px] overflow-hidden flex items-center justify-center group/img bg-[#1c1c1c]">
+          <img 
+            src={p.image} 
+            alt={p.name} 
+            className="w-full h-full object-cover filter brightness-75 group-hover/img:scale-110 group-hover/img:brightness-100 transition-all duration-700"
+          />
+
+          <div className="absolute top-0 left-0 z-20">
+             <div className="px-5 py-2 shadow-2xl bg-white">
+               <span className="text-[11px] font-black uppercase italic tracking-tighter text-black">
+                 {p.name}
+               </span>
+             </div>
+             <div className="absolute -bottom-[5px] left-0 w-2.5 h-2.5 rotate-45 bg-white filter brightness-50" />
+          </div>
+
+          <div className="absolute inset-x-3 bottom-3 flex gap-2 opacity-0 group-hover/img:opacity-100 transition-opacity duration-500">
+             <a href={p.github} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black/80 backdrop-blur-md py-2.5 rounded-lg border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                <Github className="w-3.5 h-3.5" />
+             </a>
+             <a href={p.demo} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black/80 backdrop-blur-md py-2.5 rounded-lg border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                <ExternalLink className="w-3.5 h-3.5" />
+             </a>
+          </div>
+        </div>
+
+        <div 
+          className="mt-4 mx-auto w-[94%] bg-[#0f0f0f] border border-white/5 rounded-lg p-3.5 flex items-start gap-3 cursor-pointer group/desc relative overflow-hidden"
+          onClick={() => setIsExpanded(!isExpanded)}
+        >
+           <div className="w-4 h-4 mt-0.5 flex items-center justify-center flex-shrink-0">
+              <svg viewBox="0 0 24 24" className={`w-full h-full fill-current text-white/40 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`}>
+                 <path d="M12 2L6 9.5L12 17L18 9.5L12 2Z" />
+              </svg>
+           </div>
+           <p className={`text-[10px] font-bold text-white/50 italic leading-tight uppercase tracking-tight transition-all duration-500 ${isExpanded ? '' : 'line-clamp-1'}`}>
+             {p.shortDesc}{!isExpanded && "..."}
+           </p>
+           
+           {!isExpanded && (
+             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0f0f0f]/80 opacity-0 group-hover/desc:opacity-100 transition-opacity" />
+           )}
+        </div>
+      </div>
+
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="w-44 py-3.5 rounded-[14px] bg-[#1a1a1a] border border-white/5 relative overflow-hidden group shadow-xl"
+      >
+         <div className="absolute inset-y-0 left-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-[0_0_12px_white]" />
+         <div className="absolute inset-y-0 right-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-[0_0_12px_white]" />
+         <div className="absolute inset-x-0 bottom-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-[0_0_12px_white]" />
+
+         <span className="text-[11px] font-black tracking-[0.3em] text-white/20 group-hover:text-white transition-colors uppercase italic">
+           INIT_DEMO
+         </span>
+      </motion.button>
+    </div>
+  );
+};
 
 const ProjectsSection = () => {
   return (
@@ -74,82 +149,7 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
           {allProjects.map((p) => (
-            <div key={p.id} className="flex flex-col items-center gap-6">
-              
-              {/* THE NFT CARD: 100% REPLICA ARCHITECTURE */}
-              <div className="w-full bg-[#151515] rounded-[20px] p-2.5 pb-5 border border-white/5 relative overflow-hidden transition-all duration-500 shadow-2xl">
-                
-                {/* TOP HEADER: CATEGORY */}
-                <div className="w-full flex justify-end items-start pt-2 pr-3 mb-2">
-                  <div className="flex flex-col items-end">
-                    <span className="text-[8px] text-white/20 font-black uppercase tracking-widest">Classification</span>
-                    <span className="text-[11px] font-black text-white leading-none mt-1 italic tracking-widest">{p.category}</span>
-                  </div>
-                </div>
-
-                {/* IMAGE SLAB: ASYMMETRIC ROUNDING */}
-                <div 
-                  className="relative mx-auto w-[94%] aspect-square rounded-[10px] rounded-tr-[36px] rounded-bl-[36px] overflow-hidden flex items-center justify-center group/img bg-[#1c1c1c]"
-                >
-                  <img 
-                    src={p.image} 
-                    alt={p.name} 
-                    className="w-[85%] h-[85%] object-contain filter brightness-110 drop-shadow-[0_20px_35px_rgba(0,0,0,0.5)] group-hover/img:scale-110 transition-transform duration-700"
-                  />
-
-                  {/* NAME TAG (Monochrome) */}
-                  <div className="absolute top-0 left-0 z-20">
-                     <div className="px-5 py-2 shadow-2xl bg-white">
-                       <span className="text-[11px] font-black uppercase italic tracking-tighter text-black">
-                         {p.name}
-                       </span>
-                     </div>
-                     {/* Wrapping Tail detail */}
-                     <div 
-                       className="absolute -bottom-[5px] left-0 w-2.5 h-2.5 rotate-45 bg-white filter brightness-50" 
-                     />
-                  </div>
-
-                  {/* QUICK LINKS OVERLAY */}
-                  <div className="absolute inset-x-3 bottom-3 flex gap-2 opacity-0 group-hover/img:opacity-100 transition-opacity duration-500">
-                     <a href={p.github} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black/80 backdrop-blur-md py-2.5 rounded-lg border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                        <Github className="w-3.5 h-3.5" />
-                     </a>
-                     <a href={p.demo} target="_blank" rel="noopener noreferrer" className="flex-1 bg-black/80 backdrop-blur-md py-2.5 rounded-lg border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
-                        <ExternalLink className="w-3.5 h-3.5" />
-                     </a>
-                  </div>
-                </div>
-
-                {/* DESCRIPTION PILL */}
-                <div className="mt-4 mx-auto w-[94%] bg-[#0f0f0f] border border-white/5 rounded-lg p-3.5 flex items-center gap-3">
-                   <div className="w-4 h-4 flex items-center justify-center flex-shrink-0">
-                      <svg viewBox="0 0 24 24" className="w-full h-full fill-current text-white/40">
-                         <path d="M12 2L6 9.5L12 17L18 9.5L12 2Z" />
-                      </svg>
-                   </div>
-                   <span className="text-[10px] font-bold text-white/50 italic leading-tight uppercase tracking-tight line-clamp-1">
-                     {p.shortDesc}
-                   </span>
-                </div>
-
-              </div>
-
-              {/* ACTION BUTTON (Monochrome) */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-44 py-3.5 rounded-[14px] bg-[#1a1a1a] border border-white/5 relative overflow-hidden group shadow-xl"
-              >
-                 <div className="absolute inset-y-0 left-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-[0_0_12px_white]" />
-                 <div className="absolute inset-y-0 right-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-[0_0_12px_white]" />
-                 <div className="absolute inset-x-0 bottom-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-white shadow-[0_0_12px_white]" />
-
-                 <span className="text-[11px] font-black tracking-[0.3em] text-white/20 group-hover:text-white transition-colors uppercase italic">
-                   INIT_DEMO
-                 </span>
-              </motion.button>
-            </div>
+            <ProjectCard key={p.id} p={p} />
           ))}
         </div>
 
