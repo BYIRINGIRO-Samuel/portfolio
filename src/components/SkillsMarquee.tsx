@@ -158,9 +158,6 @@ const SkillsMarquee = () => {
                   <span className="text-[14px] font-black tracking-[0.5em] text-gray-200 group-hover/item:text-white group-hover/item:scale-105 transition-all duration-300 uppercase font-mono drop-shadow-[0_2px_4px_black]">
                     {skill}
                   </span>
-                  <span className="ml-10 text-[12px] font-black text-white/10 font-mono select-none">
-                     {`///`}
-                  </span>
                 </div>
               );
             })}
