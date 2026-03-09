@@ -190,10 +190,10 @@ const CityBuilding = ({ h = 80, w = 30, delay = 0 }) => (
 
 
 const grassPositions = [
-  // Minimalist scattering for a clean city look
+  // Clean city scattering
   { top: '8%', left: '40%' }, { top: '5%', left: '75%' },
-  { top: '45%', left: '15%' }, { top: '75%', left: '5%' },
-  { top: '92%', left: '45%' }, { top: '88%', left: '85%' },
+  { top: '75%', left: '5%' },
+  { top: '92%', left: '45%' },
   { top: '35%', left: '65%' }, { top: '55%', left: '50%' }
 ];
 
@@ -448,11 +448,6 @@ const SkillsSection = () => {
         </div>
 
 
-        {/* City Benches with Pedestrians */}
-        <div className="absolute top-[8%] left-[12%] z-10">
-          <CityBench occupants={1} />
-        </div>
-
         <div className="absolute bottom-[20%] left-[8%] z-10">
           <CityBench occupants={2} />
         </div>
@@ -461,19 +456,11 @@ const SkillsSection = () => {
           <CityBench occupants={1} />
         </div>
 
-        <div className="absolute bottom-[10%] right-[22%] z-10">
-          <CityBench occupants={2} />
-        </div>
-
         <div className="relative h-full w-full p-10">
           
-          <div className="flex items-center justify-between mb-12 relative z-20">
+          <div className="flex items-start justify-between mb-12 relative z-20">
              <div>
-                <div className="flex items-center gap-3 mb-2">
-                   <div className="w-4 h-[1px] bg-white/40" />
-                   <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white/30 truncate">Technical_Roadmap // SYSTEM_DRIVE</span>
-                </div>
-                <h2 className="text-4xl font-black uppercase tracking-tighter">Skill<span className="text-white/20">Road</span>.</h2>
+                <h2 className="text-4xl font-black uppercase tracking-tighter -mt-2">Skill<span className="text-white/20">Road</span>.</h2>
              </div>
              <div className="hidden md:block text-right">
                 <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest">Active_Segment:</div>
