@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 
 const HeroSection = () => {
+  const { theme, toggleTheme } = useTheme();
   return (
     <section className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 pt-1 sm:pt-2 md:pt-3 lg:pt-4 flex justify-center font-sans overflow-hidden min-h-screen">
       
@@ -20,13 +22,37 @@ const HeroSection = () => {
               <span className="text-gray-200 group-hover:text-gray-300 transition-colors uppercase italic font-black text-xl tracking-[0.2em]">B.Samuel</span>
             </div>
             
-            <a href="#contact" className="hidden md:inline-flex relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
-              Contact Us
-              <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-              <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-              <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-              <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
-            </a>
+            {/* Theme Toggle + Contact */}
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={toggleTheme}
+                aria-label="Toggle theme"
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all duration-300 group"
+              >
+                {theme === 'dark' ? (
+                  /* Sun icon */
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-white/60 group-hover:text-yellow-300 transition-colors">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                ) : (
+                  /* Moon icon */
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-gray-600 group-hover:text-indigo-500 transition-colors">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                )}
+              </button>
+              <a href="#contact" className="relative px-8 py-3 bg-white text-black text-sm font-bold hover:bg-gray-200 transition-colors group">
+                Contact Me
+                <svg className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 10 0 L 0 0 L 0 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 10 0 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute bottom-0 left-0 -translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 0 L 0 10 L 10 10" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <svg className="absolute bottom-0 right-0 translate-x-1/2 translate-y-1/2 w-2.5 h-2.5 text-white" viewBox="0 0 10 10"><path d="M 0 10 L 10 10 L 10 0" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+              </a>
+            </div>
           </header>
 
           <nav className="hidden lg:flex flex-col items-center py-6 bg-white/[0.02] backdrop-blur-[15px] border border-white/10 rounded-3xl absolute left-8 top-1/2 -translate-y-1/2 z-30 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.7)] w-16 h-[70vh] min-h-[500px] max-h-[700px] justify-between saturate-[180%] ring-1 ring-inset ring-white/10">
@@ -95,7 +121,7 @@ const HeroSection = () => {
               <div className="relative pl-0 lg:pl-6 mb-7 flex flex-col items-center lg:items-start max-w-lg">
                 <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-white to-gray-500" />
                 <p className="text-gray-400 text-base lg:text-lg leading-snug lg:leading-relaxed font-medium">
-                  I craft robust, scalable, and intuitive digital solutions. Let's turn your complex problems into elegant web experiences.
+                  Frontend Developer specializing in React, TypeScript & pixel-perfect UI. I build fast, scalable, and beautiful web experiences from concept to code.
                 </p>
               </div>
 

@@ -145,3 +145,84 @@
     background: rgba(255, 255, 255, 0.2);
   }
 }
+
+/* ===================== LIGHT MODE ===================== */
+html.light-mode {
+  --lm-bg: #f4f4f0;
+  --lm-card: #ffffff;
+  --lm-card-secondary: #ebebeb;
+  --lm-border: rgba(0,0,0,0.08);
+  --lm-text: #0f0f0f;
+  --lm-text-muted: #555;
+  --lm-accent: #0f0f0f;
+}
+
+html.light-mode body {
+  background: var(--lm-bg);
+  color: var(--lm-text);
+}
+
+/* Outer section wrappers (bg-white) */
+html.light-mode section.bg-white {
+  background: var(--lm-bg) !important;
+}
+
+/* Main dark cards → white cards */
+html.light-mode .bg-\[\#0f0f0f\] {
+  background: var(--lm-card) !important;
+  color: var(--lm-text) !important;
+}
+html.light-mode .bg-\[\#151515\] {
+  background: var(--lm-card-secondary) !important;
+}
+html.light-mode .bg-\[\#1a1a1a\] {
+  background: #e0e0e0 !important;
+}
+html.light-mode .bg-\[\#1c1c1c\] {
+  background: #d8d8d8 !important;
+}
+
+/* Text overrides inside dark cards */
+html.light-mode .bg-\[\#0f0f0f\] .text-white {
+  color: var(--lm-text) !important;
+}
+html.light-mode .bg-\[\#0f0f0f\] .text-white\/20,
+html.light-mode .bg-\[\#0f0f0f\] .text-white\/30,
+html.light-mode .bg-\[\#0f0f0f\] .text-white\/40,
+html.light-mode .bg-\[\#0f0f0f\] .text-white\/50 {
+  color: var(--lm-text-muted) !important;
+}
+html.light-mode .bg-\[\#0f0f0f\] .text-gray-400 {
+  color: #444 !important;
+}
+
+/* Border overrides */
+html.light-mode .border-white\/5,
+html.light-mode .border-white\/10,
+html.light-mode .border-white\/20 {
+  border-color: var(--lm-border) !important;
+}
+
+/* Nav sidebar in light mode */
+html.light-mode nav.bg-white\/\[0\.02\] {
+  background: rgba(255,255,255,0.8) !important;
+  border-color: rgba(0,0,0,0.07) !important;
+}
+
+/* Light mode scrollbar */
+html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Gray background shadow section */
+html.light-mode .bg-\[\#e5e5e5\] {
+  background: #d0d0cc !important;
+}
+
+/* Smooth transition for theme switch */
+*, *::before, *::after {
+  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+}
