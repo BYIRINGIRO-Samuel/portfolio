@@ -147,13 +147,26 @@
 }
 
 /* ===================== LIGHT MODE ===================== */
+/*
+  Palette philosophy: Warm stone hierarchy.
+  Not flat white — each layer has a distinct warm tone.
+  ┌─ Page gap (outer)    : #e8e5e0  (warm stone)
+  ├─ Section card         : #f2ede8  (cream)
+  ├─ Card inner           : #ede8e2  (parchment)
+  ├─ Elevated widget      : #e6e1db  (sand)
+  └─ Dark accent blocks   : kept dark for contrast (marquee, buttons)
+*/
+
 html.light-mode {
-  --lm-bg: #f4f4f0;
-  --lm-card: #ffffff;
-  --lm-card-secondary: #ebebeb;
-  --lm-border: rgba(0,0,0,0.08);
-  --lm-text: #0f0f0f;
-  --lm-text-muted: #555;
+  --lm-bg:        #e8e5e0;   /* outer page gaps between sections */
+  --lm-card:      #f2ede8;   /* main section cards */
+  --lm-card-2:    #ede8e2;   /* inner cards / sub-cards */
+  --lm-card-3:    #e6e1db;   /* tertiary / elevated panels */
+  --lm-border:    rgba(120,100,80,0.15);
+  --lm-border-2:  rgba(120,100,80,0.25);
+  --lm-text:      #1a1614;
+  --lm-text-muted:#7a6f65;
+  --lm-text-dim:  #a89e94;
 }
 
 html.light-mode body {
@@ -161,34 +174,38 @@ html.light-mode body {
   color: var(--lm-text);
 }
 
-/* ── Outer section wrappers ──────────────────────────── */
+/* ── Outer section wrappers (bg-white strips) ─────────── */
 html.light-mode section.bg-white {
   background: var(--lm-bg) !important;
 }
 
-/* ── Main dark cards → light cards ───────────────────── */
+/* ── Main section dark cards ──────────────────────────── */
 html.light-mode .bg-\[\#0f0f0f\] {
   background: var(--lm-card) !important;
   color: var(--lm-text) !important;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08) !important;
-}
-html.light-mode .bg-\[\#151515\] {
-  background: #f0f0ec !important;
-}
-html.light-mode .bg-\[\#1a1a1a\] {
-  background: #e4e4e0 !important;
-}
-html.light-mode .bg-\[\#1c1c1c\] {
-  background: #e8e8e4 !important;
+  box-shadow: 0 2px 40px rgba(100,80,60,0.10), 0 1px 0 rgba(255,255,255,0.7) inset !important;
 }
 
-/* ── Text colors ──────────────────────────────────────── */
+/* Sub-card levels */
+html.light-mode .bg-\[\#151515\] {
+  background: var(--lm-card-2) !important;
+}
+html.light-mode .bg-\[\#1a1a1a\] {
+  background: var(--lm-card-3) !important;
+}
+html.light-mode .bg-\[\#1c1c1c\] {
+  background: var(--lm-card-3) !important;
+}
+
+/* ── Text ─────────────────────────────────────────────── */
 html.light-mode .text-white {
   color: var(--lm-text) !important;
 }
 html.light-mode .text-white\/20,
 html.light-mode .text-white\/25,
-html.light-mode .text-white\/30,
+html.light-mode .text-white\/30 {
+  color: var(--lm-text-dim) !important;
+}
 html.light-mode .text-white\/40,
 html.light-mode .text-white\/50,
 html.light-mode .text-white\/60 {
@@ -196,200 +213,124 @@ html.light-mode .text-white\/60 {
 }
 html.light-mode .text-gray-400,
 html.light-mode .text-gray-500 {
-  color: #444 !important;
+  color: #6b5f56 !important;
 }
 
-/* ── Borders — more visible in light mode ─────────────── */
+/* ── Borders ──────────────────────────────────────────── */
 html.light-mode .border-white\/5 {
-  border-color: rgba(0,0,0,0.12) !important;
+  border-color: var(--lm-border) !important;
 }
 html.light-mode .border-white\/10 {
-  border-color: rgba(0,0,0,0.18) !important;
+  border-color: var(--lm-border) !important;
 }
 html.light-mode .border-white\/20 {
-  border-color: rgba(0,0,0,0.25) !important;
+  border-color: var(--lm-border-2) !important;
 }
 
-/* ── Contact form inputs ──────────────────────────────── */
+/* ── Subtle tinted panels (bg-white/5) ────────────────── */
 html.light-mode .bg-white\/5 {
-  background: rgba(0,0,0,0.04) !important;
-  border-color: rgba(0,0,0,0.18) !important;
+  background: rgba(120,100,80,0.07) !important;
+  border-color: var(--lm-border) !important;
 }
+html.light-mode .bg-white\/10 {
+  background: rgba(120,100,80,0.10) !important;
+}
+
+/* ── Navbar sidebar ───────────────────────────────────── */
+html.light-mode nav {
+  background: rgba(242,237,232,0.95) !important;
+  border-color: var(--lm-border) !important;
+  box-shadow: 4px 0 20px rgba(100,80,60,0.08) !important;
+}
+html.light-mode nav svg {
+  stroke: #4a3f38 !important;
+  color: #4a3f38 !important;
+}
+html.light-mode nav a { color: #4a3f38 !important; }
+html.light-mode nav a:hover {
+  color: #1a1614 !important;
+  background: rgba(120,100,80,0.08) !important;
+}
+html.light-mode nav a svg[stroke="#ffbd2e"] { stroke: #c49a00 !important; }
+html.light-mode nav .bg-white\/10 { background: rgba(0,0,0,0.06) !important; }
+html.light-mode nav .text-white { color: #1a1614 !important; }
+
+/* ── Contact form ─────────────────────────────────────── */
 html.light-mode input,
 html.light-mode textarea {
-  color: #111 !important;
+  color: var(--lm-text) !important;
+  background: rgba(120,100,80,0.05) !important;
+  border-color: var(--lm-border) !important;
 }
 html.light-mode input::placeholder,
 html.light-mode textarea::placeholder {
-  color: rgba(0,0,0,0.25) !important;
+  color: var(--lm-text-dim) !important;
 }
 html.light-mode input:focus,
 html.light-mode textarea:focus {
-  border-color: rgba(0,0,0,0.5) !important;
-  background: rgba(0,0,0,0.06) !important;
+  border-color: var(--lm-border-2) !important;
+  background: rgba(120,100,80,0.09) !important;
 }
 
-/* ── Send button — keep bg-black dark, text stays white ── */
+/* ── Send button — STAYS DARK (contrast CTA) ──────────── */
 html.light-mode button.bg-black {
-  background: #0f0f0f !important;
+  background: #1a1614 !important;
 }
-html.light-mode button.bg-black .text-white,
 html.light-mode button.bg-black span,
 html.light-mode button.bg-black svg {
   color: #fff !important;
   stroke: #fff !important;
 }
-/* Corner brackets stay white */
-html.light-mode button.bg-black .border-white {
-  border-color: #fff !important;
+html.light-mode button.bg-black .border-white { border-color: #fff !important; }
+
+/* ── Hero shadow-band (bg-[#e5e5e5]) ─────────────────── */
+html.light-mode .bg-\[\#e5e5e5\] { background: #d9d4ce !important; }
+
+/* ── Marquee — keep intentionally dark for contrast ────── */
+html.light-mode .bg-black { background: #1a1614 !important; }
+html.light-mode .bg-\[\#080808\] { background: #252220 !important; }
+
+/* ── Scroll chevron ───────────────────────────────────── */
+html.light-mode .animate-bounce.text-white { color: #5a4f47 !important; }
+
+/* ── Profile labels ───────────────────────────────────── */
+html.light-mode .rounded-full.bg-black {
+  background: #1a1614 !important;
+  color: #fff !important;
+}
+html.light-mode .rounded-full.bg-black * { color: #fff !important; }
+
+/* ── SkillsSection road ───────────────────────────────── */
+html.light-mode .bg-\[\#080808\] { background: #2a2520 !important; }
+html.light-mode .bg-black\/40 { background: rgba(120,100,80,0.08) !important; }
+html.light-mode .bg-black\/60 { background: rgba(120,100,80,0.10) !important; }
+
+/* ── Career Logbook spine & nodes ─────────────────────── */
+html.light-mode .bg-white.shadow-\[0_0_12px_white\] {
+  background: #1a1614 !important;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15) !important;
+}
+html.light-mode .bg-\[\#0f0f0f\].rotate-45 {
+  background: var(--lm-card) !important;
+  border-color: var(--lm-border-2) !important;
+}
+html.light-mode .bg-white.shadow-\[0_0_8px_white\] {
+  background: #1a1614 !important;
+  box-shadow: 0 0 6px rgba(0,0,0,0.2) !important;
+}
+html.light-mode .border-l.border-white\/20 {
+  border-color: var(--lm-border-2) !important;
 }
 
-/* ── Status chips on contact left ─────────────────────── */
-html.light-mode .bg-white\/5.border.border-white\/10 {
-  background: rgba(0,0,0,0.04) !important;
-  border-color: rgba(0,0,0,0.15) !important;
-}
-
-/* ── Navbar sidebar ───────────────────────────────────── */
-html.light-mode nav {
-  background: rgba(255,255,255,0.92) !important;
-  border-color: rgba(0,0,0,0.08) !important;
-  box-shadow: 4px 0 20px rgba(0,0,0,0.06) !important;
-}
-/* Fix icon color: white icons on white bg → make them dark */
-html.light-mode nav svg {
-  stroke: #333 !important;
-  color: #333 !important;
-}
-html.light-mode nav a {
-  color: #333 !important;
-}
-html.light-mode nav a:hover {
-  color: #000 !important;
-  background: rgba(0,0,0,0.05) !important;
-}
-/* The active (home) nav icon yellow glow */
-html.light-mode nav a svg[stroke="#ffbd2e"] {
-  stroke: #c49a00 !important;
-}
-/* Traffic light dots on nav */
-html.light-mode nav .bg-\[\#ff5f56\],
-html.light-mode nav .bg-\[\#ffbd2e\],
-html.light-mode nav .bg-\[\#27c93f\] {
-  opacity: 0.7;
-}
-/* The "S" avatar */
-html.light-mode nav .bg-white\/10 {
-  background: rgba(0,0,0,0.07) !important;
-}
-html.light-mode nav .text-white {
-  color: #111 !important;
-}
-
-/* ── SkillsSection specific ───────────────────────────── */
-/* Main section outer bg */
-html.light-mode section#skills {
-  background: var(--lm-bg) !important;
-}
-/* The inner dark card wrapper of SkillsSection */
-html.light-mode #skills .bg-\[\#080808\],
-html.light-mode .bg-\[\#080808\] {
-  background: #deded8 !important;
-}
-/* bg-black/40 skill boxes */
-html.light-mode .bg-black\/40 {
-  background: rgba(0,0,0,0.05) !important;
-}
-html.light-mode .bg-black\/60 {
-  background: rgba(0,0,0,0.07) !important;
-}
-/* SVG road — invert strokes slightly */
-html.light-mode #skills svg line,
-html.light-mode #skills svg path,
-html.light-mode #skills svg use {
-  filter: invert(0.85);
-}
-/* Milestone diamonds */
-html.light-mode .border-white\/20.bg-transparent {
-  border-color: rgba(0,0,0,0.15) !important;
-}
-/* Skill card bg */
-html.light-mode .bg-black\/40.backdrop-blur-sm {
-  background: rgba(255,255,255,0.6) !important;
-  border-color: rgba(0,0,0,0.08) !important;
-}
-
-/* ── Scrollbar in light mode ──────────────────────────── */
+/* ── Scrollbar ────────────────────────────────────────── */
 html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(120,100,80,0.2);
 }
 html.light-mode .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.25);
-}
-
-/* ── Marquee / SkillsMarquee strip ────────────────────── */
-html.light-mode .bg-\[\#e5e5e5\] {
-  background: #d4d4d0 !important;
-}
-/* bg-black marquee node boxes → light grey */
-html.light-mode .bg-black {
-  background: #1a1a1a !important;
-}
-/* bg-[#080808] inner marquee stream */
-html.light-mode .bg-\[\#080808\] {
-  background: #222 !important;
-}
-/* Keep marquee text readable — already white on dark bg, so fine */
-/* But the border-y on the nodes needs to be visible */
-html.light-mode .border-white\/5 {
-  border-color: rgba(255,255,255,0.08) !important;
-}
-
-/* ── Scroll chevron at the bottom of hero ─────────────── */
-html.light-mode .animate-bounce.text-white {
-  color: #333 !important;
-}
-
-/* ── Profile bottom label ("Samuel Byiringiro") ────────── */
-/* It uses bg-black + border-white/20 — keep it dark + white text */
-html.light-mode .rounded-full.bg-black {
-  background: #111 !important;
-  color: #fff !important;
-}
-html.light-mode .rounded-full.bg-black * {
-  color: #fff !important;
-}
-
-/* ── Career Logbook — vertical spine & nodes ──────────── */
-/* The central spine line: bg-white/10 */
-html.light-mode .bg-white\/10 {
-  background: rgba(0,0,0,0.12) !important;
-}
-/* The animated progress line on the spine: bg-white */
-html.light-mode .bg-white.shadow-\[0_0_12px_white\] {
-  background: #111 !important;
-  box-shadow: 0 0 12px rgba(0,0,0,0.2) !important;
-}
-/* Connection node outer diamond bg-[#0f0f0f] rotate-45 */
-html.light-mode .bg-\[\#0f0f0f\].rotate-45 {
-  background: #fff !important;
-  border-color: rgba(0,0,0,0.25) !important;
-}
-/* Connection node inner dot bg-white */
-html.light-mode .bg-white.shadow-\[0_0_8px_white\] {
-  background: #111 !important;
-  box-shadow: 0 0 8px rgba(0,0,0,0.25) !important;
-}
-/* Metric sidecar left border */
-html.light-mode .border-l.border-white\/20 {
-  border-color: rgba(0,0,0,0.2) !important;
-}
-/* Period separator line */
-html.light-mode .bg-white\/10 {
-  background: rgba(0,0,0,0.1) !important;
+  background: rgba(120,100,80,0.35);
 }
 
 /* ── Smooth theme transition ──────────────────────────── */
 *, *::before, *::after {
-  transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.35s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
