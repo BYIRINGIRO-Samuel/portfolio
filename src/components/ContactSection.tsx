@@ -62,7 +62,7 @@ const ContactSection = () => {
            </div>
 
            {/* RIGHT SIDE: MESSAGE MODULE */}
-           <div className="lg:w-1/2 relative">
+           <div className="lg:w-1/2 relative mt-8 lg:mt-12">
               <AnimatePresence mode="wait">
                 {submitted ? (
                   <motion.div 
