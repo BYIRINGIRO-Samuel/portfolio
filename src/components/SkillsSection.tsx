@@ -118,35 +118,155 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
         <div className="absolute inset-0 border border-gray-600 rounded-md m-1" />
         
         {/* Screen */}
-        <div className={`absolute inset-3 rounded-md overflow-hidden ${isTitle ? 'bg-gradient-to-br from-white/10 to-white/15' : 'bg-gradient-to-br from-white/5 to-white/8'}`}>
-          {/* Scan Lines */}
-          <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.03)_1px,rgba(255,255,255,0.03)_2px)] pointer-events-none" />
+        <div className={`absolute inset-3 rounded-md overflow-hidden ${isTitle ? 'bg-gradient-to-br from-white/15 via-white/8 to-white/20' : 'bg-gradient-to-br from-white/5 to-white/8'}`}>
+          {/* Enhanced Scan Lines for Title */}
+          <div className={`absolute inset-0 pointer-events-none ${isTitle ? 'bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.08)_1px,rgba(255,255,255,0.08)_2px)]' : 'bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.03)_1px,rgba(255,255,255,0.03)_2px)]'}`} />
+          
+          {/* Title Screen: Additional Visual Effects */}
+          {isTitle && (
+            <>
+              {/* Moving Light Beam */}
+              <motion.div
+                animate={{ x: ['-100%', '200%'] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 1 }}
+                className="absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
+              />
+              
+              {/* Corner Vignette */}
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.3)_100%)]" />
+              
+              {/* Particle Effect */}
+              {[...Array(6)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  animate={{
+                    y: [0, -20, 0],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute w-1 h-1 bg-white/60 rounded-full"
+                  style={{
+                    left: `${20 + i * 12}%`,
+                    bottom: '10%'
+                  }}
+                />
+              ))}
+            </>
+          )}
           
           {/* Content */}
           <div className="relative h-full flex flex-col items-center justify-center p-3 text-center">
             {isTitle ? (
-              /* Title Display */
+              /* Enhanced Title Display with Unique Design */
               <motion.div
                 key="title"
-                initial={{ opacity: 0, scale: 0.5, rotateX: -90 }}
-                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
-                transition={{ duration: 0.8, type: "spring", stiffness: 200 }}
-                className="flex flex-col items-center"
+                initial={{ opacity: 0, scale: 0.3, rotateY: -180 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                transition={{ duration: 1.2, type: "spring", stiffness: 150 }}
+                className="relative flex flex-col items-center w-full h-full justify-center"
               >
-                <div className="text-[16px] font-black text-white uppercase tracking-[0.3em] leading-none mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                  SOFT
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-[length:8px_8px]" />
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent,white_10%,transparent_20%)] opacity-20"
+                  />
                 </div>
-                <div className="text-[16px] font-black text-white uppercase tracking-[0.3em] leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-                  SKILLS
+
+                {/* Main Title with Geometric Frame */}
+                <div className="relative z-10">
+                  {/* Geometric Border */}
+                  <div className="absolute -inset-4 border-2 border-white/30 transform rotate-45">
+                    <div className="absolute inset-1 border border-white/20" />
+                  </div>
+                  
+                  {/* Title Content */}
+                  <div className="relative bg-black/40 backdrop-blur-sm px-4 py-3 text-center">
+                    <motion.div
+                      initial={{ letterSpacing: "0em" }}
+                      animate={{ letterSpacing: "0.4em" }}
+                      transition={{ duration: 0.8, delay: 0.3 }}
+                      className="text-[14px] font-black text-white uppercase leading-none mb-1"
+                      style={{
+                        textShadow: '0 0 10px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.8)'
+                      }}
+                    >
+                      SOFT
+                    </motion.div>
+                    <motion.div
+                      initial={{ letterSpacing: "0em" }}
+                      animate={{ letterSpacing: "0.4em" }}
+                      transition={{ duration: 0.8, delay: 0.5 }}
+                      className="text-[14px] font-black text-white uppercase leading-none"
+                      style={{
+                        textShadow: '0 0 10px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.8)'
+                      }}
+                    >
+                      SKILLS
+                    </motion.div>
+                  </div>
                 </div>
+
+                {/* Animated Elements */}
                 <motion.div
-                  animate={{ width: ['0%', '100%', '100%', '0%'] }}
-                  transition={{ duration: 2.5, times: [0, 0.3, 0.7, 1] }}
-                  className="h-0.5 bg-white mt-2 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: "60%" }}
+                  transition={{ duration: 1, delay: 0.8 }}
+                  className="h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mt-3 rounded-full"
                 />
-                <div className="text-[6px] font-mono text-white/60 uppercase tracking-widest mt-1">
-                  SHOWCASE
-                </div>
+
+                {/* Corner Decorations */}
+                {[0, 1, 2, 3].map((i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ scale: 0, rotate: 0 }}
+                    animate={{ scale: 1, rotate: 45 }}
+                    transition={{ delay: 1 + i * 0.1, duration: 0.3 }}
+                    className="absolute w-2 h-2 border-t border-l border-white/40"
+                    style={{
+                      [i < 2 ? 'top' : 'bottom']: '8px',
+                      [i % 2 === 0 ? 'left' : 'right']: '8px',
+                      transform: `rotate(${i * 90}deg)`
+                    }}
+                  />
+                ))}
+
+                {/* Subtitle with Typewriter Effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5, duration: 0.5 }}
+                  className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
+                >
+                  <div className="text-[6px] font-mono text-white/70 uppercase tracking-[0.3em] text-center">
+                    <motion.span
+                      initial={{ width: 0 }}
+                      animate={{ width: "100%" }}
+                      transition={{ delay: 1.8, duration: 1.2 }}
+                      className="inline-block overflow-hidden whitespace-nowrap"
+                    >
+                      HUMAN CAPABILITIES
+                    </motion.span>
+                  </div>
+                </motion.div>
+
+                {/* Pulsing Glow Effect */}
+                <motion.div
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.3, 0.6, 0.3]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute inset-0 bg-white/5 rounded-md blur-sm"
+                />
               </motion.div>
             ) : (
               /* Skill Display */
