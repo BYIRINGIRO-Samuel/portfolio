@@ -206,6 +206,119 @@ const CityBuilding = ({ h = 80, w = 30, delay = 0 }) => (
   </div>
 );
 
+const ZebraCrossing = () => (
+  <g opacity="0.08">
+    {[...Array(8)].map((_, i) => (
+      <rect 
+        key={i} 
+        x={620 + i * 14} y={235} 
+        width={8} height={28} 
+        fill="white" 
+        className="pointer-events-none"
+        transform={`rotate(-5, ${620 + i * 14}, 235)`}
+      />
+    ))}
+  </g>
+);
+
+const Character = ({ type }) => {
+  const isDev = type === 'dev';
+  return (
+    <div className="relative flex flex-col items-center">
+      {/* Walking Leg Animation */}
+      <div className="absolute bottom-0 w-full flex justify-around">
+        <motion.div animate={{ rotate: [5, -5, 5] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-0.5 h-3 bg-white" />
+        <motion.div animate={{ rotate: [-5, 5, -5] }} transition={{ repeat: Infinity, duration: 0.5 }} className="w-0.5 h-3 bg-white" />
+      </div>
+      <svg width="20" height="32" viewBox="0 0 20 32" fill="none">
+        {/* Head */}
+        <circle cx="10" cy="5" r="4" fill="white" />
+        {/* Body */}
+        <path d="M6 10H14L15 24H5L6 10Z" fill={isDev ? "white" : "#d1d1d1"} fillOpacity="0.9" />
+        {/* Suit Detail for Investor */}
+        {!isDev && <path d="M10 10L13 14H7L10 10Z" fill="#333" />}
+        {/* Accessories */}
+        {isDev ? (
+           <rect x="5" y="12" width="10" height="8" rx="1" fill="#444" stroke="white" strokeWidth="0.5" /> // Backpack
+        ) : (
+           <rect x="14" y="18" width="5" height="4" rx="0.5" fill="#333" stroke="white" strokeWidth="0.3" /> // Briefcase
+        )}
+      </svg>
+    </div>
+  );
+};
+
+const InteractionZone = () => {
+  // Use local state to cycle through interaction stages
+  const [stage, setStage] = useState(0); // 0: Walking, 1: Handshake, 2: Chatting, 3: Success
+
+  React.useEffect(() => {
+    const cycle = async () => {
+      while(true) {
+        setStage(0); await new Promise(r => setTimeout(r, 4000));
+        setStage(1); await new Promise(r => setTimeout(r, 1500));
+        setStage(2); await new Promise(r => setTimeout(r, 4000));
+        setStage(3); await new Promise(r => setTimeout(r, 2000));
+      }
+    };
+    cycle();
+  }, []);
+
+  return (
+    <div className="absolute top-[41%] left-[54%] -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-none">
+       <div className="relative w-[180px] h-[60px] flex items-end justify-between px-6">
+          {/* Developer Walking In */}
+          <motion.div
+            animate={{ 
+              x: stage === 0 ? -120 : -15,
+              opacity: stage === 3 ? 0 : 1,
+              transition: { duration: 4, ease: "easeOut" }
+            }}
+            className="relative"
+          >
+             <Character type="dev" />
+             {(stage === 2) && (
+               <motion.div 
+                 initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+                 className="absolute -top-10 -left-12 bg-white/10 backdrop-blur-md border border-white/20 p-1 px-2 rounded-lg whitespace-nowrap"
+               >
+                 <span className="text-[6px] font-black tracking-widest uppercase italic">"Project Uplink Stable."</span>
+               </motion.div>
+             )}
+          </motion.div>
+
+          {/* Investor Walking In */}
+          <motion.div
+            animate={{ 
+              x: stage === 0 ? 120 : 15,
+              opacity: stage === 3 ? 0 : 1,
+              transition: { duration: 4, ease: "easeOut" }
+            }}
+            className="relative"
+          >
+             <Character type="investor" />
+             {(stage === 2) && (
+               <motion.div 
+                 initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
+                 className="absolute -top-10 -right-12 bg-white/10 backdrop-blur-md border border-white/20 p-1 px-2 rounded-lg whitespace-nowrap"
+               >
+                 <span className="text-[6px] font-black tracking-widest uppercase italic text-green-400">"Impressive... Let's fund."</span>
+               </motion.div>
+             )}
+          </motion.div>
+
+          {/* Handshake Glow */}
+          {stage === 1 && (
+            <motion.div 
+               initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 0.4 }}
+               className="absolute left-1/2 -translate-x-1/2 bottom-8 w-4 h-4 bg-white/40 blur-md rounded-full"
+            />
+          )}
+       </div>
+    </div>
+  );
+};
+
 const grassPositions = [
   // Minimalist scattering for a clean city look
   { top: '8%', left: '40%' }, { top: '5%', left: '75%' },
@@ -303,6 +416,9 @@ const SkillsSection = () => {
             className="opacity-20"
             strokeDasharray="10 10"
           />
+          
+          {/* Zebra Crossing */}
+          <ZebraCrossing />
           
           {/* Active Path Highlight */}
           <motion.path
@@ -435,10 +551,13 @@ const SkillsSection = () => {
           />
         </div>
 
-        {/* Traffic Lights */}
+        {/* Traffic Light */}
         <div className="absolute top-[28%] left-[45%] z-20">
           <TrafficLight />
         </div>
+
+        {/* Meeting Interaction: Dev & Investor */}
+        <InteractionZone />
 
         {/* City Benches with Pedestrians */}
         <div className="absolute top-[8%] left-[12%] z-10">
