@@ -44,6 +44,61 @@ const DataVehicle = () => (
   </div>
 );
 
+const CityBench = ({ occupants = 2 }) => (
+  <div className="relative group/bench">
+    <svg width="40" height="24" viewBox="0 0 40 24" fill="none" className="opacity-40 group-hover/bench:opacity-80 transition-opacity">
+      {/* Bench Frame */}
+      <path d="M4 18H36M4 14H36M6 10V22M34 10V22" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M6 14C6 14 10 12 20 12C30 12 34 14 34 14" stroke="white" strokeWidth="1" strokeOpacity="0.5" />
+      
+      {/* People Silhouettes */}
+      {occupants >= 1 && (
+        <g transform="translate(10, 4)">
+          <circle cx="4" cy="2" r="2.5" fill="white" />
+          <path d="M1 8C1 6 2 5 4 5C6 5 7 6 7 8V12H1V8Z" fill="white" />
+        </g>
+      )}
+      {occupants >= 2 && (
+        <g transform="translate(22, 5)">
+          <circle cx="4" cy="2" r="2.5" fill="white" fillOpacity="0.7" />
+          <path d="M1 8C1 6 2 5 4 5C6 5 7 6 7 8V12H1V8Z" fill="white" fillOpacity="0.7" />
+        </g>
+      )}
+    </svg>
+    <div className="absolute inset-0 bg-white/5 blur-md rounded-full -z-10 group-hover/bench:bg-white/10 transition-all" />
+  </div>
+);
+
+const RealisticGrassClump = ({ scale = 1, opacity = 0.3 }) => (
+  <div className="pointer-events-none transition-all duration-300 group-hover:scale-110" style={{ transform: `scale(${scale})` }}>
+    <svg width="30" height="20" viewBox="0 0 30 20" fill="none">
+      {/* 3-4 Curved blades per clump */}
+      <path d="M15 20 Q 12 10 8 5" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity={opacity} />
+      <path d="M15 20 Q 15 5 15 2" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity={opacity * 0.8} />
+      <path d="M15 20 Q 18 10 22 5" stroke="white" strokeWidth="1.2" strokeLinecap="round" opacity={opacity} />
+      <path d="M15 20 Q 10 15 5 12" stroke="white" strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.6} />
+      <path d="M15 20 Q 20 15 25 12" stroke="white" strokeWidth="1" strokeLinecap="round" opacity={opacity * 0.6} />
+      
+      {/* Soft ground highlight */}
+      <circle cx="15" cy="20" r="8" fill="white" fillOpacity="0.03" filter="blur(2px)" />
+    </svg>
+  </div>
+);
+
+const grassPositions = [
+  // Extensive scattering across all quadrants
+  { top: '5%', left: '8%' }, { top: '3%', left: '20%' }, { top: '7%', left: '35%' }, { top: '12%', left: '15%' },
+  { top: '18%', left: '5%' }, { top: '25%', left: '10%' }, { top: '15%', left: '42%' }, { top: '6%', left: '55%' },
+  { top: '10%', left: '68%' }, { top: '4%', left: '82%' }, { top: '14%', left: '92%' }, { top: '22%', left: '75%' },
+  { top: '30%', left: '88%' }, { top: '42%', left: '95%' }, { top: '55%', left: '90%' }, { top: '68%', left: '94%' },
+  { top: '35%', left: '5%' }, { top: '48%', left: '12%' }, { top: '52%', left: '3%' }, { top: '65%', left: '8%' },
+  { top: '78%', left: '5%' }, { top: '88%', left: '12%' }, { top: '94%', left: '4%' }, { top: '82%', left: '25%' },
+  { top: '92%', left: '35%' }, { top: '85%', left: '48%' }, { top: '95%', left: '62%' }, { top: '88%', left: '78%' },
+  { top: '92%', left: '88%' }, { top: '75%', left: '94%' }, { top: '62%', left: '82%' }, { top: '50%', left: '72%' },
+  { top: '40%', left: '62%' }, { top: '32%', left: '48%' }, { top: '28%', left: '64%' }, { top: '45%', left: '52%' },
+  { top: '38%', left: '30%' }, { top: '22%', left: '55%' }, { top: '85%', left: '95%' }, { top: '75%', left: '18%' }
+];
+
 const milestones = [
   {
     id: "01",
@@ -235,6 +290,31 @@ const SkillsSection = () => {
         >
           <DataVehicle />
         </motion.div>
+
+        {/* Urban Scene Elements */}
+        {/* Realistic Grass Clumps Scattered Everywhere */}
+        {grassPositions.map((pos, i) => (
+          <div key={i} className="absolute z-10" style={pos}>
+            <RealisticGrassClump scale={0.5 + Math.random() * 0.5} opacity={0.2 + Math.random() * 0.3} />
+          </div>
+        ))}
+
+        {/* City Benches */}
+        <div className="absolute top-[8%] left-[12%] z-10">
+          <CityBench occupants={1} />
+        </div>
+
+        <div className="absolute bottom-[20%] left-[8%] z-10">
+          <CityBench occupants={2} />
+        </div>
+
+        <div className="absolute top-[50%] right-[3%] z-10">
+          <CityBench occupants={1} />
+        </div>
+
+        <div className="absolute bottom-[12%] right-[22%] z-10">
+          <CityBench occupants={2} />
+        </div>
 
         <div className="relative h-full w-full p-10">
           
