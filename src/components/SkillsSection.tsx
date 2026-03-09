@@ -419,12 +419,7 @@ const SkillsSection = () => {
         </motion.div>
 
         {/* Urban Scene Elements */}
-        {/* HQ Skyscrapers Silhouettes for Depth */}
-        <div className="absolute top-[3%] left-[10%] z-0 flex items-end gap-3 pointer-events-none">
-          <CityBuilding h={140} w={45} delay={0.5} />
-          <CityBuilding h={200} w={60} delay={0.2} />
-          <CityBuilding h={110} w={35} delay={0.8} />
-        </div>
+        {/* Restored HQ Buildings on Right side */}
         <div className="absolute top-[5%] right-[5%] z-0 flex items-end gap-5 pointer-events-none">
           <CityBuilding h={160} w={50} delay={1.2} />
           <CityBuilding h={240} w={70} delay={0} />
