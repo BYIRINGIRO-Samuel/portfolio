@@ -1,28 +1,97 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, X, MessageCircle, Brain, Sparkles } from 'lucide-react';
+import { Send, X, Sparkles } from 'lucide-react';
 
 interface Message {
   id: string;
   text: string;
   isBot: boolean;
   timestamp: Date;
+  isTyping?: boolean;
 }
 
 const ChatBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      text: "Hello! I'm Samuel's AI assistant. I can help you learn about his skills, projects, and experience. What would you like to know?",
-      isBot: true,
-      timestamp: new Date()
-    }
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showQuickActions, setShowQuickActions] = useState(true);
+  const [typingMessageId, setTypingMessageId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Typing Text Component
+  const TypingText: React.FC<{ text: string; isTyping: boolean }> = ({ text, isTyping }) => {
+    const [displayedText, setDisplayedText] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+      if (isTyping && currentIndex < text.length) {
+        const timer = setTimeout(() => {
+          setDisplayedText(prev => prev + text[currentIndex]);
+          setCurrentIndex(prev => prev + 1);
+        }, 25);
+        return () => clearTimeout(timer);
+      } else if (!isTyping) {
+        setDisplayedText(text);
+        setCurrentIndex(text.length);
+      }
+    }, [currentIndex, text, isTyping]);
+
+    useEffect(() => {
+      // Reset when text changes
+      if (isTyping) {
+        setDisplayedText('');
+        setCurrentIndex(0);
+      }
+    }, [text, isTyping]);
+
+    return (
+      <span className="font-mono text-sm leading-relaxed">
+        {displayedText}
+        {isTyping && currentIndex < text.length && (
+          <motion.span
+            animate={{ opacity: [1, 0] }}
+            transition={{ duration: 0.8, repeat: Infinity }}
+            className="inline-block w-0.5 h-4 bg-white/60 ml-1"
+          />
+        )}
+      </span>
+    );
+  };
+
+  // Initialize with typing welcome message
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      const welcomeMessage: Message = {
+        id: 'welcome',
+        text: "Hello! I'm Samuel's AI assistant. I can help you learn about his skills, projects, and experience. What would you like to know?",
+        isBot: true,
+        timestamp: new Date(),
+        isTyping: true
+      };
+      setMessages([welcomeMessage]);
+      setTypingMessageId('welcome');
+      
+      // Start typing animation for welcome message
+      const typingDuration = welcomeMessage.text.length * 25 + 800;
+      setTimeout(() => {
+        setTypingMessageId(null);
+        setMessages(prev => prev.map(msg => 
+          msg.id === 'welcome' ? { ...msg, isTyping: false } : msg
+        ));
+      }, typingDuration);
+    }
+  }, [isOpen, messages.length]);
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 100);
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
 
   const quickActions = [
     { text: "Tell me about his skills", icon: "🚀" },
@@ -36,14 +105,6 @@ const ChatBot: React.FC = () => {
     setShowQuickActions(false);
     setTimeout(() => handleSendMessage(actionText), 100);
   };
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
 
   const botResponses = {
     skills: [
@@ -123,24 +184,47 @@ const ChatBot: React.FC = () => {
 
     setMessages(prev => [...prev, userMessage]);
     setInputValue('');
+    setShowQuickActions(false);
+    
+    // Scroll to show user message
+    setTimeout(() => scrollToBottom(), 100);
+    
+    // Start thinking animation
     setIsTyping(true);
 
-    // Simulate typing delay
+    // Simulate thinking delay
     setTimeout(() => {
+      const responseText = getResponse(textToSend);
+      const botMessageId = (Date.now() + 1).toString();
+      
       const botResponse: Message = {
-        id: (Date.now() + 1).toString(),
-        text: getResponse(textToSend),
+        id: botMessageId,
+        text: responseText,
         isBot: true,
-        timestamp: new Date()
+        timestamp: new Date(),
+        isTyping: true
       };
       
       setMessages(prev => [...prev, botResponse]);
       setIsTyping(false);
-    }, 1500);
+      setTypingMessageId(botMessageId);
+      
+      // Scroll to show bot response
+      setTimeout(() => scrollToBottom(), 200);
+      
+      // Start typing animation
+      const typingDuration = responseText.length * 25 + 500;
+      setTimeout(() => {
+        setTypingMessageId(null);
+        setMessages(prev => prev.map(msg => 
+          msg.id === botMessageId ? { ...msg, isTyping: false } : msg
+        ));
+      }, typingDuration);
+    }, 1200);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !isTyping && typingMessageId === null) {
       e.preventDefault();
       handleSendMessage();
     }
@@ -244,57 +328,166 @@ const ChatBot: React.FC = () => {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 h-[340px] chat-scrollbar">
+            <div className="flex-1 overflow-y-auto p-4 space-y-6 h-[340px] chat-scrollbar">
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                   className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
                 >
-                  <div className={`max-w-[80%] p-3 rounded-2xl ${
-                    message.isBot 
-                      ? 'bg-white/10 text-white border border-white/20' 
-                      : 'bg-white text-black'
-                  }`}>
-                    <p className="text-sm leading-relaxed">{message.text}</p>
-                    <p className="text-xs opacity-60 mt-1">
+                  {message.isBot && (
+                    <div className="flex-shrink-0 mr-3">
+                      <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20">
+                        <img 
+                          src="/hero-character.png" 
+                          alt="AI" 
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
+                  <div className={`max-w-[75%] ${message.isBot ? '' : 'flex flex-col items-end'}`}>
+                    <div className={`p-4 rounded-2xl backdrop-blur-sm ${
+                      message.isBot 
+                        ? 'bg-white/5 border border-white/10 text-white rounded-tl-sm' 
+                        : 'bg-white/90 text-gray-900 rounded-tr-sm shadow-lg'
+                    }`}>
+                      {message.isBot ? (
+                        <TypingText 
+                          text={message.text} 
+                          isTyping={message.isTyping || typingMessageId === message.id} 
+                        />
+                      ) : (
+                        <p className="font-medium text-sm leading-relaxed">{message.text}</p>
+                      )}
+                    </div>
+                    <p className={`text-xs text-white/40 mt-1 px-2 ${message.isBot ? 'text-left' : 'text-right'}`}>
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
                 </motion.div>
               ))}
               
-              {/* Typing Indicator */}
+              {/* Enhanced Thinking Animation */}
               {isTyping && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white/10 border border-white/20 p-3 rounded-2xl">
-                    <div className="flex space-x-1">
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                        className="w-2 h-2 bg-white/60 rounded-full"
+                  <div className="flex-shrink-0 mr-3">
+                    <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 relative">
+                      <img 
+                        src="/hero-character.png" 
+                        alt="AI" 
+                        className="w-full h-full object-cover"
                       />
+                      {/* Thinking overlay */}
                       <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                        className="w-2 h-2 bg-white/60 rounded-full"
-                      />
-                      <motion.div
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                        className="w-2 h-2 bg-white/60 rounded-full"
+                        animate={{ opacity: [0.3, 0.7, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Infinity }}
+                        className="absolute inset-0 bg-white/10"
                       />
                     </div>
                   </div>
+                  <div className="bg-white/5 border border-white/10 p-4 rounded-2xl rounded-tl-sm backdrop-blur-sm relative overflow-hidden">
+                    {/* Neural network thinking animation */}
+                    <div className="flex items-center space-x-3">
+                      <div className="relative">
+                        {/* Pulsing brain icon */}
+                        <motion.div
+                          animate={{ 
+                            scale: [1, 1.1, 1],
+                            opacity: [0.6, 1, 0.6]
+                          }}
+                          transition={{ duration: 1.2, repeat: Infinity }}
+                          className="w-6 h-6 flex items-center justify-center"
+                        >
+                          <svg viewBox="0 0 24 24" className="w-5 h-5 text-white/60">
+                            <path fill="currentColor" d="M21.33 12.91c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L19 10.5l2.33-1.75c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L19 6.34l2.33-1.75c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L19 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L16.5 4.5 14.75 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L12.25 4.5 10.5 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L7.5 4.5 5.75 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L3.25 4.5 1.5 2.18c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L.5 2.5c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 4.91.5 6.66c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 9.07.5 10.82c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 13.23.5 14.98c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 17.39.5 19.14c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 21.55.5 23.3c-.09.09-.15.2-.15.33s.06.24.15.33l.34.34c.09.09.2.15.33.15s.24-.06.33-.15L3.25 22.5 5 24.82c.09.09.2.15.33.15s.24-.06.33-.15L7.5 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15L12.25 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15L16.5 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15L21.25 22.5l1.75 2.32c.09.09.2.15.33.15s.24-.06.33-.15l.34-.34c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 21.55 24 19.8c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 17.39 24 15.64c.09-.09.15-.2-.15-.33s-.06-.24-.15-.33L21.67 13.23 24 11.48c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 9.07 24 7.32c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 4.91 24 3.16c.09-.09.15-.2.15-.33s-.06-.24-.15-.33L21.67 0.75 24 -1c.09-.09.15-.2.15-.33s-.06-.24-.15-.33l-.34-.34c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L21.25 0.5 19.5 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L16.5 0.5 14.75 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L12.25 0.5 10.5 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L7.5 0.5 5.75 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L3.25 0.5 1.5 -1.82c-.09-.09-.2-.15-.33-.15s-.24.06-.33.15L.5 0.5c-.09.09-.15.2-.15.33s.06.24.15.33L2.83 2.91.5 4.66c-.09.09-.15.2-.15.33s.06.24.15.33z"/>
+                          </svg>
+                        </motion.div>
+                        
+                        {/* Orbiting dots */}
+                        {[0, 1, 2].map((i) => (
+                          <motion.div
+                            key={i}
+                            animate={{ rotate: 360 }}
+                            transition={{ 
+                              duration: 2 + i * 0.5, 
+                              repeat: Infinity, 
+                              ease: "linear",
+                              delay: i * 0.3
+                            }}
+                            className="absolute inset-0 w-6 h-6"
+                          >
+                            <div 
+                              className="absolute w-1 h-1 bg-white/40 rounded-full"
+                              style={{
+                                top: `${10 + i * 5}%`,
+                                left: '50%',
+                                transform: 'translateX(-50%)'
+                              }}
+                            />
+                          </motion.div>
+                        ))}
+                      </div>
+                      
+                      {/* Animated text */}
+                      <div className="flex flex-col">
+                        <motion.span 
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                          className="text-xs text-white/70 font-mono"
+                        >
+                          Processing...
+                        </motion.span>
+                        <div className="flex space-x-1 mt-1">
+                          {[0, 1, 2, 3, 4].map((i) => (
+                            <motion.div
+                              key={i}
+                              animate={{ 
+                                scale: [1, 1.4, 1],
+                                opacity: [0.3, 1, 0.3]
+                              }}
+                              transition={{ 
+                                duration: 1, 
+                                repeat: Infinity, 
+                                delay: i * 0.1 
+                              }}
+                              className="w-1 h-1 bg-white/50 rounded-full"
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Background neural network effect */}
+                    <motion.div
+                      animate={{ opacity: [0.1, 0.3, 0.1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      className="absolute inset-0 pointer-events-none"
+                    >
+                      <svg className="w-full h-full" viewBox="0 0 100 50">
+                        <line x1="10" y1="25" x2="30" y2="15" stroke="white" strokeWidth="0.5" opacity="0.2" />
+                        <line x1="30" y1="15" x2="50" y2="25" stroke="white" strokeWidth="0.5" opacity="0.2" />
+                        <line x1="50" y1="25" x2="70" y2="35" stroke="white" strokeWidth="0.5" opacity="0.2" />
+                        <line x1="70" y1="35" x2="90" y2="25" stroke="white" strokeWidth="0.5" opacity="0.2" />
+                        <circle cx="30" cy="15" r="1" fill="white" opacity="0.3" />
+                        <circle cx="50" cy="25" r="1" fill="white" opacity="0.3" />
+                        <circle cx="70" cy="35" r="1" fill="white" opacity="0.3" />
+                      </svg>
+                    </motion.div>
+                  </div>
                 </motion.div>
               )}
+
               {/* Quick Actions */}
-              {showQuickActions && messages.length === 1 && (
+              {showQuickActions && messages.length <= 1 && !isTyping && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -304,12 +497,12 @@ const ChatBot: React.FC = () => {
                     <motion.button
                       key={index}
                       onClick={() => handleQuickAction(action.text)}
-                      whileHover={{ scale: 1.02 }}
+                      whileHover={{ scale: 1.02, backgroundColor: 'rgba(255,255,255,0.1)' }}
                       whileTap={{ scale: 0.98 }}
-                      className="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs text-white/80 hover:text-white transition-all text-left"
+                      className="p-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs text-white/80 hover:text-white transition-all text-left backdrop-blur-sm"
                     >
-                      <span className="mr-2">{action.icon}</span>
-                      {action.text}
+                      <span className="mr-2 text-sm">{action.icon}</span>
+                      <span className="font-medium">{action.text}</span>
                     </motion.button>
                   ))}
                 </motion.div>
@@ -326,15 +519,16 @@ const ChatBot: React.FC = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask me about Samuel's work..."
-                  className="flex-1 bg-transparent text-white placeholder-white/50 text-sm outline-none px-2 py-1"
+                  placeholder={isTyping ? "AI is thinking..." : "Ask me about Samuel's work..."}
+                  disabled={isTyping || typingMessageId !== null}
+                  className="flex-1 bg-transparent text-white placeholder-white/50 text-sm outline-none px-2 py-1 disabled:opacity-50"
                 />
                 <motion.button
                   onClick={() => handleSendMessage()}
-                  disabled={!inputValue.trim()}
+                  disabled={!inputValue.trim() || isTyping || typingMessageId !== null}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-gray-200"
+                  className="w-8 h-8 bg-white text-black rounded-lg flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-gray-200 disabled:hover:bg-white"
                 >
                   <Send className="w-4 h-4 text-black" />
                 </motion.button>
