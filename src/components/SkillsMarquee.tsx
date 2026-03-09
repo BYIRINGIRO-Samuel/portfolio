@@ -1,11 +1,66 @@
 import React from 'react';
 import { motion } from "framer-motion";
+import {
+  SiArduino,
+  SiBootstrap,
+  SiC,
+  SiCplusplus,
+  SiDocker,
+  SiExpress,
+  SiFigma,
+  SiFirebase,
+  SiGit,
+  SiHtml5,
+  SiJavascript,
+  SiMariadb,
+  SiMongodb,
+  SiNodedotjs,
+  SiPhp,
+  SiPostgresql,
+  SiPostman,
+  SiPython,
+  SiReact,
+  SiRedis,
+  SiRedux,
+  SiSpring,
+  SiTailwindcss,
+  SiTypescript,
+} from "react-icons/si";
+import { FaJava, FaCss3 } from "react-icons/fa";
 
 const skills = [
-  "React", "TypeScript", "Python", "TensorFlow", "Next.js", "Node.js",
-  "Three.js", "Figma", "PostgreSQL", "Docker", "AWS", "Blender",
-  "PyTorch", "GraphQL", "Rust", "WebGL", "Kubernetes", "Svelte",
+  "arduino", "bootstrap", "c", "cplusplus", "css3", "docker", "express", "figma", "firebase", "git", "html5", "java", "javascript", "mariadb", "mongodb", "nodejs", "php", "postgresql", "postman", "python", "react", "reactnative", "redis", "redux", "spring", "tailwind", "typescript"
 ];
+
+const iconMap = {
+  "arduino": SiArduino,
+  "bootstrap": SiBootstrap,
+  "c": SiC,
+  "cplusplus": SiCplusplus,
+  "css3": FaCss3,
+  "docker": SiDocker,
+  "express": SiExpress,
+  "figma": SiFigma,
+  "firebase": SiFirebase,
+  "git": SiGit,
+  "html5": SiHtml5,
+  "java": FaJava,
+  "javascript": SiJavascript,
+  "mariadb": SiMariadb,
+  "mongodb": SiMongodb,
+  "nodejs": SiNodedotjs,
+  "php": SiPhp,
+  "postgresql": SiPostgresql,
+  "postman": SiPostman,
+  "python": SiPython,
+  "react": SiReact,
+  "reactnative": SiReact,
+  "redis": SiRedis,
+  "redux": SiRedux,
+  "spring": SiSpring,
+  "tailwind": SiTailwindcss,
+  "typescript": SiTypescript,
+};
 
 const SkillsMarquee = () => {
   return (
@@ -95,16 +150,20 @@ const SkillsMarquee = () => {
           />
 
           <div className="flex animate-marquee whitespace-nowrap items-center h-full">
-            {[...skills, ...skills, ...skills].map((skill, i) => (
-              <div key={i} className="flex items-center px-18 group/item">
-                <span className="text-[14px] font-black tracking-[0.5em] text-gray-200 group-hover/item:text-white group-hover/item:scale-105 transition-all duration-300 uppercase font-mono drop-shadow-[0_2px_4px_black]">
-                  {skill}
-                </span>
-                <span className="ml-10 text-[12px] font-black text-white/10 font-mono select-none">
-                   {`///`}
-                </span>
-              </div>
-            ))}
+            {[...skills, ...skills, ...skills].map((skill, i) => {
+              const Icon = iconMap[skill];
+              return (
+                <div key={i} className="flex items-center px-12 group/item">
+                  {Icon && <Icon size={16} className="mr-2 text-gray-200 group-hover/item:text-white transition-all duration-300" />}
+                  <span className="text-[14px] font-black tracking-[0.5em] text-gray-200 group-hover/item:text-white group-hover/item:scale-105 transition-all duration-300 uppercase font-mono drop-shadow-[0_2px_4px_black]">
+                    {skill}
+                  </span>
+                  <span className="ml-10 text-[12px] font-black text-white/10 font-mono select-none">
+                     {`///`}
+                  </span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
