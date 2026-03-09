@@ -83,104 +83,28 @@ const RealisticGrassClump = ({ scale = 1, opacity = 0.3 }) => (
 );
 
 const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
-  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
-  const [currentScene, setCurrentScene] = useState(0);
-  
-  const skillScenes = {
-    "Leadership": [
-      { 
-        title: "LEADING THE TEAM",
-        character: "👨‍💼",
-        action: "Guiding team members through complex challenges",
-        bgColor: "from-blue-900/20 to-purple-900/20"
-      },
-      {
-        title: "STRATEGIC VISION", 
-        character: "🎯",
-        action: "Setting clear goals and inspiring others",
-        bgColor: "from-purple-900/20 to-blue-900/20"
-      }
-    ],
-    "Communication": [
-      {
-        title: "CLEAR MESSAGING",
-        character: "💬", 
-        action: "Articulating ideas with precision and clarity",
-        bgColor: "from-green-900/20 to-teal-900/20"
-      },
-      {
-        title: "ACTIVE LISTENING",
-        character: "👂",
-        action: "Understanding stakeholder needs deeply", 
-        bgColor: "from-teal-900/20 to-green-900/20"
-      }
-    ],
-    "Teamwork": [
-      {
-        title: "COLLABORATION",
-        character: "🤝",
-        action: "Building synergy across diverse teams",
-        bgColor: "from-orange-900/20 to-red-900/20"
-      },
-      {
-        title: "SUPPORT NETWORK",
-        character: "🌐", 
-        action: "Creating inclusive team environments",
-        bgColor: "from-red-900/20 to-orange-900/20"
-      }
-    ],
-    "Problem_Solving": [
-      {
-        title: "ANALYTICAL MIND",
-        character: "🧠",
-        action: "Breaking down complex problems systematically", 
-        bgColor: "from-indigo-900/20 to-violet-900/20"
-      },
-      {
-        title: "CREATIVE SOLUTIONS",
-        character: "💡",
-        action: "Finding innovative approaches to challenges",
-        bgColor: "from-violet-900/20 to-indigo-900/20"
-      }
-    ],
-    "Critical_Thinking": [
-      {
-        title: "DEEP ANALYSIS", 
-        character: "🔍",
-        action: "Evaluating information from multiple angles",
-        bgColor: "from-cyan-900/20 to-blue-900/20"
-      },
-      {
-        title: "LOGICAL REASONING",
-        character: "⚡",
-        action: "Making data-driven decisions confidently", 
-        bgColor: "from-blue-900/20 to-cyan-900/20"
-      }
-    ]
-  };
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showTitle, setShowTitle] = useState(true);
 
-  const currentSkill = skills[currentSkillIndex] || "Leadership";
-  const scenes = skillScenes[currentSkill] || skillScenes["Leadership"];
-  const currentSceneData = scenes[currentScene];
+  // Create the full sequence: Title -> Skills -> Title -> Skills...
+  const sequence = ['SOFT SKILLS', ...skills];
 
   useEffect(() => {
     if (!isActive) return;
     
-    const sceneInterval = setInterval(() => {
-      setCurrentScene(prev => {
-        const nextScene = (prev + 1) % scenes.length;
-        // If we've completed all scenes for this skill, move to next skill
-        if (nextScene === 0) {
-          setTimeout(() => {
-            setCurrentSkillIndex(prevSkill => (prevSkill + 1) % skills.length);
-          }, 100);
-        }
-        return nextScene;
+    const interval = setInterval(() => {
+      setCurrentIndex(prev => {
+        const nextIndex = (prev + 1) % sequence.length;
+        setShowTitle(nextIndex === 0);
+        return nextIndex;
       });
-    }, 3000);
+    }, showTitle ? 3000 : 2000); // Title shows longer (3s), skills show for 2s each
     
-    return () => clearInterval(sceneInterval);
-  }, [isActive, scenes.length, skills.length, currentSkillIndex]);
+    return () => clearInterval(interval);
+  }, [isActive, sequence.length, showTitle]);
+
+  const currentContent = sequence[currentIndex];
+  const isTitle = currentIndex === 0;
 
   return (
     <div className="relative group/billboard flex flex-col items-center transition-all duration-300">
@@ -194,87 +118,116 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
         <div className="absolute inset-0 border border-gray-600 rounded-md m-1" />
         
         {/* Screen */}
-        <div className={`absolute inset-3 rounded-md overflow-hidden bg-gradient-to-br ${currentSceneData.bgColor}`}>
+        <div className={`absolute inset-3 rounded-md overflow-hidden ${isTitle ? 'bg-gradient-to-br from-white/10 to-white/15' : 'bg-gradient-to-br from-white/5 to-white/8'}`}>
           {/* Scan Lines */}
           <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.03)_1px,rgba(255,255,255,0.03)_2px)] pointer-events-none" />
           
           {/* Content */}
           <div className="relative h-full flex flex-col items-center justify-center p-3 text-center">
-            {/* Skill Title */}
-            <div className="text-[8px] font-mono text-white/60 uppercase tracking-widest mb-1">
-              {currentSkill.replace('_', ' ')}
-            </div>
-            
-            {/* Character Animation */}
-            <motion.div
-              key={`${currentSkillIndex}-${currentScene}`}
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ duration: 0.8, type: "spring" }}
-              className="text-3xl mb-2"
-            >
-              {currentSceneData.character}
-            </motion.div>
-            
-            {/* Scene Title */}
-            <motion.div
-              key={`title-${currentSkillIndex}-${currentScene}`}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-[8px] font-bold text-white/90 uppercase tracking-wider mb-2"
-            >
-              {currentSceneData.title}
-            </motion.div>
-            
-            {/* Action Description */}
-            <motion.div
-              key={`action-${currentSkillIndex}-${currentScene}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="text-[6px] text-white/70 leading-tight font-medium"
-            >
-              {currentSceneData.action}
-            </motion.div>
-            
-            {/* Progress Indicators */}
-            <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
-              {skills.map((_, i) => (
-                <div
-                  key={i}
-                  className={`w-1 h-1 rounded-full transition-all ${
-                    i === currentSkillIndex ? 'bg-white' : 'bg-white/30'
-                  }`}
+            {isTitle ? (
+              /* Title Display */
+              <motion.div
+                key="title"
+                initial={{ opacity: 0, scale: 0.5, rotateX: -90 }}
+                animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                transition={{ duration: 0.8, type: "spring", stiffness: 200 }}
+                className="flex flex-col items-center"
+              >
+                <div className="text-[16px] font-black text-white uppercase tracking-[0.3em] leading-none mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  SOFT
+                </div>
+                <div className="text-[16px] font-black text-white uppercase tracking-[0.3em] leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  SKILLS
+                </div>
+                <motion.div
+                  animate={{ width: ['0%', '100%', '100%', '0%'] }}
+                  transition={{ duration: 2.5, times: [0, 0.3, 0.7, 1] }}
+                  className="h-0.5 bg-white mt-2 rounded-full"
                 />
-              ))}
-            </div>
+                <div className="text-[6px] font-mono text-white/60 uppercase tracking-widest mt-1">
+                  SHOWCASE
+                </div>
+              </motion.div>
+            ) : (
+              /* Skill Display */
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -50 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="flex flex-col items-center"
+              >
+                <div className="text-[12px] font-bold text-white uppercase tracking-wider leading-tight">
+                  {currentContent.replace('_', ' ')}
+                </div>
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="w-8 h-0.5 bg-white/60 mt-1 origin-left"
+                />
+              </motion.div>
+            )}
+            
+            {/* Progress Indicators - only show during skills */}
+            {!isTitle && (
+              <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
+                {skills.map((_, i) => (
+                  <div
+                    key={i}
+                    className={`w-1 h-1 rounded-full transition-all ${
+                      i === currentIndex - 1 ? 'bg-white' : 'bg-white/30'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
           
-          {/* Static/Noise Effect */}
+          {/* Enhanced Static/Noise Effect for Title */}
           <motion.div
-            animate={{ opacity: [0, 0.1, 0] }}
+            animate={{ opacity: isTitle ? [0, 0.15, 0] : [0, 0.05, 0] }}
             transition={{ duration: 0.1, repeat: Infinity, repeatType: "reverse" }}
             className="absolute inset-0 bg-white/5 mix-blend-overlay"
           />
+          
+          {/* Glitch Effect for Title */}
+          {isTitle && (
+            <motion.div
+              animate={{ 
+                opacity: [0, 0.3, 0],
+                x: [0, 2, -1, 0]
+              }}
+              transition={{ 
+                duration: 4, 
+                repeat: Infinity,
+                times: [0, 0.1, 0.2, 1]
+              }}
+              className="absolute inset-0 bg-white/10 mix-blend-difference"
+            />
+          )}
         </div>
         
         {/* TV Controls */}
         <div className="absolute bottom-2 right-2 flex gap-1">
-          <div className="w-1.5 h-1.5 bg-red-500 rounded-full opacity-60" />
-          <div className="w-1.5 h-1.5 bg-green-500 rounded-full opacity-60" />
+          <div className="w-1.5 h-1.5 bg-white/60 rounded-full opacity-60" />
+          <div className="w-1.5 h-1.5 bg-white/40 rounded-full opacity-60" />
         </div>
         
-        {/* Power Indicator */}
+        {/* Power Indicator - brighter during title */}
         <motion.div
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute top-2 right-2 w-1.5 h-1.5 bg-blue-400 rounded-full"
+          animate={{ 
+            opacity: isTitle ? [0.7, 1, 0.7] : [0.5, 1, 0.5],
+            scale: isTitle ? [1, 1.2, 1] : 1
+          }}
+          transition={{ duration: isTitle ? 1 : 2, repeat: Infinity }}
+          className="absolute top-2 right-2 w-1.5 h-1.5 bg-white/80 rounded-full"
         />
         
         {/* Brand Label */}
         <div className="absolute top-1 left-2 text-[6px] font-mono text-white/40 uppercase">
-          SOFT_SKILLS_TV
+          {isTitle ? 'BROADCAST' : 'LIVE'}
         </div>
       </motion.div>
       
