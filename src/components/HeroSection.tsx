@@ -65,7 +65,7 @@ const HeroSection = () => {
               </div>
 
               <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                <span className="text-white font-black text-sm cursor-pointer">S</span>
+                <img src="/logo.png" alt="Logo" className="h-6 w-6 rounded-full object-contain" />
               </div>
 
               <div className="flex flex-col items-center gap-2 w-full">
