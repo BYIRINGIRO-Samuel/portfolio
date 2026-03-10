@@ -40,20 +40,20 @@ const clients = [
   }
 ];
 
-/* Natural fanned spread offsets for the photos on the desk */
+/* Spread offsets for the glass screens */
 const fanOffsets = [
-  { x: -160, y: 20,  r: -16 },
-  { x: -80,  y: -10, r: -8 },
-  { x: 0,    y: -25, r: 0 },
-  { x: 80,   y: -10, r: 8 },
-  { x: 160,  y: 20,  r: 16 },
+  { x: -180, y: 30,  r: -12 },
+  { x: -90,  y: -5,  r: -6 },
+  { x: 0,    y: -20, r: 0 },
+  { x: 90,   y: -5,  r: 6 },
+  { x: 180,  y: 30,  r: 12 },
 ];
 
 /* ── Desk Props (Real-world aesthetic details) ───────── */
 const TabletDevice = () => (
+  // Resting code editor pad
   <div className="absolute -left-16 bottom-16 w-[300px] h-[220px] bg-[#050505] rounded-[24px] border-[5px] border-[#1a1a1a] shadow-[15px_15px_40px_rgba(0,0,0,0.9)] -rotate-12 flex items-center justify-center p-2 opacity-80 pointer-events-none">
     <div className="w-full h-full bg-[#0a0a0a] rounded-[14px] overflow-hidden relative border border-white/5 flex flex-col p-5 shadow-inner">
-      {/* Mock Code Editor Screen */}
       <div className="w-20 h-2 bg-white/10 rounded-full mb-4" />
       <div className="w-40 h-2 bg-white/10 rounded-full mb-4" />
       <div className="w-24 h-2 bg-green-500/30 rounded-full mb-4" />
@@ -66,13 +66,10 @@ const TabletDevice = () => (
 );
 
 const CoffeeCup = () => (
-  // Positioned top-right
   <div className="absolute -right-6 -top-6 w-40 h-40 bg-[#0a0a0a] rounded-full border-[10px] border-[#151515] shadow-[0_25px_50px_rgba(0,0,0,0.9)] flex items-center justify-center opacity-90 pointer-events-none">
     <div className="w-[75%] h-[75%] rounded-full bg-[#180a00] border-[2px] border-[#000] shadow-[inset_0_15px_30px_rgba(0,0,0,1)] relative overflow-hidden flex items-center justify-center">
-      {/* Coffee Crema Rim */}
       <div className="absolute w-[92%] h-[92%] rounded-full border-2 border-[#5c3a21] opacity-60" />
       <div className="absolute w-[80%] h-[80%] rounded-full border border-[#4a2810] opacity-30" />
-      {/* Animated Steam */}
       <motion.div
         animate={{ y: [-5, -20], opacity: [0, 0.4, 0], scale: [1, 1.5] }}
         transition={{ repeat: Infinity, duration: 4, ease: 'easeOut' }}
@@ -100,7 +97,6 @@ const Testimonials = () => {
   const [active, setActive] = useState(2);
   const [manualMode, setManualMode] = useState(false);
 
-  // Auto cycle through polaroids
   useEffect(() => {
     if (manualMode) return;
     const interval = setInterval(() => {
@@ -115,17 +111,15 @@ const Testimonials = () => {
       {/* Desk Surface Container */}
       <div className="relative w-full max-w-7xl h-[600px] md:h-[700px] bg-[#0c0c0c] border border-white/10 rounded-xl md:rounded-3xl shadow-[inset_0_0_150px_rgba(0,0,0,1)] overflow-hidden">
         
-        {/* Desk vignette lighting */}
+        {/* Desk vignette & noise */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,_rgba(255,255,255,0.06),_transparent_70%)] pointer-events-none z-0" />
-        {/* Subtle wood-like grain noise pattern */}
         <div className="absolute inset-0 opacity-[0.015] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiNmZmYiLz48cmVjdCB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSIjMDAwIi8+PC9zdmc+')] pointer-events-none z-0" />
 
-        {/* ── Environment Desk Props ── */}
         <CoffeeCup />
         <TabletDevice />
         <Pen />
 
-        {/* ── Etched Text on Desk ── */}
+        {/* Etched Text */}
         <div className="absolute top-8 left-8 md:top-12 md:left-14 pointer-events-none z-0">
           <p className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.4em] text-white/20 mb-1 italic mix-blend-overlay">Archive // 2024</p>
           <h2 className="text-3xl md:text-5xl font-black italic tracking-tighter uppercase leading-none text-white/10 mix-blend-overlay">
@@ -133,13 +127,12 @@ const Testimonials = () => {
           </h2>
         </div>
 
-        {/* ── The Polaroid Deck (Centered) ── */}
-        <div className="absolute inset-0 flex items-center justify-center mt-10 z-10">
+        {/* ── Futuristic Transparent OLED Screens ── */}
+        <div className="absolute inset-0 flex items-center justify-center mt-6 md:mt-10 z-10">
           
           {clients.map((c, i) => {
             const isActive = active === i;
             
-            // For smaller screens, reduce the horizontal spread
             const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
             const sfX = isMobile ? 0.6 : 1; 
 
@@ -149,29 +142,54 @@ const Testimonials = () => {
                 initial={false}
                 animate={
                   isActive
-                    ? { x: 0, y: -40, rotate: 0, scale: isMobile ? 1.05 : 1.25, zIndex: 50, opacity: 1 }
-                    : { x: fanOffsets[i].x * sfX, y: fanOffsets[i].y, rotate: fanOffsets[i].r, scale: isMobile ? 0.75 : 0.85, zIndex: i, opacity: 0.5 }
+                    ? { x: 0, y: -40, rotate: 0, scale: isMobile ? 1 : 1.15, zIndex: 50, opacity: 1 }
+                    : { x: fanOffsets[i].x * sfX, y: fanOffsets[i].y, rotate: fanOffsets[i].r, scale: isMobile ? 0.75 : 0.85, zIndex: i, opacity: 0.4 }
                 }
-                whileHover={!isActive ? { opacity: 0.9, y: fanOffsets[i].y - 15 } : {}}
+                whileHover={!isActive ? { opacity: 0.8, y: fanOffsets[i].y - 10 } : {}}
                 transition={{ type: 'spring', stiffness: 220, damping: 25 }}
                 onClick={() => { setActive(i); setManualMode(true); }}
-                className={`absolute w-[240px] md:w-[260px] bg-[#f8f8f8] p-3 pb-6 md:pb-8 rounded-sm shadow-[0_30px_60px_rgba(0,0,0,0.9)] 
-                  ${isActive ? 'cursor-default pointer-events-none' : 'cursor-pointer'}
+                className={`absolute w-[280px] md:w-[320px] rounded-2xl bg-[#0a0a0a]/70 backdrop-blur-xl border border-white/20 shadow-[0_30px_60px_rgba(0,0,0,0.9),inset_0_0_40px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col
+                  ${isActive ? 'cursor-default ring-1 ring-white/30' : 'cursor-pointer'}
                 `}
               >
-                {/* Photo window */}
-                <div className="w-full h-[180px] md:h-[200px] bg-black mb-4 md:mb-5 relative overflow-hidden shadow-[inset_0_4px_10px_rgba(0,0,0,0.3)]">
-                  {/* The image (darkened and styled like a printed photo) */}
-                  <img src={c.img} alt={c.company} className="w-full h-full object-cover grayscale mix-blend-screen opacity-90" />
-                  {/* Photo tint overlay */}
-                  <div className="absolute inset-0 bg-[#0f0f0f] mix-blend-overlay opacity-60" />
+                {/* Upper Screen Glare */}
+                <div className="absolute inset-x-0 top-0 h-1/2 bg-gradient-to-b from-white/[0.12] to-transparent pointer-events-none mix-blend-overlay" />
+
+                {/* UI Element on Top Right Corner */}
+                <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/40 shadow-[0_0_5px_white]" />
+                <div className="absolute top-[14px] right-6 w-8 h-[2px] rounded-full bg-white/20" />
+
+                {/* Displayed Image */}
+                <div className="w-full h-[140px] md:h-[160px] relative overflow-hidden border-b border-white/10">
+                  <img src={c.img} alt={c.company} className="w-full h-full object-cover opacity-60 mix-blend-screen scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-90" />
+                  
+                  {/* Digital Scanlines overlay */}
+                  <div className="absolute inset-0 bg-[repeating-linear-gradient(transparent,transparent_2px,rgba(0,0,0,0.4)_2px,rgba(0,0,0,0.4)_4px)] pointer-events-none" />
                 </div>
                 
-                {/* Text section representing handwritten back-of-photo or caption */}
-                <div className="px-2">
-                  <h3 className="text-[#050505] font-black uppercase text-lg md:text-xl tracking-tighter leading-none mb-1">{c.name}</h3>
-                  <p className="text-gray-500 font-mono text-[8px] md:text-[9px] uppercase tracking-widest mb-3 md:mb-4 border-b border-gray-300 pb-2 md:pb-3">{c.role} // {c.company}</p>
-                  <p className="text-[#111] font-sans text-[11px] md:text-xs leading-relaxed italic font-medium">"{c.quote}"</p>
+                {/* Screen Content Wrapper */}
+                <div className="p-4 md:p-6 relative z-10 flex flex-col justify-end flex-grow">
+                  
+                  <h3 className="text-white font-black uppercase text-lg md:text-xl tracking-tighter leading-none mb-2 drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                    {c.name}
+                  </h3>
+                  
+                  <div className="text-white/50 font-mono text-[9px] md:text-[10px] uppercase tracking-widest mb-4 border-b border-white/10 pb-3 flex justify-between items-center">
+                    <span>{c.role} // {c.company}</span>
+                    <span className="flex items-center gap-1.5 text-white/40">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                      SYS.OK
+                    </span>
+                  </div>
+                  
+                  <p className="text-white/90 font-sans text-xs md:text-[13px] leading-relaxed italic border-l-[3px] border-white/30 pl-3 min-h-[60px]">
+                    "{c.quote}"
+                  </p>
+
+                  <div className="mt-5 w-full flex justify-center">
+                    <div className="w-16 h-1 rounded-full bg-white/10" />
+                  </div>
                 </div>
               </motion.div>
             );
@@ -180,8 +198,8 @@ const Testimonials = () => {
         </div>
 
         {/* ── Hint Text ── */}
-        <p className="absolute bottom-8 w-full text-center font-mono text-[9px] uppercase tracking-widest text-white/30 pointer-events-none z-20">
-          Click any photo to bring it forward
+        <p className="absolute bottom-6 md:bottom-8 w-full text-center font-mono text-[9px] uppercase tracking-widest text-white/30 pointer-events-none z-20 transition-opacity">
+          Select a display panel to access record
         </p>
 
       </div>
