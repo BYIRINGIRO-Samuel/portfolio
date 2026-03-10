@@ -116,61 +116,72 @@ const Testimonials = () => {
           <div className="absolute inset-[2px] md:inset-[4px] bg-[#020202] overflow-hidden rounded-[2px] md:rounded-[4px]">
             
             <AnimatePresence mode="wait">
-               {/* ── Standby / Advanced Lock Screen ── */}
+               {/* ── Standby / News Show Intro Screen ── */}
                {tvState === 'standby' && (
                   <motion.div 
                     key="standby"
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute inset-0 flex flex-col items-center justify-center bg-[#070707] cursor-pointer group"
+                    className="absolute inset-0 flex flex-col bg-[#050505] cursor-pointer group shadow-inner"
                     onClick={handlePower}
                   >
-                     {/* Dynamic Grid Background */}
-                     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15)_1px,transparent_1px)] bg-[size:24px_24px]" />
-                     
-                     {/* HUD Telemetry Elements */}
-                     <div className="absolute top-4 left-5 flex flex-col gap-1.5 text-[7px] md:text-[8px] text-white/50 font-mono tracking-[0.2em] uppercase">
-                       <span className="text-white mb-1 tracking-[0.4em]">/// SYS_HUD</span>
-                       <span>STATUS: ENCRYPTED</span>
-                       <span>MEMORY: 256TB [OK]</span>
+                     {/* Dynamic Grid Background & Faux Globe Data */}
+                     <div className="absolute inset-0 opacity-[0.05] bg-[radial-gradient(ellipse_at_center,_white_1px,_transparent_1px)] bg-[size:12px_12px]" />
+                     <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+                       <div className="w-[600px] h-[300px] rounded-[100%] border border-white" />
+                       <div className="absolute w-[400px] h-[400px] rounded-[100%] border border-white rotate-45" />
+                       <div className="absolute w-[400px] h-[400px] rounded-[100%] border border-white -rotate-45" />
                      </div>
-                     <div className="absolute bottom-4 right-5 text-[7px] md:text-[8px] text-white/40 font-mono tracking-[0.2em] text-right uppercase hidden sm:block">
-                       NET: CONNECTED<br/><br/>
-                       SEC: AES-256
+                     
+                     {/* Top Bar: "LIVE REPORT" */}
+                     <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-red-600/90 to-red-900/40 border-b border-red-500/50 backdrop-blur-md z-20">
+                       <div className="flex items-center gap-2">
+                         <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse shadow-[0_0_8px_white]" />
+                         <span className="text-white font-sans text-[9px] md:text-[11px] font-black uppercase tracking-widest text-shadow">News Broadcast Feed</span>
+                       </div>
+                       <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
+                         SYNDICATION MODE: OK
+                       </span>
                      </div>
 
-                     {/* Central Interactive Scanner Component */}
-                     <div className="relative flex items-center justify-center w-28 h-28 md:w-36 md:h-36">
-                       {/* Rotating Rings */}
-                       <motion.div 
-                         animate={{ rotate: 360 }} 
-                         transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                         className="absolute w-20 h-20 md:w-28 md:h-28 rounded-full border border-white/10 border-t-white/50 border-b-white/50 pointer-events-none" 
-                       />
-                       <motion.div 
-                         animate={{ rotate: -360 }} 
-                         transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                         className="absolute w-24 h-24 md:w-36 md:h-36 rounded-full border border-white/10 border-l-white/40 border-r-white/40 border-dashed pointer-events-none" 
-                       />
+                     {/* Center Branding */}
+                     <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
+                       <div className="bg-white px-3 py-1 mb-3 rounded-xs shadow-lg">
+                         <p className="font-black text-red-700 text-[8px] md:text-[10px] uppercase tracking-[0.3em]">Special Report</p>
+                       </div>
+                       <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] leading-none text-center">
+                         Client <span className="text-white/40">Impact.</span>
+                       </h1>
+                       <p className="mt-3 text-[9px] md:text-[11px] text-white/50 font-sans font-bold uppercase tracking-[0.2em] max-w-sm text-center px-4">
+                         Exclusive Coverage on Full-Stack Engineering & Transformative Design
+                       </p>
                        
-                       {/* Play Button */}
+                       {/* Play Button simulating 'Tune In' */}
                        <motion.div 
-                         whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,1)' }}
+                         whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,1)', color: 'black' }}
                          whileTap={{ scale: 0.95 }}
-                         className="relative w-12 h-12 md:w-16 md:h-16 rounded-full bg-white text-black border border-white flex flex-col items-center justify-center z-10 transition-colors shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.6)]"
+                         className="mt-6 md:mt-8 px-6 py-2 rounded-full border border-white flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_20px_rgba(255,255,255,0.15)]"
                        >
-                         <svg className="w-5 h-5 md:w-6 md:h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                         <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                         <span className="font-black text-[9px] md:text-[11px] uppercase tracking-widest">Tune In Now</span>
                        </motion.div>
                      </div>
-                     
-                     {/* Blinking prompt */}
-                     <motion.p 
-                       animate={{ opacity: [0.4, 1, 0.4] }}
-                       transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-                       className="mt-6 font-mono text-[8px] md:text-[10px] text-white uppercase tracking-[0.4em] z-10"
-                     >
-                       Click to Decrypt
-                     </motion.p>
+
+                     {/* Bottom Breaking News Ticker */}
+                     <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-red-500/20 bg-black flex items-center z-20">
+                       <div className="bg-red-600 h-full flex items-center px-3 md:px-4 z-10 font-black text-white text-[8px] md:text-[10px] uppercase tracking-widest flex-shrink-0 shadow-[5px_0_10px_rgba(0,0,0,0.8)]">
+                         Breaking
+                       </div>
+                       <div className="flex-1 overflow-hidden h-full relative border-l border-white/5 bg-[#0a0a0a]">
+                         <motion.div 
+                           animate={{ x: ['100%', '-100%'] }}
+                           transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+                           className="absolute whitespace-nowrap h-full flex items-center font-sans font-bold text-[9px] md:text-[11px] text-white/70 uppercase tracking-widest"
+                         >
+                           Samuel's platforms skyrocket user retention &nbsp;&nbsp; /// &nbsp;&nbsp; "The code is modular and deployment was flawless" - David O. &nbsp;&nbsp; /// &nbsp;&nbsp; Next Gen Tech Solutions reshaping the web landscape...
+                         </motion.div>
+                       </div>
+                     </div>
                   </motion.div>
                )}
 
@@ -217,13 +228,13 @@ const Testimonials = () => {
                       initial={{ y: 20, opacity: 0 }} 
                       animate={{ y: 0, opacity: 1 }} 
                       transition={{ delay: 0.25, duration: 0.6, ease: 'easeOut' }}
-                      className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:max-w-xl z-20"
+                      className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:max-w-2xl z-20"
                     >
                       <div className="bg-white/95 backdrop-blur-3xl p-4 md:p-6 border-l-[4px] md:border-l-[6px] border-[#0f0f0f] shadow-2xl">
                         
                         <div className="flex items-center gap-2 mb-2">
                           <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-                          <span className="text-black font-mono text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-black">Secure Link Established</span>
+                          <span className="text-black font-mono text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-black">Live Interview</span>
                         </div>
                         
                         <div className="flex justify-between items-end mb-2 md:mb-3">
