@@ -70,18 +70,18 @@ const ContactSection = () => {
               <motion.div 
                 animate={{ y: [-8, 8, -8] }} 
                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} 
-                className="absolute z-30 -left-4 md:-left-16 top-16 md:top-24 w-52 md:w-60 bg-[#161616]/95 backdrop-blur-xl border border-white/10 p-3 md:p-4 rounded-2xl rounded-tr-sm shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
+                className="absolute z-30 -left-6 md:-left-24 top-16 md:top-24 w-60 md:w-72 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
               >
-                <div className="flex justify-between items-start mb-2">
-                   <div className="flex items-center gap-2">
-                     <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center border-[2px] border-[#161616] p-[1px] shadow-sm">
-                       <User className="w-4 h-4 text-white" />
+                <div className="flex justify-between items-center mb-4">
+                   <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#3b82f6] flex items-center justify-center shadow-lg">
+                       <User className="w-4 h-4 md:w-5 md:h-5 text-white" strokeWidth={2.5} />
                      </div>
-                     <span className="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-white/90">Lead Recruiter</span>
+                     <span className="text-[11px] md:text-[13px] uppercase font-bold tracking-widest text-white">Lead Recruiter</span>
                    </div>
-                   <div className="bg-red-600 text-white text-[7px] font-black px-1.5 py-0.5 rounded-[4px] uppercase tracking-widest">+1 MSG</div>
+                   <div className="bg-[#ef4444] text-white text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider shadow-sm">+1 MSG</div>
                 </div>
-                <p className="text-[11px] md:text-xs text-white/60 font-medium leading-relaxed">
+                <p className="text-[13px] md:text-[14px] text-white/90 font-medium leading-normal tracking-tight">
                   "Samuel, we need someone to lead our entire frontend rewrite. Are you open to chat?"
                 </p>
               </motion.div>
@@ -90,18 +90,18 @@ const ContactSection = () => {
               <motion.div 
                 animate={{ y: [8, -8, 8] }} 
                 transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }} 
-                className="absolute z-30 right-0 md:-right-8 bottom-24 md:bottom-32 w-48 md:w-56 bg-[#161616]/95 backdrop-blur-xl border border-white/10 p-3 md:p-4 rounded-2xl rounded-tl-sm shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
+                className="absolute z-30 right-0 md:-right-16 bottom-24 md:bottom-32 w-60 md:w-72 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
               >
-                <div className="flex justify-between items-start mb-2">
-                   <div className="flex items-center gap-2">
-                     <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-emerald-500 to-green-600 flex items-center justify-center border-[2px] border-[#161616] p-[1px] shadow-sm">
-                       <User className="w-4 h-4 text-white" />
+                <div className="flex justify-between items-center mb-4">
+                   <div className="flex items-center gap-3">
+                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#10b981] flex items-center justify-center shadow-lg">
+                       <User className="w-4 h-4 md:w-5 md:h-5 text-white" strokeWidth={2.5} />
                      </div>
-                     <span className="text-[9px] md:text-[10px] uppercase font-black tracking-widest text-white/90">Founder</span>
+                     <span className="text-[11px] md:text-[13px] uppercase font-bold tracking-widest text-white">Founder</span>
                    </div>
-                   <div className="bg-red-600 text-white text-[7px] font-black px-1.5 py-0.5 rounded-[4px] uppercase tracking-widest">+1 MSG</div>
+                   <div className="bg-[#ef4444] text-white text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider shadow-sm">+1 MSG</div>
                 </div>
-                <p className="text-[11px] md:text-xs text-white/60 font-medium leading-relaxed">
+                <p className="text-[13px] md:text-[14px] text-white/90 font-medium leading-normal tracking-tight">
                   "Your UI design skills are insane. I have a freelance proposal for you."
                 </p>
               </motion.div>
@@ -191,38 +191,38 @@ const ContactSection = () => {
                           <form onSubmit={handleSubmit} className="flex flex-col gap-3 mt-4">
                             
                             <div className="space-y-1">
-                              <label className="text-[9px] font-bold uppercase tracking-widest text-white/30 pl-2">Name</label>
+                              <label className="text-[9px] font-bold uppercase tracking-widest text-white/30 pl-1">Name</label>
                               <input
                                 type="text"
                                 placeholder="E.g. Elon Musk"
                                 value={form.name}
                                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                                 required
-                                className="w-full bg-[#0d0d0d] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
+                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-3 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
                               />
                             </div>
                             
                             <div className="space-y-1">
-                              <label className="text-[9px] font-bold uppercase tracking-widest text-white/30 pl-2">Email</label>
+                              <label className="text-[9px] font-bold uppercase tracking-widest text-white/30 pl-1">Email</label>
                               <input
                                 type="email"
                                 placeholder="you@company.com"
                                 value={form.email}
                                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                                 required
-                                className="w-full bg-[#0d0d0d] border border-white/10 rounded-2xl px-4 py-3 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
+                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-3 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
                               />
                             </div>
                             
                             <div className="space-y-1">
-                              <label className="text-[9px] font-bold uppercase tracking-widest text-white/30 pl-2">Message</label>
+                              <label className="text-[9px] font-bold uppercase tracking-widest text-white/30 pl-1">Message</label>
                               <textarea
                                 placeholder="Let's build something..."
                                 value={form.message}
                                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                                 required
                                 rows={3}
-                                className="w-full bg-[#0d0d0d] border border-white/10 rounded-3xl px-4 py-3.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors resize-none shadow-inner"
+                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-3.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors resize-none shadow-inner"
                               />
                             </div>
 
@@ -230,7 +230,7 @@ const ContactSection = () => {
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               type="submit"
-                              className="w-full bg-white text-black font-black uppercase tracking-widest py-3.5 rounded-full flex items-center justify-center gap-2 text-[11px] mt-2 shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-shadow"
+                              className="w-full bg-white text-black font-black uppercase tracking-widest py-3 rounded-[8px] flex items-center justify-center gap-2 text-[11px] mt-2 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-shadow"
                             >
                               Send Message
                               <Send className="w-3.5 h-3.5 ml-1" />
