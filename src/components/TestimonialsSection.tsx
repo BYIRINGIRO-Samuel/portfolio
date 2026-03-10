@@ -195,7 +195,7 @@ const Testimonials = () => {
                      <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-red-700/90 to-black/80 border-b border-red-500/50 backdrop-blur-md z-20 shadow-xl">
                        <div className="flex items-center gap-2">
                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse shadow-[0_0_8px_white]" />
-                         <span className="text-white font-sans text-[9px] md:text-[11px] font-black uppercase tracking-widest text-shadow">BlinkTech Global Broadcast</span>
+                         <span className="text-white font-sans text-[9px] md:text-[11px] font-black uppercase tracking-widest text-shadow">Kigali Tech Syndicate</span>
                        </div>
                        <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
                          BROADCAST: CONNECTED [RW]
@@ -206,14 +206,17 @@ const Testimonials = () => {
                      <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
                        <div className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 mb-4 rounded-sm shadow-lg overflow-hidden relative">
                          <div className="absolute inset-0 bg-red-600 opacity-20" />
-                         <p className="font-black text-white text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">BlinkTech Innovation Lab</p>
+                         <p className="font-black text-white text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">Premium Spotlight</p>
                        </div>
                        <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] leading-none text-center">
                          Engineering <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-white/30">Excellence.</span>
                        </h1>
-                       <p className="mt-5 text-[9px] md:text-[11px] text-white/50 font-sans font-bold uppercase tracking-[0.25em] max-w-xs md:max-w-md text-center px-4 leading-relaxed">
-                         Exclusive Coverage from the BlinkTech Architecture Division
-                       </p>
+                       
+                       {/* BlinkTech Sponsor Tag */}
+                       <div className="mt-4 flex items-center justify-center gap-2.5 bg-black/60 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full shadow-lg">
+                         <span className="text-white/40 text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-sans">Sponsored By</span>
+                         <span className="text-white text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">BlinkTech</span>
+                       </div>
                        
                        {/* Play Button simulating 'Tune In' */}
                        <motion.div 
