@@ -4,42 +4,70 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 const channels = [
   {
     name: 'Amara K.',
-    company: 'OrangeLeaf Tech',
-    role: 'CTO',
-    quote: 'Samuel transformed our frontend architecture. Extremely performant and visually stunning. Truly top-tier engineering.',
-    img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=1200&q=80',
+    company: 'FinTech Africa',
+    role: 'Lead Architect',
+    quote: 'Samuel engineer’s with profound intent. He fundamentally restructured our frontend architecture, delivering a system that is incredibly scalable, robust, and visually flawless.',
+    img: 'https://images.unsplash.com/photo-1573164713988-8665fc963095?w=1200&q=80',
   },
   {
     name: 'David O.',
-    company: 'EduBridge Africa',
-    role: 'Founder',
-    quote: 'Built our platform in record time with stunning UX. The design is world-class and deployment was absolutely flawless.',
-    img: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&q=80',
+    company: 'EduBridge Networks',
+    role: 'CEO',
+    quote: 'An absolute master of modern web technologies. Samuel built our enterprise platform with uncompromising quality. Our latency decreased massively and deployment was seamless.',
+    img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&q=80',
   },
   {
     name: 'Zara M.',
-    company: 'Luminary Studios',
-    role: 'CEO',
-    quote: 'Every pixel was crafted with purpose. He turned our vague vision into a true premium web experience that investors love.',
-    img: 'https://images.unsplash.com/photo-1600861194942-f883de0dfe96?w=1200&q=80',
+    company: 'Luminary Corp',
+    role: 'Director of Product',
+    quote: 'Samuel operates at the highest level of technical craftsmanship. He translated complex requirements into an undeniably premium, highly responsive user interface.',
+    img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1200&q=80',
   },
   {
     name: 'Marcus T.',
     company: 'Sprout Ventures',
-    role: 'Co-admin',
-    quote: 'Helped us launch faster and smarter. He automated critical workflows and shipped a gorgeous commercial platform.',
-    img: 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200&q=80',
+    role: 'Head of Engineering',
+    quote: 'Finding dev talent like Samuel is rare. He automated our core systems and shipped a polished commercial product months ahead of schedule. An elite engineering asset.',
+    img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=1200&q=80',
   },
   {
     name: 'Priya J.',
-    company: 'GreenField',
-    role: 'Director',
-    quote: 'Our application is loved by thousands of active users. Highly scalable and outstanding craftsmanship from end to end.',
-    img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80',
+    company: 'GreenField Enterprise',
+    role: 'VP of Technology',
+    quote: 'His code is elegant, modular, and exceptionally performant. Our application serves thousands of concurrent users flawlessly. A brilliant technical partner.',
+    img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=1200&q=80',
   }
 ];
 
 type TVState = 'standby' | 'booting' | 'playing';
+
+/* SVG Background for Rwandan Imigongo Patterns */
+const ImigongoPattern = () => (
+  <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.15]">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="imigongo" width="80" height="80" patternUnits="userSpaceOnUse" patternTransform="scale(1.5)">
+          {/* Traditional Geometric Zig-Zag / Triangle Lines */}
+          <path d="M 0 40 L 40 0 L 80 40 L 40 80 Z" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.5" />
+          <path d="M 10 40 L 40 10 L 70 40 L 40 70 Z" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" />
+          <path d="M 20 40 L 40 20 L 60 40 L 40 60 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5" />
+          {/* Subtle vertical divide often seen in shield patterns */}
+          <line x1="40" y1="0" x2="40" y2="80" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+          <line x1="0" y1="40" x2="80" y2="40" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#imigongo)" />
+      {/* Huge fading vignette to ensure the pattern is only subtle on the outer edges and deep black in center */}
+      <rect width="100%" height="100%" fill="url(#vignette)" />
+      <defs>
+        <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+          <stop offset="20%" stopColor="#000" stopOpacity="1" />
+          <stop offset="100%" stopColor="#000" stopOpacity="0.4" />
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+);
 
 const Testimonials = () => {
   const [tvState, setTvState] = useState<TVState>('standby');
@@ -55,14 +83,13 @@ const Testimonials = () => {
   useEffect(() => {
     if (isInView && !hasAutoPlayed && tvState === 'standby') {
       setHasAutoPlayed(true);
-      // Wait 1.5 seconds so the user can see the cool news screen graphic first
       const timer = setTimeout(() => {
         setTvState('booting');
         setTimeout(() => {
           setTvState('playing');
           setActive(0);
         }, 1200);
-      }, 1500);
+      }, 1800);
       return () => clearTimeout(timer);
     }
   }, [isInView, hasAutoPlayed, tvState]);
@@ -72,7 +99,7 @@ const Testimonials = () => {
     if (tvState !== 'playing') return;
     const interval = setInterval(() => {
       handleChannelChange('next');
-    }, 8000);
+    }, 9000);
     return () => clearInterval(interval);
   }, [tvState]);
 
@@ -109,21 +136,24 @@ const Testimonials = () => {
   };
 
   return (
-    <section ref={sectionRef} id="testimonials" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
-      {/* Inner Container styling */}
-      <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl shadow-2xl z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden">
+    <section ref={sectionRef} id="testimonials" className="bg-[#000] px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
+      {/* Inner Container wrapped tightly in deep black */}
+      <div className="relative w-full max-w-7xl bg-[#000] rounded-xl md:rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,1)] inset-shadow-sm z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden border border-white/5">
         
+        {/* Rwandan Imigongo Graphic Background */}
+        <ImigongoPattern />
+
         {/* Section Title */}
         <div className="w-full text-left max-w-[850px] mb-6 md:mb-8 z-10 pt-2">
-          <p className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] text-white/40 mb-2">Portfolio // Playback</p>
-          <h2 className="text-3xl md:text-5xl lg:text-5xl font-black italic tracking-tighter uppercase leading-none text-white">
+          <p className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] text-white/40 mb-2 drop-shadow-md">Professional // Endorsements</p>
+          <h2 className="text-3xl md:text-5xl lg:text-5xl font-black italic tracking-tighter uppercase leading-none text-white drop-shadow-lg">
             Client <span className="text-white/20">Feed</span>.
           </h2>
         </div>
 
         {/* ── 1. The OLED TV Screen Panel ── */}
         <div 
-          className="relative w-full max-w-[850px] aspect-[16/9] lg:aspect-[21/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] border-[#151515] shadow-[0_25px_50px_rgba(0,0,0,0.8),0_0_15px_rgba(0,0,0,0.4)] z-10 flex overflow-hidden group outline outline-1 outline-white/10"
+          className="relative w-full max-w-[850px] aspect-[16/9] lg:aspect-[21/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] border-[#111] shadow-[0_30px_70px_rgba(0,0,0,0.9),0_0_25px_rgba(0,0,0,0.5)] z-10 flex overflow-hidden group outline outline-1 outline-white/10"
         >
           {/* Channel Change Flash Glitch */}
           {isSwitching && (
@@ -157,23 +187,23 @@ const Testimonials = () => {
                      <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-red-600/90 to-red-900/40 border-b border-red-500/50 backdrop-blur-md z-20">
                        <div className="flex items-center gap-2">
                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse shadow-[0_0_8px_white]" />
-                         <span className="text-white font-sans text-[9px] md:text-[11px] font-black uppercase tracking-widest text-shadow">News Broadcast Feed</span>
+                         <span className="text-white font-sans text-[9px] md:text-[11px] font-black uppercase tracking-widest text-shadow">Global Tech Syndicate</span>
                        </div>
                        <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
-                         SYNDICATION MODE: OK
+                         BROADCAST: CONNECTED
                        </span>
                      </div>
 
                      {/* Center Branding */}
                      <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
                        <div className="bg-white px-3 py-1 mb-3 rounded-xs shadow-lg">
-                         <p className="font-black text-red-700 text-[8px] md:text-[10px] uppercase tracking-[0.3em]">Special Report</p>
+                         <p className="font-black text-[#000] text-[8px] md:text-[10px] uppercase tracking-[0.3em] font-sans">Enterprise Spotlight</p>
                        </div>
-                       <h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] leading-none text-center">
-                         Client <span className="text-white/40">Impact.</span>
+                       <h1 className="text-3xl md:text-5xl lg:text-7xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)] leading-none text-center">
+                         Engineering <br/><span className="text-white/40">Excellence.</span>
                        </h1>
-                       <p className="mt-3 text-[9px] md:text-[11px] text-white/50 font-sans font-bold uppercase tracking-[0.2em] max-w-sm text-center px-4">
-                         Exclusive Coverage on Full-Stack Engineering & Transformative Design
+                       <p className="mt-4 text-[9px] md:text-[11px] text-white/50 font-sans font-bold uppercase tracking-[0.2em] max-w-sm text-center px-4">
+                         Exclusive Coverage on Advanced Architecture & Design
                        </p>
                        
                        {/* Play Button simulating 'Tune In' */}
@@ -254,7 +284,7 @@ const Testimonials = () => {
                         
                         <div className="flex items-center gap-2 mb-2">
                           <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-600 animate-pulse shadow-[0_0_8px_rgba(220,38,38,0.8)]" />
-                          <span className="text-black font-mono text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-black">Live Interview</span>
+                          <span className="text-black font-mono text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-black">Professional Endorsement</span>
                         </div>
                         
                         <div className="flex justify-between items-end mb-2 md:mb-3">
@@ -304,15 +334,15 @@ const Testimonials = () => {
 
         {/* ── 3. Interactive Remote ── */}
         <div className="mt-6 md:mt-8 flex flex-col items-center gap-2 md:gap-3 z-20">
-          <p className="font-mono text-[7px] md:text-[9px] text-white/30 uppercase tracking-[0.2em]">
+          <p className="font-mono text-[7px] md:text-[9px] text-white/30 uppercase tracking-[0.2em] drop-shadow-md">
             Deck Controls
           </p>
-          <div className="flex items-center gap-2 md:gap-4 px-4 md:px-6 py-1.5 md:py-2.5 bg-[#0a0a0a] rounded-full border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.9)] relative">
+          <div className="flex items-center gap-2 md:gap-4 px-4 md:px-6 py-1.5 md:py-2.5 bg-[#050505] rounded-full border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.9)] relative">
             
             {/* Power Button */}
             <button 
               onClick={handlePower} 
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#111] hover:bg-[#1a1a1a] border border-white/5 flex items-center justify-center group transition-colors shadow-inner"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#111] hover:bg-[#1a1a1a] border border-white/5 flex items-center justify-center group transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,1)]"
             >
               <div className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full transition-all ${tvState === 'playing' ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : 'bg-white/20 group-hover:bg-white/40 group-hover:shadow-[0_0_10px_rgba(255,255,255,0.2)]'}`} />
             </button>
