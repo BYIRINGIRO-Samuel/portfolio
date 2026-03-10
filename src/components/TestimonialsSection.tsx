@@ -136,7 +136,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section ref={sectionRef} id="testimonials" className="bg-[#000] px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
+    <section ref={sectionRef} id="testimonials" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
       {/* Inner Container wrapped tightly in deep black */}
       <div className="relative w-full max-w-7xl bg-[#000] rounded-xl md:rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,1)] inset-shadow-sm z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden border border-white/5">
         
