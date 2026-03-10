@@ -5,7 +5,7 @@ import { Send, Mail, User, ShieldCheck, Activity, CheckCircle, Wifi, Battery, Ch
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
-  const [screen, setScreen] = useState<'chat' | 'lock'>('lock');
+  const [screen, setScreen] = useState<'chat' | 'lock'>('chat');
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -226,7 +226,7 @@ const ContactSection = () => {
                   <div className="flex-1 min-h-0 p-5 overflow-y-auto space-y-4 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.03),transparent)] pb-12 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     
                     <div className="text-center w-full my-2">
-                       <span className="text-[9px] font-bold text-white/30 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-full">Today 9:41 AM</span>
+                       <span className="text-[9px] font-bold text-white/30 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-full">Today {formatTime(time)}</span>
                     </div>
 
                     <AnimatePresence mode="wait">
