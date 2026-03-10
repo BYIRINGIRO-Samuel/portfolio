@@ -7,6 +7,7 @@ import ExperienceSection from "@/components/ExperienceSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import ChatBot from "@/components/ChatBot";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
       <TestimonialsSection />
       <ContactSection />
       <ChatBot />
+      <Footer />
     </main>
   );
 };
