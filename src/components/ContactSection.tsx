@@ -13,7 +13,7 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
-      <div className="relative w-full max-w-7xl bg-[#050505] rounded-xl md:rounded-2xl text-white shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-10 px-6 py-12 md:px-12 md:py-20 overflow-hidden group border border-[#161616]">
+      <div className="relative w-full max-w-7xl bg-[#050505] rounded-xl md:rounded-2xl text-white shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-10 px-6 py-10 md:px-12 md:py-14 overflow-hidden group border border-[#161616]">
         
         {/* Background Gradient & Base decor */}
         <div className="absolute inset-0 bg-gradient-to-br from-black via-[#080808] to-[#000]" />
@@ -64,13 +64,13 @@ const ContactSection = () => {
 
 
            {/* RIGHT SIDE: PHONE MOCKUP & FLOATING CHAT BUBBLES */}
-           <div className="lg:w-1/2 relative flex justify-center items-center min-h-[650px] w-full">
+           <div className="lg:w-1/2 relative flex justify-center items-center min-h-[550px] lg:min-h-[580px] w-full">
 
               {/* FLOATING CARD 1 - Code Snippet */}
               <motion.div 
                 animate={{ y: [-8, 8, -8] }} 
                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} 
-                className="absolute z-30 -left-6 md:-left-28 top-16 md:top-28 w-56 md:w-64 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
+                className="absolute z-30 -left-6 md:-left-28 top-8 md:top-16 w-56 md:w-64 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
               >
                 <div className="flex gap-1.5 mb-4">
                   <div className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
@@ -89,7 +89,7 @@ const ContactSection = () => {
               <motion.div 
                 animate={{ y: [8, -8, 8] }} 
                 transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }} 
-                className="absolute z-30 right-0 md:-right-20 bottom-24 md:bottom-32 w-52 md:w-60 bg-[#111111] border border-white/5 p-4 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:flex items-center gap-4"
+                className="absolute z-30 right-0 md:-right-20 bottom-12 md:bottom-20 w-52 md:w-60 bg-[#111111] border border-white/5 p-4 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:flex items-center gap-4"
               >
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-emerald-500 to-green-700 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0">
                   <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-white" />
@@ -102,13 +102,13 @@ const ContactSection = () => {
 
 
               {/* ------ THE SMARTPHONE ------ */}
-              <div className="relative w-[320px] h-[650px] bg-[#000] rounded-[50px] border-[14px] border-[#111] shadow-[0_30px_60px_rgba(0,0,0,0.9),inset_0_0_20px_rgba(255,255,255,0.02)] overflow-hidden flex flex-col z-20 ring-1 ring-white/10">
+              <div className="relative w-[280px] md:w-[320px] h-[520px] md:h-[580px] bg-[#000] rounded-[45px] border-[12px] border-[#111] shadow-[0_30px_60px_rgba(0,0,0,0.9),inset_0_0_20px_rgba(255,255,255,0.02)] overflow-hidden flex flex-col z-20 ring-1 ring-white/10">
                 
                 {/* Physical Phone Side Buttons */}
-                <div className="absolute left-[-16px] top-28 w-[3px] h-10 bg-[#222] rounded-l-md" />
-                <div className="absolute left-[-16px] top-44 w-[3px] h-14 bg-[#222] rounded-l-md" />
-                <div className="absolute left-[-16px] top-60 w-[3px] h-14 bg-[#222] rounded-l-md" />
-                <div className="absolute right-[-16px] top-36 w-[3px] h-20 bg-[#222] rounded-r-md" />
+                <div className="absolute left-[-14px] top-24 w-[3px] h-8 bg-[#222] rounded-l-md" />
+                <div className="absolute left-[-14px] top-36 w-[3px] h-12 bg-[#222] rounded-l-md" />
+                <div className="absolute left-[-14px] top-52 w-[3px] h-12 bg-[#222] rounded-l-md" />
+                <div className="absolute right-[-14px] top-32 w-[3px] h-16 bg-[#222] rounded-r-md" />
 
                 {/* Status Bar */}
                 <div className="w-full pt-4 pb-2 px-6 flex justify-between items-center text-[11px] font-bold text-white z-30">
@@ -134,8 +134,8 @@ const ContactSection = () => {
                      <div className="flex items-center gap-3">
                        <ChevronLeft className="w-5 h-5 text-red-500 cursor-pointer" />
                        <div className="relative">
-                         <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-red-600 to-red-900 border border-white/10 flex items-center justify-center shadow-lg">
-                           <User className="w-4 h-4 text-white" />
+                         <div className="w-9 h-9 rounded-full overflow-hidden border border-white/10 flex items-center justify-center shadow-lg bg-[#111]">
+                           <img src="/hero-character.png" alt="Samuel" className="w-full h-full object-cover" draggable="false" />
                          </div>
                          <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#0a0a0a] rounded-full" />
                        </div>
