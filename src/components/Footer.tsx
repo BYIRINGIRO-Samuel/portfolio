@@ -19,25 +19,20 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-[#050505] text-white pt-10 pb-8 px-6 md:px-12 lg:px-20 border-t border-white/5 relative overflow-hidden flex flex-col items-center">
+    <footer className="w-full bg-[#050505] text-white pt-16 pb-8 px-6 md:px-12 lg:px-20 border-t border-white/5 relative overflow-hidden flex flex-col items-center">
       
       {/* Background Atmosphere */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-      <div className="absolute -top-[300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-white/20 to-transparent z-0" />
+      <div className="absolute -top-[300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/5 blur-[120px] rounded-full pointer-events-none z-0" />
+
+      {/* Giant Background Watermark Text */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex justify-center pointer-events-none select-none z-0 opacity-[0.03]">
+        <span className="text-[20vw] font-black uppercase tracking-tighter text-white whitespace-nowrap leading-none">
+          B.SAMUEL
+        </span>
+      </div>
 
       <div className="max-w-7xl w-full mx-auto relative z-10">
-        
-        {/* Big Text Header (Moved to top) */}
-        <div className="w-full flex justify-center border-b border-white/5 pb-8 mb-10 overflow-hidden relative">
-          <motion.div 
-            initial={{ opacity: 0.5 }}
-            whileHover={{ opacity: 1, scale: 1.02 }}
-            transition={{ duration: 0.5 }}
-            className="text-[12vw] md:text-[10vw] leading-[0.8] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-transparent select-none"
-          >
-            B.SAMUEL
-          </motion.div>
-        </div>
 
         <div className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-16">
           
