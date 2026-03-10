@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 const channels = [
   {
@@ -46,6 +46,26 @@ const Testimonials = () => {
   const [active, setActive] = useState(0);
   const [isSwitching, setIsSwitching] = useState(false);
   const [showOSD, setShowOSD] = useState(false);
+  const [hasAutoPlayed, setHasAutoPlayed] = useState(false);
+
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.4 });
+
+  // Auto-play when scrolled into view
+  useEffect(() => {
+    if (isInView && !hasAutoPlayed && tvState === 'standby') {
+      setHasAutoPlayed(true);
+      // Wait 1.5 seconds so the user can see the cool news screen graphic first
+      const timer = setTimeout(() => {
+        setTvState('booting');
+        setTimeout(() => {
+          setTvState('playing');
+          setActive(0);
+        }, 1200);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [isInView, hasAutoPlayed, tvState]);
 
   // Auto-cycle channels if untouched while playing
   useEffect(() => {
@@ -89,7 +109,7 @@ const Testimonials = () => {
   };
 
   return (
-    <section id="testimonials" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
+    <section ref={sectionRef} id="testimonials" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
       {/* Inner Container styling */}
       <div className="relative w-full max-w-7xl bg-[#0f0f0f] rounded-xl md:rounded-2xl shadow-2xl z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden">
         
@@ -160,10 +180,10 @@ const Testimonials = () => {
                        <motion.div 
                          whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,1)', color: 'black' }}
                          whileTap={{ scale: 0.95 }}
-                         className="mt-6 md:mt-8 px-6 py-2 rounded-full border border-white flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+                         className="mt-6 md:mt-8 px-6 py-2 rounded-full border border-white flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_20px_rgba(255,255,255,0.15)] pointer-events-none"
                        >
-                         <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                         <span className="font-black text-[9px] md:text-[11px] uppercase tracking-widest">Tune In Now</span>
+                         <svg className="w-3.5 h-3.5 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                         <span className="font-black text-[9px] md:text-[11px] uppercase tracking-widest">Tuning In...</span>
                        </motion.div>
                      </div>
 
