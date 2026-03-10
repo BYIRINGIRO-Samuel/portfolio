@@ -127,7 +127,7 @@ const ContactSection = () => {
                 </div>
 
                 {/* Inner Phone Screen (App UI) */}
-                <div className="flex-1 w-full bg-[#050505] shadow-[0_-10px_20px_rgba(0,0,0,0.5)] flex flex-col pt-2 relative">
+                <div className="flex-1 min-h-0 w-full bg-[#050505] shadow-[0_-10px_20px_rgba(0,0,0,0.5)] flex flex-col pt-2 relative">
                   
                   {/* Chat Header */}
                   <div className="px-5 pb-4 pt-1 border-b border-white/5 flex items-center justify-between bg-[#0a0a0a]">
@@ -148,7 +148,7 @@ const ContactSection = () => {
                   </div>
 
                   {/* Chat Content / Form Area */}
-                  <div className="flex-1 p-5 overflow-y-auto space-y-4 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.03),transparent)] scrollbar-hide">
+                  <div className="flex-1 min-h-0 p-5 overflow-y-auto space-y-4 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.03),transparent)] pb-12 scrollbar-hide">
                     
                     <div className="text-center w-full my-2">
                        <span className="text-[9px] font-bold text-white/30 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-full">Today 9:41 AM</span>
@@ -192,7 +192,7 @@ const ContactSection = () => {
                                 value={form.name}
                                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                                 required
-                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-3 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
+                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
                               />
                             </div>
                             
@@ -204,7 +204,7 @@ const ContactSection = () => {
                                 value={form.email}
                                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                                 required
-                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-3 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
+                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors shadow-inner"
                               />
                             </div>
                             
@@ -216,7 +216,7 @@ const ContactSection = () => {
                                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                                 required
                                 rows={3}
-                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-3.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors resize-none shadow-inner"
+                                className="w-full bg-[#111111] border border-white/10 rounded-[8px] px-3.5 py-2.5 text-xs text-white placeholder:text-white/20 outline-none focus:border-red-500/50 transition-colors resize-none shadow-inner"
                               />
                             </div>
 
@@ -224,7 +224,7 @@ const ContactSection = () => {
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
                               type="submit"
-                              className="w-full bg-white text-black font-black uppercase tracking-widest py-3 rounded-[8px] flex items-center justify-center gap-2 text-[11px] mt-2 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-shadow"
+                              className="w-full bg-white text-black font-black uppercase tracking-widest py-2.5 rounded-[8px] flex items-center justify-center gap-2 text-[11px] mt-2 shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-shadow"
                             >
                               Send Message
                               <Send className="w-3.5 h-3.5 ml-1" />
