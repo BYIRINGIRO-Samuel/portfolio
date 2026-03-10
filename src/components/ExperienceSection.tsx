@@ -17,42 +17,42 @@ const history: HistoryItem[] = [
   {
     id: "01",
     period: "2025 — Present",
-    title: "Senior Full-Stack & AI Engineer",
-    institution: "Freelance / Studio",
-    description: "Architecting autonomous systems, neural-interfaces, and 3D environments for global frontier clients.",
-    tags: ["Next.js", "PyTorch", "Three.js"],
+    title: "CO-FOUNDER",
+    institution: "BLINK TECH",
+    description: "A tech startup focused on building innovative digital solutions and collaborating on software development projects.",
+    tags: ["Startup", "Leadership", "Innovation"],
     type: "experience",
-    metrics: { health: 98, load: "MAX_PERF" }
+    metrics: { health: 100, load: "ACTIVE" }
   },
   {
     id: "02",
-    period: "2023 — 2025",
-    title: "AI Engineer & Tech Lead",
-    institution: "Stealth AI Startup",
-    description: "Led multi-modal LLM pipelines and managed a distributed team of engineers.",
-    tags: ["LLMs", "Node.js", "AWS"],
-    type: "experience",
-    metrics: { health: 100, load: "STABLE" }
+    period: "2024 — Present",
+    title: "High school student",
+    institution: "Rwanda Coding Academy",
+    description: "Currently pursuing A-Level studies at Rwanda Coding Academy, focusing on advanced subjects and developing skills for future academic and career opportunities.",
+    tags: ["A-Level", "Coding", "Advanced Studies"],
+    type: "education",
+    metrics: { health: 98, load: "LEARNING" }
   },
   {
     id: "03",
-    period: "2021 — 2023",
-    title: "Full-Stack Developer",
-    institution: "Digital Agency",
-    description: "Developed enterprise-grade web applications and dashboards with sub-second latency targets.",
-    tags: ["React", "Go", "PostgreSQL"],
-    type: "experience",
-    metrics: { health: 95, load: "OPERATIONAL" }
+    period: "2021 — 2024",
+    title: "High school student",
+    institution: "Hope Haven School",
+    description: "Completed O-Level studies at Hope Haven School, gaining knowledge in a range of academic subjects and preparing for advanced secondary education.",
+    tags: ["O-Level", "Foundation", "Academic"],
+    type: "education",
+    metrics: { health: 95, load: "COMPLETED" }
   },
   {
     id: "04",
-    period: "2019 — 2021",
-    title: "B.Sc. Computer Science",
-    institution: "Global University",
-    description: "Specialized in Artificial Intelligence and HPC. Graduated with honors.",
-    tags: ["AI/ML", "C++", "Graphics"],
+    period: "2012 — 2016",
+    title: "Primary student",
+    institution: "Hill Light Academy",
+    description: "Completed primary education at Hill Light Academy, building a strong foundation in core subjects and essential skills.",
+    tags: ["Primary", "Foundation", "Core Skills"],
     type: "education",
-    metrics: { health: 100, load: "SYNCCED" }
+    metrics: { health: 100, load: "FOUNDATION" }
   },
 ];
 
