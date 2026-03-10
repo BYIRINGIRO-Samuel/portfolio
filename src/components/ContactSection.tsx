@@ -41,12 +41,12 @@ const ContactSection = () => {
               {/* Status HUD Chips */}
               <div className="flex flex-col gap-4">
                  <div className="flex items-center gap-4 bg-[#0a0a0a] border border-white/5 p-4 rounded-xl w-full max-w-xs shadow-lg">
-                    <div className="w-10 h-10 rounded-full bg-red-600/10 flex items-center justify-center border border-red-500/20">
-                      <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse shadow-[0_0_8px_red]" />
+                    <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[12px] font-black uppercase tracking-widest text-white">Status</span>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-white/40">Available For Hire</span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-emerald-500">Available / Active</span>
                     </div>
                  </div>
 
@@ -66,44 +66,38 @@ const ContactSection = () => {
            {/* RIGHT SIDE: PHONE MOCKUP & FLOATING CHAT BUBBLES */}
            <div className="lg:w-1/2 relative flex justify-center items-center min-h-[650px] w-full">
 
-              {/* FLOATING BUBBLE 1 - Top Left */}
+              {/* FLOATING CARD 1 - Code Snippet */}
               <motion.div 
                 animate={{ y: [-8, 8, -8] }} 
                 transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} 
-                className="absolute z-30 -left-6 md:-left-24 top-16 md:top-24 w-60 md:w-72 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
+                className="absolute z-30 -left-6 md:-left-28 top-16 md:top-28 w-56 md:w-64 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
               >
-                <div className="flex justify-between items-center mb-4">
-                   <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#3b82f6] flex items-center justify-center shadow-lg">
-                       <User className="w-4 h-4 md:w-5 md:h-5 text-white" strokeWidth={2.5} />
-                     </div>
-                     <span className="text-[11px] md:text-[13px] uppercase font-bold tracking-widest text-white">Lead Recruiter</span>
-                   </div>
-                   <div className="bg-[#ef4444] text-white text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider shadow-sm">+1 MSG</div>
+                <div className="flex gap-1.5 mb-4">
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#ef4444]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#eab308]" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-[#22c55e]" />
                 </div>
-                <p className="text-[13px] md:text-[14px] text-white/90 font-medium leading-normal tracking-tight">
-                  "Samuel, we need someone to lead our entire frontend rewrite. Are you open to chat?"
-                </p>
+                <div className="font-mono text-[10px] md:text-xs text-white/80 leading-loose">
+                  <p><span className="text-purple-400">const</span> <span className="text-blue-400">Developer</span> <span className="text-purple-400">=</span> {'{'}</p>
+                  <p className="pl-4">role: <span className="text-green-400">'Architect'</span>,</p>
+                  <p className="pl-4">status: <span className="text-green-400">'Active'</span>,</p>
+                  <p>{'}'};</p>
+                </div>
               </motion.div>
 
-              {/* FLOATING BUBBLE 2 - Bottom Right */}
+              {/* FLOATING CARD 2 - System Metrics */}
               <motion.div 
                 animate={{ y: [8, -8, 8] }} 
                 transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }} 
-                className="absolute z-30 right-0 md:-right-16 bottom-24 md:bottom-32 w-60 md:w-72 bg-[#111111] border border-white/5 p-4 md:p-5 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:block"
+                className="absolute z-30 right-0 md:-right-20 bottom-24 md:bottom-32 w-52 md:w-60 bg-[#111111] border border-white/5 p-4 rounded-[16px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] hidden sm:flex items-center gap-4"
               >
-                <div className="flex justify-between items-center mb-4">
-                   <div className="flex items-center gap-3">
-                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#10b981] flex items-center justify-center shadow-lg">
-                       <User className="w-4 h-4 md:w-5 md:h-5 text-white" strokeWidth={2.5} />
-                     </div>
-                     <span className="text-[11px] md:text-[13px] uppercase font-bold tracking-widest text-white">Founder</span>
-                   </div>
-                   <div className="bg-[#ef4444] text-white text-[9px] md:text-[10px] font-black px-2.5 py-1 rounded-md uppercase tracking-wider shadow-sm">+1 MSG</div>
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-emerald-500 to-green-700 flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.3)] shrink-0">
+                  <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 text-white" />
                 </div>
-                <p className="text-[13px] md:text-[14px] text-white/90 font-medium leading-normal tracking-tight">
-                  "Your UI design skills are insane. I have a freelance proposal for you."
-                </p>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white/50">System Status</span>
+                  <span className="text-[12px] md:text-[14px] font-bold text-white tracking-wide">100% Optimal</span>
+                </div>
               </motion.div>
 
 
