@@ -90,63 +90,6 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
   // Create the full sequence: Title -> Skills -> Title -> Skills...
   const sequence = ['SOFT SKILLS', ...skills];
 
-  // Professional TV commercial sound effects
-  const playCommercialSound = (type: 'swoosh' | 'pop' | 'chime' | 'transition') => {
-    try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
-      
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-      
-      switch (type) {
-        case 'swoosh':
-          // Professional swoosh for transitions
-          oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
-          gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-          oscillator.start();
-          oscillator.stop(audioContext.currentTime + 0.4);
-          break;
-          
-        case 'pop':
-          // Sharp pop for skill reveals
-          oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.1);
-          gainNode.gain.setValueAtTime(0.06, audioContext.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
-          oscillator.start();
-          oscillator.stop(audioContext.currentTime + 0.15);
-          break;
-          
-        case 'chime':
-          // Elegant chime for title
-          oscillator.frequency.setValueAtTime(523, audioContext.currentTime); // C5
-          oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.2); // E5
-          oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.4); // G5
-          gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
-          oscillator.start();
-          oscillator.stop(audioContext.currentTime + 0.8);
-          break;
-          
-        case 'transition':
-          // Smooth transition whoosh
-          oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
-          oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.2);
-          gainNode.gain.setValueAtTime(0.04, audioContext.currentTime);
-          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.25);
-          oscillator.start();
-          oscillator.stop(audioContext.currentTime + 0.25);
-          break;
-      }
-    } catch (error) {
-      console.log('Audio not supported');
-    }
-  };
-
   useEffect(() => {
     if (!isActive) return;
     
@@ -157,13 +100,6 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
         setCurrentIndex(prev => {
           const nextIndex = (prev + 1) % sequence.length;
           const isTitle = nextIndex === 0;
-          
-          // Play appropriate commercial sound
-          if (isTitle) {
-            playCommercialSound('chime');
-          } else {
-            playCommercialSound('swoosh');
-          }
           
           setShowTitle(isTitle);
           setAnimationPhase('intro');
