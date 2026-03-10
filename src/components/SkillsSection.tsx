@@ -202,10 +202,6 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
                     transition={{ delay: 0.5, duration: 0.8 }}
                     className="text-center"
                   >
-                    <div className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-1"
-                         style={{ textShadow: '0 0 8px rgba(255,255,255,0.6)' }}>
-                      SAMUEL'S
-                    </div>
                     <div className="text-[13px] font-black text-white uppercase tracking-[0.4em]"
                          style={{ textShadow: '0 0 10px rgba(255,255,255,0.8)' }}>
                       SOFT SKILLS
