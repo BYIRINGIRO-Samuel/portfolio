@@ -85,23 +85,99 @@ const RealisticGrassClump = ({ scale = 1, opacity = 0.3 }) => (
 const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showTitle, setShowTitle] = useState(true);
+  const [animationPhase, setAnimationPhase] = useState('intro'); // intro, main, outro
 
   // Create the full sequence: Title -> Skills -> Title -> Skills...
   const sequence = ['SOFT SKILLS', ...skills];
+
+  // Professional TV commercial sound effects
+  const playCommercialSound = (type: 'swoosh' | 'pop' | 'chime' | 'transition') => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      switch (type) {
+        case 'swoosh':
+          // Professional swoosh for transitions
+          oscillator.frequency.setValueAtTime(200, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(800, audioContext.currentTime + 0.3);
+          gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.4);
+          break;
+          
+        case 'pop':
+          // Sharp pop for skill reveals
+          oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(100, audioContext.currentTime + 0.1);
+          gainNode.gain.setValueAtTime(0.06, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.15);
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.15);
+          break;
+          
+        case 'chime':
+          // Elegant chime for title
+          oscillator.frequency.setValueAtTime(523, audioContext.currentTime); // C5
+          oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.2); // E5
+          oscillator.frequency.setValueAtTime(784, audioContext.currentTime + 0.4); // G5
+          gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.8);
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.8);
+          break;
+          
+        case 'transition':
+          // Smooth transition whoosh
+          oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+          oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.2);
+          gainNode.gain.setValueAtTime(0.04, audioContext.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.25);
+          oscillator.start();
+          oscillator.stop(audioContext.currentTime + 0.25);
+          break;
+      }
+    } catch (error) {
+      console.log('Audio not supported');
+    }
+  };
 
   useEffect(() => {
     if (!isActive) return;
     
     const interval = setInterval(() => {
-      setCurrentIndex(prev => {
-        const nextIndex = (prev + 1) % sequence.length;
-        setShowTitle(nextIndex === 0);
-        return nextIndex;
-      });
-    }, showTitle ? 3000 : 2000); // Title shows longer (3s), skills show for 2s each
+      setAnimationPhase('outro');
+      
+      setTimeout(() => {
+        setCurrentIndex(prev => {
+          const nextIndex = (prev + 1) % sequence.length;
+          const isTitle = nextIndex === 0;
+          
+          // Play appropriate commercial sound
+          if (isTitle) {
+            playCommercialSound('chime');
+          } else {
+            playCommercialSound('swoosh');
+          }
+          
+          setShowTitle(isTitle);
+          setAnimationPhase('intro');
+          
+          setTimeout(() => setAnimationPhase('main'), 500);
+          
+          return nextIndex;
+        });
+      }, 300);
+      
+    }, 4000); // 4 second intervals for professional pacing
     
     return () => clearInterval(interval);
-  }, [isActive, sequence.length, showTitle]);
+  }, [isActive, sequence.length]);
 
   const currentContent = sequence[currentIndex];
   const isTitle = currentIndex === 0;
@@ -119,214 +195,244 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
         
         {/* Screen */}
         <div className={`absolute inset-3 rounded-md overflow-hidden ${isTitle ? 'bg-gradient-to-br from-white/15 via-white/8 to-white/20' : 'bg-gradient-to-br from-white/5 to-white/8'}`}>
-          {/* Enhanced Scan Lines for Title */}
+          {/* Professional Scan Lines */}
           <div className={`absolute inset-0 pointer-events-none ${isTitle ? 'bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.08)_1px,rgba(255,255,255,0.08)_2px)]' : 'bg-[repeating-linear-gradient(0deg,transparent,transparent_1px,rgba(255,255,255,0.03)_1px,rgba(255,255,255,0.03)_2px)]'}`} />
           
-          {/* Title Screen: Additional Visual Effects */}
-          {isTitle && (
-            <>
-              {/* Moving Light Beam */}
-              <motion.div
-                animate={{ x: ['-100%', '200%'] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 1 }}
-                className="absolute inset-y-0 w-8 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"
-              />
-              
-              {/* Corner Vignette */}
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.3)_100%)]" />
-              
-              {/* Particle Effect */}
-              {[...Array(6)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  animate={{
-                    y: [0, -20, 0],
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0]
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute w-1 h-1 bg-white/60 rounded-full"
-                  style={{
-                    left: `${20 + i * 12}%`,
-                    bottom: '10%'
-                  }}
-                />
-              ))}
-            </>
-          )}
-          
-          {/* Content */}
+          {/* Professional Advertisement Content */}
           <div className="relative h-full flex flex-col items-center justify-center p-3 text-center">
             {isTitle ? (
-              /* Enhanced Title Display with Unique Design */
+              /* Professional Title Advertisement */
               <motion.div
-                key="title"
-                initial={{ opacity: 0, scale: 0.3, rotateY: -180 }}
-                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
-                transition={{ duration: 1.2, type: "spring", stiffness: 150 }}
-                className="relative flex flex-col items-center w-full h-full justify-center"
+                key="title-ad"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: animationPhase === 'outro' ? 0 : 1,
+                  scale: animationPhase === 'outro' ? 0.8 : 1,
+                  rotateY: animationPhase === 'intro' ? [180, 0] : 0
+                }}
+                transition={{ duration: 0.8, type: "spring", stiffness: 120 }}
+                className="relative w-full h-full flex flex-col items-center justify-center"
               >
-                {/* Background Pattern */}
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,white_1px,transparent_1px)] bg-[length:8px_8px]" />
+                {/* Premium Background Pattern */}
+                <div className="absolute inset-0 opacity-20">
                   <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent,white_10%,transparent_20%)] opacity-20"
+                    animate={{ 
+                      background: [
+                        'radial-gradient(circle at 20% 20%, white 2px, transparent 2px)',
+                        'radial-gradient(circle at 80% 80%, white 2px, transparent 2px)',
+                        'radial-gradient(circle at 20% 20%, white 2px, transparent 2px)'
+                      ]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                    className="absolute inset-0 bg-[length:12px_12px]"
                   />
                 </div>
 
-                {/* Main Title with Geometric Frame */}
-                <div className="relative z-10">
-                  {/* Geometric Border */}
-                  <div className="absolute -inset-4 border-2 border-white/30 transform rotate-45">
-                    <div className="absolute inset-1 border border-white/20" />
-                  </div>
-                  
-                  {/* Title Content */}
-                  <div className="relative bg-black/40 backdrop-blur-sm px-4 py-3 text-center">
-                    <motion.div
-                      initial={{ letterSpacing: "0em" }}
-                      animate={{ letterSpacing: "0.4em" }}
-                      transition={{ duration: 0.8, delay: 0.3 }}
-                      className="text-[14px] font-black text-white uppercase leading-none mb-1"
-                      style={{
-                        textShadow: '0 0 10px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.8)'
-                      }}
-                    >
-                      SOFT
-                    </motion.div>
-                    <motion.div
-                      initial={{ letterSpacing: "0em" }}
-                      animate={{ letterSpacing: "0.4em" }}
-                      transition={{ duration: 0.8, delay: 0.5 }}
-                      className="text-[14px] font-black text-white uppercase leading-none"
-                      style={{
-                        textShadow: '0 0 10px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.8)'
-                      }}
-                    >
-                      SKILLS
-                    </motion.div>
-                  </div>
+                {/* Main Logo Animation */}
+                <div className="relative z-10 flex flex-col items-center">
+                  {/* Animated Logo Frame */}
+                  <motion.div
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: animationPhase === 'main' ? 1 : 0 }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className="mb-3"
+                  >
+                    <svg width="80" height="40" viewBox="0 0 80 40" className="drop-shadow-lg">
+                      <motion.path
+                        d="M10 10 L70 10 L70 30 L10 30 Z M15 15 L65 15 L65 25 L15 25 Z"
+                        fill="none"
+                        stroke="white"
+                        strokeWidth="1"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 2, ease: "easeInOut" }}
+                      />
+                      <motion.circle
+                        cx="40"
+                        cy="20"
+                        r="8"
+                        fill="white"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 1, duration: 0.5, type: "spring" }}
+                      />
+                    </svg>
+                  </motion.div>
+
+                  {/* Premium Title Text */}
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="text-center"
+                  >
+                    <div className="text-[11px] font-black text-white uppercase tracking-[0.3em] mb-1"
+                         style={{ textShadow: '0 0 8px rgba(255,255,255,0.6)' }}>
+                      SAMUEL'S
+                    </div>
+                    <div className="text-[13px] font-black text-white uppercase tracking-[0.4em]"
+                         style={{ textShadow: '0 0 10px rgba(255,255,255,0.8)' }}>
+                      SOFT SKILLS
+                    </div>
+                  </motion.div>
+
+                  {/* Professional Tagline */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.2, duration: 0.6 }}
+                    className="mt-2 text-[6px] font-mono text-white/80 uppercase tracking-[0.2em]"
+                  >
+                    EXCELLENCE IN HUMAN CAPABILITIES
+                  </motion.div>
                 </div>
 
-                {/* Animated Elements */}
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "60%" }}
-                  transition={{ duration: 1, delay: 0.8 }}
-                  className="h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mt-3 rounded-full"
-                />
-
-                {/* Corner Decorations */}
-                {[0, 1, 2, 3].map((i) => (
+                {/* Animated Particles */}
+                {[...Array(8)].map((_, i) => (
                   <motion.div
                     key={i}
-                    initial={{ scale: 0, rotate: 0 }}
-                    animate={{ scale: 1, rotate: 45 }}
-                    transition={{ delay: 1 + i * 0.1, duration: 0.3 }}
-                    className="absolute w-2 h-2 border-t border-l border-white/40"
+                    animate={{
+                      y: [0, -15, 0],
+                      opacity: [0, 1, 0],
+                      scale: [0, 1, 0]
+                    }}
+                    transition={{
+                      duration: 2.5,
+                      repeat: Infinity,
+                      delay: i * 0.3,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute w-1 h-1 bg-white/60 rounded-full"
                     style={{
-                      [i < 2 ? 'top' : 'bottom']: '8px',
-                      [i % 2 === 0 ? 'left' : 'right']: '8px',
-                      transform: `rotate(${i * 90}deg)`
+                      left: `${15 + i * 10}%`,
+                      bottom: '15%'
                     }}
                   />
                 ))}
 
-                {/* Subtitle with Typewriter Effect */}
+                {/* Premium Border Animation */}
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.5, duration: 0.5 }}
-                  className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-                >
-                  <div className="text-[6px] font-mono text-white/70 uppercase tracking-[0.3em] text-center">
-                    <motion.span
-                      initial={{ width: 0 }}
-                      animate={{ width: "100%" }}
-                      transition={{ delay: 1.8, duration: 1.2 }}
-                      className="inline-block overflow-hidden whitespace-nowrap"
-                    >
-                      HUMAN CAPABILITIES
-                    </motion.span>
-                  </div>
-                </motion.div>
-
-                {/* Pulsing Glow Effect */}
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.6, 0.3]
+                  animate={{
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.05, 1]
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute inset-0 bg-white/5 rounded-md blur-sm"
+                  className="absolute inset-2 border border-white/30 rounded-md"
                 />
               </motion.div>
             ) : (
-              /* Skill Display */
+              /* Professional Skill Advertisement */
               <motion.div
-                key={currentIndex}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
-                className="flex flex-col items-center"
+                key={`skill-ad-${currentIndex}`}
+                initial={{ 
+                  opacity: 0, 
+                  x: animationPhase === 'intro' ? 100 : 0,
+                  rotateX: animationPhase === 'intro' ? 90 : 0
+                }}
+                animate={{ 
+                  opacity: animationPhase === 'outro' ? 0 : 1,
+                  x: animationPhase === 'outro' ? -100 : 0,
+                  rotateX: 0
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="relative w-full h-full flex flex-col items-center justify-center"
               >
-                <div className="text-[12px] font-bold text-white uppercase tracking-wider leading-tight">
-                  {currentContent.replace('_', ' ')}
-                </div>
+                {/* Skill Icon Animation */}
                 <motion.div
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="w-8 h-0.5 bg-white/60 mt-1 origin-left"
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ delay: 0.2, duration: 0.8, type: "spring", stiffness: 150 }}
+                  className="mb-3"
+                >
+                  <div className="w-8 h-8 border-2 border-white/60 rounded-full flex items-center justify-center">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                      className="w-4 h-4 border-t-2 border-white rounded-full"
+                    />
+                  </div>
+                </motion.div>
+
+                {/* Skill Name with Professional Typography */}
+                <motion.div
+                  initial={{ letterSpacing: "0em", opacity: 0 }}
+                  animate={{ letterSpacing: "0.3em", opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                  className="text-center"
+                >
+                  <div className="text-[10px] font-black text-white uppercase leading-tight"
+                       style={{ textShadow: '0 0 6px rgba(255,255,255,0.5)' }}>
+                    {currentContent.replace('_', ' ')}
+                  </div>
+                </motion.div>
+
+                {/* Professional Progress Bar */}
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "70%" }}
+                  transition={{ delay: 0.6, duration: 1.2, ease: "easeOut" }}
+                  className="mt-2 h-0.5 bg-gradient-to-r from-white/40 via-white/80 to-white/40 rounded-full"
                 />
+
+                {/* Floating Elements */}
+                {[...Array(4)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{
+                      y: [0, -8, 0],
+                      opacity: [0.3, 0.8, 0.3],
+                      scale: [0.8, 1.2, 0.8]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      delay: i * 0.5,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute w-1 h-1 bg-white/50 rounded-full"
+                    style={{
+                      left: `${20 + i * 20}%`,
+                      top: `${30 + (i % 2) * 20}%`
+                    }}
+                  />
+                ))}
+
+                {/* Premium Badge */}
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.8, duration: 0.4, type: "spring" }}
+                  className="absolute bottom-2 right-2 text-[5px] font-mono text-white/60 uppercase tracking-wider"
+                >
+                  CERTIFIED
+                </motion.div>
               </motion.div>
             )}
             
-            {/* Progress Indicators - only show during skills */}
+            {/* Professional Progress Dots */}
             {!isTitle && (
               <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex gap-1">
                 {skills.map((_, i) => (
-                  <div
+                  <motion.div
                     key={i}
-                    className={`w-1 h-1 rounded-full transition-all ${
-                      i === currentIndex - 1 ? 'bg-white' : 'bg-white/30'
-                    }`}
+                    animate={{
+                      scale: i === currentIndex - 1 ? [1, 1.3, 1] : 1,
+                      opacity: i === currentIndex - 1 ? 1 : 0.3
+                    }}
+                    transition={{ duration: 0.3 }}
+                    className="w-1 h-1 bg-white rounded-full"
                   />
                 ))}
               </div>
             )}
           </div>
           
-          {/* Enhanced Static/Noise Effect for Title */}
+          {/* Professional Film Grain Effect */}
           <motion.div
-            animate={{ opacity: isTitle ? [0, 0.15, 0] : [0, 0.05, 0] }}
+            animate={{ opacity: [0, 0.08, 0] }}
             transition={{ duration: 0.1, repeat: Infinity, repeatType: "reverse" }}
             className="absolute inset-0 bg-white/5 mix-blend-overlay"
           />
-          
-          {/* Glitch Effect for Title */}
-          {isTitle && (
-            <motion.div
-              animate={{ 
-                opacity: [0, 0.3, 0],
-                x: [0, 2, -1, 0]
-              }}
-              transition={{ 
-                duration: 4, 
-                repeat: Infinity,
-                times: [0, 0.1, 0.2, 1]
-              }}
-              className="absolute inset-0 bg-white/10 mix-blend-difference"
-            />
-          )}
         </div>
         
         {/* TV Controls */}
@@ -335,19 +441,31 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
           <div className="w-1.5 h-1.5 bg-white/40 rounded-full opacity-60" />
         </div>
         
-        {/* Power Indicator - brighter during title */}
+        {/* Power Indicator - Professional broadcast style */}
         <motion.div
           animate={{ 
-            opacity: isTitle ? [0.7, 1, 0.7] : [0.5, 1, 0.5],
-            scale: isTitle ? [1, 1.2, 1] : 1
+            opacity: [0.6, 1, 0.6],
+            scale: isTitle ? [1, 1.1, 1] : 1
           }}
-          transition={{ duration: isTitle ? 1 : 2, repeat: Infinity }}
-          className="absolute top-2 right-2 w-1.5 h-1.5 bg-white/80 rounded-full"
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute top-2 right-2 w-1.5 h-1.5 bg-white/80 rounded-full shadow-[0_0_4px_rgba(255,255,255,0.6)]"
         />
         
+        {/* Professional Broadcast Indicator */}
+        <div className="absolute top-2 left-2 flex items-center gap-1">
+          <motion.div
+            animate={{ opacity: [0.4, 1, 0.4] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="w-1 h-1 bg-red-500 rounded-full"
+          />
+          <div className="text-[5px] font-mono text-white/60 uppercase tracking-wider">
+            {animationPhase === 'intro' ? 'LOADING' : animationPhase === 'outro' ? 'NEXT' : 'LIVE'}
+          </div>
+        </div>
+        
         {/* Brand Label */}
-        <div className="absolute top-1 left-2 text-[6px] font-mono text-white/40 uppercase">
-          {isTitle ? 'BROADCAST' : 'LIVE'}
+        <div className="absolute bottom-1 left-2 text-[5px] font-mono text-white/40 uppercase tracking-wider">
+          {isTitle ? 'PREMIUM' : 'SHOWCASE'}
         </div>
       </motion.div>
       
