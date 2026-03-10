@@ -1,10 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mail, User, ShieldCheck, Activity, CheckCircle, Wifi, Battery, ChevronLeft, MoreVertical } from 'lucide-react';
+import { Send, Mail, User, ShieldCheck, Activity, CheckCircle, Wifi, Battery, ChevronLeft, MoreVertical, Lock, Camera, Flashlight } from 'lucide-react';
 
 const ContactSection = () => {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [screen, setScreen] = useState<'chat' | 'lock'>('lock');
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (date: Date) => {
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+  };
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,8 +125,8 @@ const ContactSection = () => {
                 <div className="absolute right-[-14px] top-32 w-[3px] h-16 bg-[#222] rounded-r-md" />
 
                 {/* Status Bar */}
-                <div className="w-full pt-4 pb-2 px-6 flex justify-between items-center text-[11px] font-bold text-white z-30">
-                  <span>9:41</span>
+                <div className="w-full pt-4 pb-2 px-6 flex justify-between items-center text-[11px] font-bold text-white z-30 pointer-events-none">
+                  <span className={screen === 'lock' ? 'opacity-0' : 'opacity-100 transition-opacity'}>{formatTime(time)}</span>
                   {/* Dynamic Island Notch */}
                   <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[100px] h-8 bg-black rounded-full z-30 flex items-center justify-between px-2.5 pb-[1px] shadow-[inset_0_0_2px_rgba(255,255,255,0.1)]">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#111] border border-[#222]" />
@@ -126,14 +140,75 @@ const ContactSection = () => {
                   </div>
                 </div>
 
-                {/* Inner Phone Screen (App UI) */}
-                <div className="flex-1 min-h-0 w-full bg-[#050505] shadow-[0_-10px_20px_rgba(0,0,0,0.5)] flex flex-col pt-2 relative">
+                {/* Inner Phone Screen */}
+                <div className="flex-1 min-h-0 w-full bg-[#050505] shadow-[0_-10px_20px_rgba(0,0,0,0.5)] flex flex-col relative overflow-hidden">
                   
-                  {/* Chat Header */}
-                  <div className="px-5 pb-4 pt-1 border-b border-white/5 flex items-center justify-between bg-[#0a0a0a]">
-                     <div className="flex items-center gap-3">
-                       <ChevronLeft className="w-5 h-5 text-red-500 cursor-pointer" />
-                       <div className="relative">
+                  <AnimatePresence mode="wait">
+                    {screen === 'lock' ? (
+                      <motion.div 
+                        key="lock"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 z-20 flex flex-col items-center pt-8 bg-cover bg-center"
+                        style={{ backgroundImage: 'url("/hero-character.png")' }}
+                      >
+                        <div className="absolute inset-0 bg-black/70 backdrop-blur-lg" />
+                        
+                        <div className="relative z-30 flex flex-col items-center">
+                          <Lock className="w-4 h-4 text-white/80 mb-2" />
+                          <div className="text-[52px] font-thin text-white tracking-tight leading-none mb-1">{formatTime(time)}</div>
+                          <div className="text-[14px] font-medium text-white/90">{formatDate(time)}</div>
+                        </div>
+
+                        <motion.div 
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => setScreen('chat')}
+                          className="relative z-30 w-[88%] bg-[#1a1a1a]/80 backdrop-blur-2xl border border-white/10 rounded-3xl p-4 mt-8 cursor-pointer shadow-lg group/notif"
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2">
+                              <div className="w-5 h-5 rounded-md bg-gradient-to-tr from-green-500 to-green-700 flex items-center justify-center shadow-inner">
+                                <Mail className="w-3 h-3 text-white" />
+                              </div>
+                              <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest pt-0.5">Messages</span>
+                            </div>
+                            <span className="text-[10px] text-white/40 uppercase tracking-widest pt-0.5">now</span>
+                          </div>
+                          <div className="flex flex-col">
+                            <span className="text-[13px] font-bold text-white mb-0.5 group-hover/notif:text-blue-400 transition-colors">Samuel Byiringiro</span>
+                            <span className="text-[12px] text-white/80 leading-snug">Need a developer? Tap here to send me a direct message!</span>
+                          </div>
+                        </motion.div>
+
+                        <div className="relative z-30 mt-auto flex justify-between w-full px-8 pb-10">
+                          <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-2xl flex items-center justify-center border border-white/10 cursor-pointer hover:bg-white/20 transition-colors">
+                            <Flashlight className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-2xl flex items-center justify-center border border-white/10 cursor-pointer hover:bg-white/20 transition-colors">
+                            <Camera className="w-5 h-5 text-white" />
+                          </div>
+                        </div>
+                      </motion.div>
+                    ) : (
+                      <motion.div 
+                        key="chat"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute inset-0 z-10 flex flex-col bg-[#050505] pt-2"
+                      >
+                        {/* Chat Header */}
+                        <div className="px-5 pb-4 pt-1 border-b border-white/5 flex items-center justify-between bg-[#0a0a0a]">
+                           <div className="flex items-center gap-3">
+                             {/* The Functional Back Button! */}
+                             <div className="p-1 -ml-2 cursor-pointer hover:bg-white/5 rounded-full transition-colors" onClick={() => setScreen('lock')}>
+                               <ChevronLeft className="w-6 h-6 text-blue-500" />
+                             </div>
+                             <div className="relative">
                          <div className="w-9 h-9 rounded-full overflow-hidden border border-white/10 flex items-center justify-center shadow-lg bg-[#111]">
                            <img src="/hero-character.png" alt="Samuel" className="w-full h-full object-cover" draggable="false" />
                          </div>
@@ -233,12 +308,15 @@ const ContactSection = () => {
                         </motion.div>
                       )}
                     </AnimatePresence>
-
                   </div>
+                        
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Bottom Home Indicator */}
-                <div className="absolute bottom-1 bg-[#050505] w-full pt-1 pb-3 flex justify-center z-30">
+                <div className="absolute bottom-1 w-full pt-1 pb-3 flex justify-center z-30 pointer-events-none">
                   <div className="w-32 h-1.5 bg-white/20 rounded-full" />
                 </div>
 
