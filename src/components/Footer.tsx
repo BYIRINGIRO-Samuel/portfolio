@@ -19,23 +19,35 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="w-full bg-[#050505] text-white pt-24 pb-12 px-6 md:px-12 lg:px-20 border-t border-white/5 relative overflow-hidden">
+    <footer className="w-full bg-[#050505] text-white pt-10 pb-8 px-6 md:px-12 lg:px-20 border-t border-white/5 relative overflow-hidden flex flex-col items-center">
       
       {/* Background Atmosphere */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
       <div className="absolute -top-[300px] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl w-full mx-auto relative z-10">
         
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-16 mb-24">
+        {/* Big Text Header (Moved to top) */}
+        <div className="w-full flex justify-center border-b border-white/5 pb-8 mb-10 overflow-hidden relative">
+          <motion.div 
+            initial={{ opacity: 0.5 }}
+            whileHover={{ opacity: 1, scale: 1.02 }}
+            transition={{ duration: 0.5 }}
+            className="text-[12vw] md:text-[10vw] leading-[0.8] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-transparent select-none"
+          >
+            B.SAMUEL
+          </motion.div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row justify-between items-start gap-12 lg:gap-16">
           
           {/* Main Hero Footer Text */}
           <div className="flex flex-col gap-6 lg:w-1/2">
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter leading-[1.1] text-white">
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-[1.1] text-white">
               Let's Build <br/>
               <span className="text-white/40 italic">Something Great.</span>
             </h2>
-            <p className="text-sm md:text-base text-white/50 max-w-md leading-relaxed font-medium">
+            <p className="text-sm text-white/50 max-w-[350px] leading-relaxed font-medium">
               Transforming complex problems into elegant, scaleable digital solutions. Open for freelance opportunities and collaborative tech projects.
             </p>
           </div>
@@ -98,20 +110,8 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Big Text Divider */}
-        <div className="w-full flex justify-center py-10 border-t border-b border-white/5 mb-10 overflow-hidden relative">
-          <motion.div 
-            initial={{ opacity: 0.5 }}
-            whileHover={{ opacity: 1, scale: 1.02 }}
-            transition={{ duration: 0.5 }}
-            className="text-[12vw] leading-none font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white/20 to-transparent select-none"
-          >
-            B.SAMUEL
-          </motion.div>
-        </div>
-
         {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-white/5">
           <div className="text-xs font-medium text-white/40">
             &copy; {currentYear} Samuel Byiringiro. All rights reserved.
           </div>
@@ -126,7 +126,6 @@ const Footer = () => {
             <ArrowUpRight className="w-4 h-4 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
-
       </div>
     </footer>
   );
