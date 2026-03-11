@@ -1,199 +1,241 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
-// Roughly Africa points (scaled 0-100)
-const AFRICA_POINTS = [
-  { x: 45, y: 5 }, { x: 55, y: 7 }, { x: 65, y: 5 }, { x: 75, y: 8 }, { x: 80, y: 15 }, 
-  { x: 82, y: 25 }, { x: 80, y: 35 }, { x: 70, y: 45 }, { x: 65, y: 55 }, { x: 60, y: 65 }, 
-  { x: 55, y: 75 }, { x: 50, y: 85 }, { x: 48, y: 95 }, { x: 42, y: 90 }, { x: 38, y: 80 }, 
-  { x: 35, y: 70 }, { x: 32, y: 60 }, { x: 28, y: 55 }, { x: 22, y: 52 }, { x: 15, y: 48 }, 
-  { x: 10, y: 40 }, { x: 8, y: 30 }, { x: 12, y: 20 }, { x: 20, y: 12 }, { x: 30, y: 8 }, 
-  { x: 40, y: 6 },
-  // Interior points for network feel
-  { x: 40, y: 20 }, { x: 50, y: 25 }, { x: 60, y: 30 }, { x: 30, y: 35 }, { x: 45, y: 40 }, 
-  { x: 55, y: 45 }, { x: 40, y: 55 }, { x: 50, y: 60 }, { x: 45, y: 75 },
-  // RWANDA POINT
-  { x: 52, y: 48, isRwanda: true }
-];
+// Africa path data (simplified high-res)
+const AFRICA_PATH = "M47.5,5.5 C55,5 65,4 72,8 C78,12 82,20 84,30 C86,40 84,50 80,60 C75,70 68,80 60,88 C52,95 45,98 38,92 C32,85 28,75 25,65 C22,55 18,50 12,45 C6,40 4,35 5,28 C6,20 12,12 20,8 C28,4 38,5 47.5,5.5 Z";
+
+// Generating a denser set of points for a more realistic network
+const generateMapPoints = () => {
+  const points = [];
+  // Outline points
+  const outlineCount = 60;
+  for (let i = 0; i < outlineCount; i++) {
+    const t = i / outlineCount;
+    const angle = t * 2 * Math.PI;
+    // Basic Africa-like shape logic
+    const rx = 35 * (1 + 0.3 * Math.sin(angle * 2.5) + 0.2 * Math.cos(angle * 4.2));
+    const ry = 45 * (1 + 0.2 * Math.cos(angle * 3.1) + 0.1 * Math.sin(angle * 5.7));
+    points.push({
+      x: 50 + rx * Math.cos(angle),
+      y: 50 + ry * Math.sin(angle),
+      isOutline: true
+    });
+  }
+  
+  // Hand-tuned Africa shape adjustments to match common maps
+  const realPoints = [
+    {x: 50, y: 10}, {x: 65, y: 12}, {x: 75, y: 18}, {x: 85, y: 30}, {x: 82, y: 45}, 
+    {x: 75, y: 55}, {x: 65, y: 70}, {x: 55, y: 85}, {x: 50, y: 95}, {x: 45, y: 90},
+    {x: 40, y: 80}, {x: 35, y: 65}, {x: 30, y: 55}, {x: 20, y: 50}, {x: 10, y: 45},
+    {x: 5, y: 35}, {x: 10, y: 25}, {x: 20, y: 15}, {x: 35, y: 12}, {x: 45, y: 10}
+  ];
+
+  // Fill interior with a grid of points clipped to shape (simulated)
+  for (let x = 15; x < 85; x += 6) {
+    for (let y = 15; y < 90; y += 6) {
+      // Very rough containment check for Africa shape
+      const isInTop = y < 50 && x > 15 && x < 85;
+      const isInBottom = y >= 50 && x > 35 && x < 65;
+      if (isInTop || isInBottom) {
+        points.push({ x, y, isOutline: false, isRwanda: x > 49 && x < 54 && y > 46 && y < 51 });
+      }
+    }
+  }
+
+  return points;
+};
 
 const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
   const [phase, setPhase] = useState<'formation' | 'rwanda' | 'text1' | 'text2' | 'transform' | 'finished'>('formation');
-  const [particles, setParticles] = useState<{ id: number; x: number; y: number; tx: number; ty: number; isRwanda?: boolean }[]>([]);
+  const points = useMemo(() => generateMapPoints(), []);
+  const [connections, setConnections] = useState<{p1: number, p2: number}[]>([]);
 
   useEffect(() => {
-    // Generate particles
-    const initialParticles = AFRICA_POINTS.map((pt, i) => ({
-      id: i,
-      x: Math.random() * 100, // Initial scatter
-      y: Math.random() * 100,
-      tx: pt.x,
-      ty: pt.y,
-      isRwanda: pt.isRwanda
-    }));
-    
-    // Add extra decorative particles
-    for (let i = initialParticles.length; i < 150; i++) {
-      initialParticles.push({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        tx: Math.random() * 100,
-        ty: Math.random() * 100,
+    // Generate logical network connections
+    const newConnections: {p1: number, p2: number}[] = [];
+    points.forEach((p1, i) => {
+      points.slice(i + 1).forEach((p2, j) => {
+        const idx2 = i + 1 + j;
+        const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+        if (dist < 10) newConnections.push({ p1: i, p2: idx2 });
       });
-    }
-    
-    setParticles(initialParticles);
+    });
+    setConnections(newConnections);
 
-    // Sequence
-    const t1 = setTimeout(() => setPhase('rwanda'), 2500);
-    const t2 = setTimeout(() => setPhase('text1'), 3500);
-    const t3 = setTimeout(() => setPhase('text2'), 5500);
-    const t4 = setTimeout(() => setPhase('transform'), 7500);
-    const t5 = setTimeout(() => setPhase('finished'), 9500);
-    const t6 = setTimeout(onComplete, 10500);
+    // Timeline
+    const t1 = setTimeout(() => setPhase('rwanda'), 3000);
+    const t2 = setTimeout(() => setPhase('text1'), 4000);
+    const t3 = setTimeout(() => setPhase('text2'), 6500);
+    const t4 = setTimeout(() => setPhase('transform'), 8500);
+    const t5 = setTimeout(() => setPhase('finished'), 10500);
+    const t6 = setTimeout(onComplete, 11500);
 
-    return () => {
-      [t1, t2, t3, t4, t5, t6].forEach(clearTimeout);
-    };
-  }, [onComplete]);
+    return () => [t1, t2, t3, t4, t5, t6].forEach(clearTimeout);
+  }, [onComplete, points]);
 
   return (
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: "easeInOut" }}
-      className="fixed inset-0 z-[100] bg-[#050505] flex items-center justify-center overflow-hidden"
+      transition={{ duration: 1.2, ease: "easeInOut" }}
+      className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center overflow-hidden font-sans"
     >
-      {/* Background Atmosphere */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05),transparent_70%)]" />
+      {/* Cinematic Background Atmosphere */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent_80%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black to-transparent z-20" />
       </div>
 
-      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center">
+      <div className="relative w-full max-w-4xl h-full flex flex-col items-center justify-center">
         
-        {/* MAP / PARTICLE CONTAINER */}
-        <div className="relative w-80 h-96 md:w-[400px] md:h-[500px]">
+        {/* THE DIGITAL AFRICA MAP */}
+        <div className="relative w-[320px] h-[400px] md:w-[500px] md:h-[600px] mb-12">
           
-          {/* Connecting Lines (Simulated with SVG layer) */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20">
-            {phase !== 'transform' && phase !== 'finished' && particles.slice(0, AFRICA_POINTS.length).map((p1, i) => {
-              // Connect close points
-              const connections = particles.slice(i + 1, AFRICA_POINTS.length).filter(p2 => {
-                const dist = Math.sqrt(Math.pow(p1.tx - p2.tx, 2) + Math.pow(p1.ty - p2.ty, 2));
-                return dist < 15;
-              });
-
-              return connections.map(p2 => (
+          {/* Connection Lines (SVG Layer) */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none z-10">
+            <AnimatePresence>
+              {phase !== 'transform' && phase !== 'finished' && connections.map((conn, idx) => (
                 <motion.line
-                  key={`${p1.id}-${p2.id}`}
-                  x1={`${p1.tx}%`} y1={`${p1.ty}%`}
-                  x2={`${p2.tx}%`} y2={`${p2.ty}%`}
-                  stroke="rgba(59,130,246,0.5)"
+                  key={`line-${idx}`}
+                  x1={`${points[conn.p1].x}%`} y1={`${points[conn.p1].y}%`}
+                  x2={`${points[conn.p2].x}%`} y2={`${points[conn.p2].y}%`}
+                  stroke="rgba(255,255,255,0.08)"
                   strokeWidth="0.5"
                   initial={{ pathLength: 0, opacity: 0 }}
-                  animate={{ pathLength: 1, opacity: 1 }}
-                  transition={{ duration: 2, delay: 0.5 }}
+                  animate={{ 
+                    pathLength: 1, 
+                    opacity: phase === 'rwanda' || phase === 'text1' || phase === 'text2' ? 0.15 : 0.08,
+                    stroke: (points[conn.p1].isRwanda || points[conn.p2].isRwanda) && phase !== 'formation' 
+                      ? "rgba(251,191,36,0.4)" : "rgba(255,255,255,0.08)"
+                  }}
+                  transition={{ duration: 3, delay: Math.random() * 2 }}
                 />
-              ));
-            })}
+              ))}
+            </AnimatePresence>
           </svg>
 
-          {/* Particles */}
+          {/* Rwanda Radiating Glow (Background layer) */}
           <AnimatePresence>
-            {particles.map((p) => (
+            {(phase === 'rwanda' || phase === 'text1' || phase === 'text2') && (
               <motion.div
-                key={p.id}
-                className={`absolute w-1 h-1 rounded-full ${p.isRwanda ? 'bg-amber-400 z-50' : 'bg-blue-400/60'}`}
-                style={{ 
-                  left: phase === 'formation' ? `${p.x}%` : `${p.tx}%`, 
-                  top: phase === 'formation' ? `${p.y}%` : `${p.ty}%` 
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ 
+                  opacity: [0.3, 0.6, 0.3], 
+                  scale: [1, 1.3, 1] 
                 }}
-                animate={{
-                  left: phase === 'formation' ? [`${p.x}%`, `${p.tx}%`] : `${p.tx}%`,
-                  top: phase === 'formation' ? [`${p.y}%`, `${p.ty}%`] : `${p.ty}%`,
-                  scale: (phase === 'rwanda' || phase === 'text1') && p.isRwanda ? [1, 1.5, 1] : 1,
-                  boxShadow: (phase === 'rwanda' || phase === 'text1') && p.isRwanda ? '0 0 20px rgba(251,191,36,0.8)' : 'none',
-                  opacity: phase === 'transform' ? 0 : 1
-                }}
-                transition={{ 
-                  duration: 2, 
-                  ease: "easeInOut",
-                  scale: { duration: 1, repeat: Infinity }
-                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute w-40 h-40 bg-amber-400/10 blur-[60px] rounded-full z-0"
+                style={{ left: '52%', top: '48%', transform: 'translate(-50%, -50%)' }}
               />
-            ))}
+            )}
           </AnimatePresence>
 
-          {/* Rwanda Pulse */}
-          {(phase === 'rwanda' || phase === 'text1' || phase === 'text2') && (
+          {/* Particle Nodes */}
+          {points.map((p, i) => (
             <motion.div
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ scale: [0, 1.5], opacity: [0.8, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }}
-              className="absolute w-20 h-20 bg-amber-400/20 rounded-full blur-xl z-30"
-              style={{ left: '52%', top: '48%', transform: 'translate(-50%, -50%)' }}
+              key={`node-${i}`}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: phase === 'transform' ? 0 : 1,
+                scale: p.isRwanda && phase !== 'formation' ? [1, 1.8, 1] : 1,
+                backgroundColor: p.isRwanda && phase !== 'formation' ? "#fbbf24" : "#ffffff40",
+                boxShadow: p.isRwanda && phase !== 'formation' ? "0 0 15px #fbbf24" : "none",
+              }}
+              className="absolute w-[3px] h-[3px] rounded-full z-20"
+              style={{ left: `${p.x}%`, top: `${p.y}%`, transform: 'translate(-50%, -50%)' }}
+              transition={{ 
+                duration: 1.5, 
+                delay: Math.random() * 2,
+                scale: { repeat: Infinity, duration: 1.5 }
+              }}
             />
-          )}
-        </div>
+          ))}
 
-        {/* TEXT OVERLAYS */}
-        <div className="absolute inset-x-0 bottom-24 flex flex-col items-center gap-6 h-32">
-          <AnimatePresence mode="wait">
-            {phase === 'text1' && (
+          {/* Rwanda Central Pulse Core */}
+          <AnimatePresence>
+            {(phase === 'rwanda' || phase === 'text1' || phase === 'text2') && (
               <motion.div
-                key="t1"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.8 }}
-                className="flex flex-col items-center"
-              >
-                <span className="text-sm font-black uppercase tracking-[0.4em] text-white/40 mb-2">Technological Growth</span>
-                <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">Innovation From Africa</span>
-              </motion.div>
-            )}
-            {phase === 'text2' && (
-              <motion.div
-                key="t2"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.8 }}
-                className="flex flex-col items-center"
-              >
-                <span className="text-sm font-black uppercase tracking-[0.4em] text-blue-400 mb-2">Rwanda • Hub of Tech</span>
-                <span className="text-2xl md:text-3xl font-black text-white italic tracking-tighter">Building Global Solutions</span>
-              </motion.div>
-            )}
-            {phase === 'transform' && (
-              <motion.div
-                key="t3"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 1.1 }}
-                transition={{ duration: 1.2 }}
-                className="flex flex-col items-center"
-              >
-                <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-2">
-                  Byiringiro Samuel
-                </h1>
-                <p className="text-sm font-bold text-white/40 uppercase tracking-[0.3em]">
-                  Building the Future of Software
-                </p>
-              </motion.div>
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 4], 
+                  opacity: [0.8, 0] 
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                className="absolute w-12 h-12 bg-amber-400/40 rounded-full border border-amber-400/50 z-30"
+                style={{ left: '52%', top: '48%', transform: 'translate(-50%, -50%)' }}
+              />
             )}
           </AnimatePresence>
         </div>
 
+        {/* CINEMATIC TEXT CONTENT */}
+        <div className="flex flex-col items-center justify-center gap-6 h-40 relative z-30 px-6 text-center">
+            <AnimatePresence mode="wait">
+              {phase === 'text1' && (
+                <motion.div
+                  key="t1"
+                  initial={{ opacity: 0, y: 30, letterSpacing: "0.2em" }}
+                  animate={{ opacity: 1, y: 0, letterSpacing: "0.5em" }}
+                  exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="flex flex-col items-center"
+                >
+                  <span className="text-[10px] md:text-sm font-black uppercase tracking-[0.8em] text-white/30 mb-4 ml-[0.8em]">Technological Evolution</span>
+                  <h2 className="text-3xl md:text-5xl font-black text-white italic tracking-tighter">Innovation From Africa</h2>
+                </motion.div>
+              )}
+
+              {phase === 'text2' && (
+                <motion.div
+                  key="t2"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="flex flex-col items-center"
+                >
+                  <span className="text-[10px] md:text-sm font-black uppercase tracking-[0.6em] text-amber-500 mb-4 ml-[0.6em]">Rwanda • Global Tech Hub</span>
+                  <h2 className="text-3xl md:text-5xl font-black text-white italic tracking-tighter leading-none">Building Global Solutions</h2>
+                </motion.div>
+              )}
+
+              {phase === 'transform' && (
+                <motion.div
+                  key="t3"
+                  initial={{ opacity: 0, scale: 0.8, filter: "blur(20px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1.5, ease: "anticipate" }}
+                  className="flex flex-col items-center mt-[-80px]"
+                >
+                  <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter text-white mb-4 leading-none">
+                    Byiringiro Samuel
+                  </h1>
+                  <div className="flex items-center gap-4">
+                    <div className="h-px w-8 md:w-16 bg-white/20" />
+                    <p className="text-xs md:text-sm font-black text-white/40 uppercase tracking-[0.4em] ml-[0.4em]">
+                      Building the Future of Software
+                    </p>
+                    <div className="h-px w-8 md:w-16 bg-white/20" />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+        </div>
+
       </div>
 
-      {/* GLOBAL LIGHTING EFFECTS */}
-      <div className="absolute inset-0 pointer-events-none z-20">
-        <motion.div 
-          animate={{ opacity: phase === 'transform' ? [0, 0.3, 0.2] : 0 }}
-          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent_70%)]"
-        />
-      </div>
+      {/* Finishing Flash */}
+      <AnimatePresence>
+        {phase === 'finished' && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="absolute inset-0 bg-white z-[110]"
+            transition={{ duration: 0.8 }}
+          />
+        )}
+      </AnimatePresence>
 
     </motion.div>
   );
