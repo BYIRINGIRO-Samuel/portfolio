@@ -119,20 +119,7 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
   const isTitle = currentIndex === 0;
 
   return (
-    <div className="relative group/billboard flex items-center transition-all duration-300">
-      {/* Heavy Duty Mounting Bracket (Attaching to skyscraper side) */}
-      <div className="flex flex-col items-end -mr-px z-10">
-        <div className="w-10 h-1.5 bg-gradient-to-r from-gray-800 to-gray-600 border-y border-white/10 rounded-l-full shadow-lg" />
-        <div className="w-4 h-16 bg-gray-900 border-x border-white/10 flex flex-col justify-around py-2">
-           <div className="w-full h-px bg-white/5" />
-           <div className="w-full h-px bg-white/5" />
-        </div>
-        <div className="w-10 h-1.5 bg-gradient-to-r from-gray-800 to-gray-600 border-y border-white/10 rounded-l-full shadow-lg" />
-      </div>
-
-      {/* Mounting Plate */}
-      <div className="w-2 h-20 bg-gray-800 border-y border-white/10 ml-[-4px]" />
-
+    <div className="relative group/billboard transition-all duration-300">
       {/* TV Screen */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
@@ -708,8 +695,8 @@ const SkillsSection = () => {
           </div>
         ))}
 
-        {/* Animated TV Screen - Soft Skills Display (Mounted on Building) */}
-        <div className="absolute top-[28%] right-[12.8%] z-[40]">
+        {/* Animated TV Screen - Soft Skills Display (Mounted freely on building left) */}
+        <div className="absolute top-[30%] right-[28%] z-[40]">
           <AnimatedTVScreen skills={softSkills} isActive={true} />
         </div>
 
