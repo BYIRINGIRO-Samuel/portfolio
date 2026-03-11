@@ -319,9 +319,8 @@ const ContactSection = () => {
                 <div className="absolute bottom-1 w-full pt-1 pb-3 flex justify-center z-30 pointer-events-none">
                   <div className="w-32 h-1.5 bg-white/20 rounded-full" />
                 </div>
-
               </div>
-           </div>
+            </div>
 
         </div>
 
