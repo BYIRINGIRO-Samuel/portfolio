@@ -102,9 +102,7 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
             }}
             className="absolute z-10 flex flex-col items-center"
           >
-            <div className="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.5)]">
-               <span className="text-xl font-black text-white italic">S</span>
-            </div>
+            <div className="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.5)]" />
           </motion.div>
 
           {/* Connection Lines (Appears when formed) */}
@@ -121,45 +119,6 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
                )}
              </AnimatePresence>
           </svg>
-        </div>
-
-        {/* HUD ELEMENTS */}
-        <div className="mt-12 flex flex-col items-center gap-6 relative z-20">
-          <div className="flex flex-col items-center">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-[10px] font-black uppercase tracking-[0.6em] text-white/30 mb-2"
-            >
-              Structural::Assembly
-            </motion.div>
-            
-            <div className="flex items-center gap-4">
-              <span className="text-5xl font-black text-white tracking-tighter">
-                {Math.round(progress)}
-                <span className="text-sm font-light text-white/20 ml-1">%</span>
-              </span>
-            </div>
-          </div>
-
-          <div className="w-48 h-[1px] bg-white/5 relative overflow-hidden">
-             <motion.div 
-               className="absolute inset-y-0 left-0 bg-white shadow-[0_0_10px_white]"
-               style={{ width: `${progress}%` }}
-             />
-          </div>
-
-          <AnimatePresence>
-            {progress > 80 && (
-              <motion.span
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-[9px] font-bold text-blue-400 uppercase tracking-widest"
-              >
-                Constructing Identity
-              </motion.span>
-            )}
-          </AnimatePresence>
         </div>
 
       </div>
