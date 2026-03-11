@@ -40,6 +40,102 @@ const channels = [
   }
 ];
 
+/* Premium Cinematic Countdown Overlay */
+const CountdownOverlay = () => {
+  const [count, setCount] = useState(3);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCount((prev) => (prev > 1 ? prev - 1 : prev));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden select-none">
+       {/* Ambient Static Glow */}
+       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_70%)]" />
+
+       {/* Precision Crosshair Lines */}
+       <div className="absolute w-full h-[1px] bg-white/10 top-1/2 -translate-y-1/2" />
+       <div className="absolute h-full w-[1px] bg-white/10 left-1/2 -translate-x-1/2" />
+       
+       {/* Animated Sweeping Radar Ring */}
+       <motion.div 
+         initial={{ scale: 0.8, opacity: 0 }}
+         animate={{ scale: [0.8, 1.5], opacity: [0.4, 0] }}
+         transition={{ duration: 1, repeat: Infinity, ease: "easeOut" }}
+         className="absolute w-64 h-64 border-[0.5px] border-white/30 rounded-full"
+       />
+
+       {/* Circular Progress Frame */}
+       <svg className="absolute w-48 h-48 md:w-56 md:h-56 -rotate-90">
+         <motion.circle
+           cx="50%"
+           cy="50%"
+           r="45%"
+           stroke="rgba(255,255,255,0.1)"
+           strokeWidth="1"
+           fill="none"
+         />
+         <motion.circle
+           cx="50%"
+           cy="50%"
+           r="45%"
+           stroke="white"
+           strokeWidth="2"
+           fill="none"
+           strokeDasharray="100 100"
+           initial={{ strokeDashoffset: 100 }}
+           animate={{ strokeDashoffset: 0 }}
+           transition={{ duration: 3.2, ease: "linear" }}
+         />
+       </svg>
+
+       {/* Main Countdown Logic Display */}
+       <AnimatePresence mode="wait">
+          <motion.div
+            key={count}
+            initial={{ scale: 0.5, opacity: 0, filter: 'blur(10px)' }}
+            animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
+            exit={{ scale: 2, opacity: 0, filter: 'blur(15px)' }}
+            transition={{ duration: 0.4, ease: "backOut" }}
+            className="relative z-10 flex flex-col items-center"
+          >
+             <span className="text-white font-black text-8xl md:text-9xl tracking-tighter drop-shadow-[0_0_40px_rgba(255,255,255,0.3)] italic uppercase">
+               {count}
+             </span>
+             <motion.div 
+               initial={{ opacity: 0, y: 10 }}
+               animate={{ opacity: 1, y: 0 }}
+               className="text-[10px] text-white/40 font-mono tracking-[0.5em] mt-4 uppercase drop-shadow-sm font-black"
+             >
+               Linking...
+             </motion.div>
+          </motion.div>
+       </AnimatePresence>
+
+       {/* Tech Infrastructure Callouts */}
+       <div className="absolute top-8 left-8 flex flex-col items-start gap-1">
+          <div className="w-16 h-[1.5px] bg-red-600 shadow-[0_0_10px_red]" />
+          <span className="text-[7px] text-white font-black tracking-[0.3em] uppercase">SYSTEM_LINK: ACTIVE</span>
+          <span className="text-[6px] text-white/30 font-mono uppercase">RWANDA_TX_NODE: 01</span>
+       </div>
+
+       <div className="absolute bottom-8 right-8 flex flex-col items-end gap-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[8px] text-white font-black tracking-[0.2em] uppercase">Ready to Broadcast</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          </div>
+          <div className="w-24 h-[1px] bg-white/10" />
+       </div>
+       
+       {/* Corner Tick Marks */}
+       <div className="absolute inset-6 border border-white/5 pointer-events-none" />
+    </div>
+  );
+};
+
 type TVState = 'standby' | 'booting' | 'playing';
 
 /* Premium Rwandan Imigongo SVG Background */
@@ -92,7 +188,7 @@ const Testimonials = () => {
         setTimeout(() => {
           setTvState('playing');
           setActive(0);
-        }, 1200);
+        }, 3200);
       }, 3500); // Give them a solid 3.5s to appreciate the cultural news screen
       return () => clearTimeout(timer);
     }
@@ -133,7 +229,7 @@ const Testimonials = () => {
       setTimeout(() => {
         setTvState('playing');
         setActive(0);
-      }, 1200);
+      }, 3200);
     } else {
       setTvState('standby');
     }
@@ -250,20 +346,13 @@ const Testimonials = () => {
                   </motion.div>
                )}
 
-               {/* ── Booting State ── */}
+               {/* ── Booting State: Professional Countdown ── */}
                {tvState === 'booting' && (
                   <motion.div 
                     key="booting"
-                    className="absolute inset-0 flex items-center justify-center bg-black"
+                    className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden"
                   >
-                    <motion.div 
-                      initial={{ scaleY: 0.005, scaleX: 0 }}
-                      animate={{ scaleX: 1, scaleY: [0.005, 0.01, 1] }}
-                      transition={{ duration: 0.9, times: [0, 0.7, 1], ease: "easeInOut" }}
-                      className="w-full h-full bg-white relative origin-center"
-                    >
-                       <div className="absolute inset-0 bg-[repeating-linear-gradient(transparent,transparent_2px,rgba(0,0,0,0.9)_2px,rgba(0,0,0,0.9)_4px)]" />
-                    </motion.div>
+                    <CountdownOverlay />
                   </motion.div>
                )}
 

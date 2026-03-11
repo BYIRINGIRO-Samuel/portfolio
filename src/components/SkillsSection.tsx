@@ -696,7 +696,7 @@ const SkillsSection = () => {
         ))}
 
         {/* Animated TV Screen - Soft Skills Display (Floating above the road) */}
-        <div className="absolute top-[12%] right-[20%] z-[40]">
+        <div className="absolute top-[6%] right-[24%] z-[40]">
           <AnimatedTVScreen skills={softSkills} isActive={true} />
         </div>
 
