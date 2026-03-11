@@ -26,7 +26,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 pt-4 pb-12 flex flex-col items-center justify-center font-sans tracking-tight">
+    <section id="contact" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 pt-4 pb-4 flex flex-col items-center justify-center font-sans tracking-tight">
       <div className="relative w-full max-w-7xl bg-[#050505] rounded-xl md:rounded-2xl text-white shadow-[0_20px_60px_rgba(0,0,0,0.8)] z-10 px-6 py-10 md:px-12 md:py-14 overflow-hidden group border border-[#161616]">
         
         {/* Background Gradient & Base decor */}
@@ -326,8 +326,8 @@ const ContactSection = () => {
 
       </div>
       
-      {/* MINIMALIST COPYRIGHT LINE - VISIBLE COLOR */}
-      <div className="w-full flex justify-center py-6">
+      {/* MINIMALIST COPYRIGHT LINE - REDUCED SPACING */}
+      <div className="w-full flex justify-center pt-4 pb-1">
         <p className="text-[10px] md:text-xs font-semibold text-gray-400 tracking-tight">
           &copy; {new Date().getFullYear()} Samuel Byiringiro. All rights reserved.
         </p>
