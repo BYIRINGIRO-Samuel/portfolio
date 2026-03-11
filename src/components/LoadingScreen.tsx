@@ -9,14 +9,13 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(onComplete, 1000);
+          setTimeout(onComplete, 800);
           return 100;
         }
-        // Random increments for a more "loading" feel
-        const increment = Math.floor(Math.random() * 8) + 1;
-        return Math.min(prev + increment, 100);
+        const diff = Math.random() * 15;
+        return Math.min(prev + diff, 100);
       });
-    }, 120);
+    }, 150);
 
     return () => clearInterval(timer);
   }, [onComplete]);
@@ -25,129 +24,90 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
     <motion.div
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: [0.43, 0.13, 0.23, 0.96] }}
-      className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center overflow-hidden font-mono"
+      transition={{ duration: 0.8, ease: "easeInOut" }}
+      className="fixed inset-0 z-[100] bg-[#050505] flex items-center justify-center overflow-hidden"
     >
-      {/* Background Subtle Atmosphere */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03),transparent_70%)]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full scale-[1.5] opacity-20" />
-      </div>
-
-      <div className="relative z-10 flex flex-col items-center">
+      {/* CENTERED CONSTRUCT ONLY */}
+      <div className="relative flex flex-col items-center">
         
-        {/* THE LOADER CORE */}
-        <div className="relative w-64 h-64 flex items-center justify-center">
+        {/* HOLOGRAPHIC CUBE LOADER (3D-ish SVG) */}
+        <div className="relative w-32 h-32 mb-12">
           
-          {/* Animated Concentric Rings */}
-          {[...Array(4)].map((_, i) => (
+          {/* Animated Orbitals around the core */}
+          {[...Array(2)].map((_, i) => (
             <motion.div
               key={i}
               initial={{ rotate: 0 }}
               animate={{ rotate: i % 2 === 0 ? 360 : -360 }}
-              transition={{ 
-                duration: 10 + i * 5, 
-                repeat: Infinity, 
-                ease: "linear" 
-              }}
-              style={{
-                width: 100 + i * 40 + 'px',
-                height: 100 + i * 40 + 'px',
-                borderWidth: '1px',
-                borderStyle: i === 3 ? 'dashed' : 'solid',
-              }}
-              className="absolute rounded-full border-white/10"
+              transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              className="absolute inset-[-20%] border border-white/5 rounded-full"
             />
           ))}
 
-          {/* Primary Progress Ring */}
-          <svg className="w-56 h-56 transform -rotate-90 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-            <circle
-              cx="112"
-              cy="112"
-              r="100"
-              stroke="rgba(255,255,255,0.05)"
-              strokeWidth="2"
-              fill="transparent"
-            />
-            <motion.circle
-              cx="112"
-              cy="112"
-              r="100"
-              stroke="white"
-              strokeWidth="2"
-              fill="transparent"
-              strokeDasharray="628" // 2 * PI * r
-              animate={{ strokeDashoffset: 628 - (628 * progress) / 100 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              strokeLinecap="round"
-            />
-          </svg>
-
-          {/* Floating Data Points on Ring */}
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 p-4"
+          {/* THE CORE BOX */}
+          <motion.svg 
+            viewBox="0 0 100 100" 
+            className="w-full h-full drop-shadow-[0_0_20px_rgba(59,130,246,0.2)]"
+            animate={{ rotateY: 360, rotateX: 360 }}
+            transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
           >
-            <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white] absolute top-0 left-1/2 -translate-x-1/2" />
-          </motion.div>
-
-          {/* Percentage Counter */}
-          <div className="absolute flex flex-col items-center">
-            <motion.span 
-              key={progress}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-black text-white tracking-tighter"
-            >
-              {progress}
-            </motion.span>
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">Process</span>
-          </div>
-
+            {/* Front Face Wireframe */}
+            <motion.rect 
+              x="25" y="25" width="50" height="50" 
+              fill="none" stroke="white" strokeWidth="0.5" strokeOpacity="0.3"
+            />
+            {/* Inner Glowing Core */}
+            <motion.rect 
+              x="35" y="35" width="30" height="30"
+              fill="rgba(59,130,246,0.1)" stroke="#3b82f6" strokeWidth="1"
+              animate={{ 
+                scale: [0.8, 1.1, 0.8],
+                opacity: [0.3, 0.7, 0.3],
+                strokeWidth: [0.5, 2, 0.5]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            {/* Perspective Lines */}
+            <line x1="25" y1="25" x2="10" y2="10" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+            <line x1="75" y1="25" x2="90" y2="10" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+            <line x1="25" y1="75" x2="10" y2="90" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+            <line x1="75" y1="75" x2="90" y2="90" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+          </motion.svg>
         </div>
 
-        {/* IDENTITY REVEAL (SUBTLE) */}
-        <div className="mt-20 flex flex-col items-center gap-2">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center gap-3"
-          >
-            <div className="h-px w-8 bg-white/20" />
-            <span className="text-xs font-black uppercase tracking-[0.5em] text-white/40">Byiringiro Samuel</span>
-            <div className="h-px w-8 bg-white/20" />
-          </motion.div>
-          
-          <AnimatePresence mode="wait">
+        {/* HUD TEXT BELOW CORE */}
+        <div className="flex flex-col items-center gap-4">
+          <div className="flex items-center gap-4">
+            <div className="h-px w-8 bg-white/10" />
+            <span className="text-[10px] font-black uppercase tracking-[0.6em] text-white/40 ml-[0.6em]">
+              B.Samuel::Initializing
+            </span>
+            <div className="h-px w-8 bg-white/10" />
+          </div>
+
+          <div className="flex flex-col items-center">
             <motion.span 
-              key={progress < 30 ? 'init' : progress < 70 ? 'load' : 'ready'}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="text-[9px] font-bold text-white/20 uppercase tracking-[0.3em]"
+              key={progress}
+              className="text-4xl font-black text-white italic tracking-tighter"
             >
-              {progress < 30 ? 'Initializing Architecture' : progress < 70 ? 'Analyzing Systems' : 'Deployment Ready'}
+              {Math.round(progress)}
+              <span className="text-sm font-normal not-italic text-white/20 ml-1">%</span>
             </motion.span>
-          </AnimatePresence>
+            
+            {/* Minimalist Under-bar */}
+            <div className="w-48 h-[2px] bg-white/5 rounded-full mt-4 overflow-hidden relative">
+              <motion.div 
+                className="absolute inset-y-0 left-0 bg-white shadow-[0_0_10px_white]"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         </div>
 
       </div>
 
-      {/* Finishing Grid Flash */}
-      <AnimatePresence>
-        {progress === 100 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 z-50 bg-white"
-            transition={{ duration: 0.5 }}
-          />
-        )}
-      </AnimatePresence>
-
+      {/* Subtle Background Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.03),transparent_70%)] pointer-events-none" />
     </motion.div>
   );
 };
