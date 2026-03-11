@@ -325,6 +325,14 @@ const ContactSection = () => {
         </div>
 
       </div>
+      
+      {/* MINIMALIST COPYRIGHT LINE - NO BLACK BG */}
+      <div className="absolute bottom-6 w-full flex justify-center pointer-events-none">
+        <p className="text-[10px] md:text-xs font-semibold text-black/30 tracking-tight">
+          &copy; {new Date().getFullYear()} Samuel Byiringiro. All rights reserved.
+        </p>
+      </div>
+
     </section>
   );
 };
