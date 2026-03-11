@@ -1,6 +1,6 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
-import { Briefcase, GraduationCap, Cpu, Zap, Activity, ShieldCheck, Database, Target, ChevronRight, Binary } from "lucide-react";
+import { useRef } from "react";
+import { Briefcase, GraduationCap, Cpu, Activity, ShieldCheck, Database, Binary } from "lucide-react";
 
 type HistoryItem = {
   id: string;
@@ -106,7 +106,7 @@ const ExperienceSection = () => {
 
            <div className="w-full space-y-16 md:space-y-24">
               {history.map((item, idx) => (
-                <HistoryModule key={item.id} item={item} index={idx} parentScroll={scrollYProgress} />
+                <HistoryModule key={item.id} item={item} index={idx} />
               ))}
            </div>
 
@@ -132,7 +132,7 @@ const ExperienceSection = () => {
   );
 };
 
-const HistoryModule = ({ item, index, parentScroll }: { item: HistoryItem, index: number, parentScroll: any }) => {
+const HistoryModule = ({ item, index }: { item: HistoryItem, index: number }) => {
   const isExperience = item.type === "experience";
   const alignLeft = index % 2 === 0;
 
@@ -190,7 +190,7 @@ const HistoryModule = ({ item, index, parentScroll }: { item: HistoryItem, index
              </div>
 
              {/* Metric Sidecar (HUD Detail) */}
-             <div className={`absolute top-0 ${alignLeft ? '-left-6' : '-right-6'} h-full flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden lg:flex`}>
+             <div className={`absolute top-0 ${alignLeft ? '-left-6' : '-right-6'} h-full flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden lg:flex`}>
                 <div className="flex flex-col gap-3 border-l border-white/20 pl-3 py-2">
                    <div className="flex flex-col">
                       <span className="text-[7px] font-black text-white/20 uppercase tracking-widest">Logic_Health</span>

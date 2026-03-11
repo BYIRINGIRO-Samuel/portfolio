@@ -122,7 +122,7 @@ const SkillsMarquee = () => {
         </div>
 
         {/* HEADER BLOCK: REINFORCED CHASSIS (FLUSH) */}
-        <div className="relative flex-shrink-0 bg-black text-white px-10 flex items-center z-20 border-y-2 border-white/5 border-l border-white/10 overflow-hidden">
+        <div className="relative flex-shrink-0 bg-black text-white px-10 flex items-center z-20 border-y-2 border-l border-white/10 overflow-hidden">
           {/* Moving Glare Reflection */}
           <motion.div 
              animate={{ x: [-100, 400] }}
@@ -165,7 +165,7 @@ const SkillsMarquee = () => {
         </div>
 
         {/* RIGHT NODE: THE OMEGA TERMINAL (SYMMETRICAL MIRROR) */}
-        <div className="relative flex-shrink-0 h-full w-36 z-30 flex items-center justify-center bg-black border-y-2 border-white/5 border-r border-white/10 overflow-visible">
+        <div className="relative flex-shrink-0 h-full w-36 z-30 flex items-center justify-center bg-black border-y-2 border-r border-white/10 overflow-visible">
           {/* Mirrored Animated Tech Schematics */}
           <svg className="absolute inset-0 w-full h-full scale-x-[-1]" viewBox="0 0 144 56">
              <rect x="10" y="15" width="2" height="26" fill="white" fillOpacity="0.1" />

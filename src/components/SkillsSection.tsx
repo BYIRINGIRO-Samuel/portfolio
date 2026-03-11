@@ -119,12 +119,25 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
   const isTitle = currentIndex === 0;
 
   return (
-    <div className="relative group/billboard flex flex-col items-center transition-all duration-300">
+    <div className="relative group/billboard flex items-center transition-all duration-300">
+      {/* Heavy Duty Mounting Bracket (Attaching to skyscraper side) */}
+      <div className="flex flex-col items-end -mr-px z-10">
+        <div className="w-10 h-1.5 bg-gradient-to-r from-gray-800 to-gray-600 border-y border-white/10 rounded-l-full shadow-lg" />
+        <div className="w-4 h-16 bg-gray-900 border-x border-white/10 flex flex-col justify-around py-2">
+           <div className="w-full h-px bg-white/5" />
+           <div className="w-full h-px bg-white/5" />
+        </div>
+        <div className="w-10 h-1.5 bg-gradient-to-r from-gray-800 to-gray-600 border-y border-white/10 rounded-l-full shadow-lg" />
+      </div>
+
+      {/* Mounting Plate */}
+      <div className="w-2 h-20 bg-gray-800 border-y border-white/10 ml-[-4px]" />
+
       {/* TV Screen */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="relative w-44 h-32 bg-black/90 rounded-lg border-2 border-gray-700 overflow-hidden shadow-2xl"
+        className="relative w-44 h-32 bg-black/90 rounded-lg border-2 border-gray-700 overflow-hidden shadow-[0_0_30px_rgba(255,255,255,0.1)] ml-[-1px]"
       >
         {/* TV Frame Details */}
         <div className="absolute inset-0 border border-gray-600 rounded-md m-1" />
@@ -400,10 +413,6 @@ const AnimatedTVScreen = ({ skills = [], isActive = true }) => {
           {isTitle ? 'PREMIUM' : 'SHOWCASE'}
         </div>
       </motion.div>
-      
-      {/* TV Stand */}
-      <div className="w-2 h-16 bg-white/10 border-x border-white/5" />
-      <div className="w-12 h-2 bg-white/20 rounded-t-full" />
     </div>
   );
 };
@@ -424,8 +433,8 @@ const TrafficLight = ({ state = 'GREEN' }) => (
   </div>
 );
 
-const CityBuilding = ({ h = 80, w = 30, delay = 0 }) => (
-  <div className="relative group/building opacity-20 hover:opacity-40 transition-all duration-700" style={{ width: w, height: h }}>
+const CityBuilding = ({ h = 80, w = 30, delay = 0, opacity = "opacity-20" }) => (
+  <div className={`relative group/building ${opacity} hover:opacity-40 transition-all duration-700`} style={{ width: w, height: h }}>
     {/* Main Structure */}
     <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent border-t border-x border-white/10 rounded-t-sm backdrop-blur-[2px]" />
     
@@ -688,7 +697,7 @@ const SkillsSection = () => {
         {/* Restored HQ Buildings on Right side */}
         <div className="absolute top-[5%] right-[5%] z-0 flex items-end gap-5 pointer-events-none">
           <CityBuilding h={160} w={50} delay={1.2} />
-          <CityBuilding h={240} w={70} delay={0} />
+          <CityBuilding h={240} w={70} delay={0} opacity="opacity-40" />
           <CityBuilding h={130} w={40} delay={0.4} />
         </div>
 
@@ -699,8 +708,8 @@ const SkillsSection = () => {
           </div>
         ))}
 
-        {/* Single Animated TV Screen - Soft Skills Display */}
-        <div className="absolute bottom-[42%] right-[10%] z-[40]">
+        {/* Animated TV Screen - Soft Skills Display (Mounted on Building) */}
+        <div className="absolute top-[28%] right-[12.8%] z-[40]">
           <AnimatedTVScreen skills={softSkills} isActive={true} />
         </div>
 
