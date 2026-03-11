@@ -93,16 +93,54 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
             ))}
           </AnimatePresence>
 
-          {/* Central Core Reveal */}
+          {/* Central Core Reveal - Modeled B.S Logo */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
+            initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
             animate={{ 
               opacity: phase === 'formed' || phase === 'finished' ? 1 : 0,
-              scale: phase === 'formed' ? [0.9, 1.1, 1] : 1
+              scale: phase === 'formed' ? [0.9, 1.1, 1] : 1,
+              rotate: 0
             }}
             className="absolute z-10 flex flex-col items-center"
           >
-            <div className="w-16 h-16 rounded-full border-2 border-white flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.5)]" />
+            <div className="relative w-24 h-24 flex items-center justify-center">
+               <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_20px_rgba(255,255,255,0.4)]">
+                  {/* Outer Hexagon Frame */}
+                  <motion.path 
+                    d="M50,5 L90,25 L90,75 L50,95 L10,75 L10,25 Z" 
+                    fill="none" 
+                    stroke="white" 
+                    strokeWidth="1.5"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1, delay: 0.2 }}
+                  />
+                  {/* Stylized 'B' */}
+                  <motion.path 
+                    d="M35,30 L35,70 M35,30 Q55,30 55,45 Q55,50 48,50 M35,50 Q60,50 60,60 Q60,70 35,70" 
+                    fill="none" 
+                    stroke="white" 
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, delay: 0.4 }}
+                  />
+                  {/* Stylized 'S' */}
+                  <motion.path 
+                    d="M65,35 Q50,30 45,40 Q40,50 60,55 Q75,60 65,75 Q55,85 40,80" 
+                    fill="none" 
+                    stroke="#3b82f6" 
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 1 }}
+                    transition={{ duration: 1.5, delay: 0.6 }}
+                  />
+               </svg>
+               {/* Inner Core Glow */}
+               <div className="absolute inset-0 bg-blue-500/10 blur-2xl rounded-full -z-10 animate-pulse" />
+            </div>
           </motion.div>
 
           {/* Connection Lines (Appears when formed) */}
@@ -121,6 +159,18 @@ const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
           </svg>
         </div>
 
+        {/* Minimalist Identity Text */}
+        <motion.div
+           initial={{ opacity: 0, y: 10 }}
+           animate={{ 
+             opacity: phase === 'formed' || phase === 'finished' ? 0.4 : 0, 
+             y: phase === 'formed' || phase === 'finished' ? 0 : 10 
+           }}
+           className="mt-12 flex flex-col items-center gap-1"
+        >
+          <span className="text-[10px] font-black uppercase tracking-[0.5em] text-white">Samuel Byiringiro</span>
+          <span className="text-[8px] font-bold uppercase tracking-[0.3em] text-white/40 italic">Software Engineering Excellence</span>
+        </motion.div>
       </div>
 
       {/* Finishing Flash */}
