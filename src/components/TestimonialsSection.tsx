@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 
 const channels = [
   {
@@ -42,35 +43,37 @@ const channels = [
 type TVState = 'standby' | 'booting' | 'playing';
 
 /* Premium Rwandan Imigongo SVG Background */
-const StyledImigongoBackground = () => (
+const StyledImigongoBackground = ({ isDark }: { isDark: boolean }) => (
   <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
     {/* Base Gradient */}
-    <div className="absolute inset-0 bg-gradient-to-b from-[#111] via-[#0a0a0a] to-[#000]" />
+    <div className={`absolute inset-0 bg-gradient-to-b ${isDark ? 'from-[#111] via-[#0a0a0a] to-[#000]' : 'from-[#fefefe] via-[#f5f5f5] to-[#f0f0f0]'}`} />
     
-    <svg className="absolute inset-0 w-full h-full opacity-[0.35]" xmlns="http://www.w3.org/2000/svg">
+    <svg className={`absolute inset-0 w-full h-full ${isDark ? 'opacity-[0.35]' : 'opacity-[0.5]'}`} xmlns="http://www.w3.org/2000/svg">
       <defs>
         {/* Cultural Geometric Pattern */}
         <pattern id="imigongo" width="120" height="120" patternUnits="userSpaceOnUse" patternTransform="scale(1.5) rotate(45)">
-          <path d="M 0 60 L 60 0 L 120 60 L 60 120 Z" fill="none" stroke="url(#gold-gradient)" strokeWidth="2" strokeOpacity="0.6"/>
-          <path d="M 20 60 L 60 20 L 100 60 L 60 100 Z" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-          <path d="M 40 60 L 60 40 L 80 60 L 60 80 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-          <path d="M 0 0 L 120 120 M 120 0 L 0 120" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+          <path d="M 0 60 L 60 0 L 120 60 L 60 120 Z" fill="none" stroke="url(#imigongo-stroke)" strokeWidth="2" strokeOpacity={isDark ? "0.6" : "0.3"}/>
+          <path d="M 20 60 L 60 20 L 100 60 L 60 100 Z" fill="none" stroke={isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.08)"} strokeWidth="1" />
+          <path d="M 40 60 L 60 40 L 80 60 L 60 80 Z" fill="none" stroke={isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"} strokeWidth="1" />
+          <path d="M 0 0 L 120 120 M 120 0 L 0 120" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)"} strokeWidth="1" />
         </pattern>
-        <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#fff" />
-          <stop offset="50%" stopColor="#888" />
-          <stop offset="100%" stopColor="#444" />
+        <linearGradient id="imigongo-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor={isDark ? "#fff" : "#000"} />
+          <stop offset="50%" stopColor={isDark ? "#888" : "#ccc"} />
+          <stop offset="100%" stopColor={isDark ? "#444" : "#eee"} />
         </linearGradient>
       </defs>
       <rect width="100%" height="100%" fill="url(#imigongo)" />
     </svg>
     
     {/* Central Spotlight to focus on the TV */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.85)_70%,rgba(0,0,0,1)_100%)]" />
+    <div className={`absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,${isDark ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.1)'}_70%,${isDark ? 'rgba(0,0,0,1)' : 'rgba(255,255,255,0.2)'}_100%)]`} />
   </div>
 );
 
 const Testimonials = () => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
   const [tvState, setTvState] = useState<TVState>('standby');
   const [active, setActive] = useState(0);
   const [isSwitching, setIsSwitching] = useState(false);
@@ -137,25 +140,25 @@ const Testimonials = () => {
   };
 
   return (
-    <section ref={sectionRef} id="testimonials" className="bg-white px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight">
+    <section ref={sectionRef} id="testimonials" className={`${isDark ? 'bg-white' : 'bg-[#f4f4f4]'} px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight transition-colors duration-500`}>
       {/* Inner Container wrapped tightly in deep black */}
-      <div className="relative w-full max-w-7xl bg-[#000] rounded-xl md:rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,1)] inset-shadow-sm z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden border border-[#222]">
+      <div className={`relative w-full max-w-7xl ${isDark ? 'bg-[#000] border-[#222]' : 'bg-white border-gray-100'} rounded-xl md:rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,${isDark ? '1' : '0.05'})] inset-shadow-sm z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden border transition-all duration-500`}>
         
         {/* Stunning Background Elements */}
-        <StyledImigongoBackground />
+        <StyledImigongoBackground isDark={isDark} />
 
         {/* Section Title */}
         <div className="w-full text-left max-w-[850px] mb-6 md:mb-8 z-10 pt-2 relative">
-          <div className="absolute -left-6 md:-left-10 top-0 w-1 md:w-2 h-full bg-gradient-to-b from-white/80 to-transparent" />
-          <p className="text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] text-white/50 mb-2 drop-shadow-md">Professional Endorsements</p>
-          <h2 className="text-3xl md:text-5xl lg:text-5xl font-black italic tracking-tighter uppercase leading-none text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-            Client <span className="text-white/20">Feed</span>.
+          <div className={`absolute -left-6 md:-left-10 top-0 w-1 md:w-2 h-full bg-gradient-to-b ${isDark ? 'from-white/80' : 'from-black/10'} to-transparent`} />
+          <p className={`text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] ${isDark ? 'text-white/50' : 'text-black/40'} mb-2 drop-shadow-sm`}>Professional Endorsements</p>
+          <h2 className={`text-3xl md:text-5xl lg:text-5xl font-black italic tracking-tighter uppercase leading-none ${isDark ? 'text-white' : 'text-black'} drop-shadow-[0_0_20px_rgba(0,0,0,0.05)]`}>
+            Client <span className={isDark ? 'text-white/20' : 'text-black/10'}>Feed</span>.
           </h2>
         </div>
 
         {/* ── 1. The OLED TV Screen Panel ── */}
         <div 
-          className="relative w-full max-w-[850px] aspect-[16/9] lg:aspect-[21/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] border-[#1a1a1a] shadow-[0_30px_70px_rgba(0,0,0,1),0_0_30px_rgba(255,255,255,0.05)] z-10 flex overflow-hidden group outline outline-1 outline-white/10"
+          className={`relative w-full max-w-[850px] aspect-[16/9] lg:aspect-[21/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] ${isDark ? 'border-[#1a1a1a]' : 'border-gray-800'} shadow-[0_30px_70px_rgba(0,0,0,${isDark ? '1' : '0.2'}),0_0_30px_rgba(255,255,255,0.05)] z-10 flex overflow-hidden group outline outline-1 ${isDark ? 'outline-white/10' : 'outline-black/5'}`}
         >
           {/* Channel Change Flash Glitch */}
           {isSwitching && (
@@ -169,7 +172,7 @@ const Testimonials = () => {
             
             <AnimatePresence mode="wait">
                {/* ── Standby / Advanced Cultural News Intro Screen ── */}
-               {tvState === 'standby' && (
+                {tvState === 'standby' && (
                   <motion.div 
                     key="standby"
                     exit={{ opacity: 0 }}
@@ -181,12 +184,12 @@ const Testimonials = () => {
                      <div className="absolute inset-0 opacity-[0.25] mix-blend-screen pointer-events-none">
                        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                          <defs>
-                           <pattern id="screen-imigongo" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="scale(2)">
+                           <pattern id="screen-imigongo-testimonials" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="scale(2)">
                              <path d="M0 30 L30 0 L60 30 L30 60 Z" fill="rgba(255,0,0,0.05)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
                              <path d="M15 30 L30 15 L45 30 L30 45 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
                            </pattern>
                          </defs>
-                         <rect width="100%" height="100%" fill="url(#screen-imigongo)" />
+                         <rect width="100%" height="100%" fill="url(#screen-imigongo-testimonials)" />
                        </svg>
                      </div>
                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.9)_100%)] pointer-events-none" />
@@ -231,7 +234,7 @@ const Testimonials = () => {
 
                      {/* Bottom Breaking News Ticker */}
                      <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-red-500/30 bg-black flex items-center z-20">
-                       <div className="bg-red-700 h-full flex items-center px-3 md:px-5 z-10 font-black text-white text-[8px] md:text-[10px] uppercase tracking-widest flex-shrink-0 shadow-[5px_0_15px_rgba(0,0,0,0.9)]">
+                       <div className="bg-red-700 h-full flex items-center px-3 md:px-5 z-10 font-black text-white text-[8px] md:text-[10px] uppercase tracking-wildest flex-shrink-0 shadow-[5px_0_15px_rgba(0,0,0,0.9)]">
                          Breaking
                        </div>
                        <div className="flex-1 overflow-hidden h-full relative border-l border-white/10 bg-[#0a0a0a]">
@@ -291,7 +294,7 @@ const Testimonials = () => {
                     
                     {/* Cinematic Lower Third UI */}
                     <motion.div 
-                      key={`ui-${active}`}
+                      key={`ui-testimonials-${active}`}
                       initial={{ y: 20, opacity: 0 }} 
                       animate={{ y: 0, opacity: 1 }} 
                       transition={{ delay: 0.25, duration: 0.6, ease: 'easeOut' }}
@@ -345,31 +348,31 @@ const Testimonials = () => {
 
         {/* ── 2. Minimalist TV Stand ── */}
         <div className="w-full flex flex-col items-center z-10 relative">
-          <div className="w-16 md:w-24 h-4 md:h-6 bg-gradient-to-b from-[#222] to-[#050505] border-x border-white/10" />
-          <div className="w-32 md:w-56 h-2 md:h-3 bg-[#333] rounded-t-xl border-t border-white/20 shadow-[0_10px_20px_black]" />
+          <div className={`w-16 md:w-24 h-4 md:h-6 bg-gradient-to-b ${isDark ? 'from-[#222] to-[#050505]' : 'from-gray-300 to-gray-200'} border-x ${isDark ? 'border-white/10' : 'border-black/5'}`} />
+          <div className={`w-32 md:w-56 h-2 md:h-3 ${isDark ? 'bg-[#333]' : 'bg-gray-400'} rounded-t-xl border-t ${isDark ? 'border-white/20' : 'border-black/10'} shadow-[0_10px_20px_rgba(0,0,0,${isDark ? '1' : '0.1'})]`} />
         </div>
 
         {/* ── 3. Interactive Remote ── */}
         <div className="mt-6 md:mt-8 flex flex-col items-center gap-2 md:gap-3 z-20">
-          <p className="font-mono text-[7px] md:text-[9px] text-white/40 uppercase tracking-[0.2em] drop-shadow-md">
+          <p className={`font-mono text-[7px] md:text-[9px] ${isDark ? 'text-white/40' : 'text-black/30'} uppercase tracking-[0.2em] drop-shadow-sm`}>
             Deck Controls
           </p>
-          <div className="flex items-center gap-2 md:gap-4 px-4 md:px-6 py-1.5 md:py-2.5 bg-[#111] rounded-full border border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.9)] relative">
+          <div className={`${isDark ? 'bg-[#111] border-white/10 shadow-[0_15px_30px_rgba(0,0,0,0.9)]' : 'bg-white border-gray-200 shadow-[0_15px_30px_rgba(0,0,0,0.05)]'} flex items-center gap-2 md:gap-4 px-4 md:px-6 py-1.5 md:py-2.5 rounded-full border relative transition-all duration-500`}>
             
             {/* Power Button */}
             <button 
               onClick={handlePower} 
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#1a1a1a] hover:bg-[#222] border border-white/10 flex items-center justify-center group transition-colors shadow-[inset_0_2px_10px_rgba(0,0,0,1)]"
+              className={`w-10 h-10 md:w-12 md:h-12 rounded-full ${isDark ? 'bg-[#1a1a1a] border-white/10 shadow-[inset_0_2px_10px_rgba(0,0,0,1)]' : 'bg-gray-100 border-gray-200 shadow-[inset_0_2px_10px_rgba(0,0,0,0.03)]'} hover:opacity-80 flex items-center justify-center group transition-all border`}
             >
-              <div className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full transition-all ${tvState === 'playing' ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : 'bg-white/20 group-hover:bg-white/50 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]'}`} />
+              <div className={`w-2.5 h-2.5 md:w-3.5 md:h-3.5 rounded-full transition-all ${tvState === 'playing' ? 'bg-red-500 shadow-[0_0_15px_#ef4444]' : isDark ? 'bg-white/20 group-hover:bg-white/50 group-hover:shadow-[0_0_15px_rgba(255,255,255,0.3)]' : 'bg-black/10 group-hover:bg-black/30'}`} />
             </button>
             
-            <div className="w-px h-6 md:h-8 bg-white/10 mx-1 md:mx-2" />
+            <div className={`w-px h-6 md:h-8 ${isDark ? 'bg-white/10' : 'bg-black/5'} mx-1 md:mx-2`} />
             
             {/* Prev Channel */}
             <button 
               onClick={() => handleChannelChange('prev')} 
-              className="w-9 h-9 md:w-10 md:h-10 rounded-full hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+              className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${isDark ? 'hover:bg-white/10 text-white/50 hover:text-white' : 'hover:bg-black/5 text-black/40 hover:text-black'} flex items-center justify-center transition-colors`}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
             </button>
@@ -377,7 +380,7 @@ const Testimonials = () => {
             {/* Next Channel */}
             <button 
               onClick={() => handleChannelChange('next')} 
-              className="w-9 h-9 md:w-10 md:h-10 rounded-full hover:bg-white/10 flex items-center justify-center text-white/50 hover:text-white transition-colors"
+              className={`w-9 h-9 md:w-10 md:h-10 rounded-full ${isDark ? 'hover:bg-white/10 text-white/50 hover:text-white' : 'hover:bg-black/5 text-black/40 hover:text-black'} flex items-center justify-center transition-colors`}
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
             </button>
