@@ -1,105 +1,64 @@
-import { useRef, useMemo, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial, PerspectiveCamera } from "@react-three/drei";
-import * as THREE from "three";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-/**
- * High-fidelity World Map Projection
- * Uses an ultra-accurate 2D array of continent coordinates to place particles.
- * This guarantees REALISTIC maps (Africa, Americas, Eurasia, Australia) rather than noise.
- */
-const SpectralGlobe = () => {
-  const pointsRef = useRef<THREE.Points>(null!);
-  const [positions, setPositions] = useState<Float32Array>(new Float32Array(0));
+// High-detail Realistic Elephant SVG component
+const Elephant = () => (
+  <svg width="240" height="180" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <motion.g
+      animate={{ 
+        y: [0, -1, 0],
+        rotate: [0, 0.5, 0]
+      }}
+      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+    >
+      {/* Body */}
+      <path d="M95 45c0-15-10-25-30-25s-35 8-40 20c-3 8-2 15 2 20h45c15 0 23-5 23-15z" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.5" />
+      {/* Head */}
+      <path d="M30 35c0-8-5-15-12-15s-12 7-12 15 5 15 12 15 12-7 12-15z" fill="white" fillOpacity="0.15" stroke="white" strokeWidth="0.5" />
+      {/* Trunk */}
+      <path d="M10 40c-2 0-8 5-8 15s5 12 8 12 4-2 2-5-4 0-4-7 4-10 2-15z" stroke="white" strokeWidth="0.8" fill="none" strokeLinecap="round" />
+      {/* Ear */}
+      <path d="M35 30c-2-5-8-8-12-5s-5 12 0 15 10 0 12-10z" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="0.3" />
+      {/* Legs (Front) */}
+      <rect x="35" y="60" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
+      <rect x="48" y="62" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
+      {/* Legs (Back) */}
+      <rect x="75" y="60" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
+      <rect x="85" y="62" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
+      {/* Eye */}
+      <circle cx="20" cy="35" r="1" fill="white" className="animate-pulse" />
+      {/* Tusks (Subtle) */}
+      <path d="M10 45c0 0-5 2-5 8" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" strokeLinecap="round" />
+    </motion.g>
+  </svg>
+);
 
-  useEffect(() => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    /**
-     * Using a high-contrast world map silhouette.
-     * This texture is a standard NASA/Blue Marble style silhouette.
-     */
-    img.src = "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_lights_2048.png";
+// High-detail Realistic Tree SVG component
+const AcaciaTree = () => (
+  <svg width="400" height="300" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Trunk */}
+    <path d="M95 140c2-10 0-30 5-45 5-15 15-20 25-25" stroke="white" strokeWidth="3" strokeOpacity="0.1" />
+    <path d="M100 140c-2-15 2-40 0-60" stroke="white" strokeWidth="4" strokeOpacity="0.2" strokeLinecap="round" />
     
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
+    {/* Branches & Canopy */}
+    <g opacity="0.15">
+      <path d="M60 70c0 0 20-20 80-20s100 20 100 20v5H60v-5z" fill="white" />
+      <path d="M40 80c0 0 30-25 120-25s140 25 140 25v8H40v-8z" fill="white" />
+    </g>
 
-      // Lower resolution for better performance but high enough for clarity
-      canvas.width = 1024;
-      canvas.height = 512;
-      ctx.drawImage(img, 0, 0, 1024, 512);
-      
-      const imageData = ctx.getImageData(0, 0, 1024, 512).data;
-      const pts = [];
-      const radius = 2.4; 
-
-      // Scan the image data and place particles ONLY on land (threshold check)
-      for (let y = 0; y < canvas.height; y += 4) {
-        for (let x = 0; x < canvas.width; x += 4) {
-          const index = (y * canvas.width + x) * 4;
-          const brightness = imageData[index]; // Use Red channel for silhouette check
-          
-          if (brightness > 20) { 
-            // Convert x,y to spherical coordinates
-            const lat = (y / canvas.height) * Math.PI;
-            const lon = (x / canvas.width) * 2 * Math.PI + Math.PI / 2;
-
-            const px = -radius * Math.sin(lat) * Math.cos(lon);
-            const py = radius * Math.cos(lat);
-            const pz = radius * Math.sin(lat) * Math.sin(lon);
-            
-            pts.push(px, py, pz);
-          }
-        }
-      }
-      setPositions(new Float32Array(pts));
-    };
-
-    // Fallback if image fails to load (ensures screen isn't black)
-    img.onerror = () => {
-      console.warn("World map failed to load, using default sphere.");
-    };
-  }, []);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = time * 0.15;
-      pointsRef.current.rotation.x = 0.2;
-    }
-  });
-
-  return (
-    <group>
-      {positions.length > 0 && (
-        <Points ref={pointsRef} positions={positions} stride={3} frustumCulled={false}>
-          <PointMaterial
-            transparent
-            color="#ffffff"
-            size={0.015}
-            sizeAttenuation={true}
-            depthWrite={false}
-            blending={THREE.AdditiveBlending}
-            opacity={1}
-          />
-        </Points>
-      )}
-      
-      {/* Ghostly Internal Volume */}
-      <mesh>
-        <sphereGeometry args={[2.35, 32, 32]} />
-        <meshBasicMaterial 
-          color="#ffffff" 
-          transparent 
-          opacity={0.01} 
-        />
-      </mesh>
-    </group>
-  );
-};
+    {/* Detail Leaves (Dots for realism) */}
+    {[...Array(60)].map((_, i) => (
+      <circle 
+        key={i}
+        cx={50 + Math.random() * 100}
+        cy={50 + Math.random() * 40}
+        r={0.5 + Math.random()}
+        fill="white"
+        fillOpacity={0.1 + Math.random() * 0.3}
+      />
+    ))}
+  </svg>
+);
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
@@ -107,8 +66,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsExiting(true);
-      if (onComplete) setTimeout(onComplete, 1200);
-    }, 6500);
+      if (onComplete) setTimeout(onComplete, 1500);
+    }, 8500); // Extended for the walk animation
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -119,37 +78,79 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.95, filter: "brightness(2) blur(30px)" }}
-          transition={{ duration: 1 }}
-          className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center font-sans"
+          exit={{ opacity: 0, filter: "brightness(0) blur(20px)" }}
+          transition={{ duration: 1.2 }}
+          className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center"
         >
-          {/* Subtle TV Vignette */}
-          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.95)]" />
-          
-          <div className="relative w-full h-full flex items-center justify-center">
-            {/* The 3D World Scene */}
-            <div className="w-full h-full absolute inset-0">
-                <Canvas dpr={[1, 2]}>
-                <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-                <color attach="background" args={["#000000"]} />
-                
-                <ambientLight intensity={1} />
-                <SpectralGlobe />
-                </Canvas>
-            </div>
-
-            {/* TV Technical Markings (Subtle & Elegant) */}
-            <div className="relative z-20 flex flex-col items-center pointer-events-none select-none">
-                <div className="w-64 h-[0.5px] bg-white/10" />
-                <div className="mt-8 flex gap-8">
-                     <div className="w-[1px] h-4 bg-white/20" />
-                     <div className="w-[1px] h-4 bg-white/20" />
-                </div>
-            </div>
+          {/* Night Sky Elements */}
+          <div className="absolute inset-0 z-0">
+             {/* Stars */}
+             {[...Array(100)].map((_, i) => (
+               <motion.div
+                 key={i}
+                 animate={{ opacity: [0.1, 0.5, 0.1] }}
+                 transition={{ duration: 2 + Math.random() * 3, repeat: Infinity }}
+                 className="absolute bg-white rounded-full"
+                 style={{
+                   width: Math.random() * 2,
+                   height: Math.random() * 2,
+                   top: `${Math.random() * 100}%`,
+                   left: `${Math.random() * 100}%`,
+                 }}
+               />
+             ))}
+             
+             {/* The Moon */}
+             <div className="absolute top-12 right-12 md:top-24 md:right-24">
+                <div className="w-16 h-16 md:w-32 md:h-32 rounded-full bg-white/10 blur-xl" />
+                <motion.div 
+                  animate={{ opacity: [0.8, 0.9, 0.8] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute inset-0 w-16 h-16 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-white to-gray-400 shadow-[0_0_60px_rgba(255,255,255,0.3)] overflow-hidden"
+                >
+                   {/* Moon Texture/Craters */}
+                   <div className="absolute top-[20%] left-[30%] w-[15%] h-[15%] rounded-full bg-black/10" />
+                   <div className="absolute top-[40%] left-[60%] w-[10%] h-[10%] rounded-full bg-black/10" />
+                   <div className="absolute top-[60%] left-[20%] w-[20%] h-[20%] rounded-full bg-black/10" />
+                </motion.div>
+             </div>
           </div>
 
-          {/* Central Atmospheric Bloom */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-white/[0.01] rounded-full blur-[150px] pointer-events-none" />
+          <div className="relative w-full max-w-5xl h-[60vh] flex flex-col justify-end">
+            
+            {/* The Tree (Static) */}
+            <div className="absolute right-0 bottom-[-20%] z-10 translate-x-[20%]">
+               <AcaciaTree />
+            </div>
+
+            {/* The Elephant (Animated Walk) */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: "30%", opacity: 1 }}
+              transition={{ 
+                duration: 7, 
+                ease: "linear",
+                opacity: { duration: 2 } 
+              }}
+              className="absolute left-0 bottom-[-10%] z-20"
+            >
+              <motion.div
+                animate={{ 
+                  x: [0, 5, 0],
+                  y: [0, -2, 0]
+                }}
+                transition={{ duration: 0.8, repeat: Infinity }}
+              >
+                <Elephant />
+              </motion.div>
+            </motion.div>
+
+            {/* Subtle Ground Fog */}
+            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white/[0.05] to-transparent blur-2xl z-30" />
+          </div>
+
+          {/* Cinematic Overlay */}
+          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,0.95)]" />
         </motion.div>
       )}
     </AnimatePresence>
