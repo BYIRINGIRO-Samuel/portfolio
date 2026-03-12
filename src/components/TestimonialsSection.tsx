@@ -136,7 +136,7 @@ const CountdownOverlay = () => {
   );
 };
 
-type TVState = 'standby' | 'booting' | 'playing';
+type TVState = 'standby' | 'booting' | 'intro' | 'playing';
 
 /* Premium Rwandan Imigongo SVG Background */
 const StyledImigongoBackground = ({ isDark }: { isDark: boolean }) => (
@@ -192,13 +192,23 @@ const Testimonials = () => {
       const timer = setTimeout(() => {
         setTvState('booting');
         setTimeout(() => {
-          setTvState('playing');
-          setActive(0);
+          setTvState('intro');
         }, 3200);
       }, 3500); // Give them a solid 3.5s to appreciate the cultural news screen
       return () => clearTimeout(timer);
     }
   }, [isInView, hasAutoPlayed, tvState]);
+
+  // Handle intro to playing transition
+  useEffect(() => {
+    if (tvState === 'intro') {
+      const timer = setTimeout(() => {
+        setTvState('playing');
+        setActive(0);
+      }, 4500); // Show intro panel for 4.5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [tvState]);
 
   // Auto-cycle channels if untouched while playing
   useEffect(() => {
@@ -233,8 +243,7 @@ const Testimonials = () => {
     if (tvState === 'standby') {
       setTvState('booting');
       setTimeout(() => {
-        setTvState('playing');
-        setActive(0);
+        setTvState('intro');
       }, 3200);
     } else {
       setTvState('standby');
@@ -361,6 +370,42 @@ const Testimonials = () => {
                     className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden"
                   >
                     <CountdownOverlay />
+                  </motion.div>
+               )}
+
+               {/* ── Intro State: The Panel ── */}
+               {tvState === 'intro' && (
+                  <motion.div 
+                    key="intro"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    className="absolute inset-0 w-full h-full relative"
+                  >
+                    <div className="absolute inset-0 bg-blue-900/10 mix-blend-color z-10 pointer-events-none" />
+                    <img 
+                      src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1200&q=80" 
+                      className="w-full h-full object-cover opacity-80 mix-blend-screen"
+                      alt="Professional Panel"
+                    />
+                    {/* Dark gradient overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 z-10 pointer-events-none" />
+                    
+                    {/* Intro text */}
+                    <motion.div 
+                      initial={{ y: 20, opacity: 0 }} 
+                      animate={{ y: 0, opacity: 1 }} 
+                      transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+                      className="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-4"
+                    >
+                      <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-widest drop-shadow-[0_4px_15px_rgba(0,0,0,0.8)]">
+                        The Advisory Panel
+                      </h2>
+                      <p className="text-blue-300 font-semibold mt-3 text-xs md:text-sm uppercase tracking-[0.3em] bg-black/60 px-5 md:px-8 py-1.5 md:py-2 rounded-full border border-white/10 backdrop-blur-md shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+                        Preparing Client Briefing...
+                      </p>
+                    </motion.div>
                   </motion.div>
                )}
 
