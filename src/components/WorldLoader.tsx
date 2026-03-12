@@ -5,77 +5,56 @@ import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
 
 const RotatingRings = () => {
-  const ring1Ref = useRef<THREE.Mesh>(null!);
-  const ring2Ref = useRef<THREE.Mesh>(null!);
-  const ring3Ref = useRef<THREE.Mesh>(null!);
-  const ring4Ref = useRef<THREE.Mesh>(null!);
-  const ring5Ref = useRef<THREE.Mesh>(null!);
-  const staffsRef = useRef<THREE.Group>(null!);
+  const clockwiseRingRef = useRef<THREE.Mesh>(null!);
+  const counterClockwiseRingRef = useRef<THREE.Mesh>(null!);
+  const centerOrbRef = useRef<THREE.Mesh>(null!);
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
     
-    ring1Ref.current.rotation.x = time * 0.5;
-    ring1Ref.current.rotation.y = time * 0.2;
+    // Clockwise rotation
+    clockwiseRingRef.current.rotation.z = -time * 2;
     
-    ring2Ref.current.rotation.y = time * 0.4;
-    ring2Ref.current.rotation.z = time * 0.3;
-    
-    ring3Ref.current.rotation.x = time * 0.3;
-    ring3Ref.current.rotation.z = time * 0.5;
+    // Counter-clockwise rotation
+    counterClockwiseRingRef.current.rotation.z = time * 2.5;
 
-    ring4Ref.current.rotation.y = -time * 0.6;
-    ring4Ref.current.rotation.x = time * 0.4;
-
-    ring5Ref.current.rotation.z = -time * 0.4;
-    ring5Ref.current.rotation.y = time * 0.5;
-
-    if (staffsRef.current) {
-      staffsRef.current.rotation.y = time * 0.8;
+    // Subtle drift for the center
+    if (centerOrbRef.current) {
+      centerOrbRef.current.scale.setScalar(1 + Math.sin(time * 2) * 0.05);
     }
   });
 
   return (
     <>
-      <Torus ref={ring1Ref} args={[4.2, 0.015, 16, 120]}>
-        <meshStandardMaterial color="#3b82f6" emissive="#3b82f6" emissiveIntensity={4} />
-      </Torus>
-      <Torus ref={ring2Ref} args={[3.8, 0.015, 16, 120]}>
-        <meshStandardMaterial color="#8b5cf6" emissive="#8b5cf6" emissiveIntensity={4} />
-      </Torus>
-      <Torus ref={ring3Ref} args={[3.4, 0.015, 16, 120]}>
-        <meshStandardMaterial color="#ec4899" emissive="#ec4899" emissiveIntensity={4} />
-      </Torus>
-      <Torus ref={ring4Ref} args={[3.0, 0.012, 16, 120]}>
-        <meshStandardMaterial color="#06b6d4" emissive="#06b6d4" emissiveIntensity={4} />
-      </Torus>
-      <Torus ref={ring5Ref} args={[2.6, 0.012, 16, 120]}>
-        <meshStandardMaterial color="#6366f1" emissive="#6366f1" emissiveIntensity={4} />
+      {/* Outer Clockwise Ring */}
+      <Torus ref={clockwiseRingRef} args={[4, 0.04, 16, 100]}>
+        <meshStandardMaterial 
+          color="#3b82f6" 
+          emissive="#3b82f6" 
+          emissiveIntensity={10} 
+        />
       </Torus>
 
-      <group ref={staffsRef}>
-        {[...Array(8)].map((_, i) => (
-          <mesh key={i} position={[Math.cos(i * Math.PI * 0.25) * 5, 0, Math.sin(i * Math.PI * 0.25) * 5]}>
-            <cylinderGeometry args={[0.02, 0.02, 8, 8]} />
-            <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={2} transparent opacity={0.3} />
-          </mesh>
-        ))}
-      </group>
-      
-      <Float speed={4} rotationIntensity={2} floatIntensity={2}>
-        <Sphere args={[1.6, 64, 64]}>
-          <MeshDistortMaterial
-            color="#ffffff"
-            emissive="#ffffff"
-            emissiveIntensity={1.5}
-            speed={6}
-            distort={0.6}
-            radius={1}
-            roughness={0}
-            metalness={1}
-          />
-        </Sphere>
-      </Float>
+      {/* Inner Counter-Clockwise Ring */}
+      <Torus ref={counterClockwiseRingRef} args={[3.2, 0.04, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
+        <meshStandardMaterial 
+          color="#ec4899" 
+          emissive="#ec4899" 
+          emissiveIntensity={10} 
+        />
+      </Torus>
+
+      {/* The Centerpiece */}
+      <Sphere ref={centerOrbRef} args={[1.5, 64, 64]}>
+        <MeshDistortMaterial
+          color="#ffffff"
+          emissive="#ffffff"
+          emissiveIntensity={1}
+          speed={3}
+          distort={0.3}
+          radius={1}
+        />
+      </Sphere>
     </>
   );
 };
