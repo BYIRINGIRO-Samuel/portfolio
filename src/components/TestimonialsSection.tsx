@@ -144,14 +144,20 @@ const StyledImigongoBackground = ({ isDark }: { isDark: boolean }) => (
     {/* Base Gradient */}
     <div className={`absolute inset-0 bg-gradient-to-b ${isDark ? 'from-[#111] via-[#0a0a0a] to-[#000]' : 'from-[#fefefe] via-[#f5f5f5] to-[#f0f0f0]'}`} />
     
-    <svg className={`absolute inset-0 w-full h-full ${isDark ? 'opacity-[0.35]' : 'opacity-[0.5]'}`} xmlns="http://www.w3.org/2000/svg">
+    <svg className={`absolute inset-0 w-full h-full ${isDark ? 'opacity-[0.15]' : 'opacity-[0.2]'}`} xmlns="http://www.w3.org/2000/svg">
       <defs>
-        {/* Cultural Geometric Pattern */}
-        <pattern id="imigongo" width="120" height="120" patternUnits="userSpaceOnUse" patternTransform="scale(1.5) rotate(45)">
-          <path d="M 0 60 L 60 0 L 120 60 L 60 120 Z" fill="none" stroke="url(#imigongo-stroke)" strokeWidth="2" strokeOpacity={isDark ? "0.6" : "0.3"}/>
-          <path d="M 20 60 L 60 20 L 100 60 L 60 100 Z" fill="none" stroke={isDark ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.08)"} strokeWidth="1" />
-          <path d="M 40 60 L 60 40 L 80 60 L 60 80 Z" fill="none" stroke={isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"} strokeWidth="1" />
-          <path d="M 0 0 L 120 120 M 120 0 L 0 120" stroke={isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.03)"} strokeWidth="1" />
+        {/* Evolving Cultural Geometric Pattern */}
+        <pattern id="imigongo" width="120" height="120" patternUnits="userSpaceOnUse" patternTransform="scale(1.2) rotate(30)">
+          {/* Outer diamond */}
+          <path d="M 60 0 L 120 60 L 60 120 L 0 60 Z" fill="none" stroke="url(#imigongo-stroke)" strokeWidth="0.5" strokeOpacity={isDark ? "0.4" : "0.2"} strokeDasharray="2 4"/>
+          {/* Wavy inner element mimicking traditional imigongo spirals */}
+          <path d="M 30 60 Q 60 30 90 60 T 30 60" fill="none" stroke={isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.04)"} strokeWidth="0.5" />
+          <path d="M 30 60 Q 60 90 90 60 T 30 60" fill="none" stroke={isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.03)"} strokeWidth="0.5" />
+          {/* Center core */}
+          <circle cx="60" cy="60" r="10" fill="none" stroke={isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.05)"} strokeWidth="0.5" strokeDasharray="1 2" />
+          {/* Connecting technical lines */}
+          <path d="M 60 0 L 60 120" stroke={isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.01)"} strokeWidth="0.5" strokeDasharray="1 5" />
+          <path d="M 0 60 L 120 60" stroke={isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.01)"} strokeWidth="0.5" strokeDasharray="1 5" />
         </pattern>
         <linearGradient id="imigongo-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor={isDark ? "#fff" : "#000"} />
