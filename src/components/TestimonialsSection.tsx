@@ -540,13 +540,15 @@ const Testimonials = () => {
                         initial={{ opacity: 0, scale: 1.05 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.6 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                         className="absolute inset-0"
                       >
-                        <div className="absolute inset-0 bg-red-900/10 mix-blend-color z-10" />
+                        {/* Background color overlay */}
+                        <div className="absolute inset-0 bg-[#020510]/60 mix-blend-multiply z-10" />
                         <img 
                           src={channels[active].img} 
-                          className="w-full h-full object-cover grayscale opacity-50 mix-blend-screen"
+                          className="w-full h-full object-cover grayscale opacity-40 mix-blend-screen"
+                          alt={channels[active].name}
                         />
                       </motion.div>
                     </AnimatePresence>
@@ -568,35 +570,77 @@ const Testimonials = () => {
                     </div>
 
                     {/* Dynamic Vignette & Textures */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 z-10" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.8)_120%)] z-10 pointer-events-none" />
                     
-                    {/* Cinematic Lower Third UI */}
+                    {/* Modern Editorial Testimonial Card */}
                     <motion.div 
                       key={`ui-testimonials-${active}`}
-                      initial={{ y: 20, opacity: 0 }} 
+                      initial={{ y: 30, opacity: 0 }} 
                       animate={{ y: 0, opacity: 1 }} 
-                      transition={{ delay: 0.25, duration: 0.6, ease: 'easeOut' }}
-                      className="absolute bottom-4 left-4 right-4 md:bottom-8 md:left-8 md:max-w-2xl z-20"
+                      exit={{ y: -30, opacity: 0 }}
+                      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                      className="absolute inset-4 md:inset-8 lg:inset-12 flex flex-col justify-end md:justify-center items-center z-20 pointer-events-none"
                     >
-                      <div className="bg-black/80 backdrop-blur-xl p-4 md:p-6 border-l-[4px] md:border-l-[6px] border-red-600 shadow-[0_20px_40px_rgba(0,0,0,0.8)] outline outline-1 outline-white/10">
+                      <div className="relative w-full max-w-4xl p-6 md:p-10 lg:p-14 overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl shadow-[0_30px_60px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1)] group">
                         
-                        <div className="flex items-center gap-2 mb-2 md:mb-3">
-                          <span className="text-white/80 font-mono text-[8px] md:text-[10px] uppercase tracking-wide font-medium bg-white/10 px-2 py-0.5 rounded-full border border-white/10">Industry Professional</span>
-                        </div>
+                        {/* Decorative Background Glows inside the Glass Card */}
+                        <div className="absolute -top-32 -right-32 w-64 h-64 bg-blue-500/20 rounded-full blur-[80px] group-hover:bg-blue-400/30 transition-colors duration-1000" />
+                        <div className="absolute -bottom-32 -left-32 w-64 h-64 bg-white/10 rounded-full blur-[80px]" />
                         
-                        <div className="flex justify-between items-end mb-3 md:mb-4">
-                          <h2 className="text-white font-black text-xl md:text-2xl lg:text-3xl uppercase tracking-tighter leading-none drop-shadow-lg">
-                            {channels[active].name}
-                          </h2>
-                          <p className="text-white/50 font-black text-[7px] md:text-[9px] uppercase tracking-widest text-right leading-tight max-w-[150px] md:max-w-none">
-                            {channels[active].role} <span className="hidden md:inline"> // </span><br className="md:hidden" /> {channels[active].company}
-                          </p>
-                        </div>
+                        {/* Huge decorative quote mark */}
+                        <span className="absolute -top-12 md:-top-16 -left-2 md:-left-6 text-[150px] md:text-[250px] leading-none font-serif text-white/[0.04] font-black select-none pointer-events-none">
+                          "
+                        </span>
 
-                        <p className="text-white/90 font-sans text-xs md:text-[14px] font-semibold italic border-t border-white/10 pt-3 md:pt-4 leading-relaxed font-news">
-                          "{channels[active].quote}"
-                        </p>
-                        
+                        <div className="relative z-10 flex flex-col items-start md:items-center text-left md:text-center w-full">
+                          
+                          <motion.div 
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ delay: 0.3, duration: 0.6 }}
+                            className="inline-flex items-center gap-2 mb-6 md:mb-8 px-4 py-1.5 rounded-full border border-white/10 bg-black/40 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.5)]"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]" />
+                            <span className="text-white/80 font-mono text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-medium">Industry Endorsement</span>
+                          </motion.div>
+                          
+                          <motion.p 
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                            className="text-white/95 font-serif text-lg md:text-3xl lg:text-4xl italic font-medium leading-relaxed md:leading-normal mb-8 md:mb-12 max-w-3xl"
+                          >
+                            "{channels[active].quote}"
+                          </motion.p>
+                          
+                          {/* Person Info Section */}
+                          <div className="flex flex-col md:flex-row items-start md:items-end justify-between w-full pt-6 md:pt-8 border-t border-white/10 gap-4 md:gap-0">
+                            
+                            <motion.div 
+                              initial={{ x: -20, opacity: 0 }}
+                              animate={{ x: 0, opacity: 1 }}
+                              transition={{ delay: 0.5, duration: 0.6 }}
+                              className="flex flex-col items-start"
+                            >
+                              <h2 className="text-white font-black text-xl md:text-3xl uppercase tracking-[0.1em] drop-shadow-lg mb-1 md:mb-2">
+                                {channels[active].name}
+                              </h2>
+                              <p className="text-blue-300 font-sans text-[9px] md:text-[12px] uppercase tracking-[0.3em] font-bold">
+                                {channels[active].role}
+                              </p>
+                            </motion.div>
+
+                            <motion.div 
+                               initial={{ x: 20, opacity: 0 }}
+                               animate={{ x: 0, opacity: 1 }}
+                               transition={{ delay: 0.6, duration: 0.6 }}
+                               className="text-white/40 font-black text-[10px] md:text-[14px] uppercase tracking-[0.4em] md:text-right mix-blend-overlay"
+                            >
+                              {channels[active].company}
+                            </motion.div>
+
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
 
