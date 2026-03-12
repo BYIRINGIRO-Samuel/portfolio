@@ -1,62 +1,58 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// High-detail Realistic Elephant SVG component
-const Elephant = () => (
-  <svg width="240" height="180" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+/**
+ * High-precision Silhouette Elephant
+ * Designed with intricate paths for a "Realistic" feel similar to the reference.
+ */
+const RealisticElephant = () => (
+  <svg width="180" height="120" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
     <motion.g
-      animate={{ 
-        y: [0, -1, 0],
-        rotate: [0, 0.5, 0]
-      }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+      initial={{ x: -20, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{ duration: 1 }}
     >
-      {/* Body */}
-      <path d="M95 45c0-15-10-25-30-25s-35 8-40 20c-3 8-2 15 2 20h45c15 0 23-5 23-15z" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.5" />
-      {/* Head */}
-      <path d="M30 35c0-8-5-15-12-15s-12 7-12 15 5 15 12 15 12-7 12-15z" fill="white" fillOpacity="0.15" stroke="white" strokeWidth="0.5" />
-      {/* Trunk */}
-      <path d="M10 40c-2 0-8 5-8 15s5 12 8 12 4-2 2-5-4 0-4-7 4-10 2-15z" stroke="white" strokeWidth="0.8" fill="none" strokeLinecap="round" />
-      {/* Ear */}
-      <path d="M35 30c-2-5-8-8-12-5s-5 12 0 15 10 0 12-10z" fill="white" fillOpacity="0.2" stroke="white" strokeWidth="0.3" />
-      {/* Legs (Front) */}
-      <rect x="35" y="60" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
-      <rect x="48" y="62" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
-      {/* Legs (Back) */}
-      <rect x="75" y="60" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
-      <rect x="85" y="62" width="8" height="18" rx="2" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.3" />
-      {/* Eye */}
-      <circle cx="20" cy="35" r="1" fill="white" className="animate-pulse" />
-      {/* Tusks (Subtle) */}
-      <path d="M10 45c0 0-5 2-5 8" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" strokeLinecap="round" />
+      {/* Intricate Silhouette path based on realistic anatomy */}
+      <path 
+        d="M108.5 48.5C108.5 58.5 102.5 64.5 90 64.5H85L83.5 76.5H75.5L77.5 64.5H62.5L64.5 76.5H56.5L58.5 64.5C40 64.5 32 58.5 28.5 50.5C26.5 55.5 22.5 58.5 17 58.5C13 58.5 10.5 56 10.5 52C10.5 46 14.5 38.5 8.5 30.5C6.5 28 3.5 27.5 2 28.5L0.5 26.5C3.5 23.5 9.5 24.5 13.5 28.5C17.5 32.5 18 38.5 18 43.5C21 43.5 23.5 41.5 25 38.5C23.5 32.5 21 24.5 28 18.5C35 12.5 50 10.5 65 10.5C85 10.5 108.5 18.5 108.5 40V48.5Z" 
+        fill="black" 
+      />
+      {/* Detailed Tusk */}
+      <path d="M26 44C26 44 21 46 18 52" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
+      {/* Tail */}
+      <path d="M108.5 45C112 45 114 48 114 52" stroke="black" strokeWidth="1" strokeLinecap="round" />
     </motion.g>
   </svg>
 );
 
-// High-detail Realistic Tree SVG component
-const AcaciaTree = () => (
-  <svg width="400" height="300" viewBox="0 0 200 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-    {/* Trunk */}
-    <path d="M95 140c2-10 0-30 5-45 5-15 15-20 25-25" stroke="white" strokeWidth="3" strokeOpacity="0.1" />
-    <path d="M100 140c-2-15 2-40 0-60" stroke="white" strokeWidth="4" strokeOpacity="0.2" strokeLinecap="round" />
-    
-    {/* Branches & Canopy */}
-    <g opacity="0.15">
-      <path d="M60 70c0 0 20-20 80-20s100 20 100 20v5H60v-5z" fill="white" />
-      <path d="M40 80c0 0 30-25 120-25s140 25 140 25v8H40v-8z" fill="white" />
-    </g>
-
-    {/* Detail Leaves (Dots for realism) */}
-    {[...Array(60)].map((_, i) => (
-      <circle 
-        key={i}
-        cx={50 + Math.random() * 100}
-        cy={50 + Math.random() * 40}
-        r={0.5 + Math.random()}
-        fill="white"
-        fillOpacity={0.1 + Math.random() * 0.3}
+/**
+ * Detailed Acacia Silhouette Tree
+ * Hand-crafted with organic branch structures.
+ */
+const RealisticTree = () => (
+  <svg width="320" height="280" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(10, 0)">
+      {/* Main Trunk and Branches */}
+      <path 
+        d="M80 135C78 120 82 100 70 85C55 70 30 75 15 65M80 135C82 110 85 90 100 80C120 70 145 75 155 60M80 135V110M80 110C75 100 65 95 60 85M80 110C85 100 105 98 115 88" 
+        stroke="black" strokeWidth="4" strokeLinecap="round" 
       />
-    ))}
+      {/* Intricate Canopy Layers */}
+      <path d="M10 55C10 50 25 40 70 40S140 50 140 55C140 58 130 62 70 62S10 58 10 55Z" fill="black" />
+      <path d="M30 45C30 40 45 32 80 32S130 40 130 45C130 48 110 52 80 52S30 48 30 45Z" fill="black" />
+      <path d="M50 35C50 32 60 25 85 25S120 32 120 35C120 37 100 40 85 40S50 37 50 35Z" fill="black" />
+      
+      {/* Organic texture/leaves */}
+      {[...Array(25)].map((_, i) => (
+        <circle 
+          key={i} 
+          cx={20 + Math.random() * 120} 
+          cy={25 + Math.random() * 30} 
+          r={0.5 + Math.random() * 1.5} 
+          fill="black"
+        />
+      ))}
+    </g>
   </svg>
 );
 
@@ -66,8 +62,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsExiting(true);
-      if (onComplete) setTimeout(onComplete, 1500);
-    }, 8500); // Extended for the walk animation
+      if (onComplete) setTimeout(onComplete, 1200);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -78,79 +74,65 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: "brightness(0) blur(20px)" }}
-          transition={{ duration: 1.2 }}
-          className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center"
+          exit={{ opacity: 0, scale: 0.9, filter: "blur(40px)" }}
+          transition={{ duration: 1, ease: "circOut" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#080808]"
         >
-          {/* Night Sky Elements */}
-          <div className="absolute inset-0 z-0">
-             {/* Stars */}
-             {[...Array(100)].map((_, i) => (
-               <motion.div
-                 key={i}
-                 animate={{ opacity: [0.1, 0.5, 0.1] }}
-                 transition={{ duration: 2 + Math.random() * 3, repeat: Infinity }}
-                 className="absolute bg-white rounded-full"
-                 style={{
-                   width: Math.random() * 2,
-                   height: Math.random() * 2,
-                   top: `${Math.random() * 100}%`,
-                   left: `${Math.random() * 100}%`,
-                 }}
-               />
-             ))}
-             
-             {/* The Moon */}
-             <div className="absolute top-12 right-12 md:top-24 md:right-24">
-                <div className="w-16 h-16 md:w-32 md:h-32 rounded-full bg-white/10 blur-xl" />
-                <motion.div 
-                  animate={{ opacity: [0.8, 0.9, 0.8] }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                  className="absolute inset-0 w-16 h-16 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-white to-gray-400 shadow-[0_0_60px_rgba(255,255,255,0.3)] overflow-hidden"
-                >
-                   {/* Moon Texture/Craters */}
-                   <div className="absolute top-[20%] left-[30%] w-[15%] h-[15%] rounded-full bg-black/10" />
-                   <div className="absolute top-[40%] left-[60%] w-[10%] h-[10%] rounded-full bg-black/10" />
-                   <div className="absolute top-[60%] left-[20%] w-[20%] h-[20%] rounded-full bg-black/10" />
-                </motion.div>
-             </div>
-          </div>
-
-          <div className="relative w-full max-w-5xl h-[60vh] flex flex-col justify-end">
+          {/* Centered Circular Frame (The Lens) */}
+          <div className="relative w-80 h-80 md:w-[450px] md:h-[450px] rounded-full overflow-hidden border-4 border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
             
-            {/* The Tree (Static) */}
-            <div className="absolute right-0 bottom-[-20%] z-10 translate-x-[20%]">
-               <AcaciaTree />
+            {/* The "Moonlight" Background inside the circle */}
+            <div className="absolute inset-0 bg-[#d9c5b2] overflow-hidden">
+               {/* Large Atmosphere Glow */}
+               <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10" />
+               
+               {/* Scattered Birds Animation */}
+               {[...Array(6)].map((_, i) => (
+                 <motion.div
+                   key={i}
+                   initial={{ x: "-10%", y: 40 + i * 10 }}
+                   animate={{ x: "110%" }}
+                   transition={{ duration: 10 + i * 2, repeat: Infinity, ease: "linear", delay: i * 1.5 }}
+                   className="absolute pointer-events-none"
+                 >
+                   <svg width="8" height="4" viewBox="0 0 8 4" className="text-black/40">
+                     <path d="M0 2C2 0 4 0 4 2C4 0 6 0 8 2" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                   </svg>
+                 </motion.div>
+               ))}
             </div>
 
-            {/* The Elephant (Animated Walk) */}
+            {/* The Tree (Placed on the left as per reference) */}
+            <div className="absolute left-[-20px] bottom-[-20px] z-10">
+               <RealisticTree />
+            </div>
+
+            {/* The Elephant Walking into the scene */}
             <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: "30%", opacity: 1 }}
-              transition={{ 
-                duration: 7, 
-                ease: "linear",
-                opacity: { duration: 2 } 
-              }}
-              className="absolute left-0 bottom-[-10%] z-20"
+              initial={{ x: "120%", y: "45%" }}
+              animate={{ x: "-5%" }}
+              transition={{ duration: 6, ease: "linear" }}
+              className="absolute bottom-[20%] z-20"
             >
               <motion.div
                 animate={{ 
-                  x: [0, 5, 0],
-                  y: [0, -2, 0]
+                  y: [0, -1.5, 0],
+                  rotate: [0, 0.5, 0]
                 }}
                 transition={{ duration: 0.8, repeat: Infinity }}
               >
-                <Elephant />
+                <RealisticElephant />
               </motion.div>
             </motion.div>
 
-            {/* Subtle Ground Fog */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white/[0.05] to-transparent blur-2xl z-30" />
+            {/* Ground Silhouette */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-black rounded-t-[50%]" />
+
           </div>
 
-          {/* Cinematic Overlay */}
-          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,0.95)]" />
+          {/* Exterior Grain & Vignette for Premium Feel */}
+          <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.9)]" />
         </motion.div>
       )}
     </AnimatePresence>
