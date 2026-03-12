@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 import { Canvas } from '@react-three/fiber';
-import { Environment, Text, Float, ContactShadows, PresentationControls } from '@react-three/drei';
+import { Environment, Float, ContactShadows, PresentationControls, MeshDistortMaterial, Sparkles } from '@react-three/drei';
 
 const channels = [
   {
@@ -138,14 +138,14 @@ const CountdownOverlay = () => {
   );
 };
 
-/* Abstract 3D Corporate Panel Scene */
-const AdvisoryPanelScene = () => {
+/* Advanced 3D Insights Core Scene */
+const InsightsCoreScene = () => {
   return (
     <Suspense fallback={null}>
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[10, 10, 10]} intensity={1} castShadow />
-      <spotLight position={[-5, 5, 5]} angle={0.3} penumbra={1} intensity={2} color="#4fa4ff" />
-      <spotLight position={[5, 10, -5]} angle={0.4} penumbra={1} intensity={1} color="#ffffff" />
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[10, 10, 10]} intensity={2} castShadow />
+      <spotLight position={[-5, 5, 5]} angle={0.2} penumbra={1} intensity={3} color="#4fa4ff" />
+      <spotLight position={[5, -5, -5]} angle={0.2} penumbra={1} intensity={2} color="#00ffcc" />
 
       <PresentationControls
         global
@@ -155,42 +155,41 @@ const AdvisoryPanelScene = () => {
         polar={[-Math.PI / 4, Math.PI / 4]}
         azimuth={[-Math.PI / 4, Math.PI / 4]}
       >
-        <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
-          <group position={[0, -0.5, 0]}>
-            {/* The "Table" */}
-            <mesh position={[0, -0.2, 0]} receiveShadow>
-              <cylinderGeometry args={[4, 4, 0.1, 64]} />
-              <meshStandardMaterial color="#050505" metalness={0.9} roughness={0.1} />
+        <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
+          <group position={[0, 0, 0]}>
+            {/* The Core Fluid Entity */}
+            <mesh scale={1.2} castShadow>
+               <sphereGeometry args={[1, 64, 64]} />
+               <MeshDistortMaterial
+                  color="#001133"
+                  distort={0.4}
+                  speed={2.5}
+                  roughness={0.1}
+                  metalness={1}
+                  clearcoat={1}
+                  clearcoatRoughness={0.1}
+               />
             </mesh>
             
-            {/* Center Figure (Lead Architect) */}
-            <mesh position={[0, 1.2, -1]} castShadow>
-              <capsuleGeometry args={[0.4, 1.5, 4, 16]} />
-              <meshStandardMaterial color="#ffffff" metalness={0.4} roughness={0.2} emissive="#1a5a9a" emissiveIntensity={0.2} />
+            {/* Outer Geometric Framework */}
+            <mesh scale={1.6}>
+               <icosahedronGeometry args={[1, 1]} />
+               <meshStandardMaterial color="#4fa4ff" wireframe transparent opacity={0.4} />
             </mesh>
             
-            {/* Left Figure */}
-            <mesh position={[-1.8, 1, 0.5]} rotation={[0, 0.5, 0]} castShadow>
-              <capsuleGeometry args={[0.35, 1.3, 4, 16]} />
-              <meshStandardMaterial color="#d0d0d0" metalness={0.6} roughness={0.3} />
+            <mesh scale={1.8} rotation={[Math.PI / 4, Math.PI / 4, 0]}>
+               <icosahedronGeometry args={[1, 0]} />
+               <meshStandardMaterial color="#00ffcc" wireframe transparent opacity={0.2} />
             </mesh>
-            
-            {/* Right Figure */}
-            <mesh position={[1.8, 1, 0.5]} rotation={[0, -0.5, 0]} castShadow>
-              <capsuleGeometry args={[0.35, 1.3, 4, 16]} />
-              <meshStandardMaterial color="#d0d0d0" metalness={0.6} roughness={0.3} />
-            </mesh>
-            
-            {/* Floating Data Rings */}
-            <mesh position={[0, 2, 0]} rotation={[1.5, 0, 0]}>
-               <torusGeometry args={[2.5, 0.01, 16, 100]} />
-               <meshBasicMaterial color="#4fa4ff" transparent opacity={0.4} />
-            </mesh>
+
+            {/* Orbiting Data Particles */}
+            <Sparkles count={150} scale={4} size={1.5} speed={0.4} opacity={0.6} color="#4fa4ff" />
+            <Sparkles count={50} scale={5} size={2.5} speed={0.2} opacity={0.4} color="#00ffcc" />
           </group>
         </Float>
       </PresentationControls>
 
-      <ContactShadows position={[0, -1, 0]} opacity={0.7} scale={10} blur={2.5} far={4} />
+      <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={15} blur={3} far={4} />
       <Environment preset="city" />
     </Suspense>
   );
@@ -445,8 +444,8 @@ const Testimonials = () => {
                   >
                     {/* 3D Canvas rendering the abstract modeled advisory panel */}
                     <div className="absolute inset-0 opacity-90 z-0 select-none">
-                      <Canvas camera={{ position: [0, 2, 6], fov: 45 }}>
-                        <AdvisoryPanelScene />
+                      <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
+                        <InsightsCoreScene />
                       </Canvas>
                     </div>
 
@@ -460,11 +459,12 @@ const Testimonials = () => {
                       transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
                       className="absolute inset-0 flex flex-col items-center justify-end pb-8 md:pb-12 z-20 text-center px-4 pointer-events-none"
                     >
-                      <h2 className="text-white font-black text-3xl md:text-5xl uppercase tracking-[0.2em] drop-shadow-[0_4px_15px_rgba(0,0,0,0.8)]">
-                        The Advisory Panel
+                      <h2 className="text-white font-black text-2xl md:text-4xl lg:text-5xl uppercase tracking-[0.2em] drop-shadow-[0_4px_15px_rgba(0,0,0,0.9)]">
+                        Synthesizing Client Core
                       </h2>
-                      <p className="text-blue-300 font-semibold mt-3 text-xs md:text-sm uppercase tracking-[0.3em] bg-[#050a1a]/80 px-5 md:px-8 py-1.5 md:py-2 rounded-full border border-blue-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(0,100,255,0.2)]">
-                        Preparing Client Briefing...
+                      <p className="text-blue-300 font-semibold mt-3 text-xs md:text-sm uppercase tracking-[0.3em] bg-[#050a1a]/80 px-5 md:px-8 py-1.5 md:py-2 rounded-full border border-blue-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(0,100,255,0.2)] flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+                        Aggregating Endorsements...
                       </p>
                     </motion.div>
                   </motion.div>
