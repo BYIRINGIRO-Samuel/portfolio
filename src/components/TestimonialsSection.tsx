@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 import { Canvas } from '@react-three/fiber';
-import { Environment, Float, ContactShadows, PresentationControls, MeshDistortMaterial, Sparkles } from '@react-three/drei';
+import { Environment, Float, ContactShadows, PresentationControls, MeshTransmissionMaterial, Sparkles } from '@react-three/drei';
 
 const channels = [
   {
@@ -138,14 +138,14 @@ const CountdownOverlay = () => {
   );
 };
 
-/* Advanced 3D Insights Core Scene */
-const InsightsCoreScene = () => {
+/* Ultra-Premium Glass & Refraction Scene */
+const PremiumGlassScene = () => {
   return (
     <Suspense fallback={null}>
-      <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 10]} intensity={2} castShadow />
-      <spotLight position={[-5, 5, 5]} angle={0.2} penumbra={1} intensity={3} color="#4fa4ff" />
-      <spotLight position={[5, -5, -5]} angle={0.2} penumbra={1} intensity={2} color="#00ffcc" />
+      <ambientLight intensity={0.2} />
+      <directionalLight position={[10, 10, 10]} intensity={2} />
+      <spotLight position={[-5, 5, 5]} angle={0.2} penumbra={1} intensity={3} color="#ffffff" />
+      <spotLight position={[5, -5, -5]} angle={0.2} penumbra={1} intensity={2} color="#blue-400" />
 
       <PresentationControls
         global
@@ -155,41 +155,41 @@ const InsightsCoreScene = () => {
         polar={[-Math.PI / 4, Math.PI / 4]}
         azimuth={[-Math.PI / 4, Math.PI / 4]}
       >
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={1.5}>
-          <group position={[0, 0, 0]}>
-            {/* The Core Fluid Entity */}
+        <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
+          <group position={[0, -0.2, 0]}>
+            {/* The Glass Obelisk / Knot */}
             <mesh scale={1.2} castShadow>
-               <sphereGeometry args={[1, 64, 64]} />
-               <MeshDistortMaterial
-                  color="#001133"
-                  distort={0.4}
-                  speed={2.5}
-                  roughness={0.1}
-                  metalness={1}
-                  clearcoat={1}
-                  clearcoatRoughness={0.1}
+               <torusKnotGeometry args={[1, 0.4, 256, 64]} />
+               <MeshTransmissionMaterial 
+                  backside
+                  samples={4}
+                  thickness={1.5}
+                  chromaticAberration={0.6}
+                  anisotropy={0.3}
+                  distortion={0.5}
+                  distortionScale={0.5}
+                  temporalDistortion={0.1}
+                  iridescence={1}
+                  iridescenceIOR={1}
+                  iridescenceThicknessRange={[0, 1400]}
+                  color="#ffffff"
                />
             </mesh>
             
-            {/* Outer Geometric Framework */}
-            <mesh scale={1.6}>
-               <icosahedronGeometry args={[1, 1]} />
-               <meshStandardMaterial color="#4fa4ff" wireframe transparent opacity={0.4} />
-            </mesh>
-            
-            <mesh scale={1.8} rotation={[Math.PI / 4, Math.PI / 4, 0]}>
-               <icosahedronGeometry args={[1, 0]} />
-               <meshStandardMaterial color="#00ffcc" wireframe transparent opacity={0.2} />
+            {/* Inner Core */}
+            <mesh scale={0.8}>
+               <octahedronGeometry args={[1, 0]} />
+               <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={1} wireframe opacity={0.2} transparent />
             </mesh>
 
-            {/* Orbiting Data Particles */}
-            <Sparkles count={150} scale={4} size={1.5} speed={0.4} opacity={0.6} color="#4fa4ff" />
-            <Sparkles count={50} scale={5} size={2.5} speed={0.2} opacity={0.4} color="#00ffcc" />
+            {/* Orbiting Glass/Dust Shards */}
+            <Sparkles count={150} scale={6} size={2} speed={0.4} opacity={0.5} color="#ffffff" />
+            <Sparkles count={50} scale={4} size={3} speed={0.2} opacity={0.3} color="#60a5fa" />
           </group>
         </Float>
       </PresentationControls>
 
-      <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={15} blur={3} far={4} />
+      <ContactShadows position={[0, -2, 0]} opacity={0.4} scale={15} blur={2.5} far={4} color="#000000" />
       <Environment preset="city" />
     </Suspense>
   );
@@ -432,41 +432,100 @@ const Testimonials = () => {
                   </motion.div>
                )}
 
-               {/* ── Intro State: The Panel ── */}
+               {/* ── Intro State: Premium Cinematic ── */}
                {tvState === 'intro' && (
                   <motion.div 
                     key="intro"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="absolute inset-0 w-full h-full relative bg-[#020510]"
+                    transition={{ duration: 1 }}
+                    className="absolute inset-0 w-full h-full relative bg-[#050505]"
                   >
-                    {/* 3D Canvas rendering the abstract modeled advisory panel */}
-                    <div className="absolute inset-0 opacity-90 z-0 select-none">
-                      <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-                        <InsightsCoreScene />
+                    {/* 3D Canvas rendering the abstract glass object */}
+                    <div className="absolute inset-0 opacity-100 z-0 select-none">
+                      <Canvas camera={{ position: [0, 0, 8], fov: 40 }}>
+                        <PremiumGlassScene />
                       </Canvas>
                     </div>
 
-                    {/* Dark gradient overlay to frame the 3D scene */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/40 z-10 pointer-events-none" />
-                    
-                    {/* Intro text */}
-                    <motion.div 
-                      initial={{ y: 20, opacity: 0 }} 
-                      animate={{ y: 0, opacity: 1 }} 
-                      transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
-                      className="absolute inset-0 flex flex-col items-center justify-end pb-8 md:pb-12 z-20 text-center px-4 pointer-events-none"
-                    >
-                      <h2 className="text-white font-black text-2xl md:text-4xl lg:text-5xl uppercase tracking-[0.2em] drop-shadow-[0_4px_15px_rgba(0,0,0,0.9)]">
-                        Synthesizing Client Core
-                      </h2>
-                      <p className="text-blue-300 font-semibold mt-3 text-xs md:text-sm uppercase tracking-[0.3em] bg-[#050a1a]/80 px-5 md:px-8 py-1.5 md:py-2 rounded-full border border-blue-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(0,100,255,0.2)] flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-                        Aggregating Endorsements...
-                      </p>
+                    {/* Highly stylized, editorial editorial overlay */}
+                    <motion.div className="absolute inset-0 flex flex-col justify-between p-6 md:p-10 z-20 pointer-events-none">
+                      
+                      {/* Top Bar Editorial Layout */}
+                      <div className="flex justify-between items-start w-full">
+                        <div className="overflow-hidden">
+                          <motion.p 
+                            initial={{ y: 20, opacity: 0 }} 
+                            animate={{ y: 0, opacity: 1 }} 
+                            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }} 
+                            className="text-white/40 text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-mono border-l border-white/20 pl-3"
+                          >
+                            Endorsements <br/> Archive / 01
+                          </motion.p>
+                        </div>
+                        <div className="flex flex-col items-end gap-2">
+                           <motion.p 
+                             initial={{ opacity: 0 }} 
+                             animate={{ opacity: 1 }} 
+                             transition={{ delay: 0.6 }} 
+                             className="text-white/80 text-[8px] md:text-[9px] uppercase tracking-[0.2em] font-sans flex items-center gap-2"
+                           >
+                             System Secured
+                             <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse shadow-[0_0_10px_white]" />
+                           </motion.p>
+                           <motion.div
+                             initial={{ width: 0 }}
+                             animate={{ width: "40px" }}
+                             transition={{ duration: 0.8, delay: 0.5 }}
+                             className="h-[1px] bg-white/30"
+                           />
+                        </div>
+                      </div>
+
+                      {/* Giant Central Typography */}
+                      <div className="flex flex-col items-center justify-center w-full mix-blend-overlay mt-[-40px]">
+                         <motion.h2 
+                           initial={{ filter: 'blur(10px)', opacity: 0, scale: 0.95 }} 
+                           animate={{ filter: 'blur(0px)', opacity: 1, scale: 1 }}
+                           transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                           className="text-white font-black text-6xl md:text-8xl lg:text-9xl tracking-[0.02em] uppercase leading-none drop-shadow-[0_10px_30px_rgba(0,0,0,1)]"
+                         >
+                           ELEVATE
+                         </motion.h2>
+                         <motion.h2 
+                           initial={{ y: 20, opacity: 0 }} 
+                           animate={{ y: 0, opacity: 1 }}
+                           transition={{ duration: 1, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                           className="text-gray-300 font-serif text-3xl md:text-6xl italic tracking-wide mt-[-10px] md:mt-[-25px] font-medium"
+                         >
+                           Expectations
+                         </motion.h2>
+                      </div>
+
+                      {/* Bottom Loading Bar */}
+                      <div className="flex flex-col items-center w-full overflow-hidden">
+                          <motion.p 
+                            initial={{ opacity: 0 }} 
+                            animate={{ opacity: 1 }} 
+                            transition={{ duration: 0.5, delay: 1 }} 
+                            className="text-white/40 text-[7px] md:text-[8px] uppercase tracking-[0.5em] mb-4"
+                          >
+                            Initializing Client Feedback
+                          </motion.p>
+                          <div className="w-full max-w-[200px] md:max-w-[300px] h-[1px] bg-white/10 relative">
+                            <motion.div 
+                               initial={{ width: "0%" }}
+                               animate={{ width: "100%" }}
+                               transition={{ duration: 3.5, ease: "easeInOut" }}
+                               className="absolute left-0 top-0 h-full bg-gradient-to-r from-transparent via-white to-transparent"
+                            />
+                          </div>
+                      </div>
                     </motion.div>
+                    
+                    {/* Vignette Overlay purely for contrast */}
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)] pointer-events-none z-10" />
                   </motion.div>
                )}
 
