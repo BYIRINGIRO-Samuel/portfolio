@@ -1,63 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Sphere, Torus, PerspectiveCamera, Environment, Stars } from "@react-three/drei";
-import * as THREE from "three";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const RotatingRings = () => {
-  const clockwiseRingRef = useRef<THREE.Mesh>(null!);
-  const counterClockwiseRingRef = useRef<THREE.Mesh>(null!);
-  const centerOrbRef = useRef<THREE.Mesh>(null!);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    
-    // Clockwise rotation
-    clockwiseRingRef.current.rotation.z = -time * 2;
-    
-    // Counter-clockwise rotation
-    counterClockwiseRingRef.current.rotation.z = time * 2.5;
-
-    // Subtle drift for the center
-    if (centerOrbRef.current) {
-      centerOrbRef.current.scale.setScalar(1 + Math.sin(time * 2) * 0.05);
-    }
-  });
-
-  return (
-    <>
-      {/* Outer Clockwise Ring */}
-      <Torus ref={clockwiseRingRef} args={[4, 0.04, 16, 100]}>
-        <meshStandardMaterial 
-          color="#3b82f6" 
-          emissive="#3b82f6" 
-          emissiveIntensity={10} 
-        />
-      </Torus>
-
-      {/* Inner Counter-Clockwise Ring */}
-      <Torus ref={counterClockwiseRingRef} args={[3.2, 0.04, 16, 100]} rotation={[Math.PI / 2, 0, 0]}>
-        <meshStandardMaterial 
-          color="#ec4899" 
-          emissive="#ec4899" 
-          emissiveIntensity={10} 
-        />
-      </Torus>
-
-      {/* The Centerpiece */}
-      <Sphere ref={centerOrbRef} args={[1.5, 64, 64]}>
-        <MeshDistortMaterial
-          color="#ffffff"
-          emissive="#ffffff"
-          emissiveIntensity={1}
-          speed={3}
-          distort={0.3}
-          radius={1}
-        />
-      </Sphere>
-    </>
-  );
-};
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [progress, setProgress] = useState(0);
@@ -70,13 +12,13 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           clearInterval(interval);
           setTimeout(() => {
             setIsExiting(true);
-            if (onComplete) setTimeout(onComplete, 1000);
-          }, 1000);
+            if (onComplete) setTimeout(onComplete, 1200);
+          }, 800);
           return 100;
         }
-        return prev + Math.random() * 5;
+        return prev + Math.random() * 8;
       });
-    }, 100);
+    }, 120);
 
     return () => clearInterval(interval);
   }, [onComplete]);
@@ -87,47 +29,137 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-          transition={{ duration: 0.8 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#030712]/80 backdrop-blur-md"
+          exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#030712]/95 backdrop-blur-xl"
         >
-          <div className="relative w-[350px] h-[350px] md:w-[450px] md:h-[450px] bg-black/40 rounded-3xl border border-white/10 shadow-2xl overflow-hidden flex flex-col items-center justify-center">
-            {/* 3D Canvas Container */}
-            <div className="absolute inset-0 z-0">
-              <Canvas>
-                <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1.5} color="#3b82f6" />
-                <pointLight position={[-10, -10, -10]} intensity={1} color="#ec4899" />
-                <RotatingRings />
-                <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-              </Canvas>
-            </div>
+          {/* Main Loader Container */}
+          <div className="relative w-[320px] h-[320px] md:w-[400px] md:h-[400px] flex items-center justify-center overflow-hidden">
+            
+            {/* Background Tech Elements (Inspired by Testimonials) */}
+            <div className="absolute inset-0 border border-white/5 rounded-3xl" />
+            <div className="absolute w-full h-[0.5px] bg-white/10 top-1/2 -translate-y-1/2" />
+            <div className="absolute h-full w-[0.5px] bg-white/10 left-1/2 -translate-x-1/2" />
+            
+            {/* Corner Markers */}
+            <div className="absolute top-4 left-4 w-4 h-4 border-t border-l border-white/20" />
+            <div className="absolute top-4 right-4 w-4 h-4 border-t border-r border-white/20" />
+            <div className="absolute bottom-4 left-4 w-4 h-4 border-b border-l border-white/20" />
+            <div className="absolute bottom-4 right-4 w-4 h-4 border-b border-r border-white/20" />
 
-            {/* UI Overlay */}
-            <div className="relative z-10 mt-64 text-center">
-              <motion.h2 
-                animate={{ opacity: [0.4, 1, 0.4] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="text-white text-xl font-bold tracking-[0.2em] uppercase"
-              >
-                Initializing
-              </motion.h2>
-              <div className="mt-4 w-48 h-[2px] bg-white/10 rounded-full overflow-hidden">
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress}%` }}
-                  className="h-full bg-gradient-to-right from-blue-500 via-purple-500 to-pink-500 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-                />
+            {/* Radar Pulse */}
+            <motion.div 
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: [0.5, 1.5], opacity: [0.3, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+              className="absolute w-64 h-64 border border-blue-500/20 rounded-full"
+            />
+
+            {/* SVG Loader Logic */}
+            <svg viewBox="0 0 100 100" className="w-48 h-48 md:w-64 md:h-64 relative z-10">
+              {/* Static Background Ring */}
+              <circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="rgba(255,255,255,0.05)"
+                strokeWidth="0.5"
+              />
+
+              {/* Clockwise Rider */}
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="42"
+                fill="none"
+                stroke="url(#blue-gradient)"
+                strokeWidth="2"
+                strokeDasharray="20 180"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                strokeLinecap="round"
+              />
+
+              {/* Anti-Clockwise Rider */}
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="36"
+                fill="none"
+                stroke="url(#pink-gradient)"
+                strokeWidth="1.5"
+                strokeDasharray="40 160"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                strokeLinecap="round"
+              />
+
+              {/* Progress Circle (Inspired by Testimonials) */}
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="30"
+                fill="none"
+                stroke="rgba(255,255,255,0.1)"
+                strokeWidth="1"
+                strokeDasharray="188.5"
+                initial={{ strokeDashoffset: 188.5 }}
+                animate={{ strokeDashoffset: 188.5 - (188.5 * progress) / 100 }}
+              />
+
+              {/* Gradients */}
+              <defs>
+                <linearGradient id="blue-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#60a5fa" stopOpacity="0.1" />
+                </linearGradient>
+                <linearGradient id="pink-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#ec4899" />
+                  <stop offset="100%" stopColor="#f472b6" stopOpacity="0.1" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            {/* Central Information */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={Math.floor(progress / 20)}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="mb-1"
+                >
+                  <span className="text-white/40 font-mono text-[8px] tracking-[0.4em] uppercase">
+                    {progress < 40 ? "Initializing" : progress < 80 ? "Optimizing" : "Finalizing"}
+                  </span>
+                </motion.div>
+              </AnimatePresence>
+              
+              <div className="flex items-baseline gap-1">
+                <span className="text-white font-black text-4xl md:text-5xl tracking-tighter italic">
+                  {Math.floor(progress)}
+                </span>
+                <span className="text-white/30 text-xs font-mono">%</span>
               </div>
-              <p className="mt-2 text-white/40 font-mono text-sm">
-                {Math.floor(progress)}%
-              </p>
+              
+              <div className="mt-4 flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{
+                      opacity: progress > (i + 1) * 20 ? 1 : 0.2,
+                      scale: progress > (i + 1) * 20 ? [1, 1.2, 1] : 1
+                    }}
+                    className="w-1.5 h-1.5 bg-blue-500 rounded-full"
+                  />
+                ))}
+              </div>
             </div>
 
-            {/* Spectral Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-blue-500/20 rounded-full blur-[60px] pointer-events-none" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-purple-500/10 rounded-full blur-[80px] pointer-events-none" />
+            {/* Ambient Background Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-blue-500/10 rounded-full blur-[80px] pointer-events-none" />
           </div>
         </motion.div>
       )}
