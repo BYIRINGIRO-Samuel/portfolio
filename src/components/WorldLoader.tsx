@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * The EXACT DataVehicle from SkillsSection.tsx
+ * EXACT DataVehicle component from SkillsSection.tsx
  */
 const DataVehicle = () => (
-  <div className="relative transform -rotate-90 scale-[1.5]">
+  <div className="relative transform -rotate-90">
     <svg width="56" height="26" viewBox="0 0 56 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
       {/* Main Luxury Chassis - Stately & Boxy Silhouette */}
       <path d="M2 13C2 8 4 4 10 4H50C54 4 54 8 54 13C54 18 54 22 50 22H10C4 22 2 18 2 13Z" fill="white" />
@@ -38,43 +38,69 @@ const DataVehicle = () => (
       <rect x="38" y="3" width="3" height="1.5" rx="0.5" fill="white" />
       <rect x="38" y="21.5" width="3" height="1.5" rx="0.5" fill="white" />
     </svg>
+    {/* Underglow - Refined for Luxury Feel */}
     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full border border-white/5 animate-ping" />
   </div>
 );
 
 /**
- * Realistic Modern Luxury House Silhouette
+ * EXACT CityBuilding component from SkillsSection.tsx
  */
-const ModernMansion = () => (
-  <svg width="240" height="160" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(255,255,255,0.05)]">
-    {/* Architectural Frame */}
-    <path d="M10 70H110V35H85V25H35V35H10V70Z" fill="#080808" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
-    {/* Large Glass Windows (Glow) */}
-    <rect x="42" y="30" width="36" height="15" fill="white" fillOpacity="0.05" />
-    <rect x="15" y="45" width="20" height="20" fill="white" fillOpacity="0.03" />
-    <rect x="85" y="45" width="20" height="20" fill="white" fillOpacity="0.03" />
-    {/* Main Entrance */}
-    <rect x="52" y="50" width="16" height="20" fill="white" fillOpacity="0.08" stroke="white" strokeWidth="0.1" strokeOpacity="0.3" />
-    {/* Balcony Railing */}
-    <line x1="42" y1="45" x2="78" y2="45" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
-    <line x1="45" y1="45" x2="45" y2="30" stroke="white" strokeWidth="0.1" strokeOpacity="0.1" />
-    <line x1="75" y1="45" x2="75" y2="30" stroke="white" strokeWidth="0.1" strokeOpacity="0.1" />
-  </svg>
+const CityBuilding = ({ h = 80, w = 30, delay = 0, opacity = "opacity-20" }) => (
+  <div className={`relative group/building ${opacity} hover:opacity-40 transition-all duration-700`} style={{ width: w, height: h }}>
+    {/* Main Structure */}
+    <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent border-t border-x border-white/10 rounded-t-sm backdrop-blur-[2px]" />
+    
+    {/* Rooftop Details (Antennas/Comms) */}
+    <div className="absolute -top-6 left-1/4 w-[1px] h-6 bg-white/20">
+       <motion.div 
+         animate={{ opacity: [0.2, 1, 0.2] }}
+         transition={{ duration: 2, repeat: Infinity, delay: delay }}
+         className="absolute top-0 -left-0.5 w-1 h-1 rounded-full bg-red-500 shadow-[0_0_5px_red]"
+       />
+    </div>
+    <div className="absolute -top-3 right-1/4 w-[2px] h-3 bg-white/10" />
+
+    {/* Window Grid System */}
+    <div className="absolute inset-0 p-2 grid grid-cols-3 gap-1.5 overflow-hidden">
+      {[...Array(24)].map((_, i) => (
+        <motion.div 
+          key={i} 
+          initial={{ opacity: 0.1 }}
+          animate={{ opacity: Math.random() > 0.7 ? [0.1, 0.8, 0.1] : 0.15 }}
+          transition={{ duration: 3 + Math.random() * 5, repeat: Infinity }}
+          className="h-1.5 bg-white/60 rounded-[0.5px] shadow-[0_0_2px_rgba(255,255,255,0.2)]" 
+        />
+      ))}
+    </div>
+
+    {/* Vertical Architectural Lines */}
+    <div className="absolute inset-0 border-x border-white/5 m-1" />
+  </div>
 );
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    // Start car movement
     const timer = setTimeout(() => {
+      setProgress(78); // Car will stop at the house
+    }, 500);
+
+    // Fade out after car arrives
+    const exitTimer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 7500); // Duration for the car to reach and stop
+    }, 7000);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(exitTimer);
+    };
   }, [onComplete]);
 
-  // The EXACT road path from SkillsSection.tsx
   const roadPath = "M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420";
 
   return (
@@ -83,80 +109,87 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, filter: "brightness(0) blur(20px)" }}
-          transition={{ duration: 1.2 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#050505] overflow-hidden"
+          exit={{ opacity: 0, scale: 0.9, filter: "brightness(0) blur(20px)" }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-white"
         >
-          {/* Main Visual Container */}
-          <div className="relative w-full max-w-6xl h-screen flex items-center justify-center">
-            
-            {/* The Road Surface */}
-            <svg className="absolute inset-0 w-full h-full opacity-10" viewBox="0 0 1280 500" preserveAspectRatio="xMidYMid slice">
-               <path
+          {/* Centered Scene Container (Mirrors SkillsSection exactly) */}
+          <div className="relative w-full max-w-7xl h-[550px] bg-[#080808] rounded-2xl overflow-hidden shadow-2xl mx-4">
+             
+             {/* EXACT Road logic from SkillsSection */}
+             <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+               <defs>
+                 <path id="road-geometry" d={roadPath} />
+               </defs>
+               
+               {/* Broad Road Surface (Asphalt) */}
+               <use href="#road-geometry" fill="none" stroke="white" strokeWidth="42" className="opacity-[0.03]" />
+
+               {/* Solid Edge Lines (Shoulders) */}
+               <use href="#road-geometry" fill="none" stroke="white" strokeWidth="40" className="opacity-10" />
+               <use href="#road-geometry" fill="none" stroke="#080808" strokeWidth="38" />
+
+               {/* Dashed Center Line */}
+               <use href="#road-geometry" fill="none" stroke="white" strokeWidth="1" className="opacity-20" strokeDasharray="10 10" />
+               
+               {/* Active Path Highlight */}
+               <motion.path
                  d={roadPath}
                  fill="none"
                  stroke="white"
-                 strokeWidth="60"
-                 strokeLinecap="round"
-               />
-               <path
-                 d={roadPath}
-                 fill="none"
-                 stroke="white"
-                 strokeWidth="2"
-                 strokeDasharray="15 15"
+                 strokeWidth="1.5"
+                 initial={{ pathLength: 0 }}
+                 animate={{ pathLength: progress / 100 }}
+                 transition={{ duration: 5, ease: "easeInOut" }}
                  className="opacity-40"
                />
-            </svg>
+             </svg>
 
-            {/* The Luxury House (Goal Position) */}
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1, duration: 1.5 }}
-              className="absolute z-10"
-              style={{ left: "85%", top: "82%", transform: "translate(-50%, -50%)" }}
-            >
-              <ModernMansion />
-            </motion.div>
+             {/* The House (Target Destination) */}
+             <div className="absolute top-[78%] right-[10%] z-10 origin-bottom scale-125">
+                <CityBuilding h={180} w={60} opacity="opacity-60" delay={0.5} />
+             </div>
 
-            {/* The Car Moving Along the Exact Path */}
-            <motion.div
-              className="absolute z-20 pointer-events-none"
-              initial={false}
-              animate={{ 
-                offsetDistance: "85%", // Stops just before/at the house
-              }}
-              transition={{ 
-                duration: 6, 
-                ease: "easeInOut",
-                delay: 0.5 
-              }}
-              style={{ 
-                offsetPath: `path("${roadPath}")`,
-                offsetRotate: "auto 90deg"
-              }}
-            >
-              <motion.div
-                animate={{ 
-                  y: [0, -2, 0],
-                }}
-                transition={{ duration: 0.15, repeat: Infinity, repeatType: "reverse" }}
-              >
-                <DataVehicle />
-              </motion.div>
-            </motion.div>
+             {/* The Car (EXACT code and animation logic) */}
+             <motion.div 
+               className="absolute z-30 pointer-events-none origin-center"
+               animate={{ 
+                 offsetDistance: `${progress}%`,
+               }}
+               transition={{ duration: 5, ease: "easeInOut" }}
+               style={{ 
+                 offsetPath: `path("${roadPath}")`,
+                 offsetRotate: "auto 90deg"
+               }}
+             >
+               <DataVehicle />
+             </motion.div>
 
-            {/* Atmospheric Polish */}
-            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,1)]" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-white/[0.01] rounded-full blur-[200px]" />
+             {/* Atmosphere / Details */}
+             <div className="absolute top-10 left-10">
+                <h2 className="text-4xl font-black uppercase tracking-tighter text-white">
+                  Skill<span className="text-white/20">Road</span>.
+                </h2>
+             </div>
+             
+             <div className="absolute bottom-10 left-10 flex items-center gap-8 border-t border-white/5 pt-6 w-[80%]">
+                <div className="flex flex-col gap-1">
+                   <div className="text-[8px] font-black text-gray-500 uppercase tracking-widest">Navigation_Target</div>
+                   <div className="text-[10px] font-bold text-white uppercase">DESTINATION: HOME</div>
+                </div>
+                <div className="flex-grow h-[1px] bg-white/5 relative overflow-hidden">
+                   <motion.div 
+                     animate={{ x: [`${progress}%`, '100%'] }}
+                     transition={{ duration: 1, repeat: Infinity }}
+                     className="absolute top-0 left-0 w-8 h-full bg-white opacity-20"
+                   />
+                </div>
+             </div>
+
           </div>
 
-          {/* Minimal Status Indicators */}
-          <div className="absolute top-12 left-12 flex flex-col gap-1 opacity-20">
-             <div className="text-[10px] font-mono text-white tracking-widest uppercase">AUTO_PILOT: ON</div>
-             <div className="text-[10px] font-mono text-white tracking-widest uppercase">TARGET: DOMICILE</div>
-          </div>
+          {/* Exterior Vignette */}
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.8)]" />
         </motion.div>
       )}
     </AnimatePresence>
