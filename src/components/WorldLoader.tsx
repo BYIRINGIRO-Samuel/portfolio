@@ -51,26 +51,38 @@ const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
   </div>
 );
 
-const CityBuilding = ({ h = 80, w = 30 }) => (
-  <div className="relative group/building opacity-60 transition-all duration-700" style={{ width: w, height: h }}>
-    <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-transparent border-t border-x border-white/20 rounded-t-sm backdrop-blur-[4px]" />
-    <div className="absolute inset-0 p-2 grid grid-cols-3 gap-1.5 overflow-hidden">
-      {[...Array(12)].map((_, i) => (
-        <motion.div 
-          key={i} 
-          animate={{ opacity: [0.1, 0.9, 0.1], backgroundColor: ["rgba(255,255,255,0.4)", "rgba(255,255,255,0.9)", "rgba(255,255,255,0.4)"] }}
-          transition={{ duration: 2 + Math.random() * 3, repeat: Infinity }}
-          className="h-1.5 rounded-[0.5px]" 
-        />
-      ))}
-    </div>
-    {/* Beacon Light */}
-    <motion.div 
-      animate={{ opacity: [0, 1, 0] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full p-px shadow-[0_0_10px_white]"
-    />
-  </div>
+/**
+ * Well-Modeled Modern Gas Station Silhouette
+ */
+const GasStation = () => (
+  <svg width="240" height="120" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+    {/* Main Canopy (Roof) */}
+    <rect x="10" y="10" width="100" height="8" fill="#0c0c0c" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+    {/* Supporting Pillars */}
+    <rect x="25" y="18" width="2" height="32" fill="white" fillOpacity="0.1" />
+    <rect x="93" y="18" width="2" height="32" fill="white" fillOpacity="0.1" />
+    
+    {/* Fuel Pumps */}
+    <g transform="translate(45, 35)">
+       <rect width="8" height="15" rx="1" fill="#151515" stroke="white" strokeWidth="0.1" strokeOpacity="0.3" />
+       <rect x="1.5" y="2" width="5" height="4" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
+       <path d="M7 6L10 6L10 12L8 12" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" /> {/* Hose */}
+    </g>
+    <g transform="translate(67, 35)">
+       <rect width="8" height="15" rx="1" fill="#151515" stroke="white" strokeWidth="0.1" strokeOpacity="0.3" />
+       <rect x="1.5" y="2" width="5" height="4" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
+       <path d="M7 6L10 6L10 12L8 12" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" /> {/* Hose */}
+    </g>
+
+    {/* Price Signage Pole */}
+    <rect x="110" y="5" width="1.5" height="45" fill="white" fillOpacity="0.05" />
+    <rect x="107" y="5" width="8" height="12" rx="1" fill="#101010" stroke="white" strokeWidth="0.1" strokeOpacity="0.2" />
+    <div className="absolute top-[8%] right-[5%] text-[2px] font-mono text-white opacity-20 uppercase">Premium Fuel</div>
+
+    {/* Convenience Store (Background Silhouette) */}
+    <path d="M35 50H85V30H35V50Z" fill="#080808" fillOpacity="0.5" />
+    <rect x="52" y="38" width="16" height="12" fill="white" fillOpacity="0.03" stroke="white" strokeWidth="0.05" strokeOpacity="0.2" />
+  </svg>
 );
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
@@ -80,7 +92,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(50); // Adjusted to stay visible in the zoomed view
+      setProgress(58); // Stops perfectly at the fuel pumps
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -135,12 +147,10 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 
                 {/* Road System with increased thickness */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
-                  {/* Subtle Road Texture */}
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-[0.03]" />
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="76" className="opacity-10" />
                   <path d={roadPath} fill="none" stroke="#080808" strokeWidth="74" />
                   
-                  {/* Animated Grid Line (Bolder) */}
                   <motion.path
                     d={roadPath}
                     fill="none"
@@ -155,9 +165,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-15" strokeDasharray="15 15" />
                 </svg>
 
-                {/* Destination Pillar (The House) */}
-                <div className="absolute top-[40%] left-[30%] z-10 translate-y-[-50%] scale-[1.5]">
-                    <CityBuilding h={150} w={50} />
+                {/* WELL-MODELED GAS STATION (Destination) */}
+                <div className="absolute top-[38%] left-[28%] z-10 translate-y-[-50%] scale-[1.3] origin-center">
+                    <GasStation />
                 </div>
 
                 {/* The Precision Car (SCALED UP inside the lens) */}
