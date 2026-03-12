@@ -44,7 +44,7 @@ const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
     {/* Micro HUD - stunning detail */}
     <motion.div 
       animate={{ opacity: isMoving ? 1 : 0 }}
-      className="absolute -top-8 -left-4 font-mono text-[5px] text-white/40 tracking-widest whitespace-nowrap"
+      className="absolute -top-12 -left-4 font-mono text-[6px] text-white/60 tracking-widest whitespace-nowrap"
     >
       GPS: 52.5200° N <br/> VEL: 120 KM/H
     </motion.div>
@@ -55,33 +55,35 @@ const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
  * Well-Modeled Modern Gas Station Silhouette
  */
 const GasStation = () => (
-  <svg width="240" height="120" viewBox="0 0 120 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+  <svg width="240" height="160" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">
     {/* Main Canopy (Roof) */}
-    <rect x="10" y="10" width="100" height="8" fill="#0c0c0c" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+    <rect x="5" y="10" width="110" height="10" fill="#0c0c0c" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
+    <rect x="10" y="12" width="100" height="1" fill="white" fillOpacity="0.1" />
+    
     {/* Supporting Pillars */}
-    <rect x="25" y="18" width="2" height="32" fill="white" fillOpacity="0.1" />
-    <rect x="93" y="18" width="2" height="32" fill="white" fillOpacity="0.1" />
+    <rect x="25" y="20" width="3" height="40" fill="white" fillOpacity="0.15" />
+    <rect x="92" y="20" width="3" height="40" fill="white" fillOpacity="0.15" />
     
     {/* Fuel Pumps */}
-    <g transform="translate(45, 35)">
-       <rect width="8" height="15" rx="1" fill="#151515" stroke="white" strokeWidth="0.1" strokeOpacity="0.3" />
-       <rect x="1.5" y="2" width="5" height="4" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
-       <path d="M7 6L10 6L10 12L8 12" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" /> {/* Hose */}
+    <g transform="translate(42, 40)">
+       <rect width="10" height="20" rx="1" fill="#151515" stroke="white" strokeWidth="0.2" strokeOpacity="0.4" />
+       <rect x="2" y="3" width="6" height="5" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
+       <path d="M9 8L12 8L12 16L10 16" stroke="white" strokeWidth="0.3" strokeOpacity="0.3" /> {/* Hose */}
     </g>
-    <g transform="translate(67, 35)">
-       <rect width="8" height="15" rx="1" fill="#151515" stroke="white" strokeWidth="0.1" strokeOpacity="0.3" />
-       <rect x="1.5" y="2" width="5" height="4" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
-       <path d="M7 6L10 6L10 12L8 12" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" /> {/* Hose */}
+    <g transform="translate(68, 40)">
+       <rect width="10" height="20" rx="1" fill="#151515" stroke="white" strokeWidth="0.2" strokeOpacity="0.4" />
+       <rect x="2" y="3" width="6" height="5" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
+       <path d="M9 8L12 8L12 16L10 16" stroke="white" strokeWidth="0.3" strokeOpacity="0.3" /> {/* Hose */}
     </g>
 
     {/* Price Signage Pole */}
-    <rect x="110" y="5" width="1.5" height="45" fill="white" fillOpacity="0.05" />
-    <rect x="107" y="5" width="8" height="12" rx="1" fill="#101010" stroke="white" strokeWidth="0.1" strokeOpacity="0.2" />
-    <div className="absolute top-[8%] right-[5%] text-[2px] font-mono text-white opacity-20 uppercase">Premium Fuel</div>
+    <rect x="110" y="5" width="2" height="55" fill="white" fillOpacity="0.08" />
+    <rect x="105" y="5" width="12" height="18" rx="1" fill="#101010" stroke="white" strokeWidth="0.2" strokeOpacity="0.3" />
+    <rect x="107" y="7" width="8" height="5" fill="white" fillOpacity="0.05" />
 
     {/* Convenience Store (Background Silhouette) */}
-    <path d="M35 50H85V30H35V50Z" fill="#080808" fillOpacity="0.5" />
-    <rect x="52" y="38" width="16" height="12" fill="white" fillOpacity="0.03" stroke="white" strokeWidth="0.05" strokeOpacity="0.2" />
+    <path d="M30 60H90V35H30V60Z" fill="#080808" fillOpacity="0.6" />
+    <rect x="50" y="45" width="20" height="15" fill="white" fillOpacity="0.03" stroke="white" strokeWidth="0.1" strokeOpacity="0.2" />
   </svg>
 );
 
@@ -92,7 +94,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(58); // Stops perfectly at the fuel pumps
+      setProgress(68); // Adjusted stop point for better visibility in larger frame
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -134,45 +136,46 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
              ))}
           </div>
 
-          {/* Centered MODULAR CIRCLE (Ultra Minimalist Size) */}
+          {/* Centered MODULAR CIRCLE (Increased Size for Visibility) */}
           <motion.div 
-            initial={{ scale: 0.5, opacity: 0, rotate: -20 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1, type: "spring" }}
-            className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/10 bg-[#050505] shadow-[0_0_100px_rgba(255,255,255,0.05)] overflow-hidden z-10"
+            className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border border-white/10 bg-[#050505] shadow-[0_0_120px_rgba(255,255,255,0.08)] overflow-hidden z-10"
           >
              
-             {/* THE MINIATURE WORLD (Re-centered and ZOOMED IN) */}
-             <div className="absolute inset-0 origin-center scale-[0.6] translate-x-[-300px] translate-y-[-70px]">
+             {/* THE MINIATURE WORLD (Re-centered and Balanced) */}
+             <div className="absolute inset-0 origin-center scale-[0.5] translate-x-[-340px] translate-y-[-100px]">
                 
-                {/* Road System with increased thickness */}
+                {/* Road System */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-[0.03]" />
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="76" className="opacity-10" />
                   <path d={roadPath} fill="none" stroke="#080808" strokeWidth="74" />
                   
+                  {/* Animated Path (Bolder) */}
                   <motion.path
                     d={roadPath}
                     fill="none"
                     stroke="white"
-                    strokeWidth="3"
+                    strokeWidth="4"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: progress / 100 }}
                     transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                    className="opacity-70 blur-[1px]"
+                    className="opacity-80 blur-[0.5px]"
                   />
                   
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-15" strokeDasharray="15 15" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-15" strokeDasharray="20 20" />
                 </svg>
 
                 {/* WELL-MODELED GAS STATION (Destination) */}
-                <div className="absolute top-[38%] left-[28%] z-10 translate-y-[-50%] scale-[1.3] origin-center">
+                <div className="absolute top-[45%] left-[30%] z-10 translate-y-[-50%] scale-[1.5] origin-center">
                     <GasStation />
                 </div>
 
                 {/* The Precision Car (SCALED UP inside the lens) */}
                 <motion.div 
-                  className="absolute z-30 pointer-events-none origin-center scale-150"
+                  className="absolute z-30 pointer-events-none origin-center scale-[1.8]"
                   animate={{ offsetDistance: `${progress}%` }}
                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
                   style={{ 
@@ -188,11 +191,11 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
              <motion.div 
                animate={{ y: ["-100%", "250%"] }}
                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-               className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none blur-sm"
+               className="absolute inset-x-0 h-1.5 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none blur-sm"
              />
 
              {/* Circular Vignette Mask */}
-             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_50px_rgba(0,0,0,1)] pointer-events-none" />
+             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_80px_rgba(0,0,0,1)] pointer-events-none" />
           </motion.div>
 
           {/* FINAL SHOCKWAVE PULSE */}
@@ -200,20 +203,20 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             {isDone && (
               <motion.div 
                 initial={{ scale: 0, opacity: 1 }}
-                animate={{ scale: 4, opacity: 0 }}
-                transition={{ duration: 1.2 }}
+                animate={{ scale: 5, opacity: 0 }}
+                transition={{ duration: 1.5 }}
                 className="absolute w-40 h-40 border border-white/10 rounded-full z-20 pointer-events-none"
               />
             )}
           </AnimatePresence>
 
           {/* Minimal Production Text */}
-          <div className="absolute bottom-16 text-[6px] font-mono text-white/5 tracking-[1.5em] uppercase select-none">
+          <div className="absolute bottom-16 text-[8px] font-mono text-white/10 tracking-[1.5em] uppercase select-none">
              Authenticating System Core
           </div>
 
           {/* Cinematic Vignette */}
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,1)]" />
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_250px_rgba(0,0,0,1)]" />
         </motion.div>
       )}
     </AnimatePresence>
