@@ -264,8 +264,18 @@ const Testimonials = () => {
         >
           {/* Channel Change Flash Glitch */}
           {isSwitching && (
-            <div className="absolute inset-0 bg-white mix-blend-difference z-50 pointer-events-none">
-              <div className="absolute inset-0 bg-[repeating-linear-gradient(transparent,transparent_2px,black_2px,black_4px)] opacity-60" />
+            <div className="absolute inset-0 z-50 pointer-events-none overflow-hidden mix-blend-difference">
+               {/* High contrast flash */}
+               <div className="absolute inset-0 bg-white opacity-90" />
+               <div className="absolute inset-0 bg-[repeating-linear-gradient(transparent,transparent_2px,black_3px,black_5px)] opacity-80" />
+               {/* Scanline wipe */}
+               <motion.div 
+                 initial={{ y: "-100%" }}
+                 animate={{ y: "100%" }}
+                 transition={{ duration: 0.15, ease: "linear" }}
+                 className="absolute w-full h-1/2 bg-white/50 blur-md"
+               />
+               <div className="absolute inset-0 opacity-40 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
             </div>
           )}
 
@@ -384,6 +394,50 @@ const Testimonials = () => {
                       </motion.div>
                     </AnimatePresence>
                     
+                    {/* Live Broadcast HUD Overlay */}
+                    <div className="absolute top-4 md:top-6 left-4 md:left-6 right-4 md:right-8 flex justify-between items-start z-30 pointer-events-none">
+                       {/* REC indicator */}
+                       <div className="flex items-center gap-2 bg-black/50 backdrop-blur-md px-2 md:px-3 py-1 md:py-1.5 rounded-sm border border-red-500/20 shadow-lg">
+                          <motion.div 
+                            animate={{ opacity: [1, 0.3, 1] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+                            className="w-2 h-2 md:w-2.5 md:h-2.5 bg-red-600 rounded-full shadow-[0_0_10px_red]"
+                          />
+                          <span className="text-white font-black text-[9px] md:text-[11px] tracking-widest uppercase shadow-black drop-shadow-md">LIVE</span>
+                       </div>
+
+                       {/* Timecode & Spectrum */}
+                       <div className="flex flex-col items-end gap-2 text-white">
+                          <div className="font-mono font-black text-[9px] md:text-sm tracking-widest bg-black/50 backdrop-blur-md px-2 md:px-3 py-1 border border-white/10 rounded-sm">
+                             <motion.span
+                               animate={{ opacity: [1, 0.8, 1] }}
+                               transition={{ duration: 0.1, repeat: Infinity }}
+                             >
+                               CH_0{active + 1} // 
+                             </motion.span>
+                             <motion.span 
+                               animate={{ opacity: [1, 0.5, 1] }}
+                               transition={{ duration: 1, repeat: Infinity }}
+                               className="text-red-400 ml-1 inline-block"
+                             >
+                               00:00:24:12
+                             </motion.span>
+                          </div>
+                          
+                          {/* Audio Spectrum */}
+                          <div className="flex items-end gap-[2px] md:gap-1 h-6 md:h-8 bg-black/40 backdrop-blur-md p-1.5 rounded-sm border border-white/5">
+                            {[0.4, 0.8, 0.5, 0.9, 0.3, 0.7].map((h, i) => (
+                              <motion.div 
+                                key={i}
+                                animate={{ height: ['20%', `${h * 100}%`, '30%', `${h * 80}%`, '20%'] }}
+                                transition={{ duration: 1 + i * 0.1, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+                                className="w-1 md:w-1.5 bg-gradient-to-t from-red-600 to-red-400 opacity-80 rounded-t-sm"
+                              />
+                            ))}
+                          </div>
+                       </div>
+                    </div>
+
                     {/* Dynamic Vignette & Textures */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/10 z-10" />
                     
@@ -441,10 +495,28 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* ── 2. Minimalist TV Stand ── */}
-        <div className="w-full flex flex-col items-center z-10 relative">
-          <div className={`w-16 md:w-24 h-4 md:h-6 bg-gradient-to-b ${isDark ? 'from-[#222] to-[#050505]' : 'from-gray-300 to-gray-200'} border-x ${isDark ? 'border-white/10' : 'border-black/5'}`} />
-          <div className={`w-32 md:w-56 h-2 md:h-3 ${isDark ? 'bg-[#333]' : 'bg-gray-400'} rounded-t-xl border-t ${isDark ? 'border-white/20' : 'border-black/10'} shadow-[0_10px_20px_rgba(0,0,0,${isDark ? '1' : '0.1'})]`} />
+        {/* ── 2. Holographic TV Stand ── */}
+        <div className="w-full flex flex-col items-center z-10 relative -mt-0.5 md:-mt-1">
+          {/* Anti-gravity gap effect glowing field */}
+          <motion.div 
+            animate={{ opacity: [0.3, 0.7, 0.3], height: ['6px', '10px', '6px'] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-32 md:w-48 bg-gradient-to-b from-red-600/40 via-red-900/20 to-transparent blur-md"
+          />
+          {/* Base connection node */}
+          <div className={`w-12 md:w-20 h-3 md:h-5 bg-gradient-to-b ${isDark ? 'from-black to-[#0a0a0a] border-white/10' : 'from-gray-800 to-gray-900 border-gray-600'} border-x relative overflow-hidden`}>
+             <motion.div 
+               animate={{ y: [-20, 40] }}
+               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+               className="absolute inset-0 w-full h-[1px] bg-red-500/80 shadow-[0_0_10px_red]"
+             />
+          </div>
+          {/* Core pedestal */}
+          <div className={`relative w-40 md:w-64 h-2 md:h-3 ${isDark ? 'bg-gradient-to-r from-[#111] via-[#2a0000] to-[#111]' : 'bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700'} rounded-t-xl border-t ${isDark ? 'border-white/20' : 'border-black/30'} shadow-[0_10px_30px_rgba(0,0,0,1)]`}>
+            <div className="absolute inset-0 flex justify-center pt-[1px]">
+               <div className="w-1/2 h-[1px] bg-gradient-to-r from-transparent via-red-500/80 to-transparent shadow-[0_0_15px_red]" />
+            </div>
+          </div>
         </div>
 
         {/* ── 3. Interactive Remote ── */}
