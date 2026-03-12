@@ -7,19 +7,19 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
   <div className="relative transform -rotate-90">
     {/* Cinematic Headlight Beams */}
-    <div className="absolute top-[48px] left-[6px] w-[120px] h-[40px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
+    <div className="absolute top-[48px] left-[6px] w-[150px] h-[50px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
        <motion.div 
-         animate={{ opacity: isMoving ? [0.1, 0.3, 0.1] : 0.4 }}
+         animate={{ opacity: isMoving ? [0.2, 0.4, 0.2] : 0.5 }}
          transition={{ duration: 1.5, repeat: Infinity }}
-         className="w-full h-full bg-gradient-to-r from-white/20 to-transparent blur-md" 
+         className="w-full h-full bg-gradient-to-r from-white/30 to-transparent blur-md" 
          style={{ clipPath: "polygon(0 40%, 100% 0, 100% 100%, 0 60%)" }}
        />
     </div>
-    <div className="absolute top-[48px] left-[17px] w-[120px] h-[40px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
+    <div className="absolute top-[48px] left-[17px] w-[150px] h-[50px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
        <motion.div 
-         animate={{ opacity: isMoving ? [0.1, 0.3, 0.1] : 0.4 }}
+         animate={{ opacity: isMoving ? [0.2, 0.4, 0.2] : 0.5 }}
          transition={{ duration: 1.5, repeat: Infinity, delay: 0.1 }}
-         className="w-full h-full bg-gradient-to-r from-white/20 to-transparent blur-md" 
+         className="w-full h-full bg-gradient-to-r from-white/30 to-transparent blur-md" 
          style={{ clipPath: "polygon(0 40%, 100% 0, 100% 100%, 0 60%)" }}
        />
     </div>
@@ -80,7 +80,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(55); // Adjusted to keep the car centered in the smaller view
+      setProgress(50); // Adjusted to stay visible in the zoomed view
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -127,42 +127,42 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             initial={{ scale: 0.5, opacity: 0, rotate: -20 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{ duration: 1, type: "spring" }}
-            className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/5 bg-[#050505] shadow-[0_0_80px_rgba(255,255,255,0.03)] overflow-hidden z-10"
+            className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/10 bg-[#050505] shadow-[0_0_100px_rgba(255,255,255,0.05)] overflow-hidden z-10"
           >
              
-             {/* THE MINIATURE WORLD (Re-centered and Balanced) */}
-             <div className="absolute inset-0 origin-center scale-[0.22] translate-x-[-140px] translate-y-[-20px]">
+             {/* THE MINIATURE WORLD (Re-centered and ZOOMED IN) */}
+             <div className="absolute inset-0 origin-center scale-[0.6] translate-x-[-300px] translate-y-[-70px]">
                 
-                {/* Road System */}
+                {/* Road System with increased thickness */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
                   {/* Subtle Road Texture */}
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="50" className="opacity-[0.02]" />
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="46" className="opacity-10" />
-                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="44" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-[0.03]" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="76" className="opacity-10" />
+                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="74" />
                   
-                  {/* Animated Grid Line */}
+                  {/* Animated Grid Line (Bolder) */}
                   <motion.path
                     d={roadPath}
                     fill="none"
                     stroke="white"
-                    strokeWidth="2"
+                    strokeWidth="3"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: progress / 100 }}
                     transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                    className="opacity-60 blur-[0.5px]"
+                    className="opacity-70 blur-[1px]"
                   />
                   
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="1" className="opacity-10" strokeDasharray="10 10" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-15" strokeDasharray="15 15" />
                 </svg>
 
                 {/* Destination Pillar (The House) */}
-                <div className="absolute top-[50%] left-[45%] z-10 translate-y-[-50%]">
+                <div className="absolute top-[40%] left-[30%] z-10 translate-y-[-50%] scale-[1.5]">
                     <CityBuilding h={150} w={50} />
                 </div>
 
-                {/* The Precision Car */}
+                {/* The Precision Car (SCALED UP inside the lens) */}
                 <motion.div 
-                  className="absolute z-30 pointer-events-none origin-center"
+                  className="absolute z-30 pointer-events-none origin-center scale-150"
                   animate={{ offsetDistance: `${progress}%` }}
                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
                   style={{ 
@@ -177,12 +177,12 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
              {/* HUD SCANNER Overlay */}
              <motion.div 
                animate={{ y: ["-100%", "250%"] }}
-               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-               className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none"
+               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none blur-sm"
              />
 
              {/* Circular Vignette Mask */}
-             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(0,0,0,1)] pointer-events-none" />
+             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_50px_rgba(0,0,0,1)] pointer-events-none" />
           </motion.div>
 
           {/* FINAL SHOCKWAVE PULSE */}
