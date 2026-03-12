@@ -2,10 +2,10 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * EXACT DataVehicle component from SkillsSection.tsx
+ * EXACT DataVehicle component from SkillsSection.tsx but SCALED UP
  */
 const DataVehicle = () => (
-  <div className="relative transform -rotate-90">
+  <div className="relative transform -rotate-90 scale-150">
     <svg width="56" height="26" viewBox="0 0 56 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
       <path d="M2 13C2 8 4 4 10 4H50C54 4 54 8 54 13C54 18 54 22 50 22H10C4 22 2 18 2 13Z" fill="white" />
       <rect x="36" y="5" width="16" height="16" rx="1" fill="white" stroke="#080808" strokeWidth="0.2" opacity="0.3" />
@@ -25,7 +25,7 @@ const DataVehicle = () => (
   </div>
 );
 
-const CityBuilding = ({ h = 80, w = 30, delay = 0 }) => (
+const CityBuilding = ({ h = 80, w = 30 }) => (
   <div className="relative opacity-40 transition-all duration-700" style={{ width: w, height: h }}>
     <div className="absolute inset-0 bg-gradient-to-b from-white/20 to-transparent border-t border-x border-white/10 rounded-t-sm backdrop-blur-[2px]" />
     <div className="absolute inset-0 p-2 grid grid-cols-3 gap-1.5 overflow-hidden">
@@ -47,7 +47,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(78); 
+      setProgress(55); // Stops a bit earlier to stay within the zoomed view
     }, 500);
 
     const exitTimer = setTimeout(() => {
@@ -72,23 +72,23 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           exit={{ opacity: 0, scale: 0.9, filter: "blur(40px)" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
         >
-          {/* Centered Circular Frame (Small Portion) */}
-          <div className="relative w-80 h-80 md:w-[450px] md:h-[450px] rounded-full border border-white/10 bg-[#080808] shadow-[0_0_80px_rgba(255,255,255,0.05)] overflow-hidden">
+          {/* Centered Small Circular Frame */}
+          <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border border-white/10 bg-[#080808] shadow-[0_0_80px_rgba(255,255,255,0.05)] overflow-hidden">
              
-             {/* The Content Scaled to fit the lens */}
-             <div className="absolute inset-0 origin-center scale-[0.45] translate-x-[-350px] translate-y-[-100px]">
-                {/* Road System */}
+             {/* The Content ZOOMED IN for Big Road and Big Car */}
+             <div className="absolute inset-0 origin-center scale-[1.2] translate-x-[-380px] translate-y-[-100px]">
+                {/* Road System with increased thickness for visual impact */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="42" className="opacity-[0.03]" />
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="40" className="opacity-10" />
-                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="38" />
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="1" className="opacity-20" strokeDasharray="10 10" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-[0.03]" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="76" className="opacity-10" />
+                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="74" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 20" />
                   
                   <motion.path
                     d={roadPath}
                     fill="none"
                     stroke="white"
-                    strokeWidth="1.5"
+                    strokeWidth="3"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: progress / 100 }}
                     transition={{ duration: 5, ease: "easeInOut" }}
@@ -96,12 +96,12 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   />
                 </svg>
 
-                {/* The Destination House */}
-                <div className="absolute top-[78%] right-[10%] z-10 scale-150">
-                    <CityBuilding h={180} w={60} />
+                {/* The Destination House (Scaled up) */}
+                <div className="absolute top-[35%] left-[30%] z-10 scale-[2]">
+                    <CityBuilding h={120} w={40} />
                 </div>
 
-                {/* The Car */}
+                {/* The Car (Scaled up inside the zoomed path) */}
                 <motion.div 
                   className="absolute z-30 pointer-events-none origin-center"
                   animate={{ offsetDistance: `${progress}%` }}
@@ -116,12 +116,11 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
              </div>
 
              {/* Internal Glassmorphism Overlay */}
-             <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/5 pointer-events-none" />
+             <div className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-white/10 pointer-events-none" />
           </div>
 
           {/* Exterior Grain & Vignette */}
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,1)]" />
-          <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,1)]" />
         </motion.div>
       )}
     </AnimatePresence>
