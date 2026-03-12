@@ -9,7 +9,7 @@ import ExperienceSection from "@/components/ExperienceSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import ChatBot from "@/components/ChatBot";
-import LoadingScreen from "@/components/LoadingScreen";
+import WorldLoader from "@/components/WorldLoader";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,7 @@ const Index = () => {
     <main className="bg-background relative">
       <AnimatePresence mode="wait">
         {isLoading && (
-          <LoadingScreen onComplete={() => setIsLoading(false)} />
+          <WorldLoader onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
 
