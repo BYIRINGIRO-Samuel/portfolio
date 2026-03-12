@@ -115,17 +115,17 @@ const CountdownOverlay = () => {
           </motion.div>
        </AnimatePresence>
 
-       {/* Tech Infrastructure Callouts */}
+       {/* Professional Project Callouts */}
        <div className="absolute top-8 left-8 flex flex-col items-start gap-1">
-          <div className="w-16 h-[1.5px] bg-red-600 shadow-[0_0_10px_red]" />
-          <span className="text-[7px] text-white font-black tracking-[0.3em] uppercase">SYSTEM_LINK: ACTIVE</span>
-          <span className="text-[6px] text-white/30 font-mono uppercase">RWANDA_TX_NODE: 01</span>
+          <div className="w-8 h-[1.5px] bg-blue-500 shadow-[0_0_10px_blue]" />
+          <span className="text-[7px] text-white font-semibold tracking-[0.3em] uppercase">SYSTEM: OPTIMIZED</span>
+          <span className="text-[6px] text-white/40 font-mono uppercase">Initializing Assets...</span>
        </div>
 
        <div className="absolute bottom-8 right-8 flex flex-col items-end gap-1">
           <div className="flex items-center gap-2">
-            <span className="text-[8px] text-white font-black tracking-[0.2em] uppercase">Ready to Broadcast</span>
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-[8px] text-white font-semibold tracking-[0.2em] uppercase">Ready to Showcase</span>
+            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
           </div>
           <div className="w-24 h-[1px] bg-white/10" />
        </div>
@@ -262,21 +262,20 @@ const Testimonials = () => {
         <div 
           className={`relative w-full max-w-[850px] aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] ${isDark ? 'border-[#1a1a1a]' : 'border-gray-800'} shadow-[0_30px_70px_rgba(0,0,0,${isDark ? '1' : '0.2'}),0_0_30px_rgba(255,255,255,0.05)] z-10 flex overflow-hidden group outline outline-1 ${isDark ? 'outline-white/10' : 'outline-black/5'}`}
         >
-          {/* Channel Change Flash Glitch */}
+          {/* Smooth Fade Transition */}
           {isSwitching && (
-            <div className="absolute inset-0 z-50 pointer-events-none overflow-hidden mix-blend-difference">
-               {/* High contrast flash */}
-               <div className="absolute inset-0 bg-white opacity-90" />
-               <div className="absolute inset-0 bg-[repeating-linear-gradient(transparent,transparent_2px,black_3px,black_5px)] opacity-80" />
-               {/* Scanline wipe */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-[#050505] z-50 pointer-events-none flex items-center justify-center"
+            >
                <motion.div 
-                 initial={{ y: "-100%" }}
-                 animate={{ y: "100%" }}
-                 transition={{ duration: 0.15, ease: "linear" }}
-                 className="absolute w-full h-1/2 bg-white/50 blur-md"
+                 animate={{ scale: [0.95, 1.05], opacity: [0.5, 0] }}
+                 transition={{ duration: 0.3 }}
+                 className="w-16 h-16 rounded-full border border-white/20"
                />
-               <div className="absolute inset-0 opacity-40 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-            </div>
+            </motion.div>
           )}
 
           {/* Internal Bezel */}
@@ -306,56 +305,49 @@ const Testimonials = () => {
                      </div>
                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.9)_100%)] pointer-events-none" />
                      
-                     {/* Top Bar: "LIVE REPORT" */}
-                     <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-red-700/90 to-black/80 border-b border-red-500/50 backdrop-blur-md z-20 shadow-xl">
+                     {/* Top Bar: Professional Header */}
+                     <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-blue-900/80 to-black/80 border-b border-blue-500/30 backdrop-blur-md z-20 shadow-xl">
                        <div className="flex items-center gap-2">
-                         <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse shadow-[0_0_8px_white]" />
-                         <span className="text-white font-sans text-[9px] md:text-[11px] font-black uppercase tracking-widest text-shadow">Kigali Tech Syndicate</span>
+                         <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_blue]" />
+                         <span className="text-white font-sans text-[9px] md:text-[11px] font-semibold uppercase tracking-widest text-shadow">Portfolio Showcase</span>
                        </div>
                        <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
-                         BROADCAST: CONNECTED [RW]
+                         Verified Professional Endorsements
                        </span>
                      </div>
 
                      {/* Center Branding */}
                      <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
-                       <div className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-1.5 mb-4 rounded-sm shadow-lg overflow-hidden relative">
-                         <div className="absolute inset-0 bg-red-600 opacity-20" />
-                         <p className="font-black text-white text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">Premium Spotlight</p>
+                       <div className="bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 mb-4 rounded-full shadow-lg overflow-hidden relative">
+                         <p className="font-semibold text-white/80 text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">Client Feedback</p>
                        </div>
-                       <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)] leading-none text-center">
-                         Engineering <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-white/70 to-white/30">Excellence.</span>
+                       <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] leading-tight text-center">
+                         Professional <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">Excellence.</span>
                        </h1>
-                       
-                       {/* BlinkTech Sponsor Tag */}
-                       <div className="mt-4 flex items-center justify-center gap-2.5 bg-black/60 backdrop-blur-md border border-white/10 px-4 py-1.5 rounded-full shadow-lg">
-                         <span className="text-white/40 text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-sans">Sponsored By</span>
-                         <span className="text-white text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">BlinkTech</span>
-                       </div>
                        
                        {/* Play Button simulating 'Tune In' */}
                        <motion.div 
                          whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,1)', color: 'black' }}
                          whileTap={{ scale: 0.95 }}
-                         className="mt-8 md:mt-10 px-6 py-2.5 rounded-sm border-2 border-white flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_30px_rgba(255,255,255,0.1)] pointer-events-none"
+                         className="mt-8 md:mt-10 px-6 py-2.5 rounded-full border border-white/20 flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_30px_rgba(255,255,255,0.05)] pointer-events-none"
                        >
-                         <svg className="w-3.5 h-3.5 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                         <span className="font-black text-[9px] md:text-[11px] uppercase tracking-widest pl-1">Establishing Links...</span>
+                         <svg className="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                         <span className="font-semibold text-[9px] md:text-[11px] uppercase tracking-widest pl-1">Starting Presentation...</span>
                        </motion.div>
                      </div>
 
-                     {/* Bottom Breaking News Ticker */}
-                     <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-red-500/30 bg-black flex items-center z-20">
-                       <div className="bg-red-700 h-full flex items-center px-3 md:px-5 z-10 font-black text-white text-[8px] md:text-[10px] uppercase tracking-wildest flex-shrink-0 shadow-[5px_0_15px_rgba(0,0,0,0.9)]">
-                         Breaking
+                     {/* Bottom Ticker */}
+                     <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-white/10 bg-black flex items-center z-20">
+                       <div className="bg-blue-900 border-r border-blue-500/30 h-full flex items-center px-3 md:px-5 z-10 font-bold text-white text-[8px] md:text-[10px] uppercase tracking-widest flex-shrink-0">
+                         Highlights
                        </div>
-                       <div className="flex-1 overflow-hidden h-full relative border-l border-white/10 bg-[#0a0a0a]">
+                       <div className="flex-1 overflow-hidden h-full relative bg-[#0a0a0a]">
                          <motion.div 
                            animate={{ x: ['100%', '-100%'] }}
                            transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
-                           className="absolute whitespace-nowrap h-full flex items-center font-sans font-bold text-[9px] md:text-[11px] text-white/80 uppercase tracking-widest"
+                           className="absolute whitespace-nowrap h-full flex items-center font-sans text-[9px] md:text-[11px] text-white/70 uppercase tracking-widest"
                          >
-                           Rwandan Engineer fundamentally restructures global architectures &nbsp;&nbsp; /// &nbsp;&nbsp; "The application is incredibly scalable & robust" - Amara K. &nbsp;&nbsp; /// &nbsp;&nbsp; Elite technical craftsmanship recognized...
+                           "Delivering incredibly scalable & robust systems" &nbsp;&nbsp; /// &nbsp;&nbsp; "An absolute master of modern web technologies" &nbsp;&nbsp; /// &nbsp;&nbsp; "Elite engineering asset for any team..."
                          </motion.div>
                        </div>
                      </div>
@@ -394,47 +386,19 @@ const Testimonials = () => {
                       </motion.div>
                     </AnimatePresence>
                     
-                    {/* Live Broadcast HUD Overlay */}
+                    {/* Clean Portfolio Overlay */}
                     <div className="absolute top-4 md:top-6 left-4 md:left-6 right-4 md:right-8 flex justify-between items-start z-30 pointer-events-none">
-                       {/* REC indicator */}
-                       <div className="flex items-center gap-2 bg-black/50 backdrop-blur-md px-2 md:px-3 py-1 md:py-1.5 rounded-sm border border-red-500/20 shadow-lg">
-                          <motion.div 
-                            animate={{ opacity: [1, 0.3, 1] }}
-                            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-                            className="w-2 h-2 md:w-2.5 md:h-2.5 bg-red-600 rounded-full shadow-[0_0_10px_red]"
-                          />
-                          <span className="text-white font-black text-[9px] md:text-[11px] tracking-widest uppercase shadow-black drop-shadow-md">LIVE</span>
+                       {/* Verified Badge */}
+                       <div className="flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-2.5 md:px-3 py-1 md:py-1.5 rounded-full border border-white/10 shadow-sm">
+                          <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <span className="text-white/90 font-medium text-[9px] md:text-[10px] tracking-wide uppercase">Verified Client</span>
                        </div>
 
-                       {/* Timecode & Spectrum */}
-                       <div className="flex flex-col items-end gap-2 text-white">
-                          <div className="font-mono font-black text-[9px] md:text-sm tracking-widest bg-black/50 backdrop-blur-md px-2 md:px-3 py-1 border border-white/10 rounded-sm">
-                             <motion.span
-                               animate={{ opacity: [1, 0.8, 1] }}
-                               transition={{ duration: 0.1, repeat: Infinity }}
-                             >
-                               CH_0{active + 1} // 
-                             </motion.span>
-                             <motion.span 
-                               animate={{ opacity: [1, 0.5, 1] }}
-                               transition={{ duration: 1, repeat: Infinity }}
-                               className="text-red-400 ml-1 inline-block"
-                             >
-                               00:00:24:12
-                             </motion.span>
-                          </div>
-                          
-                          {/* Audio Spectrum */}
-                          <div className="flex items-end gap-[2px] md:gap-1 h-6 md:h-8 bg-black/40 backdrop-blur-md p-1.5 rounded-sm border border-white/5">
-                            {[0.4, 0.8, 0.5, 0.9, 0.3, 0.7].map((h, i) => (
-                              <motion.div 
-                                key={i}
-                                animate={{ height: ['20%', `${h * 100}%`, '30%', `${h * 80}%`, '20%'] }}
-                                transition={{ duration: 1 + i * 0.1, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
-                                className="w-1 md:w-1.5 bg-gradient-to-t from-red-600 to-red-400 opacity-80 rounded-t-sm"
-                              />
-                            ))}
-                          </div>
+                       {/* Simple Counter */}
+                       <div className="font-mono text-[9px] md:text-sm tracking-widest bg-black/30 backdrop-blur-md px-3 py-1 rounded-full border border-white/5 text-white/70">
+                          {active + 1} / {channels.length}
                        </div>
                     </div>
 
@@ -452,8 +416,7 @@ const Testimonials = () => {
                       <div className="bg-black/80 backdrop-blur-xl p-4 md:p-6 border-l-[4px] md:border-l-[6px] border-red-600 shadow-[0_20px_40px_rgba(0,0,0,0.8)] outline outline-1 outline-white/10">
                         
                         <div className="flex items-center gap-2 mb-2 md:mb-3">
-                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-500 animate-pulse shadow-[0_0_8px_rgba(239,68,68,0.8)]" />
-                          <span className="text-white/80 font-mono text-[7px] md:text-[9px] uppercase tracking-[0.2em] font-black bg-white/10 px-2 py-0.5 rounded-sm">Professional Record</span>
+                          <span className="text-white/80 font-mono text-[8px] md:text-[10px] uppercase tracking-wide font-medium bg-white/10 px-2 py-0.5 rounded-full border border-white/10">Industry Professional</span>
                         </div>
                         
                         <div className="flex justify-between items-end mb-3 md:mb-4">
@@ -495,28 +458,10 @@ const Testimonials = () => {
           </div>
         </div>
 
-        {/* ── 2. Holographic TV Stand ── */}
-        <div className="w-full flex flex-col items-center z-10 relative -mt-0.5 md:-mt-1">
-          {/* Anti-gravity gap effect glowing field */}
-          <motion.div 
-            animate={{ opacity: [0.3, 0.7, 0.3], height: ['6px', '10px', '6px'] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="w-32 md:w-48 bg-gradient-to-b from-red-600/40 via-red-900/20 to-transparent blur-md"
-          />
-          {/* Base connection node */}
-          <div className={`w-12 md:w-20 h-3 md:h-5 bg-gradient-to-b ${isDark ? 'from-black to-[#0a0a0a] border-white/10' : 'from-gray-800 to-gray-900 border-gray-600'} border-x relative overflow-hidden`}>
-             <motion.div 
-               animate={{ y: [-20, 40] }}
-               transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-               className="absolute inset-0 w-full h-[1px] bg-red-500/80 shadow-[0_0_10px_red]"
-             />
-          </div>
-          {/* Core pedestal */}
-          <div className={`relative w-40 md:w-64 h-2 md:h-3 ${isDark ? 'bg-gradient-to-r from-[#111] via-[#2a0000] to-[#111]' : 'bg-gradient-to-r from-gray-700 via-gray-600 to-gray-700'} rounded-t-xl border-t ${isDark ? 'border-white/20' : 'border-black/30'} shadow-[0_10px_30px_rgba(0,0,0,1)]`}>
-            <div className="absolute inset-0 flex justify-center pt-[1px]">
-               <div className="w-1/2 h-[1px] bg-gradient-to-r from-transparent via-red-500/80 to-transparent shadow-[0_0_15px_red]" />
-            </div>
-          </div>
+        {/* ── 2. Sleek Monitor Stand ── */}
+        <div className="w-full flex flex-col items-center z-10 relative">
+          <div className={`w-12 md:w-16 h-6 md:h-8 bg-gradient-to-b ${isDark ? 'from-[#333] to-[#111]' : 'from-gray-300 to-gray-400'} border-x ${isDark ? 'border-white/10' : 'border-black/5'} shadow-inner`} />
+          <div className={`w-32 md:w-48 h-1.5 md:h-2 ${isDark ? 'bg-gradient-to-r from-[#222] via-[#444] to-[#222]' : 'bg-gradient-to-r from-gray-400 via-gray-300 to-gray-400'} rounded-t-sm border-t ${isDark ? 'border-white/20' : 'border-black/10'} shadow-[0_6px_15px_rgba(0,0,0,${isDark ? '0.8' : '0.1'})]`} />
         </div>
 
         {/* ── 3. Interactive Remote ── */}
