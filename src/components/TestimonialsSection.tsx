@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 import { Canvas } from '@react-three/fiber';
@@ -141,7 +141,7 @@ const CountdownOverlay = () => {
 /* Abstract 3D Corporate Panel Scene */
 const AdvisoryPanelScene = () => {
   return (
-    <>
+    <Suspense fallback={null}>
       <ambientLight intensity={0.4} />
       <directionalLight position={[10, 10, 10]} intensity={1} castShadow />
       <spotLight position={[-5, 5, 5]} angle={0.3} penumbra={1} intensity={2} color="#4fa4ff" />
@@ -192,7 +192,7 @@ const AdvisoryPanelScene = () => {
 
       <ContactShadows position={[0, -1, 0]} opacity={0.7} scale={10} blur={2.5} far={4} />
       <Environment preset="city" />
-    </>
+    </Suspense>
   );
 };
 
