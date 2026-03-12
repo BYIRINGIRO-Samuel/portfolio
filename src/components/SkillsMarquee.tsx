@@ -108,15 +108,15 @@ const SkillsMarquee = () => {
                 <motion.div 
                   animate={{ opacity: [1, 0.4, 1], scale: [1, 1.3, 1] }} 
                   transition={{ duration: 1.5, repeat: Infinity }}
-                  className="w-2.5 h-2.5 bg-red-600 rounded-full shadow-[0_0_15px_red] border border-white/20" 
+                  className="w-2.5 h-2.5 bg-blue-500 rounded-full shadow-[0_0_15px_blue] border border-white/20" 
                 />
-                <span className="font-black text-[14px] tracking-[0.3em] uppercase italic text-white/95">
-                  CORE://UX
+                <span className="font-bold text-[14px] tracking-[0.2em] uppercase text-white/95">
+                  SOFTWARE
                 </span>
              </div>
              <div className="flex items-center gap-2 mt-0.5 pl-5">
                 <div className="w-6 h-[1px] bg-white/20" />
-                <span className="text-[7px] font-black text-white/40 tracking-[0.4em] uppercase">NEURAL_LOCK</span>
+                <span className="text-[8px] font-bold text-white/50 tracking-[0.3em] uppercase">ENGINEER</span>
              </div>
           </div>
         </div>
@@ -129,8 +129,8 @@ const SkillsMarquee = () => {
              transition={{ duration: 3, repeat: Infinity, repeatDelay: 5 }}
              className="absolute inset-0 w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-25deg] pointer-events-none"
           />
-          <span className="font-black text-[18px] tracking-[0.6em] uppercase italic text-[#fbfbfb] drop-shadow-[0_2px_4px_black]">
-            TECH_STACK
+          <span className="font-bold text-[18px] tracking-[0.4em] uppercase text-[#fbfbfb] drop-shadow-[0_2px_4px_black]">
+            TECHNOLOGIES
           </span>
           <div className="absolute left-full top-0 bottom-0 w-12 bg-black skew-x-[-25deg] origin-top translate-x-[-50%] z-10 border-r-2 border-white/10" />
         </div>
@@ -182,13 +182,13 @@ const SkillsMarquee = () => {
 
           <div className="relative z-40 flex flex-col items-end pr-8">
              <div className="flex items-center gap-2.5">
-                <span className="font-black text-[14px] tracking-[0.3em] uppercase italic text-white/95">
-                  SIGNAL://02
+                <span className="font-bold text-[14px] tracking-[0.2em] uppercase text-white/95">
+                  CREATIVE
                 </span>
                 <div className="w-2.5 h-2.5 bg-white/10 border border-white/30 rotate-45 shadow-[0_0_8px_rgba(255,255,255,0.2)]" />
              </div>
              <div className="flex items-center gap-2 mt-0.5 pr-5">
-                <span className="text-[7px] font-black text-white/30 tracking-[0.4em] uppercase">SYNC_ACTIVE</span>
+                <span className="text-[8px] font-bold text-white/40 tracking-[0.3em] uppercase">DEVELOPER</span>
                 <div className="w-6 h-[1px] bg-white/10" />
              </div>
           </div>
