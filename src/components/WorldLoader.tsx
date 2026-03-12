@@ -2,57 +2,62 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * High-precision Silhouette Elephant
- * Designed with intricate paths for a "Realistic" feel similar to the reference.
+ * High-End Sleek Panther Silhouette
+ * Chosen for its elegance and recognizability in a Dark Mode aesthetic.
  */
-const RealisticElephant = () => (
-  <svg width="180" height="120" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <motion.g
-      initial={{ x: -20, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
-      {/* Intricate Silhouette path based on realistic anatomy */}
-      <path 
-        d="M108.5 48.5C108.5 58.5 102.5 64.5 90 64.5H85L83.5 76.5H75.5L77.5 64.5H62.5L64.5 76.5H56.5L58.5 64.5C40 64.5 32 58.5 28.5 50.5C26.5 55.5 22.5 58.5 17 58.5C13 58.5 10.5 56 10.5 52C10.5 46 14.5 38.5 8.5 30.5C6.5 28 3.5 27.5 2 28.5L0.5 26.5C3.5 23.5 9.5 24.5 13.5 28.5C17.5 32.5 18 38.5 18 43.5C21 43.5 23.5 41.5 25 38.5C23.5 32.5 21 24.5 28 18.5C35 12.5 50 10.5 65 10.5C85 10.5 108.5 18.5 108.5 40V48.5Z" 
-        fill="black" 
-      />
-      {/* Detailed Tusk */}
-      <path d="M26 44C26 44 21 46 18 52" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
-      {/* Tail */}
-      <path d="M108.5 45C112 45 114 48 114 52" stroke="black" strokeWidth="1" strokeLinecap="round" />
-    </motion.g>
+const SleekPanther = () => (
+  <svg width="160" height="100" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <motion.path
+      d="M140 65C140 65 145 68 152 68C159 68 155 58 145 53C135 48 115 38 95 38C75 38 60 45 45 55C30 65 20 68 12 68C4 68 2 62 8 58C14 54 25 48 30 35C35 22 45 15 65 15C85 15 110 25 125 35C140 45 140 55 140 65Z"
+      fill="black"
+      initial={{ pathLength: 0, opacity: 0 }}
+      animate={{ pathLength: 1, opacity: 1 }}
+      transition={{ duration: 1.5, ease: "easeInOut" }}
+    />
+    {/* Body / Muscle Definition Silhouette */}
+    <path 
+      d="M135 60C132 75 125 85 115 85H108L105 70H90L88 85H80L75 65C65 80 55 85 45 85H38L35 70H25L22 85H15L12 65C12 65 15 50 30 45" 
+      fill="black" 
+    />
+    {/* Head / Ears Detail */}
+    <path d="M45 40C45 40 48 32 52 35C56 38 58 45 52 50C46 55 42 52 40 45" fill="black" />
+    <path d="M55 35C55 35 58 28 62 30C66 32 68 38 62 42" fill="black" />
   </svg>
 );
 
 /**
- * Detailed Acacia Silhouette Tree
- * Hand-crafted with organic branch structures.
+ * Realistic Intricate Acacia Tree
+ * Focuses on fine branches and organic canopy shapes.
  */
-const RealisticTree = () => (
-  <svg width="320" height="280" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(10, 0)">
-      {/* Main Trunk and Branches */}
-      <path 
-        d="M80 135C78 120 82 100 70 85C55 70 30 75 15 65M80 135C82 110 85 90 100 80C120 70 145 75 155 60M80 135V110M80 110C75 100 65 95 60 85M80 110C85 100 105 98 115 88" 
-        stroke="black" strokeWidth="4" strokeLinecap="round" 
-      />
-      {/* Intricate Canopy Layers */}
-      <path d="M10 55C10 50 25 40 70 40S140 50 140 55C140 58 130 62 70 62S10 58 10 55Z" fill="black" />
-      <path d="M30 45C30 40 45 32 80 32S130 40 130 45C130 48 110 52 80 52S30 48 30 45Z" fill="black" />
-      <path d="M50 35C50 32 60 25 85 25S120 32 120 35C120 37 100 40 85 40S50 37 50 35Z" fill="black" />
-      
-      {/* Organic texture/leaves */}
-      {[...Array(25)].map((_, i) => (
-        <circle 
-          key={i} 
-          cx={20 + Math.random() * 120} 
-          cy={25 + Math.random() * 30} 
-          r={0.5 + Math.random() * 1.5} 
-          fill="black"
-        />
-      ))}
+const RealisticAcacia = () => (
+  <svg width="300" height="250" viewBox="0 0 300 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Main Trunk Structure */}
+    <path 
+      d="M150 240C148 210 155 180 140 160C120 140 80 145 60 130M150 240C152 200 155 170 180 155C210 140 240 145 260 120" 
+      stroke="black" strokeWidth="5" strokeLinecap="round" 
+    />
+    <path 
+      d="M150 180C145 150 120 155 110 130M150 160C158 140 190 135 205 120" 
+      stroke="black" strokeWidth="3" strokeLinecap="round" 
+    />
+    
+    {/* Intricate Canopy Branches */}
+    <g opacity="1">
+      <path d="M40 120C40 110 60 95 150 95S260 110 260 120C260 125 240 132 150 132S40 125 40 120Z" fill="black" />
+      <path d="M70 105C70 95 90 85 150 85S230 95 230 105C230 110 210 115 150 115S70 110 70 105Z" fill="black" />
+      <path d="M100 90C100 85 115 75 150 75S200 85 200 90C200 95 185 98 150 98S100 95 100 90Z" fill="black" />
     </g>
+
+    {/* Organic Texture Details */}
+    {[...Array(30)].map((_, i) => (
+      <circle 
+        key={i} 
+        cx={50 + Math.random() * 200} 
+        cy={70 + Math.random() * 50} 
+        r={0.8 + Math.random() * 2} 
+        fill="black"
+      />
+    ))}
   </svg>
 );
 
@@ -63,7 +68,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     const timer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 7000);
+    }, 6000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -74,65 +79,69 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.9, filter: "blur(40px)" }}
-          transition={{ duration: 1, ease: "circOut" }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#080808]"
+          exit={{ opacity: 0, filter: "blur(20px)" }}
+          transition={{ duration: 1 }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
         >
-          {/* Centered Circular Frame (The Lens) */}
-          <div className="relative w-80 h-80 md:w-[450px] md:h-[450px] rounded-full overflow-hidden border-4 border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+          {/* Centered Realistic Scene Container */}
+          <div className="relative w-72 h-72 md:w-[500px] md:h-[500px] flex items-center justify-center">
             
-            {/* The "Moonlight" Background inside the circle */}
-            <div className="absolute inset-0 bg-[#d9c5b2] overflow-hidden">
-               {/* Large Atmosphere Glow */}
-               <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10" />
+            {/* The Lens / Circle Frame */}
+            <div className="absolute inset-0 rounded-full border border-white/10 bg-[#e3d5c5] shadow-[0_0_80px_rgba(227,213,197,0.1)] overflow-hidden">
+               {/* Internal Atmosphere */}
+               <div className="absolute inset-0 bg-gradient-to-tr from-black/20 via-transparent to-white/10 pointer-events-none" />
                
-               {/* Scattered Birds Animation */}
-               {[...Array(6)].map((_, i) => (
+               {/* Distant Trees/Savannah Detail (Realistic Layers) */}
+               <div className="absolute inset-0 opacity-10 scale-90 translate-x-10 translate-y-5 grayscale">
+                  <RealisticAcacia />
+               </div>
+
+               {/* Flying Birds Sequence */}
+               {[...Array(4)].map((_, i) => (
                  <motion.div
                    key={i}
-                   initial={{ x: "-10%", y: 40 + i * 10 }}
-                   animate={{ x: "110%" }}
-                   transition={{ duration: 10 + i * 2, repeat: Infinity, ease: "linear", delay: i * 1.5 }}
+                   initial={{ x: "-20%", y: 60 + i * 20 }}
+                   animate={{ x: "120%" }}
+                   transition={{ duration: 12, repeat: Infinity, ease: "linear", delay: i * 3 }}
                    className="absolute pointer-events-none"
                  >
-                   <svg width="8" height="4" viewBox="0 0 8 4" className="text-black/40">
-                     <path d="M0 2C2 0 4 0 4 2C4 0 6 0 8 2" fill="none" stroke="currentColor" strokeWidth="0.5" />
+                   <svg width="12" height="6" viewBox="0 0 12 6" className="text-black/60">
+                     <path d="M0 3C3 0 6 0 6 3C6 0 9 0 12 3" fill="none" stroke="currentColor" strokeWidth="0.8" />
                    </svg>
                  </motion.div>
                ))}
             </div>
 
-            {/* The Tree (Placed on the left as per reference) */}
-            <div className="absolute left-[-20px] bottom-[-20px] z-10">
-               <RealisticTree />
+            {/* The Main Realistic Tree (Foreground) */}
+            <div className="absolute left-[-20%] bottom-[-5%] z-20 scale-110">
+               <RealisticAcacia />
             </div>
 
-            {/* The Elephant Walking into the scene */}
+            {/* The Majestic Panther Walking (Innovative Choice) */}
             <motion.div
-              initial={{ x: "120%", y: "45%" }}
-              animate={{ x: "-5%" }}
-              transition={{ duration: 6, ease: "linear" }}
-              className="absolute bottom-[20%] z-20"
+              initial={{ x: "110%", opacity: 0 }}
+              animate={{ x: "-15%", opacity: 1 }}
+              transition={{ duration: 5, ease: "linear" }}
+              className="absolute bottom-[20%] z-30"
             >
-              <motion.div
-                animate={{ 
-                  y: [0, -1.5, 0],
-                  rotate: [0, 0.5, 0]
-                }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-              >
-                <RealisticElephant />
-              </motion.div>
+              <div className="relative">
+                <SleekPanther />
+                {/* Movement Animation */}
+                <motion.div
+                  className="absolute inset-0"
+                  animate={{ y: [0, -2, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+                />
+              </div>
             </motion.div>
 
-            {/* Ground Silhouette */}
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-black rounded-t-[50%]" />
+            {/* Ground / Terrain */}
+            <div className="absolute bottom-0 left-0 right-0 h-[10%] bg-black rounded-t-[50%] z-10" />
 
           </div>
 
-          {/* Exterior Grain & Vignette for Premium Feel */}
-          <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.9)]" />
+          {/* Cinematic Vignette */}
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,1)]" />
         </motion.div>
       )}
     </AnimatePresence>
