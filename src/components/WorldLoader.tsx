@@ -80,7 +80,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(78); 
+      setProgress(55); // Adjusted to keep the car centered in the smaller view
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -97,6 +97,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     };
   }, [onComplete]);
 
+  // Road path same as skills section
   const roadPath = "M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420";
 
   return (
@@ -121,30 +122,30 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
              ))}
           </div>
 
-          {/* Centered MODULAR CIRCLE (Smaller Size) */}
+          {/* Centered MODULAR CIRCLE (Ultra Minimalist Size) */}
           <motion.div 
             initial={{ scale: 0.5, opacity: 0, rotate: -20 }}
             animate={{ scale: 1, opacity: 1, rotate: 0 }}
             transition={{ duration: 1, type: "spring" }}
-            className="relative w-48 h-48 md:w-56 md:h-56 rounded-full border border-white/10 bg-[#050505] shadow-[0_0_100px_rgba(255,255,255,0.05)] overflow-hidden z-10 p-4"
+            className="relative w-32 h-32 md:w-40 md:h-40 rounded-full border border-white/5 bg-[#050505] shadow-[0_0_80px_rgba(255,255,255,0.03)] overflow-hidden z-10"
           >
              
-             {/* THE MINIATURE WORLD (Reduced Scale for "Stunning" Clarity) */}
-             <div className="absolute inset-0 origin-center scale-[0.3] translate-x-[-420px] translate-y-[-140px]">
+             {/* THE MINIATURE WORLD (Re-centered and Balanced) */}
+             <div className="absolute inset-0 origin-center scale-[0.22] translate-x-[-140px] translate-y-[-20px]">
                 
                 {/* Road System */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
                   {/* Subtle Road Texture */}
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="46" className="opacity-[0.02]" />
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="42" className="opacity-10" />
-                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="40" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="50" className="opacity-[0.02]" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="46" className="opacity-10" />
+                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="44" />
                   
                   {/* Animated Grid Line */}
                   <motion.path
                     d={roadPath}
                     fill="none"
                     stroke="white"
-                    strokeWidth="1.5"
+                    strokeWidth="2"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: progress / 100 }}
                     transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
@@ -155,8 +156,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 </svg>
 
                 {/* Destination Pillar (The House) */}
-                <div className="absolute top-[82%] right-[10%] z-10 translate-y-[-50%]">
-                    <CityBuilding h={180} w={60} />
+                <div className="absolute top-[50%] left-[45%] z-10 translate-y-[-50%]">
+                    <CityBuilding h={150} w={50} />
                 </div>
 
                 {/* The Precision Car */}
@@ -175,29 +176,29 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
              {/* HUD SCANNER Overlay */}
              <motion.div 
-               animate={{ y: ["-100%", "200%"] }}
-               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-               className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none blur-sm"
+               animate={{ y: ["-100%", "250%"] }}
+               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none"
              />
 
-             {/* Glass Reflection */}
-             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-20 pointer-events-none" />
+             {/* Circular Vignette Mask */}
+             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(0,0,0,1)] pointer-events-none" />
           </motion.div>
 
           {/* FINAL SHOCKWAVE PULSE */}
           <AnimatePresence>
             {isDone && (
               <motion.div 
-                initial={{ scale: 0, opacity: 0.8 }}
+                initial={{ scale: 0, opacity: 1 }}
                 animate={{ scale: 4, opacity: 0 }}
-                transition={{ duration: 1 }}
-                className="absolute w-64 h-64 border border-white/20 rounded-full z-20 pointer-events-none"
+                transition={{ duration: 1.2 }}
+                className="absolute w-40 h-40 border border-white/10 rounded-full z-20 pointer-events-none"
               />
             )}
           </AnimatePresence>
 
           {/* Minimal Production Text */}
-          <div className="absolute bottom-12 text-[7px] font-mono text-white/10 tracking-[1em] uppercase select-none">
+          <div className="absolute bottom-16 text-[6px] font-mono text-white/5 tracking-[1.5em] uppercase select-none">
              Authenticating System Core
           </div>
 
