@@ -1,22 +1,21 @@
 import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Points, PointMaterial, Stars, PerspectiveCamera } from "@react-three/drei";
+import { Points, PointMaterial, PerspectiveCamera } from "@react-three/drei";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SpectralGlobe = () => {
   const pointsRef = useRef<THREE.Points>(null!);
   
-  // Create a dense cloud of points for the globe shape
-  const count = 15000;
+  // High density point cloud for the sphere
+  const count = 25000;
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      // Points distributed on a sphere surface
       const phi = Math.acos(-1 + (2 * i) / count);
       const theta = Math.sqrt(count * Math.PI) * phi;
       
-      const r = 3; // radius
+      const r = 3;
       pos[i * 3] = r * Math.cos(theta) * Math.sin(phi);
       pos[i * 3 + 1] = r * Math.sin(theta) * Math.sin(phi);
       pos[i * 3 + 2] = r * Math.cos(phi);
@@ -26,8 +25,8 @@ const SpectralGlobe = () => {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
-    pointsRef.current.rotation.y = time * 0.15;
-    pointsRef.current.rotation.x = Math.sin(time * 0.05) * 0.1;
+    pointsRef.current.rotation.y = time * 0.2;
+    pointsRef.current.rotation.x = time * 0.05;
   });
 
   return (
@@ -35,21 +34,22 @@ const SpectralGlobe = () => {
       <Points ref={pointsRef} positions={positions} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
-          color="#3b82f6"
-          size={0.015}
+          color="#60a5fa"
+          size={0.012}
           sizeAttenuation={true}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
+          opacity={0.6}
         />
       </Points>
       
-      {/* Outer Atmosphere Glow */}
+      {/* Outer Atmosphere Glow - Subtle Blue Pulse */}
       <mesh>
-        <sphereGeometry args={[3.1, 64, 64]} />
+        <sphereGeometry args={[3.05, 64, 64]} />
         <meshBasicMaterial 
-          color="#1e40af" 
+          color="#3b82f6" 
           transparent 
-          opacity={0.05} 
+          opacity={0.03} 
           side={THREE.BackSide}
         />
       </mesh>
@@ -64,7 +64,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     const timer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 6000); // 6s duration to appreciate the globe
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -75,13 +75,12 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1, filter: "brightness(2) blur(30px)" }}
-          transition={{ duration: 1 }}
+          exit={{ opacity: 0, scale: 1.1, filter: "brightness(1.5) blur(40px)" }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center"
         >
-          {/* TV Overlay Effects */}
-          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,1)]" />
-          <div className="absolute inset-0 z-40 opacity-[0.03] pointer-events-none bg-[url('https://media.giphy.com/media/oEI9uWUicRlsc/giphy.gif')] bg-repeat" />
+          {/* REMOVED ALL GIF/TEXT OVERLAYS - PURE CLEAN BLACK BACKGROUND */}
+          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.95)]" />
           
           <div className="relative w-full h-full">
             <Canvas dpr={[1, 2]}>
@@ -89,38 +88,27 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
               <color attach="background" args={["#000000"]} />
               
               <ambientLight intensity={1} />
-              
               <SpectralGlobe />
               
-              <Stars 
-                radius={100} 
-                depth={50} 
-                count={2000} 
-                factor={4} 
-                saturation={0} 
-                fade 
-                speed={0.5} 
-              />
-              
-              {/* Cinematic Horizontal Scanline */}
+              {/* CLEAN SCANLINE EFFECT */}
               <group position={[0, 0, 0]}>
-                <mesh position={[0, 0, -2]}>
-                  <planeGeometry args={[20, 0.01]} />
-                  <meshBasicMaterial color="#ffffff" transparent opacity={0.1} />
+                <mesh position={[0, 0, -1]}>
+                  <planeGeometry args={[30, 0.005]} />
+                  <meshBasicMaterial color="#ffffff" transparent opacity={0.05} />
                 </mesh>
               </group>
             </Canvas>
           </div>
 
-          {/* Minimal Scan Line */}
+          {/* SINGLE WHITE SCAN LINE */}
           <motion.div 
-            animate={{ top: ["-10%", "110%"] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-            className="absolute left-0 right-0 h-px bg-white/20 blur-[1px] z-[40]"
+            animate={{ top: ["-5%", "105%"] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+            className="absolute left-0 right-0 h-[2px] bg-white/10 blur-[1px] z-[40]"
           />
 
-          {/* Bottom Bloom */}
-          <div className="absolute bottom-0 w-full h-[30vh] bg-gradient-to-t from-blue-900/10 to-transparent z-10 pointer-events-none" />
+          {/* SUBTLE GLOW DEPTH */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/[0.02] rounded-full blur-[120px] pointer-events-none" />
         </motion.div>
       )}
     </AnimatePresence>
