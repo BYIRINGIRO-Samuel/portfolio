@@ -244,13 +244,13 @@ const Testimonials = () => {
   return (
     <section ref={sectionRef} id="testimonials" className={`${isDark ? 'bg-white' : 'bg-[#f4f4f4]'} px-2 sm:px-4 md:px-6 lg:px-8 py-4 flex justify-center font-sans tracking-tight transition-colors duration-500`}>
       {/* Inner Container wrapped tightly in deep black */}
-      <div className={`relative w-full max-w-7xl ${isDark ? 'bg-[#000] border-[#222]' : 'bg-white border-gray-100'} rounded-xl md:rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,${isDark ? '1' : '0.05'})] inset-shadow-sm z-10 px-6 sm:px-10 lg:px-20 py-8 md:py-12 flex flex-col items-center overflow-hidden border transition-all duration-500`}>
+      <div className={`relative w-full max-w-7xl ${isDark ? 'bg-[#000] border-[#222]' : 'bg-white border-gray-100'} rounded-xl md:rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,${isDark ? '1' : '0.05'})] inset-shadow-sm z-10 px-6 sm:px-10 lg:px-20 py-6 md:py-8 flex flex-col items-center overflow-hidden border transition-all duration-500`}>
         
         {/* Stunning Background Elements */}
         <StyledImigongoBackground isDark={isDark} />
 
         {/* Section Title */}
-        <div className="w-full text-left max-w-[850px] mb-6 md:mb-8 z-10 pt-2 relative">
+        <div className="w-full text-left max-w-[850px] mb-4 md:mb-5 z-10 pt-0 md:pt-2 relative">
           <div className={`absolute -left-6 md:-left-10 top-0 w-1 md:w-2 h-full bg-gradient-to-b ${isDark ? 'from-white/80' : 'from-black/10'} to-transparent`} />
           <p className={`text-[9px] md:text-[11px] font-black uppercase tracking-[0.4em] ${isDark ? 'text-white/50' : 'text-black/40'} mb-2 drop-shadow-sm`}>Professional Endorsements</p>
           <h2 className={`text-3xl md:text-5xl lg:text-5xl font-black italic tracking-tighter uppercase leading-none ${isDark ? 'text-white' : 'text-black'} drop-shadow-[0_0_20px_rgba(0,0,0,0.05)]`}>
@@ -260,7 +260,7 @@ const Testimonials = () => {
 
         {/* ── 1. The OLED TV Screen Panel ── */}
         <div 
-          className={`relative w-full max-w-[850px] aspect-[16/9] lg:aspect-[21/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] ${isDark ? 'border-[#1a1a1a]' : 'border-gray-800'} shadow-[0_30px_70px_rgba(0,0,0,${isDark ? '1' : '0.2'}),0_0_30px_rgba(255,255,255,0.05)] z-10 flex overflow-hidden group outline outline-1 ${isDark ? 'outline-white/10' : 'outline-black/5'}`}
+          className={`relative w-full max-w-[850px] aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] bg-black rounded-lg md:rounded-2xl border-[4px] md:border-[6px] ${isDark ? 'border-[#1a1a1a]' : 'border-gray-800'} shadow-[0_30px_70px_rgba(0,0,0,${isDark ? '1' : '0.2'}),0_0_30px_rgba(255,255,255,0.05)] z-10 flex overflow-hidden group outline outline-1 ${isDark ? 'outline-white/10' : 'outline-black/5'}`}
         >
           {/* Channel Change Flash Glitch */}
           {isSwitching && (
@@ -448,7 +448,7 @@ const Testimonials = () => {
         </div>
 
         {/* ── 3. Interactive Remote ── */}
-        <div className="mt-6 md:mt-8 flex flex-col items-center gap-2 md:gap-3 z-20">
+        <div className="mt-4 md:mt-5 flex flex-col items-center gap-2 md:gap-3 z-20">
           <p className={`font-mono text-[7px] md:text-[9px] ${isDark ? 'text-white/40' : 'text-black/30'} uppercase tracking-[0.2em] drop-shadow-sm`}>
             Deck Controls
           </p>
