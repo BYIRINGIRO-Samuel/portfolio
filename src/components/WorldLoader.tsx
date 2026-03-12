@@ -1,5 +1,61 @@
-import { useState, useEffect } from "react";
+import { useRef, useMemo, useState, useEffect } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Points, PointMaterial, Stars, PerspectiveCamera } from "@react-three/drei";
+import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
+
+const SpectralGlobe = () => {
+  const pointsRef = useRef<THREE.Points>(null!);
+  
+  // Create a dense cloud of points for the globe shape
+  const count = 15000;
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      // Points distributed on a sphere surface
+      const phi = Math.acos(-1 + (2 * i) / count);
+      const theta = Math.sqrt(count * Math.PI) * phi;
+      
+      const r = 3; // radius
+      pos[i * 3] = r * Math.cos(theta) * Math.sin(phi);
+      pos[i * 3 + 1] = r * Math.sin(theta) * Math.sin(phi);
+      pos[i * 3 + 2] = r * Math.cos(phi);
+    }
+    return pos;
+  }, [count]);
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    pointsRef.current.rotation.y = time * 0.15;
+    pointsRef.current.rotation.x = Math.sin(time * 0.05) * 0.1;
+  });
+
+  return (
+    <group>
+      <Points ref={pointsRef} positions={positions} stride={3} frustumCulled={false}>
+        <PointMaterial
+          transparent
+          color="#3b82f6"
+          size={0.015}
+          sizeAttenuation={true}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </Points>
+      
+      {/* Outer Atmosphere Glow */}
+      <mesh>
+        <sphereGeometry args={[3.1, 64, 64]} />
+        <meshBasicMaterial 
+          color="#1e40af" 
+          transparent 
+          opacity={0.05} 
+          side={THREE.BackSide}
+        />
+      </mesh>
+    </group>
+  );
+};
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
@@ -8,7 +64,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     const timer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 5500);
+    }, 6000); // 6s duration to appreciate the globe
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -19,131 +75,52 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1, filter: "brightness(2) contrast(1.2) blur(20px)" }}
-          transition={{ duration: 0.8, ease: "anticipate" }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden"
+          exit={{ opacity: 0, scale: 1.1, filter: "brightness(2) blur(30px)" }}
+          transition={{ duration: 1 }}
+          className="fixed inset-0 z-[100] bg-black overflow-hidden flex items-center justify-center"
         >
-          {/* TV SCREEN SIMULATION MASK */}
-          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.9)]" />
+          {/* TV Overlay Effects */}
+          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,1)]" />
+          <div className="absolute inset-0 z-40 opacity-[0.03] pointer-events-none bg-[url('https://media.giphy.com/media/oEI9uWUicRlsc/giphy.gif')] bg-repeat" />
           
-          {/* SUBTLE CRT SCANLINES & STATIC GRAIN */}
-          <div className="absolute inset-0 z-40 opacity-[0.04] pointer-events-none bg-[url('https://media.giphy.com/media/oEI9uWUicRlsc/giphy.gif')] bg-repeat mix-blend-screen" />
-          <div className="absolute inset-0 z-40 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] pointer-events-none" />
-
-          {/* THE "PRODUCTION LEADER" / INTRO SEQUENCE */}
-          <div className="relative w-full h-full flex items-center justify-center">
-            
-            {/* CINEMATIC BARS */}
-            <motion.div 
-              initial={{ height: "0%" }}
-              animate={{ height: "15%" }}
-              className="absolute top-0 w-full bg-black z-30" 
-            />
-            <motion.div 
-              initial={{ height: "0%" }}
-              animate={{ height: "15%" }}
-              className="absolute bottom-0 w-full bg-black z-30" 
-            />
-
-            {/* THE CIRCULAR "COUNTDOWN" SHOW INTRO */}
-            <div className="relative flex items-center justify-center w-[300px] h-[300px] md:w-[450px] md:h-[450px]">
+          <div className="relative w-full h-full">
+            <Canvas dpr={[1, 2]}>
+              <PerspectiveCamera makeDefault position={[0, 0, 10]} />
+              <color attach="background" args={["#000000"]} />
               
-              {/* PRECISION CROSSHAIR (PRO PRODUCTION STYLE) */}
-              <div className="absolute w-full h-[0.5px] bg-white/20" />
-              <div className="absolute h-full w-[0.5px] bg-white/20" />
-              <div className="absolute w-[20px] h-[20px] border border-white/40 rounded-full" />
-
-              {/* ROTATING PRODUCTION RINGS (FANCY & FAST) */}
-              <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full">
-                {/* Master Ring Clockwise */}
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r="48"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="0.25"
-                  strokeDasharray="1 5"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                />
-
-                {/* Weighted "Tuning" Segment */}
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeDasharray="60 222.7"
-                  strokeLinecap="round"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1.5, repeat: Infinity, ease: "circIn" }}
-                />
-
-                {/* Fast Pulse Ring */}
-                <motion.circle
-                  cx="50"
-                  cy="50"
-                  r="40"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="0.5"
-                  animate={{ 
-                    scale: [0.9, 1.1],
-                    opacity: [0.1, 0.4, 0.1]
-                  }}
-                  transition={{ duration: 0.5, repeat: Infinity }}
-                />
-              </svg>
-
-              {/* VERTICAL SCANNING BEAM (STUDIO STYLE) */}
-              <motion.div 
-                animate={{ x: ["-150%", "150%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                className="absolute w-1 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent blur-sm z-10"
+              <ambientLight intensity={1} />
+              
+              <SpectralGlobe />
+              
+              <Stars 
+                radius={100} 
+                depth={50} 
+                count={2000} 
+                factor={4} 
+                saturation={0} 
+                fade 
+                speed={0.5} 
               />
-
-              {/* THE CORE "SPECTRAL" FOCUS */}
-              <div className="relative z-20 overflow-hidden rounded-full w-24 h-24 flex items-center justify-center">
-                 <motion.div 
-                   animate={{ 
-                     rotate: -360,
-                     scale: [1, 1.2, 1]
-                   }}
-                   transition={{ 
-                     rotate: { duration: 4, repeat: Infinity, ease: "linear" },
-                     scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
-                   }}
-                   className="w-full h-full border-[1px] border-white/30 rounded-full flex items-center justify-center"
-                 >
-                    <div className="w-2 h-2 bg-white rounded-full shadow-[0_0_40px_white]" />
-                 </motion.div>
-              </div>
-
-              {/* CORNER MARKS (FRAME GUIDES) */}
-              <div className="absolute -inset-10 border-[0.5px] border-white/5 pointer-events-none">
-                 <div className="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/40" />
-                 <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-white/40" />
-                 <div className="absolute bottom-0 left-0 w-8 h-8 border-b border-l border-white/40" />
-                 <div className="absolute bottom-0 right-0 w-8 h-8 border-b border-r border-white/40" />
-              </div>
-
-            </div>
-
-            {/* LIGHT LEAK / BLOOM (CINEMATIC GOBOS) */}
-            <div className="absolute top-0 left-1/4 w-1/2 h-full bg-white/[0.02] -skew-x-[45deg] blur-[100px] pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-1/2 h-full bg-white/[0.02] skew-x-[45deg] blur-[100px] pointer-events-none" />
+              
+              {/* Cinematic Horizontal Scanline */}
+              <group position={[0, 0, 0]}>
+                <mesh position={[0, 0, -2]}>
+                  <planeGeometry args={[20, 0.01]} />
+                  <meshBasicMaterial color="#ffffff" transparent opacity={0.1} />
+                </mesh>
+              </group>
+            </Canvas>
           </div>
 
-          {/* FINAL "FLASH" BEFORE TRANSITION */}
+          {/* Minimal Scan Line */}
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ delay: 5.2, duration: 0.3 }}
-            className="absolute inset-0 bg-white z-[60]" 
+            animate={{ top: ["-10%", "110%"] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+            className="absolute left-0 right-0 h-px bg-white/20 blur-[1px] z-[40]"
           />
+
+          {/* Bottom Bloom */}
+          <div className="absolute bottom-0 w-full h-[30vh] bg-gradient-to-t from-blue-900/10 to-transparent z-10 pointer-events-none" />
         </motion.div>
       )}
     </AnimatePresence>
