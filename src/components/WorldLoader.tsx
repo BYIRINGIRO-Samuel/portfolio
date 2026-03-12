@@ -7,24 +7,24 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
   <div className="relative transform -rotate-90">
     {/* Cinematic Headlight Beams */}
-    <div className="absolute top-[48px] left-[6px] w-[150px] h-[50px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
+    <div className="absolute top-[48px] left-[6px] w-[200px] h-[60px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
        <motion.div 
-         animate={{ opacity: isMoving ? [0.2, 0.4, 0.2] : 0.5 }}
+         animate={{ opacity: isMoving ? [0.3, 0.6, 0.3] : 0.6 }}
          transition={{ duration: 1.5, repeat: Infinity }}
-         className="w-full h-full bg-gradient-to-r from-white/30 to-transparent blur-md" 
+         className="w-full h-full bg-gradient-to-r from-white/40 to-transparent blur-xl" 
          style={{ clipPath: "polygon(0 40%, 100% 0, 100% 100%, 0 60%)" }}
        />
     </div>
-    <div className="absolute top-[48px] left-[17px] w-[150px] h-[50px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
+    <div className="absolute top-[48px] left-[17px] w-[200px] h-[60px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
        <motion.div 
-         animate={{ opacity: isMoving ? [0.2, 0.4, 0.2] : 0.5 }}
+         animate={{ opacity: isMoving ? [0.3, 0.6, 0.3] : 0.6 }}
          transition={{ duration: 1.5, repeat: Infinity, delay: 0.1 }}
-         className="w-full h-full bg-gradient-to-r from-white/30 to-transparent blur-md" 
+         className="w-full h-full bg-gradient-to-r from-white/40 to-transparent blur-xl" 
          style={{ clipPath: "polygon(0 40%, 100% 0, 100% 100%, 0 60%)" }}
        />
     </div>
 
-    <svg width="56" height="26" viewBox="0 0 56 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+    <svg width="56" height="26" viewBox="0 0 56 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
       <path d="M2 13C2 8 4 4 10 4H50C54 4 54 8 54 13C54 18 54 22 50 22H10C4 22 2 18 2 13Z" fill="white" />
       <rect x="36" y="5" width="16" height="16" rx="1" fill="white" stroke="#080808" strokeWidth="0.2" opacity="0.3" />
       <rect x="52" y="7" width="2" height="12" rx="0.5" fill="#e5e5e5" />
@@ -39,12 +39,12 @@ const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
       <rect x="38" y="3" width="3" height="1.5" rx="0.5" fill="white" />
       <rect x="38" y="21.5" width="3" height="1.5" rx="0.5" fill="white" />
     </svg>
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full border border-white/5 animate-ping" />
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/5 animate-ping" />
     
     {/* Micro HUD - stunning detail */}
     <motion.div 
       animate={{ opacity: isMoving ? 1 : 0 }}
-      className="absolute -top-12 -left-4 font-mono text-[6px] text-white/60 tracking-widest whitespace-nowrap"
+      className="absolute -top-12 -left-4 font-mono text-[7px] text-white/80 tracking-widest whitespace-nowrap bg-black/40 px-2 py-1 rounded-sm backdrop-blur-sm border border-white/5"
     >
       GPS: 52.5200° N <br/> VEL: 120 KM/H
     </motion.div>
@@ -52,38 +52,58 @@ const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
 );
 
 /**
- * Well-Modeled Modern Gas Station Silhouette
+ * High-End Isometric Gas Station (Well-Modeled based on reference image)
  */
-const GasStation = () => (
-  <svg width="240" height="160" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(255,255,255,0.1)]">
-    {/* Main Canopy (Roof) */}
-    <rect x="5" y="10" width="110" height="10" fill="#0c0c0c" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
-    <rect x="10" y="12" width="100" height="1" fill="white" fillOpacity="0.1" />
+const IsometricGasStation = () => (
+  <svg width="300" height="250" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+    {/* Isometric Platform / Base */}
+    <path d="M20 90L80 60L140 90L80 120L20 90Z" fill="#111" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
+    <path d="M20 90V96L80 126L140 96V90L80 120L20 90Z" fill="#080808" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
+
+    {/* Pillars supporting the canopy */}
+    <rect x="45" y="40" width="4" height="60" fill="white" fillOpacity="0.15" />
+    <rect x="111" y="40" width="4" height="60" fill="white" fillOpacity="0.15" />
+
+    {/* Massive Isometric Canopy (Roof) */}
+    <path d="M10 40L80 10L150 40L80 70L10 40Z" fill="#0c0c0c" stroke="white" strokeWidth="1" strokeOpacity="0.5" />
+    <path d="M10 40V48L80 78L150 48V40L80 70L10 40Z" fill="#151515" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
     
-    {/* Supporting Pillars */}
-    <rect x="25" y="20" width="3" height="40" fill="white" fillOpacity="0.15" />
-    <rect x="92" y="20" width="3" height="40" fill="white" fillOpacity="0.15" />
-    
-    {/* Fuel Pumps */}
-    <g transform="translate(42, 40)">
-       <rect width="10" height="20" rx="1" fill="#151515" stroke="white" strokeWidth="0.2" strokeOpacity="0.4" />
-       <rect x="2" y="3" width="6" height="5" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
-       <path d="M9 8L12 8L12 16L10 16" stroke="white" strokeWidth="0.3" strokeOpacity="0.3" /> {/* Hose */}
+    {/* "GAS STATION" Banner with light effects */}
+    <rect x="40" y="45" width="80" height="12" rx="1" fill="#111" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
+    <motion.text 
+      animate={{ opacity: [0.3, 0.6, 0.3] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      x="80" y="53" fontSize="6" fontFamily="monospace" fill="white" textAnchor="middle" dominantBaseline="middle" className="tracking-[0.3em] font-bold"
+    >
+      GAS STATION
+    </motion.text>
+
+    {/* High-Detail Fuel Pumps (Isometric) */}
+    <g transform="translate(55, 75)">
+       {/* Pump 1 */}
+       <motion.path 
+         animate={{ strokeOpacity: [0.2, 0.5, 0.2] }}
+         transition={{ duration: 1.5, repeat: Infinity }}
+         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="#151515" stroke="white" strokeWidth="0.5" 
+       />
+       <rect x="4" y="10" width="16" height="8" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.2" strokeOpacity="0.3" />
+       {/* Yellow Accent / Detail (Subtle) */}
+       <path d="M4 22H20" stroke="white" strokeWidth="2" strokeOpacity="0.05" />
     </g>
-    <g transform="translate(68, 40)">
-       <rect width="10" height="20" rx="1" fill="#151515" stroke="white" strokeWidth="0.2" strokeOpacity="0.4" />
-       <rect x="2" y="3" width="6" height="5" fill="white" fillOpacity="0.1" /> {/* Pump Screen */}
-       <path d="M9 8L12 8L12 16L10 16" stroke="white" strokeWidth="0.3" strokeOpacity="0.3" /> {/* Hose */}
+    <g transform="translate(90, 75)">
+       {/* Pump 2 */}
+       <motion.path 
+         animate={{ strokeOpacity: [0.2, 0.5, 0.2] }}
+         transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="#151515" stroke="white" strokeWidth="0.5" 
+       />
+       <rect x="4" y="10" width="16" height="8" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.2" strokeOpacity="0.3" />
     </g>
 
-    {/* Price Signage Pole */}
-    <rect x="110" y="5" width="2" height="55" fill="white" fillOpacity="0.08" />
-    <rect x="105" y="5" width="12" height="18" rx="1" fill="#101010" stroke="white" strokeWidth="0.2" strokeOpacity="0.3" />
-    <rect x="107" y="7" width="8" height="5" fill="white" fillOpacity="0.05" />
-
-    {/* Convenience Store (Background Silhouette) */}
-    <path d="M30 60H90V35H30V60Z" fill="#080808" fillOpacity="0.6" />
-    <rect x="50" y="45" width="20" height="15" fill="white" fillOpacity="0.03" stroke="white" strokeWidth="0.1" strokeOpacity="0.2" />
+    {/* Large Totem Sign */}
+    <rect x="145" y="5" width="3" height="110" fill="white" fillOpacity="0.1" />
+    <rect x="138" y="5" width="18" height="25" rx="1" fill="#080808" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
+    <circle cx="147" cy="17" r="4" fill="white" fillOpacity="0.05" className="animate-pulse" />
   </svg>
 );
 
@@ -94,7 +114,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(68); // Adjusted stop point for better visibility in larger frame
+      setProgress(58); // Car stops between the two pumps
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -102,7 +122,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 7500);
+    }, 8500);
 
     return () => {
       clearTimeout(timer);
@@ -121,61 +141,65 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0, scale: 1.1, filter: "brightness(2) blur(30px)" }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden"
         >
-          {/* Outer Atmosphere - Parallax Particles */}
-          <div className="absolute inset-0 z-0 opacity-10">
-             {[...Array(40)].map((_, i) => (
+          {/* Static Background Texture */}
+          <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
+          
+          {/* Outer Atmosphere - Parallax Data Particles */}
+          <div className="absolute inset-0 z-0 opacity-20">
+             {[...Array(60)].map((_, i) => (
                <motion.div
                  key={i}
-                 animate={{ y: [0, -1000] }}
-                 transition={{ duration: 10 + Math.random() * 20, repeat: Infinity, ease: "linear" }}
+                 animate={{ y: [0, -1200] }}
+                 transition={{ duration: 12 + Math.random() * 20, repeat: Infinity, ease: "linear" }}
                  className="absolute w-px h-px bg-white"
                  style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
                />
              ))}
           </div>
 
-          {/* Centered MODULAR CIRCLE (Increased Size for Visibility) */}
+          {/* Centered MODULAR LENS (Increased Size for High Detail) */}
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, type: "spring" }}
-            className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border border-white/10 bg-[#050505] shadow-[0_0_120px_rgba(255,255,255,0.08)] overflow-hidden z-10"
+            transition={{ duration: 1.2, type: "spring", damping: 20 }}
+            className="relative w-72 h-72 md:w-[500px] md:h-[500px] rounded-full border border-white/20 bg-[#050505] shadow-[0_0_150px_rgba(255,255,255,0.1)] overflow-hidden z-10"
           >
              
-             {/* THE MINIATURE WORLD (Re-centered and Balanced) */}
-             <div className="absolute inset-0 origin-center scale-[0.5] translate-x-[-340px] translate-y-[-100px]">
+             {/* THE MINIATURE WORLD (Precisely Re-centered and ZOOMED IN) */}
+             <div className="absolute inset-0 origin-center scale-[0.55] translate-x-[-340px] translate-y-[-80px]">
                 
                 {/* Road System */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-[0.03]" />
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="76" className="opacity-10" />
-                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="74" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="84" className="opacity-[0.04]" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-10" />
+                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="78" />
                   
-                  {/* Animated Path (Bolder) */}
+                  {/* Active Navigation Glow */}
                   <motion.path
                     d={roadPath}
                     fill="none"
                     stroke="white"
-                    strokeWidth="4"
+                    strokeWidth="5"
                     initial={{ pathLength: 0 }}
                     animate={{ pathLength: progress / 100 }}
                     transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                    className="opacity-80 blur-[0.5px]"
+                    className="opacity-90 blur-[1px]"
                   />
                   
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-15" strokeDasharray="20 20" />
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
 
-                {/* WELL-MODELED GAS STATION (Destination) */}
-                <div className="absolute top-[45%] left-[30%] z-10 translate-y-[-50%] scale-[1.5] origin-center">
-                    <GasStation />
+                {/* WELL-MODELED ISOMETRIC GAS STATION */}
+                <div className="absolute top-[38%] left-[28%] z-10 translate-y-[-50%] scale-[1.3] origin-center">
+                    <IsometricGasStation />
                 </div>
 
                 {/* The Precision Car (SCALED UP inside the lens) */}
                 <motion.div 
-                  className="absolute z-30 pointer-events-none origin-center scale-[1.8]"
+                  className="absolute z-30 pointer-events-none origin-center scale-[2.2]"
                   animate={{ offsetDistance: `${progress}%` }}
                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
                   style={{ 
@@ -187,36 +211,42 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 </motion.div>
              </div>
 
-             {/* HUD SCANNER Overlay */}
+             {/* HUD SCANNER Radar Overlay */}
              <motion.div 
-               animate={{ y: ["-100%", "250%"] }}
-               transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-               className="absolute inset-x-0 h-1.5 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none blur-sm"
+               animate={{ y: ["-100%", "300%"] }}
+               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+               className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none blur-sm z-50"
              />
 
-             {/* Circular Vignette Mask */}
-             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_80px_rgba(0,0,0,1)] pointer-events-none" />
+             {/* Dynamic Vignette Lens Flare */}
+             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_120px_rgba(0,0,0,1)] pointer-events-none border border-white/5" />
           </motion.div>
 
           {/* FINAL SHOCKWAVE PULSE */}
           <AnimatePresence>
             {isDone && (
-              <motion.div 
-                initial={{ scale: 0, opacity: 1 }}
-                animate={{ scale: 5, opacity: 0 }}
-                transition={{ duration: 1.5 }}
-                className="absolute w-40 h-40 border border-white/10 rounded-full z-20 pointer-events-none"
-              />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <motion.div 
+                  initial={{ scale: 0, opacity: 1, borderAlpha: 1 }}
+                  animate={{ scale: 6, opacity: 0 }}
+                  transition={{ duration: 1.5, ease: "easeOut" }}
+                  className="w-40 h-40 border-2 border-white/30 rounded-full"
+                />
+              </div>
             )}
           </AnimatePresence>
 
-          {/* Minimal Production Text */}
-          <div className="absolute bottom-16 text-[8px] font-mono text-white/10 tracking-[1.5em] uppercase select-none">
-             Authenticating System Core
+          {/* Production Credit Text (Subtle) */}
+          <div className="absolute bottom-12 flex flex-col items-center gap-2 opacity-10">
+             <div className="text-[9px] font-mono text-white tracking-[1.5em] uppercase">SYSTEM_INITIALIZED</div>
+             <div className="flex gap-4">
+               <div className="w-12 h-[1px] bg-white" />
+               <div className="w-12 h-[1px] bg-white" />
+             </div>
           </div>
 
-          {/* Cinematic Vignette */}
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_250px_rgba(0,0,0,1)]" />
+          {/* Cinematic Global Vignette */}
+          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,1)]" />
         </motion.div>
       )}
     </AnimatePresence>
