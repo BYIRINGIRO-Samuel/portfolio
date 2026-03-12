@@ -2,63 +2,69 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 /**
- * High-Fidelity Silhouette Rhino
- * Intricate anatomical details for a professional, realistic feel.
+ * Ultra-High Fidelity Rolls Royce Silhouette
+ * Based on the DataVehicle from SkillsSection but enhanced for cinematic loading.
  */
-const HighFidelityRhino = () => (
-  <svg width="200" height="120" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <motion.g
-      initial={{ x: -20, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 1.2 }}
-    >
-      {/* Precision path for a realistic rhinoceros silhouette */}
-      <path 
-        d="M140 65C140 75 130 85 115 85H108L106 72H92L90 85H70C65 75 60 70 50 70H45L42 85H28L25 70H15L12 60C12 50 15 40 30 35C35 30 45 28 65 28C85 28 110 32 125 40C140 48 140 55 140 65Z" 
-        fill="black" 
-      />
-      {/* The Horns - Key for realism */}
-      <path d="M12 60C8 58 2 45 5 40M14 55C12 50 10 45 12 43" stroke="black" strokeWidth="3" strokeLinecap="round" />
-      {/* Ear / Head detail */}
-      <path d="M30 35C28 30 32 25 35 28" stroke="black" strokeWidth="2" strokeLinecap="round" />
-      {/* Tail Detail */}
-      <path d="M140 60C145 60 148 68 148 75" stroke="black" strokeWidth="1" strokeLinecap="round" />
-      
-      {/* Eye Glow (Subtle) */}
-      <circle cx="25" cy="48" r="0.5" fill="white" className="animate-pulse" />
-    </motion.g>
-  </svg>
-);
+const RollsRoyce = () => (
+  <div className="relative transform scale-150">
+    <svg width="120" height="50" viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Ghostly Underglow - Cinematic Detail */}
+      <defs>
+        <radialGradient id="carGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="white" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="white" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <ellipse cx="60" cy="40" rx="60" ry="10" fill="url(#carGlow)" />
 
-/**
- * Realistic Savannah Tree
- * Focuses on fine branch structures and organic foliage.
- */
-const RealisticSavannahTree = () => (
-  <svg width="340" height="260" viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g transform="translate(20, 10)">
-      {/* Organic main trunk */}
-      <path 
-        d="M90 145C88 130 92 110 80 95C65 80 40 85 20 75M90 145C92 120 95 100 110 90C130 80 155 85 175 70M90 145V120M90 120C85 110 75 105 70 95M90 120C95 110 115 108 125 98" 
-        stroke="black" strokeWidth="5" strokeLinecap="round" 
-      />
-      {/* Detailed Layered Canopy */}
-      <path d="M15 65C15 60 35 45 90 45S170 60 170 65C170 68 150 75 90 75S15 70 15 65Z" fill="black" />
-      <path d="M40 55C40 50 60 40 100 40S150 50 150 55C150 58 130 63 100 63S40 58 40 55Z" fill="black" />
-      <path d="M65 45C65 42 75 35 105 35S135 42 135 45C135 47 120 50 105 50S65 47 65 45Z" fill="black" />
+      {/* Main Luxury Chassis - Stately & Boxy Silhouette (The Phantoms) */}
+      <path d="M5 30C5 25 10 20 20 20H110C115 20 118 25 118 30C118 35 118 42 110 42H20C10 42 5 37 5 30Z" fill="black" />
       
-      {/* Leaf Texturing */}
-      {[...Array(35)].map((_, i) => (
-        <circle 
-          key={i} 
-          cx={20 + Math.random() * 150} 
-          cy={35 + Math.random() * 40} 
-          r={0.8 + Math.random() * 1.5} 
-          fill="black"
-        />
-      ))}
-    </g>
-  </svg>
+      {/* Imposing Bonnet (Hood) Section */}
+      <rect x="75" y="21" width="40" height="15" rx="1" fill="#0c0c0c" />
+      
+      {/* Signature Tall Pantheon Grille */}
+      <rect x="115" y="23" width="3" height="15" rx="0.5" fill="#1a1a1a" />
+      
+      {/* Spirit of Ecstasy (Front Ornament - Precise) */}
+      <path d="M116 23C116 23 115 18 117 17C118 16 119 18 119 18" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
+
+      {/* Structured Passenger Cabin / Cockpit */}
+      <path d="M30 22C30 22 40 20 55 20C75 20 85 22 85 24V40C85 41 75 42 55 42C35 42 30 41 30 40V22Z" fill="black" />
+      
+      {/* Window Details (Tinted) */}
+      <rect x="40" y="23" width="18" height="10" rx="1" fill="#080808" stroke="white" strokeWidth="0.1" strokeOpacity="0.1" />
+      <rect x="62" y="23" width="18" height="10" rx="1" fill="#080808" stroke="white" strokeWidth="0.1" strokeOpacity="0.1" />
+      
+      {/* Dual Luxury Headlights - "Angelic" Eyes */}
+      <motion.rect 
+        animate={{ opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        x="110" y="25" width="4" height="2" rx="0.5" fill="white" 
+      />
+      <motion.rect 
+        animate={{ opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 2, repeat: Infinity, delay: 0.1 }}
+        x="110" y="35" width="4" height="2" rx="0.5" fill="white" 
+      />
+
+      {/* Wheels with realistic motion spin */}
+      <g>
+         <circle cx="25" cy="40" r="6" fill="#050505" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+         <circle cx="95" cy="40" r="6" fill="#050505" stroke="white" strokeWidth="0.2" strokeOpacity="0.2" />
+         <motion.path 
+           animate={{ rotate: 360 }}
+           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+           d="M23 40H27M25 38V42" stroke="white" strokeWidth="0.3" strokeOpacity="0.1" transform-origin="25 40"
+         />
+         <motion.path 
+           animate={{ rotate: 360 }}
+           transition={{ duration: 0.5, repeat: Infinity, ease: "linear" }}
+           d="M93 40H97M95 38V42" stroke="white" strokeWidth="0.3" strokeOpacity="0.1" transform-origin="95 40"
+         />
+      </g>
+    </svg>
+  </div>
 );
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
@@ -68,7 +74,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     const timer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 7500);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, [onComplete]);
@@ -79,79 +85,91 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.95, filter: "blur(30px) contrast(1.5)" }}
-          transition={{ duration: 1.2 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black"
+          exit={{ opacity: 0, scale: 1.1, filter: "brightness(2) blur(30px)" }}
+          transition={{ duration: 1, ease: "circInOut" }}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden px-4"
         >
-          {/* Centered Large Moon Scene */}
-          <div className="relative w-80 h-80 md:w-[600px] md:h-[600px] flex items-center justify-center">
+          {/* Centered Production Lens */}
+          <div className="relative w-full max-w-4xl h-80 flex flex-col items-center justify-center">
             
-            {/* The Great Moon (High Contrast Silhouette Background) */}
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 2, ease: "easeOut" }}
-              className="absolute inset-4 rounded-full bg-[#d0c0b0] shadow-[0_0_120px_rgba(208,192,176,0.15)] overflow-hidden"
-            >
-               {/* Internal Lunar Atmosphere */}
-               <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-white/20 pointer-events-none" />
-               
-               {/* Distant Birds Sequence */}
-               {[...Array(5)].map((_, i) => (
+            {/* The Cinematic Background (Moving Road/Cityscape) */}
+            <div className="absolute inset-x-0 h-40 bg-white/[0.02] border-y border-white/5 overflow-hidden">
+               {/* Moving Road Lines */}
+               <div className="absolute inset-0 flex items-center">
+                 {[...Array(20)].map((_, i) => (
+                   <motion.div
+                     key={i}
+                     initial={{ x: "100%" }}
+                     animate={{ x: "-1500%" }}
+                     transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: i * 0.15 }}
+                     className="w-12 h-[1px] bg-white opacity-20 mr-24 flex-shrink-0"
+                   />
+                 ))}
+               </div>
+
+               {/* Moving Distant Particles (City Blur) */}
+               {[...Array(30)].map((_, i) => (
                  <motion.div
                    key={i}
-                   initial={{ x: "-10%", y: 80 + i * 15 }}
-                   animate={{ x: "110%" }}
-                   transition={{ duration: 15, repeat: Infinity, ease: "linear", delay: i * 2 }}
-                   className="absolute pointer-events-none"
-                 >
-                   <svg width="10" height="5" viewBox="0 0 10 5" className="text-black/30">
-                     <path d="M0 2.5C2.5 0 5 0 5 2.5C5 0 7.5 0 10 2.5" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                   </svg>
-                 </motion.div>
+                   initial={{ x: "110%", y: Math.random() * 100 }}
+                   animate={{ x: "-10%" }}
+                   transition={{ duration: 1 + Math.random() * 2, repeat: Infinity, ease: "linear", delay: Math.random() * 5 }}
+                   className="absolute w-[1px] h-[1px] bg-white opacity-40 blur-[1px]"
+                 />
                ))}
-            </motion.div>
+            </div>
 
-            {/* Middle Ground: The Silhouette Environment */}
-            <div className="absolute inset-0 z-10 overflow-hidden rounded-full pointer-events-none">
-                
-                {/* Far Tree (Faint) */}
-                <div className="absolute right-[10%] bottom-[15%] opacity-20 scale-75 grayscale translate-y-5">
-                   <RealisticSavannahTree />
-                </div>
+            {/* THE ROLLS ROYCE (Static in Frame, Environment Moves) */}
+            <div className="relative z-20 flex flex-col items-center">
+               <motion.div
+                 animate={{ 
+                   y: [0, -1.5, 0],
+                   rotate: [0, -0.2, 0]
+                 }}
+                 transition={{ duration: 0.1, repeat: Infinity, repeatType: "reverse" }}
+               >
+                 <RollsRoyce />
+               </motion.div>
+               
+               {/* Smooth Ground Reflection */}
+               <div className="mt-8 scale-y-[-0.6] opacity-10 filter blur-md">
+                   <RollsRoyce />
+               </div>
+            </div>
 
-                {/* Foreground Tree (Left) */}
-                <div className="absolute left-[-15%] bottom-[-10%] scale-110">
-                   <RealisticSavannahTree />
-                </div>
-
-                {/* The Majestic Rhino Walking */}
-                <motion.div
-                  initial={{ x: "120%", y: "45%" }}
-                  animate={{ x: "-10%" }}
-                  transition={{ duration: 7, ease: "linear" }}
-                  className="absolute bottom-[20%] z-20"
-                >
-                  <motion.div
-                    animate={{ 
-                      y: [0, -1, 0],
-                      rotate: [0, 0.3, 0]
-                    }}
-                    transition={{ duration: 0.9, repeat: Infinity }}
-                  >
-                    <HighFidelityRhino />
-                  </motion.div>
-                </motion.div>
-
-                {/* Terrain / Ground Line */}
-                <div className="absolute bottom-0 left-0 right-0 h-24 bg-black rounded-t-[50%] z-10" />
+            {/* TECHNICAL MARKERS (The "Loading" Vibe) */}
+            <div className="absolute bottom-4 flex gap-12 pointer-events-none opacity-20">
+               <div className="flex flex-col items-center">
+                  <div className="text-[8px] font-mono text-white/40 mb-1">STABILITY_CHECK</div>
+                  <div className="w-12 h-[1px] bg-white" />
+               </div>
+               <div className="flex flex-col items-center">
+                  <div className="text-[8px] font-mono text-white/40 mb-1">ENGINE_INIT</div>
+                  <div className="w-12 h-[1px] bg-white" />
+               </div>
+               <div className="flex flex-col items-center">
+                  <div className="text-[8px] font-mono text-white/40 mb-1">BROADCAST_LIVE</div>
+                  <div className="w-12 h-[1px] bg-white" />
+               </div>
             </div>
 
           </div>
 
-          {/* Exterior Cinematic Vignette */}
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_250px_rgba(0,0,0,1)]" />
-          <div className="absolute inset-0 pointer-events-none opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          {/* Cinematic Overlay - CRT Grain & Scanlines */}
+          <div className="absolute inset-0 z-50 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.95)]" />
+          <motion.div 
+            animate={{ opacity: [0.03, 0.05, 0.03] }}
+            transition={{ duration: 0.1, repeat: Infinity }}
+            className="absolute inset-0 z-50 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"
+          />
+          
+          {/* Transition Flash */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 0.3, 0] }}
+            transition={{ delay: 6.8, duration: 0.2 }}
+            className="absolute inset-0 bg-white z-[60]"
+          />
         </motion.div>
       )}
     </AnimatePresence>
