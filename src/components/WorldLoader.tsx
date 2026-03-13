@@ -156,21 +156,21 @@ const Rabbit = () => (
     transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
     className="relative"
   >
-    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]">
       {/* Body */}
-      <ellipse cx="15" cy="22" rx="10" ry="7" fill="#E5E7EB" />
+      <ellipse cx="15" cy="22" rx="10" ry="7" fill="#FFFFFF" />
       {/* Head */}
-      <circle cx="22" cy="15" r="5" fill="#F3F4F6" />
+      <circle cx="22" cy="15" r="5" fill="#F9FAFB" />
       {/* Ears - Twitching */}
       <motion.path 
         animate={{ rotate: [-5, 5, -5] }}
         transition={{ duration: 0.5, repeat: Infinity }}
-        d="M20 12 L19 2 L22 2 L23 12 Z" fill="#F3F4F6" 
+        d="M20 12 L19 2 L22 2 L23 12 Z" fill="#F9FAFB" 
       />
       <motion.path 
         animate={{ rotate: [5, -5, 5] }}
         transition={{ duration: 0.5, repeat: Infinity, delay: 0.2 }}
-        d="M23 12 L24 2 L27 2 L26 12 Z" fill="#F3F4F6" 
+        d="M23 12 L24 2 L27 2 L26 12 Z" fill="#F9FAFB" 
       />
       {/* Eye */}
       <circle cx="24" cy="14" r="0.8" fill="black" />
@@ -190,31 +190,31 @@ const Lion = () => (
     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
     className="relative"
   >
-    <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(180,83,9,0.2)]">
+    <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_25px_rgba(251,191,36,0.5)]">
       {/* Legs */}
-      <path d="M25 55 L28 68 L34 68 L32 55 Z" fill="#B45309" />
-      <path d="M70 55 L73 68 L79 68 L77 55 Z" fill="#B45309" />
+      <path d="M25 55 L28 68 L34 68 L32 55 Z" fill="#D97706" />
+      <path d="M70 55 L73 68 L79 68 L77 55 Z" fill="#D97706" />
       
       {/* Body */}
-      <path d="M20 35 C 20 20, 80 20, 85 45 L85 55 C 85 62, 20 62, 20 55 Z" fill="#D97706" />
+      <path d="M20 35 C 20 20, 80 20, 85 45 L85 55 C 85 62, 20 62, 20 55 Z" fill="#FBBF24" />
       
       {/* Tail - Swishing */}
       <motion.path 
         animate={{ rotate: [-10, 10, -10] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         d="M20 40 C 5 40, 0 60, 5 65" 
-        stroke="#78350F" strokeWidth="2.5" strokeLinecap="round" className="origin-right"
+        stroke="#92400E" strokeWidth="2.5" strokeLinecap="round" className="origin-right"
       />
       
       {/* Mane & Head */}
       <g>
-        {/* Mane */}
+        {/* Mane (Darker to pop against the white rim light) */}
         <circle cx="85" cy="35" r="18" fill="#78350F" />
         {/* Face */}
-        <path d="M80 30 C 80 22, 100 22, 100 35 C 100 45, 95 48, 85 48 Z" fill="#F59E0B" />
+        <path d="M80 30 C 80 22, 100 22, 100 35 C 100 45, 95 48, 85 48 Z" fill="#FCD34D" />
         {/* Features */}
         <circle cx="95" cy="33" r="1.5" fill="black" />
-        <path d="M100 38 L105 42" stroke="#78350F" strokeWidth="1" />
+        <path d="M100 38 L105 42" stroke="#92400E" strokeWidth="1" />
       </g>
     </svg>
   </motion.div>
