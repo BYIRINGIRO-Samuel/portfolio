@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 import { Canvas } from '@react-three/fiber';
-import { Environment, Float, ContactShadows, PresentationControls, MeshTransmissionMaterial, Sparkles, Text } from '@react-three/drei';
+import { Environment, Float, ContactShadows, PresentationControls, MeshTransmissionMaterial, Sparkles } from '@react-three/drei';
 
 const channels = [
   {
@@ -195,7 +195,7 @@ const PremiumGlassScene = () => {
   );
 };
 
-/* 3D Testimonial Quote Scene for Standby Screen */
+/* 3D Testimonial Glass Scene for Standby Screen */
 const StandbyGlassScene = () => {
   return (
     <Suspense fallback={null}>
@@ -214,41 +214,9 @@ const StandbyGlassScene = () => {
       >
         <Float speed={1.8} rotationIntensity={0.6} floatIntensity={1.2}>
           <group>
-            {/* Large Glass Quote Mark - Left */}
-            <Text
-              position={[-0.8, 0.3, 0]}
-              fontSize={4}
-              font="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff"
-              color="#ffffff"
-              anchorX="center"
-              anchorY="middle"
-            >
-              <MeshTransmissionMaterial
-                backside
-                samples={4}
-                thickness={1.5}
-                chromaticAberration={0.6}
-                anisotropy={0.3}
-                distortion={0.4}
-                distortionScale={0.4}
-                temporalDistortion={0.08}
-                iridescence={1}
-                iridescenceIOR={1}
-                iridescenceThicknessRange={[0, 1400]}
-                color="#ffffff"
-              />
-              “
-            </Text>
-
-            {/* Large Glass Quote Mark - Right */}
-            <Text
-              position={[1.2, -0.5, 0.3]}
-              fontSize={4}
-              font="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff"
-              color="#ffffff"
-              anchorX="center"
-              anchorY="middle"
-            >
+            {/* Glass Torus - Represents connection/feedback loop */}
+            <mesh scale={1.6} castShadow>
+              <torusGeometry args={[1, 0.4, 32, 64]} />
               <MeshTransmissionMaterial
                 backside
                 samples={4}
@@ -263,13 +231,18 @@ const StandbyGlassScene = () => {
                 iridescenceThicknessRange={[0, 1400]}
                 color="#a0c4ff"
               />
-              ”
-            </Text>
+            </mesh>
 
-            {/* Small accent sphere between quotes */}
-            <mesh position={[0.2, -0.1, 0.5]} scale={0.25}>
+            {/* Inner wireframe octahedron - represents trust/structure */}
+            <mesh scale={0.8}>
+              <octahedronGeometry args={[1, 0]} />
+              <meshStandardMaterial color="#ffffff" emissive="#60a5fa" emissiveIntensity={0.5} wireframe opacity={0.3} transparent />
+            </mesh>
+
+            {/* Core glowing sphere */}
+            <mesh scale={0.3}>
               <sphereGeometry args={[1, 32, 32]} />
-              <meshStandardMaterial color="#60a5fa" emissive="#60a5fa" emissiveIntensity={1.5} transparent opacity={0.6} />
+              <meshStandardMaterial color="#60a5fa" emissive="#60a5fa" emissiveIntensity={2} />
             </mesh>
 
             {/* Ambient Sparkles */}
@@ -440,91 +413,83 @@ const Testimonials = () => {
           <div className="absolute inset-[2px] md:inset-[4px] bg-[#020202] overflow-hidden rounded-[2px] md:rounded-[4px]">
             
             <AnimatePresence mode="wait">
-               {/* ── Standby / Professional Intro Screen ── */}
+               {/* ── Standby / Advanced Cultural News Intro Screen ── */}
                 {tvState === 'standby' && (
                   <motion.div 
                     key="standby"
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="absolute inset-0 flex flex-col bg-[#030308] cursor-pointer group"
+                    transition={{ duration: 0.3 }}
+                    className="absolute inset-0 flex flex-col bg-[#050505] cursor-pointer group shadow-inner"
                     onClick={handlePower}
                   >
-                     {/* Subtle Gradient Background */}
-                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_40%,rgba(96,165,250,0.08)_0%,transparent_60%)] pointer-events-none" />
-                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.95)_100%)] pointer-events-none" />
+                     {/* Imigongo Screen Background */}
+                     <div className="absolute inset-0 opacity-[0.25] mix-blend-screen pointer-events-none">
+                       <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                         <defs>
+                           <pattern id="screen-imigongo-testimonials" width="60" height="60" patternUnits="userSpaceOnUse" patternTransform="scale(2)">
+                             <path d="M0 30 L30 0 L60 30 L30 60 Z" fill="rgba(255,0,0,0.05)" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                             <path d="M15 30 L30 15 L45 30 L30 45 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                           </pattern>
+                         </defs>
+                         <rect width="100%" height="100%" fill="url(#screen-imigongo-testimonials)" />
+                       </svg>
+                     </div>
+                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.9)_100%)] pointer-events-none" />
+                     
+                     {/* Top Bar: Professional Header */}
+                     <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-blue-900/80 to-black/80 border-b border-blue-500/30 backdrop-blur-md z-20 shadow-xl">
+                       <div className="flex items-center gap-2">
+                         <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_blue]" />
+                         <span className="text-white font-sans text-[9px] md:text-[11px] font-semibold uppercase tracking-widest text-shadow">Portfolio Showcase</span>
+                       </div>
+                       <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
+                         Verified Professional Endorsements
+                       </span>
+                     </div>
 
-                     {/* 3D Glass Scene - Centered Focal Point */}
+                     {/* 3D Glass Scene Background */}
                      <div className="absolute inset-0 z-[5] pointer-events-none select-none">
                        <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
                          <StandbyGlassScene />
                        </Canvas>
                      </div>
-                     <div className="absolute inset-0 z-[6] bg-[radial-gradient(circle_at_center,transparent_25%,rgba(3,3,8,0.85)_60%)] pointer-events-none" />
+                     <div className="absolute inset-0 z-[6] bg-[radial-gradient(circle_at_center,transparent_20%,rgba(5,5,5,0.85)_60%)] pointer-events-none" />
 
-                     {/* Content Overlay */}
-                     <div className="relative flex-1 flex flex-col items-center justify-center z-10">
+                     {/* Center Branding */}
+                     <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
+                       <div className="bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 mb-4 rounded-full shadow-lg overflow-hidden relative">
+                         <p className="font-semibold text-white/80 text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">Client Feedback</p>
+                       </div>
+                       <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] leading-tight text-center">
+                         Professional <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">Excellence.</span>
+                       </h1>
                        
-                       {/* Large Decorative Quote Mark */}
-                       <span className="absolute top-[10%] left-[10%] text-[180px] md:text-[280px] leading-none font-serif text-white/[0.03] font-black select-none pointer-events-none">
-                         "
-                       </span>
-
-                       {/* Small Label */}
+                       {/* Play Button simulating 'Tune In' */}
                        <motion.div 
-                         initial={{ opacity: 0, y: 10 }}
-                         animate={{ opacity: 1, y: 0 }}
-                         transition={{ delay: 0.3, duration: 0.6 }}
-                         className="flex items-center gap-2 mb-6"
+                         whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,1)', color: 'black' }}
+                         whileTap={{ scale: 0.95 }}
+                         className="mt-8 md:mt-10 px-6 py-2.5 rounded-full border border-white/20 flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_30px_rgba(255,255,255,0.05)] pointer-events-none"
                        >
-                         <div className="w-8 h-[1px] bg-white/20" />
-                         <p className="text-white/50 text-[9px] md:text-[11px] uppercase tracking-[0.4em] font-sans font-medium">What Clients Say</p>
-                         <div className="w-8 h-[1px] bg-white/20" />
-                       </motion.div>
-
-                       {/* Main Heading */}
-                       <motion.h1 
-                         initial={{ opacity: 0, y: 20 }}
-                         animate={{ opacity: 1, y: 0 }}
-                         transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                         className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter leading-tight text-center drop-shadow-[0_4px_30px_rgba(96,165,250,0.15)]"
-                       >
-                         Trusted by<br/>
-                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400/90 via-white to-blue-300/80">Professionals.</span>
-                       </motion.h1>
-
-                       {/* Subtitle */}
-                       <motion.p
-                         initial={{ opacity: 0 }}
-                         animate={{ opacity: 1 }}
-                         transition={{ delay: 0.8, duration: 0.6 }}
-                         className="text-white/30 text-[10px] md:text-[13px] font-sans mt-5 md:mt-6 tracking-wide max-w-md text-center leading-relaxed"
-                       >
-                         Real feedback from clients I've had the privilege to work with.
-                       </motion.p>
-
-                       {/* Animated Loading Indicator */}
-                       <motion.div 
-                         initial={{ opacity: 0 }}
-                         animate={{ opacity: 1 }}
-                         transition={{ delay: 1.2 }}
-                         className="mt-10 md:mt-14 flex flex-col items-center gap-3"
-                       >
-                         <div className="flex items-center gap-1.5">
-                           {[0, 1, 2].map((i) => (
-                             <motion.div
-                               key={i}
-                               animate={{ opacity: [0.2, 1, 0.2] }}
-                               transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
-                               className="w-1.5 h-1.5 rounded-full bg-blue-400/80"
-                             />
-                           ))}
-                         </div>
-                         <span className="text-white/25 text-[8px] md:text-[9px] uppercase tracking-[0.3em] font-sans">Loading testimonials</span>
+                         <svg className="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                         <span className="font-semibold text-[9px] md:text-[11px] uppercase tracking-widest pl-1">Starting Presentation...</span>
                        </motion.div>
                      </div>
 
-                     {/* Bottom Subtle Line */}
-                     <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent z-10" />
+                     {/* Bottom Ticker */}
+                     <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-white/10 bg-black flex items-center z-20">
+                       <div className="bg-blue-900 border-r border-blue-500/30 h-full flex items-center px-3 md:px-5 z-10 font-bold text-white text-[8px] md:text-[10px] uppercase tracking-widest flex-shrink-0">
+                         Highlights
+                       </div>
+                       <div className="flex-1 overflow-hidden h-full relative bg-[#0a0a0a]">
+                         <motion.div 
+                           animate={{ x: ['100%', '-100%'] }}
+                           transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
+                           className="absolute whitespace-nowrap h-full flex items-center font-sans text-[9px] md:text-[11px] text-white/70 uppercase tracking-widest"
+                         >
+                           "Delivering incredibly scalable & robust systems" &nbsp;&nbsp; /// &nbsp;&nbsp; "An absolute master of modern web technologies" &nbsp;&nbsp; /// &nbsp;&nbsp; "Elite engineering asset for any team..."
+                         </motion.div>
+                       </div>
+                     </div>
                   </motion.div>
                )}
 
