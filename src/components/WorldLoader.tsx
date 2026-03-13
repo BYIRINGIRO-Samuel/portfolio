@@ -101,73 +101,32 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
 /**
  * Well-Modeled Savanna Acacia Tree - White Edition
  */
-/**
- * Well-Modeled Savanna Acacia Tree - Dynamic Colors
- */
-const SavannaTree = ({ isDay }: { isDay: boolean }) => (
+const SavannaTree = () => (
   <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-    {/* Trunk - Animates from White to Dark Green */}
-    <motion.path 
-      d="M95 180 C 95 150, 85 130, 80 110" 
-      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
-      transition={{ duration: 6 }}
-      strokeWidth="6" strokeLinecap="round" 
-    />
-    <motion.path 
-      d="M105 180 C 105 150, 115 130, 120 110" 
-      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
-      transition={{ duration: 6 }}
-      strokeWidth="6" strokeLinecap="round" 
-    />
+    {/* Trunk */}
+    <path d="M95 180 C 95 150, 85 130, 80 110" stroke="#f0f0f0" strokeWidth="6" strokeLinecap="round" />
+    <path d="M105 180 C 105 150, 115 130, 120 110" stroke="#f0f0f0" strokeWidth="6" strokeLinecap="round" />
     
     {/* Branches */}
-    <motion.path 
-      d="M80 110 C 60 90, 40 85, 30 80" 
-      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
-      transition={{ duration: 6 }}
-      strokeWidth="4" strokeLinecap="round" 
-    />
-    <motion.path 
-      d="M120 110 C 140 90, 160 85, 170 80" 
-      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
-      transition={{ duration: 6 }}
-      strokeWidth="4" strokeLinecap="round" 
-    />
-    <motion.path 
-      d="M100 110 C 100 90, 100 80, 100 70" 
-      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
-      transition={{ duration: 6 }}
-      strokeWidth="4" strokeLinecap="round" 
-    />
+    <path d="M80 110 C 60 90, 40 85, 30 80" stroke="#f0f0f0" strokeWidth="4" strokeLinecap="round" />
+    <path d="M120 110 C 140 90, 160 85, 170 80" stroke="#f0f0f0" strokeWidth="4" strokeLinecap="round" />
+    <path d="M100 110 C 100 90, 100 80, 100 70" stroke="#f0f0f0" strokeWidth="4" strokeLinecap="round" />
     
-    {/* Canopy - Animates from White to Pure Green */}
-    <g className="opacity-100">
-      <motion.ellipse 
-        cx="100" cy="65" rx="60" ry="12" 
-        animate={{ fill: isDay ? "#22C55E" : "#FFFFFF" }}
-        transition={{ duration: 6 }}
-      />
-      <motion.ellipse 
-        cx="60" cy="75" rx="45" ry="10" 
-        animate={{ fill: isDay ? "#16A34A" : "#f8f8f8" }}
-        transition={{ duration: 6 }}
-      />
-      <motion.ellipse 
-        cx="140" cy="75" rx="45" ry="10" 
-        animate={{ fill: isDay ? "#16A34A" : "#f8f8f8" }}
-        transition={{ duration: 6 }}
-      />
+    {/* Canopy */}
+    <g className="opacity-95">
+      <ellipse cx="100" cy="65" rx="60" ry="12" fill="white" />
+      <ellipse cx="60" cy="75" rx="45" ry="10" fill="#f8f8f8" />
+      <ellipse cx="140" cy="75" rx="45" ry="10" fill="#f8f8f8" />
     </g>
 
     {/* Leaves clusters */}
     {[...Array(30)].map((_, i) => (
-      <motion.circle 
+      <circle 
         key={i} 
         cx={50 + Math.random() * 100} 
         cy={50 + Math.random() * 30} 
         r={1.5 + Math.random() * 3} 
-        animate={{ fill: isDay ? "#4ADE80" : "#FFFFFF" }}
-        transition={{ duration: 6 }}
+        fill="white" 
         className="animate-pulse" 
         style={{ animationDelay: `${Math.random() * 2}s` }}
       />
@@ -175,82 +134,28 @@ const SavannaTree = ({ isDay }: { isDay: boolean }) => (
   </svg>
 );
 
-const GrassBlade = ({ x, y, delay, isDay }: { x: number, y: number, delay: number, isDay: boolean }) => (
+const GrassBlade = ({ x, y, delay }: { x: number, y: number, delay: number }) => (
   <motion.path
     d={`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`}
     stroke="white"
     strokeWidth="1.2"
     strokeOpacity="0.9"
     fill="none"
-    animate={{ 
-      d: [`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`, `M ${x} ${y} Q ${x - 3} ${y - 10}, ${x - 1} ${y - 15}`, `M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`],
-      stroke: isDay ? "#22C55E" : "#FFFFFF" 
-    }}
-    transition={{ 
-      d: { duration: 3, repeat: Infinity, ease: "easeInOut", delay },
-      stroke: { duration: 6 }
-    }}
+    animate={{ d: [`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`, `M ${x} ${y} Q ${x - 3} ${y - 10}, ${x - 1} ${y - 15}`, `M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`] }}
+    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
   />
-);
-
-/**
- * Modeled Sun Component (SVG)
- * Rising sun for the day transition
- */
-const Sun = ({ isDay }: { isDay: boolean }) => (
-  <motion.div 
-    initial={{ y: 200, opacity: 0 }}
-    animate={isDay ? { y: -100, opacity: 1 } : { y: 200, opacity: 0 }}
-    transition={{ duration: 6, ease: [0.16, 1, 0.3, 1] }}
-    className="absolute left-[70%] top-[45%] z-0"
-  >
-    <div className="w-14 h-14 rounded-full bg-[#FFEA00] shadow-[0_0_80px_rgba(255,234,0,0.5)] blur-[1px]" />
-    <motion.div 
-        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 4, repeat: Infinity }}
-        className="absolute inset-[-15px] rounded-full bg-yellow-400/10 blur-2xl" 
-    />
-  </motion.div>
-);
-
-/**
- * Modeled Bird Component (SVG)
- * Simple flapping animation for birds flying in the distance
- */
-const Bird = ({ delay, xTarget }: { delay: number, xTarget: number }) => (
-  <motion.div
-    initial={{ x: -100, y: 50 + Math.random() * 80, opacity: 0 }}
-    animate={{ x: xTarget, opacity: 1 }}
-    transition={{ duration: 8, delay, ease: "linear" }}
-    className="absolute z-0"
-  >
-    <motion.svg 
-      width="20" height="15" viewBox="0 0 20 15" 
-      animate={{ y: [0, -5, 0] }}
-      transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
-    >
-      <motion.path 
-        d="M0 5 Q 5 0, 10 5 Q 15 0, 20 5" 
-        stroke="#000000" strokeWidth="2" fill="none"
-        animate={{ d: ["M0 8 Q 5 0, 10 8 Q 15 0, 20 8", "M0 2 Q 5 10, 10 2 Q 15 10, 20 2", "M0 8 Q 5 0, 10 8 Q 15 0, 20 8"] }}
-        transition={{ duration: 0.4, repeat: Infinity }}
-      />
-    </motion.svg>
-  </motion.div>
 );
 
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
-  const [isDay, setIsDay] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setProgress(46); // Giraffe stops under the tree
     }, 500);
 
-    const sunriseTimer = setTimeout(() => setIsDay(true), 3000);
     const finishTimer = setTimeout(() => setIsDone(true), 12500);
 
     const exitTimer = setTimeout(() => {
@@ -260,7 +165,6 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(sunriseTimer);
       clearTimeout(finishTimer);
       clearTimeout(exitTimer);
     };
@@ -298,42 +202,23 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           {/* Centered MODULAR LENS (Increased Size for High Detail) */}
           <motion.div 
             initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ 
-              scale: 1, 
-              opacity: 1,
-              backgroundColor: isDay ? "#FFFFFF" : "#020205" // Pure White to Midnight
-            }}
+            animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.2, type: "spring", damping: 20 }}
-            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
+            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 bg-[#020205] shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
           >
               {/* SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
-                {/* Birds Flying (Visible when day starts) */}
-                {isDay && (
-                  <div className="absolute inset-0 pointer-events-none">
-                    {[...Array(6)].map((_, i) => (
-                      <Bird key={i} delay={i * 0.8} xTarget={450} />
-                    ))}
-                  </div>
-                )}
-                {/* Glowing Moon - Fades as sun rises */}
-                <motion.div 
-                  animate={{ opacity: isDay ? 0 : 1, y: isDay ? -50 : 0 }}
-                  transition={{ duration: 5 }}
-                  className="absolute top-[12%] left-[12%] w-14 h-14 rounded-full bg-white/5 blur-[1px]"
-                >
+                {/* Glowing Moon */}
+                <div className="absolute top-[12%] left-[12%] w-14 h-14 rounded-full bg-white/5 blur-[1px]">
                   <div className="absolute inset-0 rounded-full bg-white/20 blur-[4px] animate-pulse" />
                   <div className="absolute inset-0 rounded-full bg-white/95" style={{ clipPath: "path('M 28 0 A 28 28 0 1 0 28 56 A 18 24 0 1 1 28 0')" }} />
-                </motion.div>
+                </div>
                 
-                {/* Twinkling Stars - Fade as sun rises */}
+                {/* Twinkling Stars */}
                 {[...Array(40)].map((_, i) => (
                   <motion.div
                     key={i}
-                    animate={{ 
-                      opacity: isDay ? 0 : [0.2, 0.8, 0.2], 
-                      scale: isDay ? 0 : [1, 1.2, 1] 
-                    }}
+                    animate={{ opacity: [0.2, 0.8, 0.2], scale: [1, 1.2, 1] }}
                     transition={{ duration: 2 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 5 }}
                     className="absolute w-[2px] h-[2px] bg-white rounded-full"
                     style={{ 
@@ -343,16 +228,6 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                     }}
                   />
                 ))}
-
-                {/* THE RISING SUN */}
-                <Sun isDay={isDay} />
-                
-                {/* Daylight Horizon Glow - Brighter for the white sky */}
-                <motion.div 
-                   animate={{ opacity: isDay ? 0.3 : 0 }}
-                   transition={{ duration: 6 }}
-                   className="absolute bottom-0 inset-x-0 h-40 bg-white/20 blur-2xl z-0"
-                />
               </div>
 
               {/* THE MINIATURE WORLD (Optimized for savanna grass scenario) */}
@@ -369,7 +244,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                       const x = 50 + t * 1180;
                       // Distribute grass more across the "floor" instead of just a line
                       const y = 250 + Math.random() * 200;
-                      return <GrassBlade key={i} x={x} y={y} delay={Math.random() * 2} isDay={isDay} />;
+                      return <GrassBlade key={i} x={x} y={y} delay={Math.random() * 2} />;
                     })}
 
                    {/* Active Spirit Trail */}
@@ -403,7 +278,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
                   {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
                   <div className="absolute top-[140px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
-                      <SavannaTree isDay={isDay} />
+                      <SavannaTree />
                   </div>
 
                  {/* THE WHITE GIRAFFE */}
@@ -411,7 +286,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    className="absolute z-30 pointer-events-none origin-center scale-[1]"
                    animate={{ 
                      offsetDistance: `${progress}%`,
-                     filter: isDay ? "brightness(1.1) drop-shadow(0 0 20px rgba(255,255,255,0.4))" : "brightness(0.9)"
+                     filter: "brightness(0.9)"
                    }}
                    transition={{ 
                      offsetDistance: { duration: 12, ease: [0.16, 1, 0.3, 1] },
@@ -426,21 +301,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                  </motion.div>
                </div>
 
-               {/* ATMOSPHERE Overlays - Adjust for Day */}
-               <motion.div 
-                  animate={{ opacity: isDay ? 0.05 : 0.4 }}
-                  transition={{ duration: 6 }}
-                  className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" 
-               />
-               <motion.div 
-                  animate={{ 
-                    background: isDay 
-                      ? "radial-gradient(circle at 65% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)" 
-                      : "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.4) 100%)"
-                  }}
-                  transition={{ duration: 6 }}
-                  className="absolute inset-0 pointer-events-none" 
-               />
+               {/* ATMOSPHERE Overlays */}
+               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none opacity-40" />
+               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.4) 100%)" }} />
 
               {/* HUD SCANNER Radar Overlay */}
               <motion.div 
