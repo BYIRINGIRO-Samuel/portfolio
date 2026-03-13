@@ -146,6 +146,80 @@ const GrassBlade = ({ x, y, delay }: { x: number, y: number, delay: number }) =>
   />
 );
 
+/**
+ * Modeled Rabbit Component (SVG) - Minimalist & Tiny
+ * Cute hopping/twitching idle animation
+ */
+const Rabbit = () => (
+  <motion.div 
+    animate={{ y: [0, -3, 0], scaleY: [1, 0.9, 1] }}
+    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+    className="relative"
+  >
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* Body */}
+      <ellipse cx="15" cy="22" rx="10" ry="7" fill="#E5E7EB" />
+      {/* Head */}
+      <circle cx="22" cy="15" r="5" fill="#F3F4F6" />
+      {/* Ears - Twitching */}
+      <motion.path 
+        animate={{ rotate: [-5, 5, -5] }}
+        transition={{ duration: 0.5, repeat: Infinity }}
+        d="M20 12 L19 2 L22 2 L23 12 Z" fill="#F3F4F6" 
+      />
+      <motion.path 
+        animate={{ rotate: [5, -5, 5] }}
+        transition={{ duration: 0.5, repeat: Infinity, delay: 0.2 }}
+        d="M23 12 L24 2 L27 2 L26 12 Z" fill="#F3F4F6" 
+      />
+      {/* Eye */}
+      <circle cx="24" cy="14" r="0.8" fill="black" />
+      {/* Tail */}
+      <circle cx="6" cy="22" r="2.5" fill="white" />
+    </svg>
+  </motion.div>
+);
+
+/**
+ * Modeled Lion Component (SVG) - Regal & Minimalist
+ * Subtle breathing and tail-swishing animation
+ */
+const Lion = () => (
+  <motion.div 
+    animate={{ scale: [1, 1.02, 1] }}
+    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+    className="relative"
+  >
+    <svg width="100" height="70" viewBox="0 0 100 70" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(180,83,9,0.2)]">
+      {/* Legs */}
+      <path d="M25 55 L28 68 L34 68 L32 55 Z" fill="#B45309" />
+      <path d="M70 55 L73 68 L79 68 L77 55 Z" fill="#B45309" />
+      
+      {/* Body */}
+      <path d="M20 35 C 20 20, 80 20, 85 45 L85 55 C 85 62, 20 62, 20 55 Z" fill="#D97706" />
+      
+      {/* Tail - Swishing */}
+      <motion.path 
+        animate={{ rotate: [-10, 10, -10] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        d="M20 40 C 5 40, 0 60, 5 65" 
+        stroke="#78350F" strokeWidth="2.5" strokeLinecap="round" className="origin-right"
+      />
+      
+      {/* Mane & Head */}
+      <g>
+        {/* Mane */}
+        <circle cx="85" cy="35" r="18" fill="#78350F" />
+        {/* Face */}
+        <path d="M80 30 C 80 22, 100 22, 100 35 C 100 45, 95 48, 85 48 Z" fill="#F59E0B" />
+        {/* Features */}
+        <circle cx="95" cy="33" r="1.5" fill="black" />
+        <path d="M100 38 L105 42" stroke="#78350F" strokeWidth="1" />
+      </g>
+    </svg>
+  </motion.div>
+);
+
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -277,7 +351,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                  />
 
                  {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
-                 <div className="absolute top-[180px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
+                 <div className="absolute top-[160px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
                      <SavannaTree />
                  </div>
 
@@ -293,6 +367,19 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                  >
                    <Giraffe isMoving={!isDone} />
                  </motion.div>
+
+                 {/* THE LION (Relaxing in the park) */}
+                 <div className="absolute top-[280px] left-[780px] z-20 pointer-events-none scale-[0.8]">
+                    <Lion />
+                 </div>
+
+                 {/* THE RABBIT (Hopping in the foreground) */}
+                 <div className="absolute top-[350px] left-[320px] z-40 pointer-events-none scale-[1.2]">
+                    <Rabbit />
+                 </div>
+                 <div className="absolute top-[380px] left-[900px] z-40 pointer-events-none scale-[1] opacity-80">
+                    <Rabbit />
+                 </div>
               </div>
 
               {/* SAVANNA ATMOSPHERE Overlays */}
