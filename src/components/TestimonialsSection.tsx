@@ -195,6 +195,60 @@ const PremiumGlassScene = () => {
   );
 };
 
+/* 3D Floating Glass Sphere Scene for Standby Screen */
+const StandbyGlassScene = () => {
+  return (
+    <Suspense fallback={null}>
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[5, 8, 5]} intensity={1.5} />
+      <spotLight position={[-3, 3, 5]} angle={0.3} penumbra={1} intensity={2} color="#60a5fa" />
+      <spotLight position={[3, -3, -5]} angle={0.3} penumbra={1} intensity={1.5} color="#ffffff" />
+
+      <Float speed={1.5} rotationIntensity={0.8} floatIntensity={1}>
+        <group>
+          {/* Main Glass Icosahedron */}
+          <mesh scale={1.8} castShadow>
+            <icosahedronGeometry args={[1, 1]} />
+            <MeshTransmissionMaterial
+              backside
+              samples={4}
+              thickness={2}
+              chromaticAberration={0.8}
+              anisotropy={0.5}
+              distortion={0.3}
+              distortionScale={0.3}
+              temporalDistortion={0.05}
+              iridescence={1}
+              iridescenceIOR={1.2}
+              iridescenceThicknessRange={[0, 1400]}
+              color="#a0c4ff"
+            />
+          </mesh>
+
+          {/* Wireframe Inner Shell */}
+          <mesh scale={1.2}>
+            <icosahedronGeometry args={[1, 0]} />
+            <meshStandardMaterial color="#ffffff" emissive="#60a5fa" emissiveIntensity={0.5} wireframe opacity={0.3} transparent />
+          </mesh>
+
+          {/* Tiny Orbiting Core */}
+          <mesh scale={0.4}>
+            <dodecahedronGeometry args={[1, 0]} />
+            <meshStandardMaterial color="#60a5fa" emissive="#60a5fa" emissiveIntensity={2} />
+          </mesh>
+
+          {/* Sparkles */}
+          <Sparkles count={80} scale={5} size={2} speed={0.3} opacity={0.6} color="#60a5fa" />
+          <Sparkles count={40} scale={3} size={1.5} speed={0.5} opacity={0.4} color="#ffffff" />
+        </group>
+      </Float>
+
+      <ContactShadows position={[0, -2.5, 0]} opacity={0.3} scale={10} blur={2} far={4} color="#000000" />
+      <Environment preset="city" />
+    </Suspense>
+  );
+};
+
 type TVState = 'standby' | 'booting' | 'intro' | 'playing';
 
 /* Premium Rwandan Imigongo SVG Background */
@@ -383,6 +437,14 @@ const Testimonials = () => {
                          Verified Professional Endorsements
                        </span>
                      </div>
+
+                     {/* 3D Glass Scene Background for Standby */}
+                     <div className="absolute inset-0 z-[5] opacity-50 pointer-events-none select-none">
+                       <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
+                         <StandbyGlassScene />
+                       </Canvas>
+                     </div>
+                     <div className="absolute inset-0 z-[6] bg-[radial-gradient(circle_at_center,transparent_15%,rgba(0,0,0,0.9)_65%)] pointer-events-none" />
 
                      {/* Center Branding */}
                      <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
