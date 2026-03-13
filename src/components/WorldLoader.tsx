@@ -192,8 +192,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
 
-                {/* WHITE ISOMETRIC GAS STATION - Aligned with the car stop point */}
-                <div className="absolute top-[48%] left-[56%] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center">
+                {/* WHITE ISOMETRIC GAS STATION - Precisely placed relative to the 1280px road world */}
+                <div className="absolute top-[260px] left-[780px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center">
                     <IsometricGasStation />
                 </div>
 
