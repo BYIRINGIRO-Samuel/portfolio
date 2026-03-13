@@ -78,14 +78,15 @@ const IsometricGasStation = () => (
       GAS STATION
     </motion.text>
 
-    {/* Fuel Pumps with Visible Colors */}
+    {/* Fuel Pumps with Rectangular Shapes */}
     <g transform="translate(55, 75)">
        {/* Pump 1 - Cyber Blue Accent */}
        <motion.path 
          animate={{ strokeOpacity: [0.8, 1, 0.8] }}
          transition={{ duration: 1.5, repeat: Infinity }}
-         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="white" stroke="#3b82f6" strokeWidth="1" 
+         d="M0 4L12 8L24 4V24L12 28L0 24V4Z" fill="white" stroke="#3b82f6" strokeWidth="1" 
        />
+       <path d="M0 4L12 0L24 4L12 8L0 4Z" fill="#eee" stroke="#3b82f6" strokeWidth="0.5" />
        <rect x="4" y="10" width="16" height="8" fill="#1e1e1e" stroke="#3b82f6" strokeWidth="0.5" />
        <path d="M4 22H20" stroke="#3b82f6" strokeWidth="3" />
     </g>
@@ -94,8 +95,9 @@ const IsometricGasStation = () => (
        <motion.path 
          animate={{ strokeOpacity: [0.8, 1, 0.8] }}
          transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="white" stroke="#22c55e" strokeWidth="1" 
+         d="M0 4L12 8L24 4V24L12 28L0 24V4Z" fill="white" stroke="#22c55e" strokeWidth="1" 
        />
+       <path d="M0 4L12 0L24 4L12 8L0 4Z" fill="#eee" stroke="#22c55e" strokeWidth="0.5" />
        <rect x="4" y="10" width="16" height="8" fill="#1e1e1e" stroke="#22c55e" strokeWidth="0.5" />
        <path d="M4 22H20" stroke="#22c55e" strokeWidth="3" />
     </g>
@@ -205,8 +207,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
 
-                {/* WHITE ISOMETRIC GAS STATION - Pushed further UP for extra clearance */}
-                <div className="absolute top-[20px] left-[780px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
+                {/* WHITE ISOMETRIC GAS STATION - Pushed to the LEFT to be centered in the lens */}
+                <div className="absolute top-[20px] left-[640px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
                     <IsometricGasStation />
                 </div>
 
