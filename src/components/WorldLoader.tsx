@@ -102,31 +102,31 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
  * Well-Modeled Savanna Acacia Tree - White Edition
  */
 const SavannaTree = () => (
-  <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_50px_rgba(255,255,255,0.2)]">
-    {/* Trunk */}
-    <path d="M95 180 C 95 150, 85 130, 80 110" stroke="#f0f0f0" strokeWidth="6" strokeLinecap="round" />
-    <path d="M105 180 C 105 150, 115 130, 120 110" stroke="#f0f0f0" strokeWidth="6" strokeLinecap="round" />
+  <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(34,197,94,0.2)]">
+    {/* Trunk - Darker Green/Brownish */}
+    <path d="M95 180 C 95 150, 85 130, 80 110" stroke="#14532D" strokeWidth="6" strokeLinecap="round" />
+    <path d="M105 180 C 105 150, 115 130, 120 110" stroke="#14532D" strokeWidth="6" strokeLinecap="round" />
     
     {/* Branches */}
-    <path d="M80 110 C 60 90, 40 85, 30 80" stroke="#f0f0f0" strokeWidth="4" strokeLinecap="round" />
-    <path d="M120 110 C 140 90, 160 85, 170 80" stroke="#f0f0f0" strokeWidth="4" strokeLinecap="round" />
-    <path d="M100 110 C 100 90, 100 80, 100 70" stroke="#f0f0f0" strokeWidth="4" strokeLinecap="round" />
+    <path d="M80 110 C 60 90, 40 85, 30 80" stroke="#14532D" strokeWidth="4" strokeLinecap="round" />
+    <path d="M120 110 C 140 90, 160 85, 170 80" stroke="#14532D" strokeWidth="4" strokeLinecap="round" />
+    <path d="M100 110 C 100 90, 100 80, 100 70" stroke="#14532D" strokeWidth="4" strokeLinecap="round" />
     
-    {/* Canopy */}
-    <g className="opacity-95">
-      <ellipse cx="100" cy="65" rx="60" ry="12" fill="white" />
-      <ellipse cx="60" cy="75" rx="45" ry="10" fill="#f8f8f8" />
-      <ellipse cx="140" cy="75" rx="45" ry="10" fill="#f8f8f8" />
+    {/* Canopy - Pure Green */}
+    <g className="opacity-100">
+      <ellipse cx="100" cy="65" rx="60" ry="12" fill="#22C55E" />
+      <ellipse cx="60" cy="75" rx="45" ry="10" fill="#16A34A" />
+      <ellipse cx="140" cy="75" rx="45" ry="10" fill="#16A34A" />
     </g>
 
     {/* Leaves clusters */}
-    {[...Array(25)].map((_, i) => (
+    {[...Array(30)].map((_, i) => (
       <circle 
         key={i} 
         cx={50 + Math.random() * 100} 
         cy={50 + Math.random() * 30} 
         r={1.5 + Math.random() * 3} 
-        fill="white" 
+        fill="#4ADE80" 
         className="animate-pulse" 
         style={{ animationDelay: `${Math.random() * 2}s` }}
       />
@@ -138,12 +138,12 @@ const GrassBlade = ({ x, y, delay, isDay }: { x: number, y: number, delay: numbe
   <motion.path
     d={`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`}
     stroke="white"
-    strokeWidth="0.8"
-    strokeOpacity="0.8"
+    strokeWidth="1.2"
+    strokeOpacity="0.9"
     fill="none"
     animate={{ 
       d: [`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`, `M ${x} ${y} Q ${x - 3} ${y - 10}, ${x - 1} ${y - 15}`, `M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`],
-      stroke: isDay ? "#16A34A" : "#FFFFFF" // Darker green for visibility vs pure white
+      stroke: isDay ? "#22C55E" : "#FFFFFF" 
     }}
     transition={{ 
       d: { duration: 3, repeat: Infinity, ease: "easeInOut", delay },
@@ -190,7 +190,7 @@ const Bird = ({ delay, xTarget }: { delay: number, xTarget: number }) => (
     >
       <motion.path 
         d="M0 5 Q 5 0, 10 5 Q 15 0, 20 5" 
-        stroke="black" strokeWidth="1.5" fill="none"
+        stroke="#000000" strokeWidth="2" fill="none"
         animate={{ d: ["M0 8 Q 5 0, 10 8 Q 15 0, 20 8", "M0 2 Q 5 10, 10 2 Q 15 10, 20 2", "M0 8 Q 5 0, 10 8 Q 15 0, 20 8"] }}
         transition={{ duration: 0.4, repeat: Infinity }}
       />
@@ -263,7 +263,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
               backgroundColor: isDay ? "#FFFFFF" : "#020205" // Pure White to Midnight
             }}
             transition={{ duration: 1.2, type: "spring", damping: 20 }}
-            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/20 shadow-[0_0_150px_rgba(255,255,255,0.05)] overflow-hidden z-10"
+            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
           >
               {/* SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
@@ -308,9 +308,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 
                 {/* Daylight Horizon Glow - Brighter for the white sky */}
                 <motion.div 
-                   animate={{ opacity: isDay ? 0.6 : 0 }}
+                   animate={{ opacity: isDay ? 0.3 : 0 }}
                    transition={{ duration: 6 }}
-                   className="absolute bottom-0 inset-x-0 h-60 bg-gradient-to-t from-white via-white to-transparent blur-3xl z-0"
+                   className="absolute bottom-0 inset-x-0 h-40 bg-white/20 blur-2xl z-0"
                 />
               </div>
 
@@ -360,10 +360,10 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    }}
                  />
 
-                 {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
-                 <div className="absolute top-[160px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
-                     <SavannaTree />
-                 </div>
+                  {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
+                  <div className="absolute top-[140px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
+                      <SavannaTree />
+                  </div>
 
                  {/* THE WHITE GIRAFFE */}
                  <motion.div 
@@ -387,15 +387,15 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
                {/* ATMOSPHERE Overlays - Adjust for Day */}
                <motion.div 
-                  animate={{ opacity: isDay ? 0.2 : 0.6 }}
+                  animate={{ opacity: isDay ? 0.05 : 0.4 }}
                   transition={{ duration: 6 }}
-                  className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent pointer-events-none" 
+                  className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" 
                />
                <motion.div 
                   animate={{ 
                     background: isDay 
-                      ? "radial-gradient(circle at 65% 50%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 100%)" 
-                      : "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.9) 100%)"
+                      ? "radial-gradient(circle at 65% 50%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%)" 
+                      : "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.01) 0%, rgba(0,0,0,0.4) 100%)"
                   }}
                   transition={{ duration: 6 }}
                   className="absolute inset-0 pointer-events-none" 
@@ -408,8 +408,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none blur-sm z-50"
               />
 
-              {/* Dynamic Vignette Lens Flare */}
-              <div className="absolute inset-0 rounded-full shadow-[inset_0_0_120px_rgba(0,0,0,1)] pointer-events-none border border-white/5" />
+               {/* Dynamic Vignette Lens Flare - Reduced visibility */}
+               <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(0,0,0,0.2)] pointer-events-none border border-white/10" />
            </motion.div>
 
            {/* FINAL SHOCKWAVE PULSE */}
@@ -435,8 +435,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
               </div>
            </div>
 
-           {/* Cinematic Global Vignette */}
-           <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,1)]" />
+            {/* Cinematic Global Vignette - Reduced for day visibility */}
+            <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_100px_rgba(0,0,0,0.3)]" />
         </motion.div>
       )}
     </AnimatePresence>
