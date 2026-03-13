@@ -177,12 +177,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
   const [hudProgress, setHudProgress] = useState(0);
-  const [isBooting, setIsBooting] = useState(true);
 
   useEffect(() => {
-    // Cinematic Boot Sequence
-    const bootTimer = setTimeout(() => setIsBooting(false), 2500);
-
     // Smoother HUD progress for visual polish
     const hudInterval = setInterval(() => {
         setHudProgress(prev => {
@@ -194,7 +190,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
     const timer = setTimeout(() => {
       setProgress(46); // Giraffe stops under the tree
-    }, 3000);
+    }, 1500);
 
     const finishTimer = setTimeout(() => {
         setIsDone(true);
@@ -207,7 +203,6 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     }, 17500);
 
     return () => {
-      clearTimeout(bootTimer);
       clearInterval(hudInterval);
       clearTimeout(timer);
       clearTimeout(finishTimer);
@@ -228,72 +223,45 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden"
         >
-          {/* CINEMATIC BOOT SEQUENCE LOGS */}
-          <AnimatePresence>
-            {isBooting && (
-              <motion.div 
-                exit={{ opacity: 0, scale: 1.1 }}
-                className="absolute inset-0 z-[110] flex flex-col items-center justify-center bg-black p-10 pointer-events-none"
-              >
-                <div className="w-full max-w-lg font-mono text-[10px] text-white/40 space-y-1">
-                    {[
-                        "> INITIALIZING KERNEL_SPIRIT_V2.0",
-                        "> LOADING SECTOR: SAVANNA_PLAINS",
-                        "> CONNECTING TO BIOMETRIC_REPLICA...",
-                        "> SCANNING_ENVIRONMENT: NIGHT_MODE_ACTIVE",
-                        "> ASSET_LOAD: GIRAFFE_MODEL_STABLE",
-                        "> ASSET_LOAD: ACACIA_TREE_STABLE",
-                        "> CALCULATING TRAJECTORY: SPIRIT_PATH_04",
-                        "> BOOT_READY: 0x44A299BF"
-                    ].map((text, i) => (
-                        <motion.div
-                            key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: i * 0.15 }}
-                        >
-                            {text}
-                        </motion.div>
-                    ))}
-                    <motion.div 
-                        animate={{ opacity: [0, 1] }} 
-                        transition={{ duration: 0.2, repeat: Infinity }}
-                        className="w-2 h-4 bg-white/40 inline-block mt-2"
-                    />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           {/* Static Background Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
           
           {/* Outer Atmosphere - Parallax Data Particles */}
           <div className="absolute inset-0 z-0 opacity-20">
              {[...Array(60)].map((_, i) => (
-               <motion.div
-                 key={i}
-                 animate={{ y: [0, -1200] }}
-                 transition={{ duration: 12 + Math.random() * 20, repeat: Infinity, ease: "linear" }}
-                 className="absolute w-px h-px bg-white"
-                 style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
-               />
+                <motion.div
+                  key={i}
+                  animate={{ y: [0, -1200] }}
+                  transition={{ duration: 12 + Math.random() * 20, repeat: Infinity, ease: "linear" }}
+                  className="absolute w-px h-px bg-white"
+                  style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+                />
              ))}
           </div>
 
           {/* PREMIUM LOADER FRAME & HUD */}
-          <div className="relative group">
+          <div className="relative">
+            {/* Tactical Grid Overlay */}
+            <div className="absolute inset-[-150px] opacity-[0.03] pointer-events-none" style={{ backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+            
+            {/* Technical Rotating Frame Decor */}
+            <motion.svg className="absolute inset-[-60px] w-[calc(100%+120px)] h-[calc(100%+120px)] pointer-events-none origin-center" animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }}>
+                <circle cx="50%" cy="50%" r="49%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="1 10" className="opacity-10" />
+                <path d="M 50% 5% L 50% 8%" stroke="white" strokeWidth="2" className="opacity-30" />
+                <path d="M 50% 92% L 50% 95%" stroke="white" strokeWidth="2" className="opacity-30" />
+            </motion.svg>
+
             {/* Outer Rotating Progress Ring (High Precision) */}
-            <svg className="absolute inset-[-40px] w-[calc(100%+80px)] h-[calc(100%+80px)] -rotate-90 pointer-events-none opacity-40">
+            <svg className="absolute inset-[-40px] w-[calc(100%+80px)] h-[calc(100%+80px)] -rotate-90 pointer-events-none opacity-60">
                 <circle 
                     cx="50%" cy="50%" r="48%" 
                     stroke="white" strokeWidth="0.5" fill="none" 
-                    strokeDasharray="4 8"
-                    className="opacity-20"
+                    strokeDasharray="2 4"
+                    className="opacity-10"
                 />
                 <motion.circle 
                     cx="50%" cy="50%" r="48%" 
-                    stroke="white" strokeWidth="1.5" fill="none" 
+                    stroke="white" strokeWidth="2" fill="none" 
                     strokeDasharray="1000"
                     animate={{ strokeDashoffset: 1000 - (hudProgress * 10) }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
@@ -304,7 +272,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 3.5 }}
+                transition={{ delay: 1 }}
                 className="absolute top-[-50px] left-[-30px] flex gap-4 text-[9px] font-mono text-white/40 tracking-wider pointer-events-none"
             >
                 <div className="flex flex-col gap-1">
@@ -325,7 +293,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             <motion.div 
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 3.8 }}
+                transition={{ delay: 1.3 }}
                 className="absolute bottom-[-50px] right-[-30px] flex items-end gap-3 pointer-events-none"
             >
                 <div className="flex flex-col items-end">
@@ -335,17 +303,6 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                     </div>
                 </div>
             </motion.div>
-
-            {/* Tactical Grid / Coordinates Crosshair Layer */}
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isBooting ? 0 : 0.15 }}
-                className="absolute inset-[-100px] border border-white/5 pointer-events-none z-0"
-                style={{ 
-                    backgroundImage: "radial-gradient(circle, white 0.5px, transparent 0.5px)",
-                    backgroundSize: "30px 30px" 
-                }}
-            />
 
             {/* Centered MODULAR LENS (Increased Size for High Detail) */}
             <motion.div 
@@ -436,40 +393,75 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                        <SavannaTree />
                    </div>
 
-                 {/* THE WHITE GIRAFFE */}
-                 <motion.div 
-                   className="absolute z-30 pointer-events-none origin-center scale-[1]"
-                   animate={{ 
-                     offsetDistance: `${progress}%`,
-                     filter: "brightness(0.9)"
-                   }}
-                   transition={{ 
-                     offsetDistance: { duration: 12, ease: "easeInOut" },
-                     filter: { duration: 6 }
-                   }}
-                   style={{ 
-                     offsetPath: `path("${roadPath}")`,
-                     offsetRotate: "0deg"
-                   }}
-                 >
-                   <Giraffe isMoving={!isDone} />
-                 </motion.div>
+                  {/* CINEMATIC TARGET LOCKING (Homing System) */}
+                  <motion.div 
+                    className="absolute z-50 pointer-events-none"
+                    animate={{ 
+                        offsetDistance: `${progress}%`,
+                        opacity: isDone ? 0 : 1
+                    }}
+                    transition={{ offsetDistance: { duration: 12, ease: "easeInOut" } }}
+                    style={{ 
+                        offsetPath: `path("${roadPath}")`,
+                        offsetRotate: "0deg",
+                        width: "180px", height: "180px",
+                        transform: "translate(-50%, -50%)"
+                    }}
+                  >
+                        {/* Interactive UI Corners */}
+                        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-white/40" />
+                        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-white/40" />
+                        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-white/40" />
+                        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-white/40" />
+                        
+                        {/* Scanning Bar */}
+                        <motion.div 
+                            animate={{ top: ["10%", "90%", "10%"] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                            className="absolute left-0 right-0 h-[1px] bg-white/20 blur-[1px]" 
+                        />
+
+                        {/* Telemetry Labels */}
+                        <div className="absolute -top-10 left-0 flex flex-col font-mono text-[8px] text-white/60 uppercase">
+                            <span className="bg-white/10 px-1">Tracking_ID: 0xG_SPIRIT</span>
+                            <span>Distance: {(progress * 12.5).toFixed(1)}m</span>
+                        </div>
+                  </motion.div>
+
+                  {/* THE WHITE GIRAFFE */}
+                  <motion.div 
+                    className="absolute z-30 pointer-events-none origin-center scale-[1]"
+                    animate={{ 
+                      offsetDistance: `${progress}%`,
+                      filter: "brightness(0.9)"
+                    }}
+                    transition={{ 
+                      offsetDistance: { duration: 12, ease: "easeInOut" },
+                      filter: { duration: 6 }
+                    }}
+                    style={{ 
+                      offsetPath: `path("${roadPath}")`,
+                      offsetRotate: "0deg"
+                    }}
+                  >
+                    <Giraffe isMoving={!isDone} />
+                  </motion.div>
                </div>
 
-               {/* ATMOSPHERE Overlays */}
-               <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none opacity-40" />
-               <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.4) 100%)" }} />
+                {/* ATMOSPHERE Overlays */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none opacity-40" />
+                <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.4) 100%)" }} />
 
-              {/* HUD SCANNER Radar Overlay */}
-              <motion.div 
-                animate={{ y: ["-100%", "300%"] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none blur-sm z-50"
-              />
+               {/* HUD SCANNER Radar Overlay */}
+               <motion.div 
+                 animate={{ y: ["-100%", "300%"] }}
+                 transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                 className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none blur-sm z-50"
+               />
 
                {/* Dynamic Vignette Lens Flare - Refined dynamics */}
                <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(0,0,0,0.2)] pointer-events-none border border-white/10" />
-           </motion.div>
+            </motion.div>
           </div>
 
            {/* FINAL SHOCKWAVE PULSE */}
