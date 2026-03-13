@@ -118,8 +118,8 @@ const GrassBlade = ({ x, y, delay }: { x: number, y: number, delay: number }) =>
   <motion.path
     d={`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`}
     stroke="white"
-    strokeWidth="0.5"
-    strokeOpacity="0.2"
+    strokeWidth="0.8"
+    strokeOpacity="0.8"
     fill="none"
     animate={{ d: [`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`, `M ${x} ${y} Q ${x - 3} ${y - 10}, ${x - 1} ${y - 15}`, `M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`] }}
     transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
@@ -196,7 +196,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                     <path d={roadPath} fill="none" stroke="white" strokeWidth="180" className="opacity-[0.03] blur-3xl" />
                     
                     {/* Heavy Grass Clusters */}
-                    {[...Array(350)].map((_, i) => {
+                    {[...Array(400)].map((_, i) => {
                       const t = Math.random();
                       const x = 50 + t * 1180;
                       // Distribute grass more across the "floor" instead of just a line
@@ -234,7 +234,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                  />
 
                  {/* WHITE SAVANNA TREE - Moved UP to create more room */}
-                 <div className="absolute top-[40px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
+                 <div className="absolute top-[10px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
                      <SavannaTree />
                  </div>
 
