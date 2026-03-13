@@ -166,6 +166,32 @@ const Sun = ({ isDay }: { isDay: boolean }) => (
   </motion.div>
 );
 
+/**
+ * Modeled Bird Component (SVG)
+ * Simple flapping animation for birds flying in the distance
+ */
+const Bird = ({ delay, xTarget }: { delay: number, xTarget: number }) => (
+  <motion.div
+    initial={{ x: -100, y: 50 + Math.random() * 80, opacity: 0 }}
+    animate={{ x: xTarget, opacity: 1 }}
+    transition={{ duration: 8, delay, ease: "linear" }}
+    className="absolute z-0"
+  >
+    <motion.svg 
+      width="20" height="15" viewBox="0 0 20 15" 
+      animate={{ y: [0, -5, 0] }}
+      transition={{ duration: 0.4, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <motion.path 
+        d="M0 5 Q 5 0, 10 5 Q 15 0, 20 5" 
+        stroke="black" strokeWidth="1.5" fill="none"
+        animate={{ d: ["M0 8 Q 5 0, 10 8 Q 15 0, 20 8", "M0 2 Q 5 10, 10 2 Q 15 10, 20 2", "M0 8 Q 5 0, 10 8 Q 15 0, 20 8"] }}
+        transition={{ duration: 0.4, repeat: Infinity }}
+      />
+    </motion.svg>
+  </motion.div>
+);
+
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -228,13 +254,21 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             animate={{ 
               scale: 1, 
               opacity: 1,
-              backgroundColor: isDay ? "#87CEEB" : "#020205" // Sky Blue to Midnight
+              backgroundColor: isDay ? "#FFFFFF" : "#020205" // Pure White to Midnight
             }}
             transition={{ duration: 1.2, type: "spring", damping: 20 }}
             className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/20 shadow-[0_0_150px_rgba(255,255,255,0.05)] overflow-hidden z-10"
           >
               {/* SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
+                {/* Birds Flying (Visible when day starts) */}
+                {isDay && (
+                  <div className="absolute inset-0 pointer-events-none">
+                    {[...Array(6)].map((_, i) => (
+                      <Bird key={i} delay={i * 0.8} xTarget={450} />
+                    ))}
+                  </div>
+                )}
                 {/* Glowing Moon - Fades as sun rises */}
                 <motion.div 
                   animate={{ opacity: isDay ? 0 : 1, y: isDay ? -50 : 0 }}
@@ -266,11 +300,11 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 {/* THE RISING SUN */}
                 <Sun isDay={isDay} />
                 
-                {/* Daylight Horizon Glow */}
+                {/* Daylight Horizon Glow - Brighter for the white sky */}
                 <motion.div 
-                   animate={{ opacity: isDay ? 0.3 : 0 }}
+                   animate={{ opacity: isDay ? 0.6 : 0 }}
                    transition={{ duration: 6 }}
-                   className="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-orange-400 via-yellow-200 to-transparent blur-2xl z-0"
+                   className="absolute bottom-0 inset-x-0 h-60 bg-gradient-to-t from-white via-white to-transparent blur-3xl z-0"
                 />
               </div>
 
@@ -354,7 +388,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                <motion.div 
                   animate={{ 
                     background: isDay 
-                      ? "radial-gradient(circle at 65% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.2) 100%)" 
+                      ? "radial-gradient(circle at 65% 50%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.1) 100%)" 
                       : "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, rgba(0,0,0,0.9) 100%)"
                   }}
                   transition={{ duration: 6 }}
