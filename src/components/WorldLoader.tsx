@@ -243,20 +243,32 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           <div className="relative">
             {/* Tactical Grid Overlay Removed */}
             
-            {/* Technical Rotating Frame Decor - Enhanced Rotation */}
+            {/* Technical Rotating Frame Decor - Clockwise Layer */}
             <motion.svg 
                 className="absolute inset-[-80px] w-[calc(100%+160px)] h-[calc(100%+160px)] pointer-events-none origin-center" 
                 animate={{ rotate: 360 }} 
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
             >
-                <circle cx="50%" cy="50%" r="48%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="1 15" className="opacity-20" />
-                <circle cx="50%" cy="50%" r="49.5%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="4 20" className="opacity-10" />
-                
-                {/* Orbital Tech Marks */}
-                {[0, 90, 180, 270].map((angle) => (
+                <circle cx="50%" cy="50%" r="48%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="1 15" className="opacity-30" />
+                {[0, 180].map((angle) => (
                     <g key={angle} style={{ transformOrigin: 'center', transform: `rotate(${angle}deg)` }}>
                         <path d="M 50% 2% L 50% 6%" stroke="white" strokeWidth="2" className="opacity-40" />
                         <path d="M 48% 4% L 52% 4%" stroke="white" strokeWidth="1" className="opacity-20" />
+                    </g>
+                ))}
+            </motion.svg>
+
+            {/* Technical Rotating Frame Decor - Anticlockwise Layer */}
+            <motion.svg 
+                className="absolute inset-[-100px] w-[calc(100%+200px)] h-[calc(100%+200px)] pointer-events-none origin-center" 
+                animate={{ rotate: -360 }} 
+                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+            >
+                <circle cx="50%" cy="50%" r="49.5%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="4 20" className="opacity-20" />
+                {[90, 270].map((angle) => (
+                    <g key={angle} style={{ transformOrigin: 'center', transform: `rotate(${angle}deg)` }}>
+                        <path d="M 50% 1.5% L 50% 5.5%" stroke="white" strokeWidth="2" className="opacity-40" />
+                        <path d="M 48% 3.5% L 52% 3.5%" stroke="white" strokeWidth="1" className="opacity-20" />
                     </g>
                 ))}
             </motion.svg>
