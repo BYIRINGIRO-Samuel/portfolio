@@ -134,15 +134,21 @@ const SavannaTree = () => (
   </svg>
 );
 
-const GrassBlade = ({ x, y, delay }: { x: number, y: number, delay: number }) => (
+const GrassBlade = ({ x, y, delay, isDay }: { x: number, y: number, delay: number, isDay: boolean }) => (
   <motion.path
     d={`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`}
     stroke="white"
     strokeWidth="0.8"
     strokeOpacity="0.8"
     fill="none"
-    animate={{ d: [`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`, `M ${x} ${y} Q ${x - 3} ${y - 10}, ${x - 1} ${y - 15}`, `M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`] }}
-    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay }}
+    animate={{ 
+      d: [`M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`, `M ${x} ${y} Q ${x - 3} ${y - 10}, ${x - 1} ${y - 15}`, `M ${x} ${y} Q ${x + 2} ${y - 10}, ${x + 5} ${y - 15}`],
+      stroke: isDay ? "#16A34A" : "#FFFFFF" // Darker green for visibility vs pure white
+    }}
+    transition={{ 
+      d: { duration: 3, repeat: Infinity, ease: "easeInOut", delay },
+      stroke: { duration: 6 }
+    }}
   />
 );
 
@@ -153,15 +159,15 @@ const GrassBlade = ({ x, y, delay }: { x: number, y: number, delay: number }) =>
 const Sun = ({ isDay }: { isDay: boolean }) => (
   <motion.div 
     initial={{ y: 200, opacity: 0 }}
-    animate={isDay ? { y: -80, opacity: 1 } : { y: 200, opacity: 0 }}
+    animate={isDay ? { y: -100, opacity: 1 } : { y: 200, opacity: 0 }}
     transition={{ duration: 6, ease: [0.16, 1, 0.3, 1] }}
-    className="absolute left-[65%] top-[50%] z-0"
+    className="absolute left-[70%] top-[45%] z-0"
   >
-    <div className="w-24 h-24 rounded-full bg-[#FFD700] shadow-[0_0_100px_rgba(255,215,0,0.6)] blur-[1px]" />
+    <div className="w-14 h-14 rounded-full bg-[#FFEA00] shadow-[0_0_80px_rgba(255,234,0,0.5)] blur-[1px]" />
     <motion.div 
-        animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }}
         transition={{ duration: 4, repeat: Infinity }}
-        className="absolute inset-[-20px] rounded-full bg-yellow-400/20 blur-3xl" 
+        className="absolute inset-[-15px] rounded-full bg-yellow-400/10 blur-2xl" 
     />
   </motion.div>
 );
@@ -322,7 +328,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                       const x = 50 + t * 1180;
                       // Distribute grass more across the "floor" instead of just a line
                       const y = 250 + Math.random() * 200;
-                      return <GrassBlade key={i} x={x} y={y} delay={Math.random() * 2} />;
+                      return <GrassBlade key={i} x={x} y={y} delay={Math.random() * 2} isDay={isDay} />;
                     })}
 
                    {/* Active Spirit Trail */}
