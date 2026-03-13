@@ -276,8 +276,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    }}
                  />
 
-                 {/* WHITE SAVANNA TREE - Repositioned slightly up for balance */}
-                 <div className="absolute top-[210px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
+                 {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
+                 <div className="absolute top-[180px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
                      <SavannaTree />
                  </div>
 
