@@ -2,123 +2,107 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 /**
- * EXACT DataVehicle component from SkillsSection.tsx but with Cinematic Light Beams
+ * Modeled Elephant Component (SVG)
+ * Features walking animation and high-detail details
  */
-const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
-  <div className="relative transform -rotate-90">
-    {/* Cinematic Headlight Beams */}
-    <div className="absolute top-[48px] left-[6px] w-[200px] h-[60px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
-       <motion.div 
-         animate={{ opacity: isMoving ? [0.3, 0.6, 0.3] : 0.6 }}
-         transition={{ duration: 1.5, repeat: Infinity }}
-         className="w-full h-full bg-gradient-to-r from-white/40 to-transparent blur-xl" 
-         style={{ clipPath: "polygon(0 40%, 100% 0, 100% 100%, 0 60%)" }}
-       />
-    </div>
-    <div className="absolute top-[48px] left-[17px] w-[200px] h-[60px] pointer-events-none overflow-hidden origin-top scale-y-[0.5]">
-       <motion.div 
-         animate={{ opacity: isMoving ? [0.3, 0.6, 0.3] : 0.6 }}
-         transition={{ duration: 1.5, repeat: Infinity, delay: 0.1 }}
-         className="w-full h-full bg-gradient-to-r from-white/40 to-transparent blur-xl" 
-         style={{ clipPath: "polygon(0 40%, 100% 0, 100% 100%, 0 60%)" }}
-       />
-    </div>
+const Elephant = ({ isMoving }: { isMoving: boolean }) => (
+  <div className="relative transform">
+    <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+      {/* Back Legs */}
+      <motion.path 
+        animate={isMoving ? { d: ["M85 70 L90 95 L100 95 L95 70 Z", "M85 70 L80 90 L90 90 L95 70 Z", "M85 70 L90 95 L100 95 L95 70 Z"] } : {}}
+        transition={{ duration: 1, repeat: Infinity }}
+        d="M85 70 L90 95 L100 95 L95 70 Z" fill="#222" 
+      />
+      <motion.path 
+        animate={isMoving ? { d: ["M35 70 L40 95 L50 95 L45 70 Z", "M35 70 L30 90 L40 90 L45 70 Z", "M35 70 L40 95 L50 95 L45 70 Z"] } : {}}
+        transition={{ duration: 1, repeat: Infinity, delay: 0.5 }}
+        d="M35 70 L40 95 L50 95 L45 70 Z" fill="#222" 
+      />
 
-    <svg width="56" height="26" viewBox="0 0 56 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]">
-      <path d="M2 13C2 8 4 4 10 4H50C54 4 54 8 54 13C54 18 54 22 50 22H10C4 22 2 18 2 13Z" fill="white" />
-      <rect x="36" y="5" width="16" height="16" rx="1" fill="white" stroke="#080808" strokeWidth="0.2" opacity="0.3" />
-      <rect x="52" y="7" width="2" height="12" rx="0.5" fill="#e5e5e5" />
-      <line x1="53" y1="8" x2="53" y2="18" stroke="#080808" strokeWidth="0.2" strokeDasharray="1 1" />
-      <circle cx="53" cy="13" r="0.8" fill="white" />
-      <path d="M16 6.5C16 6.5 20 5.5 28 5.5C36 5.5 38 6.5 38 7.5V18.5C38 19.5 36 20.5 28 20.5C20 20.5 16 19.5 16 19.5V6.5Z" fill="#080808" />
-      <rect x="20" y="8" width="14" height="10" rx="1" fill="#151515" />
-      <rect x="48" y="6" width="3" height="3" rx="0.5" fill="white" className="animate-pulse" />
-      <rect x="48" y="17" width="3" height="3" rx="0.5" fill="white" className="animate-pulse" />
-      <line x1="10" y1="4.5" x2="50" y2="4.5" stroke="#080808" strokeWidth="0.3" opacity="0.2" />
-      <line x1="10" y1="21.5" x2="50" y2="21.5" stroke="#080808" strokeWidth="0.3" opacity="0.2" />
-      <rect x="38" y="3" width="3" height="1.5" rx="0.5" fill="white" />
-      <rect x="38" y="21.5" width="3" height="1.5" rx="0.5" fill="white" />
+      {/* Body */}
+      <path d="M20 40 C 20 20, 100 20, 105 50 C 105 75, 95 80, 80 80 L35 80 C 25 80, 20 70, 20 40 Z" fill="#151515" />
+      
+      {/* Front Legs */}
+      <motion.path 
+        animate={isMoving ? { d: ["M80 75 L85 98 L95 98 L90 75 Z", "M80 75 L75 92 L85 92 L90 75 Z", "M80 75 L85 98 L95 98 L90 75 Z"] } : {}}
+        transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
+        d="M80 75 L85 98 L95 98 L90 75 Z" fill="#1a1a1a" 
+      />
+      <motion.path 
+        animate={isMoving ? { d: ["M30 75 L35 98 L45 98 L40 75 Z", "M30 75 L25 92 L35 92 L40 75 Z", "M30 75 L35 98 L45 98 L40 75 Z"] } : {}}
+        transition={{ duration: 1, repeat: Infinity, delay: 0.7 }}
+        d="M30 75 L35 98 L45 98 L40 75 Z" fill="#1a1a1a" 
+      />
+
+      {/* Head & Trunk */}
+      <path d="M25 35 C 5 35, 0 50, 5 65 C 10 80, 20 85, 20 70 C 20 60, 15 55, 25 55 Z" fill="#151515" />
+      
+      {/* Ear */}
+      <path d="M25 30 C 35 25, 45 40, 40 60 C 35 75, 25 70, 25 55 Z" fill="#1a1a1a" stroke="#ffffff10" strokeWidth="0.5" />
+      
+      {/* Eye */}
+      <circle cx="22" cy="45" r="1.5" fill="#ffffff" fillOpacity="0.8" />
+      
+      {/* Tusk */}
+      <path d="M12 58 C 8 58, 5 65, 8 72" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+
+      {/* Tail */}
+      <path d="M105 55 C 115 55, 115 75, 110 85" stroke="#151515" strokeWidth="2" strokeLinecap="round" />
     </svg>
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full border border-white/5 animate-ping" />
     
-    {/* Micro HUD - stunning detail */}
-    <motion.div 
-      animate={{ opacity: isMoving ? 1 : 0 }}
-      className="absolute -top-12 -left-4 font-mono text-[7px] text-white/80 tracking-widest whitespace-nowrap bg-black/40 px-2 py-1 rounded-sm backdrop-blur-sm border border-white/5"
-    >
-      GPS: 52.5200° N <br/> VEL: 120 KM/H
-    </motion.div>
+    {/* Dust Clouds while walking */}
+    {isMoving && (
+      <div className="absolute bottom-0 right-0 w-full h-8 overflow-hidden pointer-events-none">
+        {[...Array(4)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: 80, y: 10, scale: 0.5 }}
+            animate={{ opacity: [0, 0.4, 0], x: [80, 20], y: [10, -5], scale: [0.5, 1.5] }}
+            transition={{ duration: 1, repeat: Infinity, delay: i * 0.25 }}
+            className="absolute w-4 h-4 bg-white/10 rounded-full blur-md"
+          />
+        ))}
+      </div>
+    )}
   </div>
 );
 
 /**
- * High-End Isometric Gas Station (Well-Modeled based on reference image)
+ * Well-Modeled Savanna Acacia Tree
  */
-const IsometricGasStation = () => (
-  <svg width="300" height="250" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]">
-    {/* Isometric Platform / Base */}
-    <path d="M20 90L80 60L140 90L80 120L20 90Z" fill="#f8f8f8" stroke="white" strokeWidth="0.5" strokeOpacity="0.8" />
-    <path d="M20 90V96L80 126L140 96V90L80 120L20 90Z" fill="#e0e0e0" stroke="white" strokeWidth="0.5" strokeOpacity="0.5" />
-
-    {/* Pillars supporting the canopy */}
-    <rect x="45" y="40" width="4" height="60" fill="white" />
-    <rect x="111" y="40" width="4" height="60" fill="white" />
-
-    {/* Massive Isometric Canopy (Roof) */}
-    <path d="M10 40L80 10L150 40L80 70L10 40Z" fill="#ffffff" stroke="white" strokeWidth="1" />
-    <path d="M10 40V48L80 78L150 48V40L80 70L10 40Z" fill="#ebebeb" stroke="white" strokeWidth="0.5" />
+const SavannaTree = () => (
+  <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+    {/* Trunk */}
+    <path d="M95 180 C 95 150, 85 130, 80 110" stroke="#0a0a0a" strokeWidth="6" strokeLinecap="round" />
+    <path d="M105 180 C 105 150, 115 130, 120 110" stroke="#0a0a0a" strokeWidth="6" strokeLinecap="round" />
+    <path d="M100 185 L90 195 M100 185 L110 195" stroke="#0a0a0a" strokeWidth="4" strokeLinecap="round" />
     
-    {/* "GAS STATION" Banner */}
-    <rect x="40" y="45" width="80" height="12" rx="1" fill="white" stroke="#080808" strokeWidth="0.5" />
-    <motion.text 
-      animate={{ opacity: [0.8, 1, 0.8] }}
-      transition={{ duration: 1, repeat: Infinity }}
-      x="80" y="53" fontSize="6" fontFamily="monospace" fill="black" textAnchor="middle" dominantBaseline="middle" className="tracking-[0.3em] font-bold"
-    >
-      GAS STATION
-    </motion.text>
-
-    {/* Fuel Pumps with Rectangular Shapes */}
-    <g transform="translate(55, 75)">
-       {/* Pump 1 - Cyber Blue Accent */}
-       <motion.path 
-         animate={{ strokeOpacity: [0.8, 1, 0.8] }}
-         transition={{ duration: 1.5, repeat: Infinity }}
-         d="M0 4L12 8L24 4V24L12 28L0 24V4Z" fill="white" stroke="#3b82f6" strokeWidth="1" 
-       />
-       <path d="M0 4L12 0L24 4L12 8L0 4Z" fill="#eee" stroke="#3b82f6" strokeWidth="0.5" />
-       <rect x="4" y="10" width="16" height="8" fill="#1e1e1e" stroke="#3b82f6" strokeWidth="0.5" />
-       <path d="M4 22H20" stroke="#3b82f6" strokeWidth="3" />
-    </g>
-    <g transform="translate(95, 75)">
-       {/* Pump 2 - Neon Green Accent */}
-       <motion.path 
-         animate={{ strokeOpacity: [0.8, 1, 0.8] }}
-         transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-         d="M0 4L12 8L24 4V24L12 28L0 24V4Z" fill="white" stroke="#22c55e" strokeWidth="1" 
-       />
-       <path d="M0 4L12 0L24 4L12 8L0 4Z" fill="#eee" stroke="#22c55e" strokeWidth="0.5" />
-       <rect x="4" y="10" width="16" height="8" fill="#1e1e1e" stroke="#22c55e" strokeWidth="0.5" />
-       <path d="M4 22H20" stroke="#22c55e" strokeWidth="3" />
+    {/* Main Branches */}
+    <path d="M80 110 C 60 90, 40 85, 30 80" stroke="#0a0a0a" strokeWidth="4" strokeLinecap="round" />
+    <path d="M120 110 C 140 90, 160 85, 170 80" stroke="#0a0a0a" strokeWidth="4" strokeLinecap="round" />
+    <path d="M100 110 C 100 90, 100 80, 100 70" stroke="#0a0a0a" strokeWidth="4" strokeLinecap="round" />
+    
+    {/* Canopy Silhouettes (Layered for depth) */}
+    <g className="opacity-90">
+      <ellipse cx="100" cy="65" rx="60" ry="12" fill="#050505" />
+      <ellipse cx="60" cy="75" rx="45" ry="10" fill="#050505" />
+      <ellipse cx="140" cy="75" rx="45" ry="10" fill="#050505" />
+      <ellipse cx="100" cy="55" rx="40" ry="8" fill="#080808" />
     </g>
 
-    {/* FUEL ATTENDANT (The Person) */}
-    <g transform="translate(82, 85)">
-       {/* Body */}
-       <rect x="0" y="4" width="6" height="12" rx="1" fill="#222" />
-       {/* Head */}
-       <circle cx="3" cy="2" r="2.5" fill="#fca5a5" />
-       {/* Vest (High-Vis) */}
-       <rect x="0" y="5" width="6" height="6" fill="#fbbf24" stroke="white" strokeWidth="0.2" />
-       {/* Arms */}
-       <line x1="-1" y1="6" x2="0" y2="9" stroke="#222" strokeWidth="1.5" strokeLinecap="round" />
-       <line x1="6" y1="6" x2="7" y2="12" stroke="#222" strokeWidth="1.5" strokeLinecap="round" />
-    </g>
-
-    {/* Large Totem Sign */}
-    <rect x="145" y="5" width="3" height="110" fill="white" />
-    <rect x="138" y="5" width="18" height="25" rx="1" fill="white" stroke="black" strokeWidth="0.5" />
-    <circle cx="147" cy="17" r="4" fill="#3b82f6" fillOpacity="0.3" className="animate-pulse" />
+    {/* Detailed Leaf Clusters (Higher Fidelity) */}
+    {[...Array(20)].map((_, i) => (
+      <circle 
+        key={i} 
+        cx={70 + Math.random() * 60} 
+        cy={55 + Math.random() * 25} 
+        r={2 + Math.random() * 4} 
+        fill="#000" 
+        className="animate-pulse" 
+        style={{ animationDelay: `${Math.random() * 2}s` }}
+      />
+    ))}
   </svg>
 );
 
@@ -129,7 +113,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(44); // Car stops EXACTLY at the center of the gas station pumps
+      setProgress(46); // Elephant stops under the tree
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -183,103 +167,107 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/20 bg-[#050505] shadow-[0_0_150px_rgba(255,255,255,0.1)] overflow-hidden z-10"
           >
              
-             {/* THE MINIATURE WORLD (Optimized for centering and spacing) */}
-             <div className="absolute inset-0 origin-center scale-[0.42] translate-x-[-150px] translate-y-[100px]">
-                
-                {/* Road System */}
-                <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="84" className="opacity-[0.04]" />
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-10" />
-                  <path d={roadPath} fill="none" stroke="#080808" strokeWidth="78" />
-                  
-                  {/* Road Ambient Lighting (Realism) */}
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="1" className="opacity-[0.05] blur-md" />
-                  
-                  {/* Active Navigation Glow */}
-                  <motion.path
-                    d={roadPath}
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="5"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: progress / 100 }}
-                    transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                    className="opacity-90 blur-[1px]"
-                  />
-                  
-                  <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
-                </svg>
+              {/* THE MINIATURE WORLD (Optimized for savanna scenario) */}
+              <div className="absolute inset-0 origin-center scale-[0.42] translate-x-[-150px] translate-y-[100px]">
+                 
+                 {/* Road System (Converted to a natural trail) */}
+                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
+                   <path d={roadPath} fill="none" stroke="#2a1a0a" strokeWidth="84" className="opacity-[0.1]" />
+                   <path d={roadPath} fill="none" stroke="#3d2b1f" strokeWidth="80" className="opacity-20" />
+                   <path d={roadPath} fill="none" stroke="#1a1a1a" strokeWidth="78" />
+                   
+                   {/* Ambient Dust/Glow along trail */}
+                   <path d={roadPath} fill="none" stroke="#b58d67" strokeWidth="2" className="opacity-[0.05] blur-md" />
+                   
+                   {/* Active Progress along trail */}
+                   <motion.path
+                     d={roadPath}
+                     fill="none"
+                     stroke="#d4af37"
+                     strokeWidth="3"
+                     initial={{ pathLength: 0 }}
+                     animate={{ pathLength: progress / 100 }}
+                     transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
+                     className="opacity-40 blur-[1px]"
+                   />
+                   
+                   <path d={roadPath} fill="none" stroke="#3d2b1f" strokeWidth="1" className="opacity-30" strokeDasharray="10 30" />
+                 </svg>
 
-                {/* THE CAR SHADOW (Realism) */}
-                <motion.div 
-                  className="absolute z-20 pointer-events-none origin-center"
-                  animate={{ offsetDistance: `${progress}%` }}
-                  transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ 
-                    offsetPath: `path("${roadPath}")`,
-                    offsetRotate: "auto 90deg",
-                    width: "100px", height: "40px",
-                    background: "rgba(0,0,0,0.4)",
-                    filter: "blur(15px)",
-                    borderRadius: "50%"
-                  }}
-                />
+                 {/* THE ELEPHANT SHADOW (Realism) */}
+                 <motion.div 
+                   className="absolute z-20 pointer-events-none origin-center"
+                   animate={{ offsetDistance: `${progress}%` }}
+                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
+                   style={{ 
+                     offsetPath: `path("${roadPath}")`,
+                     offsetRotate: "0deg",
+                     width: "120px", height: "30px",
+                     background: "rgba(0,0,0,0.5)",
+                     filter: "blur(20px)",
+                     borderRadius: "50%"
+                   }}
+                 />
 
-                {/* WHITE ISOMETRIC GAS STATION - Pushed further LEFT and UP to center it in the lens */}
-                <div className="absolute top-[-30px] left-[520px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
-                    <IsometricGasStation />
-                </div>
+                 {/* SAVANNA TREE - Well-positioned to frame the elephant */}
+                 <div className="absolute top-[80px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
+                     <SavannaTree />
+                 </div>
 
-                {/* The Precision Car (SCALED UP inside the lens) */}
-                <motion.div 
-                  className="absolute z-30 pointer-events-none origin-center scale-[2.5]"
-                  animate={{ offsetDistance: `${progress}%` }}
-                  transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ 
-                    offsetPath: `path("${roadPath}")`,
-                    offsetRotate: "auto 90deg"
-                  }}
-                >
-                  <DataVehicle isMoving={!isDone} />
-                </motion.div>
-             </div>
-
-             {/* HUD SCANNER Radar Overlay */}
-             <motion.div 
-               animate={{ y: ["-100%", "300%"] }}
-               transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-               className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none blur-sm z-50"
-             />
-
-             {/* Dynamic Vignette Lens Flare */}
-             <div className="absolute inset-0 rounded-full shadow-[inset_0_0_120px_rgba(0,0,0,1)] pointer-events-none border border-white/5" />
-          </motion.div>
-
-          {/* FINAL SHOCKWAVE PULSE */}
-          <AnimatePresence>
-            {isDone && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <motion.div 
-                  initial={{ scale: 0, opacity: 1 }}
-                  animate={{ scale: 6, opacity: 0 }}
-                  transition={{ duration: 1.5, ease: "easeOut" }}
-                  className="w-40 h-40 border-2 border-white/30 rounded-full"
-                />
+                 {/* THE ELEPHANT (Walking on the trail) */}
+                 <motion.div 
+                   className="absolute z-30 pointer-events-none origin-center scale-[1.2]"
+                   animate={{ offsetDistance: `${progress}%` }}
+                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
+                   style={{ 
+                     offsetPath: `path("${roadPath}")`,
+                     offsetRotate: "0deg"
+                   }}
+                 >
+                   <Elephant isMoving={!isDone} />
+                 </motion.div>
               </div>
-            )}
-          </AnimatePresence>
 
-          {/* Production Credit Text (Subtle) */}
-          <div className="absolute bottom-12 flex flex-col items-center gap-2 opacity-10">
-             <div className="text-[9px] font-mono text-white tracking-[1.5em] uppercase">SYSTEM_INITIALIZED</div>
-             <div className="flex gap-4">
-               <div className="w-12 h-[1px] bg-white" />
-               <div className="w-12 h-[1px] bg-white" />
-             </div>
-          </div>
+              {/* SAVANNA ATMOSPHERE Overlays */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-radial from-transparent to-black/80 pointer-events-none" />
 
-          {/* Cinematic Global Vignette */}
-          <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,1)]" />
+              {/* HUD SCANNER Radar Overlay (Stayed for technical aesthetic) */}
+              <motion.div 
+                animate={{ y: ["-100%", "300%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none blur-sm z-50"
+              />
+
+              {/* Dynamic Vignette Lens Flare */}
+              <div className="absolute inset-0 rounded-full shadow-[inset_0_0_120px_rgba(0,0,0,1)] pointer-events-none border border-white/5" />
+           </motion.div>
+
+           {/* FINAL SHOCKWAVE PULSE */}
+           <AnimatePresence>
+             {isDone && (
+               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                 <motion.div 
+                   initial={{ scale: 0, opacity: 1 }}
+                   animate={{ scale: 6, opacity: 0 }}
+                   transition={{ duration: 1.5, ease: "easeOut" }}
+                   className="w-40 h-40 border-2 border-[#d4af37]/20 rounded-full"
+                 />
+               </div>
+             )}
+           </AnimatePresence>
+
+           {/* Production Credit Text (Subtle) */}
+           <div className="absolute bottom-12 flex flex-col items-center gap-2 opacity-10">
+              <div className="text-[9px] font-mono text-[#d4af37] tracking-[1.5em] uppercase">ECOSYSTEM_INITIALIZED</div>
+              <div className="flex gap-4">
+                <div className="w-12 h-[1px] bg-[#d4af37]" />
+                <div className="w-12 h-[1px] bg-[#d4af37]" />
+              </div>
+           </div>
+
+           {/* Cinematic Global Vignette */}
+           <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,1)]" />
         </motion.div>
       )}
     </AnimatePresence>
