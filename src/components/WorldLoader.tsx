@@ -196,8 +196,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     };
   }, [onComplete]);
 
-  // Road path same as skills section
-  const roadPath = "M 120 100 C 320 100, 420 250, 660 250 S 920 420, 1160 420";
+  // Road path - Flattened to a straight horizontal line for realistic motion
+  const roadPath = "M 0 350 L 1400 350";
 
   return (
     <AnimatePresence>
@@ -309,8 +309,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    }}
                  />
 
-                  {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
-                  <div className="absolute top-[140px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
+                  {/* WHITE SAVANNA TREE - Grounded on the new horizontal path */}
+                  <div className="absolute top-[295px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
                       <SavannaTree />
                   </div>
 
