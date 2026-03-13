@@ -303,7 +303,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.2 }}
-                className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 bg-[#020205] shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
+                className="relative w-56 h-56 md:w-[300px] md:h-[300px] rounded-full border border-white/40 bg-[#020205] shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
             >
               {/* SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
