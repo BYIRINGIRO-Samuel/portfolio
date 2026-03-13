@@ -276,16 +276,16 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 className="absolute top-[-50px] left-[-30px] flex gap-4 text-[9px] font-mono text-white/40 tracking-wider pointer-events-none"
             >
                 <div className="flex flex-col gap-1">
-                    <span className="text-white/60">SYS_INIT: OK</span>
+                    <span className="text-white/60">RUNTIME_ENV: PROD</span>
                     <span className="flex items-center gap-1">
-                        <motion.div animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                        POS: 1.80.350
+                        <motion.div animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                        VERSION: 3.2.0_SAM
                     </span>
                 </div>
                 <div className="w-[1px] h-6 bg-white/10" />
                 <div className="flex flex-col gap-1">
-                    <span>LENS_ID: PRM_88</span>
-                    <span>TYPE: SAVANNA</span>
+                    <span>ASSET_LOADER: ACTIVE</span>
+                    <span>UI_INTERFACE: PREMIUM</span>
                 </div>
             </motion.div>
 
@@ -297,7 +297,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 className="absolute bottom-[-50px] right-[-30px] flex items-end gap-3 pointer-events-none"
             >
                 <div className="flex flex-col items-end">
-                    <div className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Deployment Status</div>
+                    <div className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Portfolio Assembly Status</div>
                     <div className="text-2xl font-mono text-white font-light tracking-tighter">
                         {Math.floor(hudProgress)}<span className="text-sm opacity-40 ml-1">%</span>
                     </div>
@@ -423,8 +423,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
                         {/* Telemetry Labels */}
                         <div className="absolute -top-10 left-0 flex flex-col font-mono text-[8px] text-white/60 uppercase">
-                            <span className="bg-white/10 px-1">Tracking_ID: 0xG_SPIRIT</span>
-                            <span>Distance: {(progress * 12.5).toFixed(1)}m</span>
+                            <span className="bg-white/10 px-1">Component: 0xSAM_GIRAFFE</span>
+                            <span>Memory_Usage: {(progress * 8.4).toFixed(1)}MB</span>
                         </div>
                   </motion.div>
 
@@ -480,7 +480,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
            {/* Production Credit Text */}
            <div className="absolute bottom-12 flex flex-col items-center gap-2 opacity-10">
-              <div className="text-[9px] font-mono text-white tracking-[1.5em] uppercase">SPIRIT_AWAKENED</div>
+              <div className="text-[9px] font-mono text-white tracking-[0.8em] uppercase">Samuel Byiringiro // Creative Portfolio v3.2</div>
               <div className="flex gap-4">
                 <div className="w-12 h-[1px] bg-white" />
                 <div className="w-12 h-[1px] bg-white" />
