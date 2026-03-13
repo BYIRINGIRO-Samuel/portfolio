@@ -146,6 +146,32 @@ const GrassBlade = ({ x, y, delay }: { x: number, y: number, delay: number }) =>
   />
 );
 
+/**
+ * Modeled White Bird Component (SVG)
+ * Simple flapping animation for birds flying in the night sky
+ */
+const NightBird = ({ delay, xTarget }: { delay: number, xTarget: number }) => (
+  <motion.div
+    initial={{ x: -100, y: 30 + Math.random() * 60, opacity: 0 }}
+    animate={{ x: xTarget, opacity: [0, 0.6, 0.6, 0] }}
+    transition={{ duration: 10, delay, ease: "linear" }}
+    className="absolute z-0"
+  >
+    <motion.svg 
+      width="18" height="12" viewBox="0 0 20 15" 
+      animate={{ y: [0, -3, 0] }}
+      transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+    >
+      <motion.path 
+        d="M0 5 Q 5 0, 10 5 Q 15 0, 20 5" 
+        stroke="white" strokeWidth="1.2" fill="none"
+        animate={{ d: ["M0 8 Q 5 0, 10 8 Q 15 0, 20 8", "M0 2 Q 5 10, 10 2 Q 15 10, 20 2", "M0 8 Q 5 0, 10 8 Q 15 0, 20 8"] }}
+        transition={{ duration: 0.5, repeat: Infinity }}
+      />
+    </motion.svg>
+  </motion.div>
+);
+
 const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -208,6 +234,13 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           >
               {/* SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
+                {/* Night Birds Flying */}
+                <div className="absolute inset-0 pointer-events-none">
+                  {[...Array(5)].map((_, i) => (
+                    <NightBird key={i} delay={4 + i * 1.2} xTarget={450} />
+                  ))}
+                </div>
+
                 {/* Glowing Moon */}
                 <div className="absolute top-[12%] left-[12%] w-14 h-14 rounded-full bg-white/5 blur-[1px]">
                   <div className="absolute inset-0 rounded-full bg-white/20 blur-[4px] animate-pulse" />
