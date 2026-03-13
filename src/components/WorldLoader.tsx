@@ -176,13 +176,25 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [isExiting, setIsExiting] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
+  const [hudProgress, setHudProgress] = useState(0);
 
   useEffect(() => {
+    // Smoother HUD progress for visual polish
+    const hudInterval = setInterval(() => {
+        setHudProgress(prev => {
+            if (prev >= 100) return 100;
+            return prev + (100 - prev) * 0.05;
+        });
+    }, 100);
+
     const timer = setTimeout(() => {
       setProgress(46); // Giraffe stops under the tree
     }, 500);
 
-    const finishTimer = setTimeout(() => setIsDone(true), 12500);
+    const finishTimer = setTimeout(() => {
+        setIsDone(true);
+        setHudProgress(100);
+    }, 12500);
 
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
@@ -190,6 +202,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     }, 15500);
 
     return () => {
+      clearInterval(hudInterval);
       clearTimeout(timer);
       clearTimeout(finishTimer);
       clearTimeout(exitTimer);
@@ -225,13 +238,55 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
              ))}
           </div>
 
-          {/* Centered MODULAR LENS (Increased Size for High Detail) */}
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.2, type: "spring", damping: 20 }}
-            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 bg-[#020205] shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
-          >
+          {/* PREMIUM LOADER FRAME & HUD */}
+          <div className="relative group">
+            {/* Outer Rotating Progress Ring (High Precision) */}
+            <svg className="absolute inset-[-40px] w-[calc(100%+80px)] h-[calc(100%+80px)] -rotate-90 pointer-events-none opacity-40">
+                <circle 
+                    cx="50%" cy="50%" r="48%" 
+                    stroke="white" strokeWidth="0.5" fill="none" 
+                    strokeDasharray="4 8"
+                    className="opacity-20"
+                />
+                <motion.circle 
+                    cx="50%" cy="50%" r="48%" 
+                    stroke="white" strokeWidth="1.5" fill="none" 
+                    strokeDasharray="1000"
+                    animate={{ strokeDashoffset: 1000 - (hudProgress * 10) }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                />
+            </svg>
+
+            {/* Micro-HUD Telemetry (Top Left) */}
+            <div className="absolute top-[-50px] left-[-30px] flex gap-4 text-[9px] font-mono text-white/40 tracking-wider pointer-events-none">
+                <div className="flex flex-col gap-1">
+                    <span className="text-white/60">SYS_INIT: OK</span>
+                    <span>POS: 1.80.350</span>
+                </div>
+                <div className="w-[1px] h-6 bg-white/10" />
+                <div className="flex flex-col gap-1">
+                    <span>LENS_ID: PRM_88</span>
+                    <span>TYPE: SAVANNA</span>
+                </div>
+            </div>
+
+            {/* Micro-HUD Percentage (Bottom Right) */}
+            <div className="absolute bottom-[-50px] right-[-30px] flex items-end gap-3 pointer-events-none">
+                <div className="flex flex-col items-end">
+                    <div className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Deployment Status</div>
+                    <div className="text-2xl font-mono text-white font-light tracking-tighter">
+                        {Math.floor(hudProgress)}<span className="text-sm opacity-40 ml-1">%</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Centered MODULAR LENS (Increased Size for High Detail) */}
+            <motion.div 
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.2, type: "spring", damping: 20 }}
+                className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 bg-[#020205] shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
+            >
               {/* SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
                 {/* Night Birds Flying */}
@@ -345,9 +400,10 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none blur-sm z-50"
               />
 
-               {/* Dynamic Vignette Lens Flare - Reduced visibility */}
+               {/* Dynamic Vignette Lens Flare - Refined dynamics */}
                <div className="absolute inset-0 rounded-full shadow-[inset_0_0_40px_rgba(0,0,0,0.2)] pointer-events-none border border-white/10" />
            </motion.div>
+          </div>
 
            {/* FINAL SHOCKWAVE PULSE */}
            <AnimatePresence>
