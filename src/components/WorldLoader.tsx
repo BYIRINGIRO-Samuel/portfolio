@@ -219,7 +219,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1, filter: "brightness(2) blur(30px)" }}
+          exit={{ opacity: 0, filter: "brightness(2) blur(30px)" }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden"
         >
@@ -301,9 +301,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
             {/* Centered MODULAR LENS (Increased Size for High Detail) */}
             <motion.div 
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 1.2, type: "spring", damping: 20 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.2 }}
                 className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/40 bg-[#020205] shadow-[0_0_100px_rgba(255,255,255,0.02)] overflow-hidden z-10"
             >
               {/* SKY ELEMENTS (Inside the lens) */}
