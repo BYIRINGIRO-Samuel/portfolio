@@ -165,11 +165,11 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.2, type: "spring", damping: 20 }}
-            className="relative w-72 h-72 md:w-[500px] md:h-[500px] rounded-full border border-white/20 bg-[#050505] shadow-[0_0_150px_rgba(255,255,255,0.1)] overflow-hidden z-10"
+            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/20 bg-[#050505] shadow-[0_0_150px_rgba(255,255,255,0.1)] overflow-hidden z-10"
           >
              
              {/* THE MINIATURE WORLD (Precisely Re-centered and ZOOMED IN) */}
-             <div className="absolute inset-0 origin-center scale-[0.55] translate-x-[-340px] translate-y-[-40px]">
+             <div className="absolute inset-0 origin-center scale-[0.42] translate-x-[-340px] translate-y-[20px]">
                 
                 {/* Road System */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
@@ -193,13 +193,13 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 </svg>
 
                 {/* WHITE ISOMETRIC GAS STATION - Pushed "UP" relative to the road */}
-                <div className="absolute top-[180px] left-[780px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center">
+                <div className="absolute top-[160px] left-[780px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
                     <IsometricGasStation />
                 </div>
 
                 {/* The Precision Car (SCALED UP inside the lens) */}
                 <motion.div 
-                  className="absolute z-30 pointer-events-none origin-center scale-[2.2]"
+                  className="absolute z-30 pointer-events-none origin-center scale-[1.8]"
                   animate={{ offsetDistance: `${progress}%` }}
                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
                   style={{ 
