@@ -190,21 +190,21 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
               {/* THE MINIATURE WORLD (Optimized for savanna grass scenario) */}
               <div className="absolute inset-0 origin-center scale-[0.42] translate-x-[-150px] translate-y-[100px]">
                  
-                 {/* Grass Field (Scattered modeled blades along the hidden path) */}
+                 {/* Grass Field (Increased density for a Park/Savanna look) */}
                  <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none overflow-visible">
-                    {/* Background Soft Glow for the path area */}
-                    <path d={roadPath} fill="none" stroke="white" strokeWidth="120" className="opacity-[0.02] blur-3xl" />
+                    {/* Background Soft Glow for the park area */}
+                    <path d={roadPath} fill="none" stroke="white" strokeWidth="180" className="opacity-[0.03] blur-3xl" />
                     
-                    {/* Scattered Grass Blades */}
-                    {[...Array(120)].map((_, i) => {
-                      const t = i / 120;
-                      // Path interpolation for placement (simplified)
-                      const x = 120 + t * 1040;
-                      const y = 300 + Math.sin(t * Math.PI) * 150 + (Math.random() - 0.5) * 60;
+                    {/* Heavy Grass Clusters */}
+                    {[...Array(350)].map((_, i) => {
+                      const t = Math.random();
+                      const x = 50 + t * 1180;
+                      // Distribute grass more across the "floor" instead of just a line
+                      const y = 250 + Math.random() * 200;
                       return <GrassBlade key={i} x={x} y={y} delay={Math.random() * 2} />;
                     })}
 
-                   {/* Active Spirit Trail (Subtle stardust instead of a solid line) */}
+                   {/* Active Spirit Trail */}
                    <motion.path
                      d={roadPath}
                      fill="none"
@@ -213,8 +213,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                      initial={{ pathLength: 0 }}
                      animate={{ pathLength: progress / 100 }}
                      transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
-                     className="opacity-10 blur-[2px]"
-                     strokeDasharray="2 10"
+                     className="opacity-5 blur-[1px]"
+                     strokeDasharray="1 15"
                    />
                  </svg>
 
@@ -227,14 +227,14 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                      offsetPath: `path("${roadPath}")`,
                      offsetRotate: "0deg",
                      width: "120px", height: "30px",
-                     background: "rgba(255,255,255,0.1)",
+                     background: "rgba(255,255,255,0.08)",
                      filter: "blur(20px)",
                      borderRadius: "50%"
                    }}
                  />
 
-                 {/* WHITE SAVANNA TREE */}
-                 <div className="absolute top-[80px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
+                 {/* WHITE SAVANNA TREE - Moved UP to create more room */}
+                 <div className="absolute top-[40px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
                      <SavannaTree />
                  </div>
 
