@@ -179,27 +179,27 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [hudProgress, setHudProgress] = useState(0);
 
   useEffect(() => {
-    // Accelerated HUD progress for 3s total duration
+    // Accelerated HUD progress for 5s total duration
     const hudInterval = setInterval(() => {
         setHudProgress(prev => {
             if (prev >= 100) return 100;
-            return Math.min(100, prev + 8); // Much faster jumps
+            return Math.min(100, prev + 4); // Adjusted for 5s
         });
-    }, 100);
+    }, 150);
 
     const timer = setTimeout(() => {
       setProgress(46); // Giraffe stops under the tree
-    }, 500); // Faster stop
+    }, 800); 
 
     const finishTimer = setTimeout(() => {
         setIsDone(true);
         setHudProgress(100);
-    }, 2200); // Mark done earlier
+    }, 4000); // Mark done earlier
 
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
-      if (onComplete) setTimeout(onComplete, 800);
-    }, 3000); // Total scene duration: 3s
+      if (onComplete) setTimeout(onComplete, 1000);
+    }, 5000); // Total scene duration: 5s
 
     return () => {
       clearInterval(hudInterval);
@@ -361,7 +361,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                      strokeWidth="1"
                      initial={{ pathLength: 0 }}
                      animate={{ pathLength: progress / 100 }}
-                     transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+                     transition={{ duration: 4, ease: [0.16, 1, 0.3, 1] }}
                      className="opacity-5 blur-[1px]"
                      strokeDasharray="1 15"
                    />
@@ -371,7 +371,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                  <motion.div 
                    className="absolute z-20 pointer-events-none origin-center"
                    animate={{ offsetDistance: `${progress}%` }}
-                   transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+                   transition={{ duration: 4, ease: [0.16, 1, 0.3, 1] }}
                    style={{ 
                      offsetPath: `path("${roadPath}")`,
                      offsetRotate: "0deg",
@@ -394,7 +394,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                         offsetDistance: `${progress}%`,
                         opacity: isDone ? 0 : 1
                     }}
-                    transition={{ offsetDistance: { duration: 2.2, ease: "easeInOut" } }}
+                    transition={{ offsetDistance: { duration: 4, ease: "easeInOut" } }}
                     style={{ 
                         offsetPath: `path("${roadPath}")`,
                         offsetRotate: "0deg",
@@ -426,8 +426,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                       filter: "brightness(0.9)"
                     }}
                     transition={{ 
-                      offsetDistance: { duration: 2.2, ease: "easeInOut" },
-                      filter: { duration: 1.5 }
+                      offsetDistance: { duration: 4, ease: "easeInOut" },
+                      filter: { duration: 2.5 }
                     }}
                     style={{ 
                       offsetPath: `path("${roadPath}")`,
