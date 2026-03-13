@@ -208,10 +208,10 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           >
               {/* NIGHT SKY ELEMENTS (Inside the lens) */}
               <div className="absolute inset-0 z-0">
-                {/* Glowing Moon - Enhanced visibility */}
-                <div className="absolute top-[12%] left-[12%] w-16 h-16 rounded-full bg-white/5 blur-[1px]">
-                  <div className="absolute inset-0 rounded-full bg-white/40 blur-[8px] animate-pulse" />
-                  <div className="absolute inset-0 rounded-full bg-white/95" style={{ clipPath: "path('M 32 0 A 32 32 0 1 0 32 64 A 20 28 0 1 1 32 0')" }} />
+                {/* Glowing Moon - Refined visibility */}
+                <div className="absolute top-[12%] left-[12%] w-14 h-14 rounded-full bg-white/5 blur-[1px]">
+                  <div className="absolute inset-0 rounded-full bg-white/20 blur-[4px] animate-pulse" />
+                  <div className="absolute inset-0 rounded-full bg-white/95" style={{ clipPath: "path('M 28 0 A 28 28 0 1 0 28 56 A 18 24 0 1 1 28 0')" }} />
                 </div>
                 
                 {/* Twinkling Stars */}
@@ -276,8 +276,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    }}
                  />
 
-                 {/* WHITE SAVANNA TREE - Moved DOWN to sit in the grasses */}
-                 <div className="absolute top-[230px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
+                 {/* WHITE SAVANNA TREE - Repositioned slightly up for balance */}
+                 <div className="absolute top-[210px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-90">
                      <SavannaTree />
                  </div>
 
