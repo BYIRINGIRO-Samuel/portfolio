@@ -169,7 +169,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           >
              
              {/* THE MINIATURE WORLD (Precisely Re-centered and ZOOMED IN) */}
-             <div className="absolute inset-0 origin-center scale-[0.55] translate-x-[-340px] translate-y-[-80px]">
+             <div className="absolute inset-0 origin-center scale-[0.55] translate-x-[-340px] translate-y-[-40px]">
                 
                 {/* Road System */}
                 <svg className="absolute inset-0 w-[1280px] h-[500px] pointer-events-none">
@@ -192,8 +192,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
 
-                {/* WHITE ISOMETRIC GAS STATION - Precisely placed relative to the 1280px road world */}
-                <div className="absolute top-[260px] left-[780px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center">
+                {/* WHITE ISOMETRIC GAS STATION - Pushed "UP" relative to the road */}
+                <div className="absolute top-[180px] left-[780px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center">
                     <IsometricGasStation />
                 </div>
 
