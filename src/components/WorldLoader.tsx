@@ -368,16 +368,16 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    <Giraffe isMoving={!isDone} />
                  </motion.div>
 
-                 {/* THE LION (Closer to the tree for visibility) */}
-                 <div className="absolute top-[220px] left-[700px] z-20 pointer-events-none scale-[0.6]">
+                 {/* THE LION (Increased size, pushed behind) */}
+                 <div className="absolute top-[180px] left-[700px] z-5 pointer-events-none scale-[1.1]">
                     <Lion />
                  </div>
 
-                 {/* THE RABBITS (Near the tree trunk) */}
-                 <div className="absolute top-[240px] left-[580px] z-40 pointer-events-none scale-[1]">
+                 {/* THE RABBITS (Increased size, pushed behind) */}
+                 <div className="absolute top-[220px] left-[450px] z-5 pointer-events-none scale-[1.8]">
                     <Rabbit />
                  </div>
-                 <div className="absolute top-[240px] left-[660px] z-40 pointer-events-none scale-[0.9] opacity-90">
+                 <div className="absolute top-[250px] left-[850px] z-5 pointer-events-none scale-[1.5] opacity-90">
                     <Rabbit />
                  </div>
               </div>
