@@ -447,13 +447,7 @@ const Testimonials = () => {
                        </span>
                      </div>
 
-                     {/* 3D Glass Scene Background */}
-                     <div className="absolute inset-0 z-[5] pointer-events-none select-none">
-                       <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-                         <StandbyGlassScene />
-                       </Canvas>
-                     </div>
-                     <div className="absolute inset-0 z-[6] bg-[radial-gradient(circle_at_center,transparent_20%,rgba(5,5,5,0.85)_60%)] pointer-events-none" />
+
 
                      {/* Center Branding */}
                      <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
@@ -461,7 +455,7 @@ const Testimonials = () => {
                          <p className="font-semibold text-white/80 text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">Client Feedback</p>
                        </div>
                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] leading-tight text-center">
-                         Professional <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">Excellence.</span>
+                         Trusted by <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">Professionals.</span>
                        </h1>
                        
                        {/* Play Button simulating 'Tune In' */}
