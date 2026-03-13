@@ -204,9 +204,31 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 1.2, type: "spring", damping: 20 }}
-            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/20 bg-[#050505] shadow-[0_0_150px_rgba(255,255,255,0.1)] overflow-hidden z-10"
+            className="relative w-64 h-64 md:w-[350px] md:h-[350px] rounded-full border border-white/20 bg-[#020205] shadow-[0_0_150px_rgba(255,255,255,0.05)] overflow-hidden z-10"
           >
-                 
+              {/* NIGHT SKY ELEMENTS (Inside the lens) */}
+              <div className="absolute inset-0 z-0">
+                {/* Glowing Moon */}
+                <div className="absolute top-[15%] left-[15%] w-12 h-12 rounded-full bg-white/10 blur-[2px] shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+                  <div className="absolute inset-0 rounded-full bg-white/90" style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%, 35% 50%)" }} />
+                </div>
+                
+                {/* Twinkling Stars */}
+                {[...Array(40)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    animate={{ opacity: [0.2, 0.8, 0.2], scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 5 }}
+                    className="absolute w-[2px] h-[2px] bg-white rounded-full"
+                    style={{ 
+                      top: `${Math.random() * 60}%`, 
+                      left: `${Math.random() * 100}%`,
+                      boxShadow: "0 0 5px rgba(255,255,255,0.8)"
+                    }}
+                  />
+                ))}
+              </div>
+
               {/* THE MINIATURE WORLD (Optimized for savanna grass scenario) */}
               <div className="absolute inset-0 origin-center scale-[0.42] translate-x-[-150px] translate-y-[100px]">
                  
