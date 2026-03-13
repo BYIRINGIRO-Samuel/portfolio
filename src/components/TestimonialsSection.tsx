@@ -434,7 +434,28 @@ const Testimonials = () => {
                          <rect width="100%" height="100%" fill="url(#screen-imigongo-testimonials)" />
                        </svg>
                      </div>
-                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.9)_100%)] pointer-events-none" />
+                     <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.85)_60%,rgba(0,0,0,0.98)_100%)] pointer-events-none" />
+                     
+                     {/* Animated Horizontal Scanner */}
+                     <motion.div 
+                       animate={{ top: ['0%', '100%', '0%'] }}
+                       transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                       className="absolute left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent z-[3] pointer-events-none"
+                     />
+
+                     {/* Pulsing Central Crosshair */}
+                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[2]">
+                       <motion.div 
+                         animate={{ opacity: [0.1, 0.25, 0.1], scale: [0.98, 1.02, 0.98] }}
+                         transition={{ duration: 3, repeat: Infinity }}
+                         className="w-32 h-32 md:w-48 md:h-48"
+                       >
+                         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-6 bg-gradient-to-b from-white/40 to-transparent" />
+                         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-6 bg-gradient-to-t from-white/40 to-transparent" />
+                         <div className="absolute left-0 top-1/2 -translate-y-1/2 h-[1px] w-6 bg-gradient-to-r from-white/40 to-transparent" />
+                         <div className="absolute right-0 top-1/2 -translate-y-1/2 h-[1px] w-6 bg-gradient-to-l from-white/40 to-transparent" />
+                       </motion.div>
+                     </div>
                      
                      {/* Top Bar: Professional Header */}
                      <div className="absolute top-0 w-full flex items-center justify-between px-4 md:px-6 py-2.5 bg-gradient-to-r from-blue-900/80 to-black/80 border-b border-blue-500/30 backdrop-blur-md z-20 shadow-xl">
@@ -442,36 +463,113 @@ const Testimonials = () => {
                          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_blue]" />
                          <span className="text-white font-sans text-[9px] md:text-[11px] font-semibold uppercase tracking-widest text-shadow">Portfolio Showcase</span>
                        </div>
-                       <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
-                         Verified Professional Endorsements
-                       </span>
+                       <div className="flex items-center gap-3">
+                         <span className="text-white/60 font-mono text-[8px] md:text-[9px] uppercase tracking-[0.2em] hidden sm:block">
+                           Verified Professional Endorsements
+                         </span>
+                         <div className="flex items-center gap-1">
+                           <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ duration: 2, repeat: Infinity }} className="w-1 h-1 rounded-full bg-green-400" />
+                           <span className="text-green-400/80 text-[7px] font-mono uppercase tracking-widest hidden md:block">Live</span>
+                         </div>
+                       </div>
                      </div>
 
+                     {/* Top-Left Data HUD */}
+                     <motion.div 
+                       initial={{ opacity: 0, x: -10 }}
+                       animate={{ opacity: 1, x: 0 }}
+                       transition={{ delay: 0.5, duration: 0.6 }}
+                       className="absolute top-14 left-4 md:left-6 z-10 flex flex-col gap-1.5 pointer-events-none"
+                     >
+                       <div className="flex items-center gap-2">
+                         <div className="w-5 h-[1px] bg-blue-400/50" />
+                         <span className="text-[7px] md:text-[8px] text-white/40 font-mono uppercase tracking-[0.3em]">Signal_Integrity</span>
+                       </div>
+                       <div className="flex items-center gap-1">
+                         {[...Array(5)].map((_, i) => (
+                           <motion.div
+                             key={i}
+                             animate={{ height: [4, 8 + i * 2, 4] }}
+                             transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.15 }}
+                             className="w-[2px] bg-blue-400/60 rounded-full"
+                             style={{ height: 4 }}
+                           />
+                         ))}
+                       </div>
+                     </motion.div>
 
+                     {/* Top-Right Data HUD */}
+                     <motion.div 
+                       initial={{ opacity: 0, x: 10 }}
+                       animate={{ opacity: 1, x: 0 }}
+                       transition={{ delay: 0.7, duration: 0.6 }}
+                       className="absolute top-14 right-4 md:right-6 z-10 flex flex-col items-end gap-1.5 pointer-events-none"
+                     >
+                       <span className="text-[7px] md:text-[8px] text-white/30 font-mono uppercase tracking-[0.2em]">Endorsements: {channels.length}</span>
+                       <div className="w-16 h-[2px] bg-white/10 rounded-full overflow-hidden">
+                         <motion.div 
+                           animate={{ width: ['0%', '100%'] }}
+                           transition={{ duration: 3, repeat: Infinity }}
+                           className="h-full bg-gradient-to-r from-blue-400/60 to-white/40 rounded-full"
+                         />
+                       </div>
+                     </motion.div>
 
                      {/* Center Branding */}
-                     <div className="flex-1 flex flex-col items-center justify-center z-10 relative mt-4">
-                       <div className="bg-white/5 backdrop-blur-md border border-white/10 px-4 py-1.5 mb-4 rounded-full shadow-lg overflow-hidden relative">
-                         <p className="font-semibold text-white/80 text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10">Client Feedback</p>
-                       </div>
-                       <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] leading-tight text-center">
-                         Trusted by <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">Professionals.</span>
-                       </h1>
-                       
-                       {/* Play Button simulating 'Tune In' */}
+                     <div className="flex-1 flex flex-col items-center justify-center z-10 relative">
+                       {/* Client Feedback Badge - Sharper corners */}
                        <motion.div 
+                         initial={{ opacity: 0, y: -10 }}
+                         animate={{ opacity: 1, y: 0 }}
+                         transition={{ delay: 0.2, duration: 0.5 }}
+                         className="bg-white/[0.04] backdrop-blur-md border border-white/10 px-5 py-1.5 mb-5 rounded-sm shadow-[0_0_20px_rgba(96,165,250,0.1),inset_0_1px_0_rgba(255,255,255,0.05)] overflow-hidden relative"
+                       >
+                         <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-blue-400/60" />
+                         <p className="font-semibold text-white/80 text-[8px] md:text-[10px] uppercase tracking-[0.4em] font-sans relative z-10 pl-2">Client Feedback</p>
+                       </motion.div>
+
+                       {/* Main Title */}
+                       <motion.h1 
+                         initial={{ opacity: 0 }}
+                         animate={{ opacity: 1 }}
+                         transition={{ delay: 0.4, duration: 0.8 }}
+                         className="text-4xl md:text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] leading-tight text-center"
+                       >
+                         Trusted by <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-200">Professionals.</span>
+                       </motion.h1>
+                       
+                       {/* Decorative line under title */}
+                       <motion.div 
+                         initial={{ width: 0 }}
+                         animate={{ width: '80px' }}
+                         transition={{ delay: 0.8, duration: 0.6 }}
+                         className="h-[1px] bg-gradient-to-r from-transparent via-blue-400/50 to-transparent mt-5"
+                       />
+                       
+                       {/* Start Presentation Button - Sharp corners */}
+                       <motion.div 
+                         initial={{ opacity: 0, y: 10 }}
+                         animate={{ opacity: 1, y: 0 }}
+                         transition={{ delay: 1, duration: 0.5 }}
                          whileHover={{ scale: 1.05, backgroundColor: 'rgba(255,255,255,1)', color: 'black' }}
                          whileTap={{ scale: 0.95 }}
-                         className="mt-8 md:mt-10 px-6 py-2.5 rounded-full border border-white/20 flex items-center gap-2 text-white transition-colors backdrop-blur-sm bg-black/40 shadow-[0_0_30px_rgba(255,255,255,0.05)] pointer-events-none"
+                         className="mt-8 md:mt-10 px-7 py-2.5 rounded-sm border border-white/15 flex items-center gap-3 text-white transition-colors backdrop-blur-sm bg-white/[0.03] shadow-[0_0_30px_rgba(96,165,250,0.08),inset_0_1px_0_rgba(255,255,255,0.05)] pointer-events-none relative overflow-hidden"
                        >
-                         <svg className="w-3.5 h-3.5 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                         <span className="font-semibold text-[9px] md:text-[11px] uppercase tracking-widest pl-1">Starting Presentation...</span>
+                         {/* Animated shimmer */}
+                         <motion.div 
+                           animate={{ x: ['-100%', '200%'] }}
+                           transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                           className="absolute inset-y-0 w-12 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-20deg]"
+                         />
+                         <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                         <span className="font-semibold text-[9px] md:text-[11px] uppercase tracking-[0.2em] relative z-10">Starting Presentation...</span>
                        </motion.div>
                      </div>
 
                      {/* Bottom Ticker */}
-                     <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-white/10 bg-black flex items-center z-20">
-                       <div className="bg-blue-900 border-r border-blue-500/30 h-full flex items-center px-3 md:px-5 z-10 font-bold text-white text-[8px] md:text-[10px] uppercase tracking-widest flex-shrink-0">
+                     <div className="absolute bottom-0 w-full h-8 md:h-10 border-t border-white/10 bg-black/90 backdrop-blur-sm flex items-center z-20">
+                       <div className="bg-blue-900/90 border-r border-blue-500/30 h-full flex items-center px-3 md:px-5 z-10 font-bold text-white text-[8px] md:text-[10px] uppercase tracking-widest flex-shrink-0">
+                         <motion.div animate={{ opacity: [1, 0.5, 1] }} transition={{ duration: 1.5, repeat: Infinity }} className="w-1.5 h-1.5 rounded-full bg-red-500 mr-2" />
                          Highlights
                        </div>
                        <div className="flex-1 overflow-hidden h-full relative bg-[#0a0a0a]">
