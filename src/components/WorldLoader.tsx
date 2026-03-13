@@ -2,82 +2,95 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 /**
- * Modeled Giraffe Component (SVG) - White Minimalist Version
- * Realistic long-neck walk cycle with neck bobbing and leg sequence
+ * Modeled Giraffe Component (SVG) - Realistic Version
+ * Features realistic coloring, spot patterns, and scaled-up proportions
  */
 const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
   <motion.div 
-    animate={isMoving ? { y: [0, -1, 0] } : {}}
+    animate={isMoving ? { y: [0, -2, 0] } : {}}
     transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
     className="relative transform"
   >
-    <svg width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.4)] overflow-visible">
-      {/* Legs - Staggered sequence */}
+    <svg width="140" height="200" viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(234,179,8,0.2)] overflow-visible">
+      {/* Definitive Giraffe Colors: Tan Base (#F59E0B), Brown Spots (#78350F) */}
       
-      {/* Rear Left (Back Layer) */}
+      {/* Legs - Rear Left */}
       <motion.path 
-        animate={isMoving ? { d: ["M30 110 L32 145 L38 145 L36 110 Z", "M30 110 L25 135 L31 135 L36 110 Z", "M30 110 L32 145 L38 145 L36 110 Z"] } : {}}
+        animate={isMoving ? { d: ["M40 140 L43 190 L51 190 L48 140 Z", "M40 140 L35 180 L43 180 L48 140 Z", "M40 140 L43 190 L51 190 L48 140 Z"] } : {}}
         transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0 }}
-        d="M30 110 L32 145 L38 145 L36 110 Z" fill="#d1d1d1" 
+        d="M40 140 L43 190 L51 190 L48 140 Z" fill="#B45309" 
       />
       
-      {/* Front Left (Back Layer) */}
+      {/* Legs - Front Left */}
       <motion.path 
-        animate={isMoving ? { d: ["M65 110 L67 145 L73 145 L71 110 Z", "M65 110 L60 135 L66 135 L71 110 Z", "M65 110 L67 145 L73 145 L71 110 Z"] } : {}}
+        animate={isMoving ? { d: ["M95 140 L98 190 L106 190 L103 140 Z", "M95 140 L90 180 L98 180 L103 140 Z", "M95 140 L98 190 L106 190 L103 140 Z"] } : {}}
         transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0.35 }}
-        d="M65 110 L67 145 L73 145 L71 110 Z" fill="#d1d1d1" 
+        d="M95 140 L98 190 L106 190 L103 140 Z" fill="#B45309" 
       />
 
       {/* Body - Main Torso */}
-      <path d="M25 105 C 25 85, 80 85, 80 105 L80 115 C 80 120, 25 120, 25 115 Z" fill="white" />
+      <path d="M30 135 C 30 105, 110 105, 110 135 L110 150 C 110 160, 30 160, 30 150 Z" fill="#F59E0B" />
       
-      {/* Rear Right (Front Layer) */}
+      {/* Body Spots */}
+      <circle cx="50" cy="130" r="8" fill="#78350F" />
+      <circle cx="80" cy="125" r="10" fill="#78350F" />
+      <circle cx="45" cy="145" r="6" fill="#78350F" />
+      <circle cx="95" cy="135" r="7" fill="#78350F" />
+      <circle cx="70" cy="148" r="9" fill="#78350F" />
+      
+      {/* Legs - Rear Right */}
       <motion.path 
-        animate={isMoving ? { d: ["M40 110 L42 145 L48 145 L46 110 Z", "M40 110 L35 135 L41 135 L46 110 Z", "M40 110 L42 145 L48 145 L46 110 Z"] } : {}}
+        animate={isMoving ? { d: ["M55 140 L58 195 L66 195 L63 140 Z", "M55 140 L50 185 L58 185 L63 140 Z", "M55 140 L58 195 L66 195 L63 140 Z"] } : {}}
         transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0.7 }}
-        d="M40 110 L42 145 L48 145 L46 110 Z" fill="white" 
+        d="M55 140 L58 195 L66 195 L63 140 Z" fill="#D97706" 
       />
       
-      {/* Front Right (Front Layer) */}
+      {/* Legs - Front Right */}
       <motion.path 
-        animate={isMoving ? { d: ["M75 110 L77 145 L83 145 L81 110 Z", "M75 110 L70 135 L76 135 L81 110 Z", "M75 110 L77 145 L83 145 L81 110 Z"] } : {}}
+        animate={isMoving ? { d: ["M110 140 L113 195 L121 195 L118 140 Z", "M110 140 L105 185 L113 185 L118 140 Z", "M110 140 L113 195 L121 195 L118 140 Z"] } : {}}
         transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 1.05 }}
-        d="M75 110 L77 145 L83 145 L81 110 Z" fill="white" 
+        d="M110 140 L113 195 L121 195 L118 140 Z" fill="#D97706" 
       />
 
-      {/* Neck & Head - Bobbing Animation */}
+      {/* Neck & Head Section */}
       <motion.g
-        animate={isMoving ? { rotate: [-2, 2, -2], x: [0, 1, 0] } : {}}
+        animate={isMoving ? { rotate: [-1, 2, -1], x: [0, 2, 0] } : {}}
         transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
-        className="origin-[75px_105px]"
+        className="origin-[100px_135px]"
       >
         {/* Long Neck */}
-        <path d="M72 105 L85 40 L95 40 L82 105 Z" fill="white" />
+        <path d="M95 135 L115 40 L130 40 L110 135 Z" fill="#F59E0B" />
+        
+        {/* Neck Spots */}
+        <circle cx="108" cy="110" r="5" fill="#78350F" />
+        <circle cx="115" cy="85" r="4" fill="#78350F" />
+        <circle cx="120" cy="65" r="4.5" fill="#78350F" />
+        <circle cx="124" cy="48" r="3" fill="#78350F" />
+
         {/* Head */}
-        <path d="M82 45 C 82 35, 105 35, 110 42 C 110 50, 95 52, 85 52 Z" fill="white" />
-        {/* Ossicones (small horns) */}
-        <rect x="85" y="32" width="2" height="8" rx="1" fill="#f5f5f5" />
-        <rect x="91" y="32" width="2" height="8" rx="1" fill="#f5f5f5" />
-        {/* Eye */}
-        <circle cx="95" cy="42" r="1.2" fill="#000000" fillOpacity="0.6" />
-        {/* Ear */}
-        <path d="M83 38 C 78 35, 78 45, 83 42 Z" fill="#f5f5f5" />
+        <path d="M110 45 C 110 32, 145 32, 150 42 C 150 55, 130 58, 115 58 Z" fill="#F59E0B" />
+        
+        {/* Features */}
+        <circle cx="130" cy="42" r="1.5" fill="black" />
+        <rect x="115" y="28" width="3" height="12" rx="1.5" fill="#78350F" />
+        <rect x="123" y="28" width="3" height="12" rx="1.5" fill="#78350F" />
+        <path d="M112 38 C 105 35, 105 45, 112 42 Z" fill="#B45309" />
       </motion.g>
 
       {/* Tail */}
-      <path d="M25 105 C 15 105, 15 125, 20 130" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M30 135 C 15 135, 10 155, 15 170" stroke="#78350F" strokeWidth="2.5" strokeLinecap="round" />
     </svg>
     
-    {/* Spiritual Dust/Glow Trail */}
+    {/* Dust/Glow Trail */}
     {isMoving && (
-      <div className="absolute bottom-0 left-0 w-full h-8 overflow-hidden pointer-events-none translate-x-[-10%] translate-y-[20px]">
+      <div className="absolute bottom-[-10px] left-0 w-full h-12 overflow-hidden pointer-events-none translate-x-[-10%]">
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, x: 20, y: 15, scale: 0.5 }}
-            animate={{ opacity: [0, 0.3, 0], x: [20, 80], y: [15, 0], scale: [0.5, 2] }}
+            animate={{ opacity: [0, 0.2, 0], x: [20, 100], y: [15, 0], scale: [0.5, 2] }}
             transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.25 }}
-            className="absolute w-4 h-4 bg-white/20 rounded-full blur-xl"
+            className="absolute w-5 h-5 bg-orange-200/20 rounded-full blur-xl"
           />
         ))}
       </div>
