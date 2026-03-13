@@ -241,18 +241,33 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
           {/* PREMIUM LOADER FRAME & HUD */}
           <div className="relative">
-            {/* Tactical Grid Overlay */}
-            <div className="absolute inset-[-150px] opacity-[0.03] pointer-events-none" style={{ backgroundImage: "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+            {/* Tactical Grid Overlay Removed */}
             
-            {/* Technical Rotating Frame Decor */}
-            <motion.svg className="absolute inset-[-60px] w-[calc(100%+120px)] h-[calc(100%+120px)] pointer-events-none origin-center" animate={{ rotate: 360 }} transition={{ duration: 60, repeat: Infinity, ease: "linear" }}>
-                <circle cx="50%" cy="50%" r="49%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="1 10" className="opacity-10" />
-                <path d="M 50% 5% L 50% 8%" stroke="white" strokeWidth="2" className="opacity-30" />
-                <path d="M 50% 92% L 50% 95%" stroke="white" strokeWidth="2" className="opacity-30" />
+            {/* Technical Rotating Frame Decor - Enhanced Rotation */}
+            <motion.svg 
+                className="absolute inset-[-80px] w-[calc(100%+160px)] h-[calc(100%+160px)] pointer-events-none origin-center" 
+                animate={{ rotate: 360 }} 
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            >
+                <circle cx="50%" cy="50%" r="48%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="1 15" className="opacity-20" />
+                <circle cx="50%" cy="50%" r="49.5%" stroke="white" strokeWidth="0.5" fill="none" strokeDasharray="4 20" className="opacity-10" />
+                
+                {/* Orbital Tech Marks */}
+                {[0, 90, 180, 270].map((angle) => (
+                    <g key={angle} style={{ transformOrigin: 'center', transform: `rotate(${angle}deg)` }}>
+                        <path d="M 50% 2% L 50% 6%" stroke="white" strokeWidth="2" className="opacity-40" />
+                        <path d="M 48% 4% L 52% 4%" stroke="white" strokeWidth="1" className="opacity-20" />
+                    </g>
+                ))}
             </motion.svg>
 
-            {/* Outer Rotating Progress Ring (High Precision) */}
-            <svg className="absolute inset-[-40px] w-[calc(100%+80px)] h-[calc(100%+80px)] -rotate-90 pointer-events-none opacity-60">
+            {/* Outer Rotating Progress Ring (High Precision) - Dynamic Orbital Rotation */}
+            <motion.svg 
+                initial={{ rotate: -90 }}
+                animate={{ rotate: 270 }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-40px] w-[calc(100%+80px)] h-[calc(100%+80px)] pointer-events-none opacity-60"
+            >
                 <circle 
                     cx="50%" cy="50%" r="48%" 
                     stroke="white" strokeWidth="0.5" fill="none" 
@@ -266,7 +281,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                     animate={{ strokeDashoffset: 1000 - (hudProgress * 10) }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                 />
-            </svg>
+            </motion.svg>
 
             {/* Micro-HUD Telemetry (Top Left) */}
             <motion.div 
