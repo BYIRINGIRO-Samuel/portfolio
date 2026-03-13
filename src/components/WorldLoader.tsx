@@ -129,7 +129,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(58); // Car stops between the two pumps
+      setProgress(44); // Car stops EXACTLY at the center of the gas station pumps
     }, 500);
 
     const finishTimer = setTimeout(() => setIsDone(true), 5500);
@@ -192,6 +192,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="80" className="opacity-10" />
                   <path d={roadPath} fill="none" stroke="#080808" strokeWidth="78" />
                   
+                  {/* Road Ambient Lighting (Realism) */}
+                  <path d={roadPath} fill="none" stroke="white" strokeWidth="1" className="opacity-[0.05] blur-md" />
+                  
                   {/* Active Navigation Glow */}
                   <motion.path
                     d={roadPath}
@@ -206,6 +209,21 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
+
+                {/* THE CAR SHADOW (Realism) */}
+                <motion.div 
+                  className="absolute z-20 pointer-events-none origin-center"
+                  animate={{ offsetDistance: `${progress}%` }}
+                  transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ 
+                    offsetPath: `path("${roadPath}")`,
+                    offsetRotate: "auto 90deg",
+                    width: "100px", height: "40px",
+                    background: "rgba(0,0,0,0.4)",
+                    filter: "blur(15px)",
+                    borderRadius: "50%"
+                  }}
+                />
 
                 {/* WHITE ISOMETRIC GAS STATION - Pushed further LEFT and UP to center it in the lens */}
                 <div className="absolute top-[-30px] left-[520px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
@@ -242,7 +260,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             {isDone && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <motion.div 
-                  initial={{ scale: 0, opacity: 1, borderAlpha: 1 }}
+                  initial={{ scale: 0, opacity: 1 }}
                   animate={{ scale: 6, opacity: 0 }}
                   transition={{ duration: 1.5, ease: "easeOut" }}
                   className="w-40 h-40 border-2 border-white/30 rounded-full"
