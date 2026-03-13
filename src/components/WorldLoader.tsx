@@ -243,9 +243,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           <div className="relative">
             {/* Tactical Grid Overlay Removed */}
             
-            {/* Technical Rotating Frame Decor - Clockwise Layer */}
+            {/* Technical Rotating Frame Decor - Clockwise Layer (Reduced Size) */}
             <motion.svg 
-                className="absolute inset-[-80px] w-[calc(100%+160px)] h-[calc(100%+160px)] pointer-events-none origin-center" 
+                className="absolute inset-[-30px] w-[calc(100%+60px)] h-[calc(100%+60px)] pointer-events-none origin-center" 
                 animate={{ rotate: 360 }} 
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
             >
@@ -258,9 +258,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                 ))}
             </motion.svg>
 
-            {/* Technical Rotating Frame Decor - Anticlockwise Layer */}
+            {/* Technical Rotating Frame Decor - Anticlockwise Layer (Reduced Size) */}
             <motion.svg 
-                className="absolute inset-[-100px] w-[calc(100%+200px)] h-[calc(100%+200px)] pointer-events-none origin-center" 
+                className="absolute inset-[-50px] w-[calc(100%+100px)] h-[calc(100%+100px)] pointer-events-none origin-center" 
                 animate={{ rotate: -360 }} 
                 transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
             >
@@ -297,20 +297,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
             {/* Micro-HUD Telemetry Removed */}
 
-            {/* Micro-HUD Percentage (Bottom Right) */}
-            <motion.div 
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.3 }}
-                className="absolute bottom-[-50px] right-[-30px] flex items-end gap-3 pointer-events-none"
-            >
-                <div className="flex flex-col items-end">
-                    {/* Status Label Removed */}
-                    <div className="text-2xl font-mono text-white font-light tracking-tighter">
-                        {Math.floor(hudProgress)}<span className="text-sm opacity-40 ml-1">%</span>
-                    </div>
-                </div>
-            </motion.div>
+            {/* Micro-HUD Percentage Removed */}
 
             {/* Centered MODULAR LENS (Increased Size for High Detail) */}
             <motion.div 
