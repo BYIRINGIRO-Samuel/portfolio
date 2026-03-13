@@ -2,68 +2,75 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 
 /**
- * Modeled Elephant Component (SVG) - White Minimalist Version
- * Realistic lateral walk cycle with body bobbing
+ * Modeled Giraffe Component (SVG) - White Minimalist Version
+ * Realistic long-neck walk cycle with neck bobbing and leg sequence
  */
-const Elephant = ({ isMoving }: { isMoving: boolean }) => (
+const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
   <motion.div 
-    animate={isMoving ? { y: [0, -2, 0] } : {}}
-    transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+    animate={isMoving ? { y: [0, -1, 0] } : {}}
+    transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
     className="relative transform"
   >
-    <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.4)]">
-      {/* Legs - Lateral sequence: LH, LF, RH, RF */}
+    <svg width="100" height="150" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.4)] overflow-visible">
+      {/* Legs - Staggered sequence */}
       
       {/* Rear Left (Back Layer) */}
       <motion.path 
-        animate={isMoving ? { d: ["M25 70 L30 95 L40 95 L35 70 Z", "M25 70 L20 85 L30 85 L35 70 Z", "M25 70 L30 95 L40 95 L35 70 Z"] } : {}}
-        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0 }}
-        d="M25 70 L30 95 L40 95 L35 70 Z" fill="#d1d1d1" 
+        animate={isMoving ? { d: ["M30 110 L32 145 L38 145 L36 110 Z", "M30 110 L25 135 L31 135 L36 110 Z", "M30 110 L32 145 L38 145 L36 110 Z"] } : {}}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0 }}
+        d="M30 110 L32 145 L38 145 L36 110 Z" fill="#d1d1d1" 
       />
       
       {/* Front Left (Back Layer) */}
       <motion.path 
-        animate={isMoving ? { d: ["M75 75 L80 98 L90 98 L85 75 Z", "M75 75 L70 90 L80 90 L85 75 Z", "M75 75 L80 98 L90 98 L85 75 Z"] } : {}}
-        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0.3 }}
-        d="M75 75 L80 98 L90 98 L85 75 Z" fill="#d1d1d1" 
+        animate={isMoving ? { d: ["M65 110 L67 145 L73 145 L71 110 Z", "M65 110 L60 135 L66 135 L71 110 Z", "M65 110 L67 145 L73 145 L71 110 Z"] } : {}}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0.35 }}
+        d="M65 110 L67 145 L73 145 L71 110 Z" fill="#d1d1d1" 
       />
 
       {/* Body - Main Torso */}
-      <path d="M15 50 C 15 20, 95 20, 100 40 C 100 70, 95 80, 85 80 L35 80 C 25 80, 15 75, 15 50 Z" fill="white" />
+      <path d="M25 105 C 25 85, 80 85, 80 105 L80 115 C 80 120, 25 120, 25 115 Z" fill="white" />
       
       {/* Rear Right (Front Layer) */}
       <motion.path 
-        animate={isMoving ? { d: ["M35 70 L40 95 L50 95 L45 70 Z", "M35 70 L30 85 L40 85 L45 70 Z", "M35 70 L40 95 L50 95 L45 70 Z"] } : {}}
-        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0.6 }}
-        d="M35 70 L40 95 L50 95 L45 70 Z" fill="white" 
+        animate={isMoving ? { d: ["M40 110 L42 145 L48 145 L46 110 Z", "M40 110 L35 135 L41 135 L46 110 Z", "M40 110 L42 145 L48 145 L46 110 Z"] } : {}}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0.7 }}
+        d="M40 110 L42 145 L48 145 L46 110 Z" fill="white" 
       />
       
       {/* Front Right (Front Layer) */}
       <motion.path 
-        animate={isMoving ? { d: ["M85 75 L90 98 L100 98 L95 75 Z", "M85 75 L80 90 L90 90 L95 75 Z", "M85 75 L90 98 L100 98 L95 75 Z"] } : {}}
-        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0.9 }}
-        d="M85 75 L90 98 L100 98 L95 75 Z" fill="white" 
+        animate={isMoving ? { d: ["M75 110 L77 145 L83 145 L81 110 Z", "M75 110 L70 135 L76 135 L81 110 Z", "M75 110 L77 145 L83 145 L81 110 Z"] } : {}}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 1.05 }}
+        d="M75 110 L77 145 L83 145 L81 110 Z" fill="white" 
       />
 
-      {/* Head & Trunk - Facing RIGHT */}
-      <path d="M95 35 C 115 35, 120 50, 115 65 C 110 80, 100 85, 100 70 C 100 60, 105 55, 95 55 Z" fill="white" />
-      
-      {/* Ear */}
-      <path d="M95 30 C 85 25, 75 40, 80 60 C 85 75, 95 70, 95 55 Z" fill="#f5f5f5" stroke="#00000005" strokeWidth="0.5" />
-      
-      {/* Eye */}
-      <circle cx="98" cy="45" r="1.5" fill="#000000" fillOpacity="0.6" />
-      
-      {/* Tusk */}
-      <path d="M108 58 C 112 58, 115 65, 112 72" stroke="#e5e5e5" strokeWidth="1.2" strokeLinecap="round" />
+      {/* Neck & Head - Bobbing Animation */}
+      <motion.g
+        animate={isMoving ? { rotate: [-2, 2, -2], x: [0, 1, 0] } : {}}
+        transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
+        className="origin-[75px_105px]"
+      >
+        {/* Long Neck */}
+        <path d="M72 105 L85 40 L95 40 L82 105 Z" fill="white" />
+        {/* Head */}
+        <path d="M82 45 C 82 35, 105 35, 110 42 C 110 50, 95 52, 85 52 Z" fill="white" />
+        {/* Ossicones (small horns) */}
+        <rect x="85" y="32" width="2" height="8" rx="1" fill="#f5f5f5" />
+        <rect x="91" y="32" width="2" height="8" rx="1" fill="#f5f5f5" />
+        {/* Eye */}
+        <circle cx="95" cy="42" r="1.2" fill="#000000" fillOpacity="0.6" />
+        {/* Ear */}
+        <path d="M83 38 C 78 35, 78 45, 83 42 Z" fill="#f5f5f5" />
+      </motion.g>
 
       {/* Tail */}
-      <path d="M15 55 C 5 55, 5 75, 10 85" stroke="white" strokeWidth="2" strokeLinecap="round" />
+      <path d="M25 105 C 15 105, 15 125, 20 130" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
     
     {/* Spiritual Dust/Glow Trail */}
     {isMoving && (
-      <div className="absolute bottom-0 left-0 w-full h-8 overflow-hidden pointer-events-none translate-x-[-20%]">
+      <div className="absolute bottom-0 left-0 w-full h-8 overflow-hidden pointer-events-none translate-x-[-10%] translate-y-[20px]">
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
@@ -238,9 +245,9 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                      <SavannaTree />
                  </div>
 
-                 {/* THE WHITE ELEPHANT */}
+                 {/* THE WHITE GIRAFFE */}
                  <motion.div 
-                   className="absolute z-30 pointer-events-none origin-center scale-[1.2]"
+                   className="absolute z-30 pointer-events-none origin-center scale-[1]"
                    animate={{ offsetDistance: `${progress}%` }}
                    transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
                    style={{ 
@@ -248,7 +255,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                      offsetRotate: "0deg"
                    }}
                  >
-                   <Elephant isMoving={!isDone} />
+                   <Giraffe isMoving={!isDone} />
                  </motion.div>
               </div>
 
