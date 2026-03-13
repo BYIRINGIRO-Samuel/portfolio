@@ -196,8 +196,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
     };
   }, [onComplete]);
 
-  // Road path - Elevated and flattened for better visibility
-  const roadPath = "M 0 220 L 1400 220";
+  // Road path - Elevated further for center-lens visibility
+  const roadPath = "M 0 180 L 1400 180";
 
   return (
     <AnimatePresence>
@@ -275,8 +275,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                     {[...Array(400)].map((_, i) => {
                       const t = Math.random();
                       const x = 50 + t * 1180;
-                      // Grounded on the new elevated path
-                      const y = 150 + Math.random() * 150;
+                      // Grounded on the new elevated path (Y=180)
+                      const y = 110 + Math.random() * 150;
                       return <GrassBlade key={i} x={x} y={y} delay={Math.random() * 2} />;
                     })}
 
@@ -309,8 +309,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                    }}
                  />
 
-                   {/* WHITE SAVANNA TREE - Elevated to match new horizontal path */}
-                   <div className="absolute top-[165px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
+                   {/* WHITE SAVANNA TREE - Elevated perfectly for center visibility */}
+                   <div className="absolute top-[125px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
                        <SavannaTree />
                    </div>
 
