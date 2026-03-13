@@ -207,14 +207,14 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
 
-                {/* WHITE ISOMETRIC GAS STATION - Pushed to the LEFT to be centered in the lens */}
-                <div className="absolute top-[20px] left-[640px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
+                {/* WHITE ISOMETRIC GAS STATION - Pushed further LEFT and UP to center it in the lens */}
+                <div className="absolute top-[-30px] left-[520px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.1] origin-center">
                     <IsometricGasStation />
                 </div>
 
                 {/* The Precision Car (SCALED UP inside the lens) */}
                 <motion.div 
-                  className="absolute z-30 pointer-events-none origin-center scale-[1.8]"
+                  className="absolute z-30 pointer-events-none origin-center scale-[2.5]"
                   animate={{ offsetDistance: `${progress}%` }}
                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
                   style={{ 
