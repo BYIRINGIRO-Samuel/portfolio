@@ -3,68 +3,79 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 
 /**
  * Modeled Elephant Component (SVG) - White Minimalist Version
+ * Realistic lateral walk cycle with body bobbing
  */
 const Elephant = ({ isMoving }: { isMoving: boolean }) => (
-  <div className="relative transform">
+  <motion.div 
+    animate={isMoving ? { y: [0, -2, 0] } : {}}
+    transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut" }}
+    className="relative transform"
+  >
     <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.4)]">
-      {/* Back Legs */}
-      <motion.path 
-        animate={isMoving ? { d: ["M85 70 L90 95 L100 95 L95 70 Z", "M85 70 L80 90 L90 90 L95 70 Z", "M85 70 L90 95 L100 95 L95 70 Z"] } : {}}
-        transition={{ duration: 1, repeat: Infinity }}
-        d="M85 70 L90 95 L100 95 L95 70 Z" fill="#e5e5e5" 
-      />
-      <motion.path 
-        animate={isMoving ? { d: ["M35 70 L40 95 L50 95 L45 70 Z", "M35 70 L30 90 L40 90 L45 70 Z", "M35 70 L40 95 L50 95 L45 70 Z"] } : {}}
-        transition={{ duration: 1, repeat: Infinity, delay: 0.5 }}
-        d="M35 70 L40 95 L50 95 L45 70 Z" fill="#e5e5e5" 
-      />
-
-      {/* Body */}
-      <path d="M20 40 C 20 20, 100 20, 105 50 C 105 75, 95 80, 80 80 L35 80 C 25 80, 20 70, 20 40 Z" fill="white" />
+      {/* Legs - Lateral sequence: LH, LF, RH, RF */}
       
-      {/* Front Legs */}
+      {/* Rear Left (Back Layer) */}
       <motion.path 
-        animate={isMoving ? { d: ["M80 75 L85 98 L95 98 L90 75 Z", "M80 75 L75 92 L85 92 L90 75 Z", "M80 75 L85 98 L95 98 L90 75 Z"] } : {}}
-        transition={{ duration: 1, repeat: Infinity, delay: 0.2 }}
-        d="M80 75 L85 98 L95 98 L90 75 Z" fill="#f5f5f5" 
+        animate={isMoving ? { d: ["M25 70 L30 95 L40 95 L35 70 Z", "M25 70 L20 85 L30 85 L35 70 Z", "M25 70 L30 95 L40 95 L35 70 Z"] } : {}}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0 }}
+        d="M25 70 L30 95 L40 95 L35 70 Z" fill="#d1d1d1" 
       />
+      
+      {/* Front Left (Back Layer) */}
       <motion.path 
-        animate={isMoving ? { d: ["M30 75 L35 98 L45 98 L40 75 Z", "M30 75 L25 92 L35 92 L40 75 Z", "M30 75 L35 98 L45 98 L40 75 Z"] } : {}}
-        transition={{ duration: 1, repeat: Infinity, delay: 0.7 }}
-        d="M30 75 L35 98 L45 98 L40 75 Z" fill="#f5f5f5" 
+        animate={isMoving ? { d: ["M75 75 L80 98 L90 98 L85 75 Z", "M75 75 L70 90 L80 90 L85 75 Z", "M75 75 L80 98 L90 98 L85 75 Z"] } : {}}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0.3 }}
+        d="M75 75 L80 98 L90 98 L85 75 Z" fill="#d1d1d1" 
       />
 
-      {/* Head & Trunk */}
-      <path d="M25 35 C 5 35, 0 50, 5 65 C 10 80, 20 85, 20 70 C 20 60, 15 55, 25 55 Z" fill="white" />
+      {/* Body - Main Torso */}
+      <path d="M15 50 C 15 20, 95 20, 100 40 C 100 70, 95 80, 85 80 L35 80 C 25 80, 15 75, 15 50 Z" fill="white" />
+      
+      {/* Rear Right (Front Layer) */}
+      <motion.path 
+        animate={isMoving ? { d: ["M35 70 L40 95 L50 95 L45 70 Z", "M35 70 L30 85 L40 85 L45 70 Z", "M35 70 L40 95 L50 95 L45 70 Z"] } : {}}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0.6 }}
+        d="M35 70 L40 95 L50 95 L45 70 Z" fill="white" 
+      />
+      
+      {/* Front Right (Front Layer) */}
+      <motion.path 
+        animate={isMoving ? { d: ["M85 75 L90 98 L100 98 L95 75 Z", "M85 75 L80 90 L90 90 L95 75 Z", "M85 75 L90 98 L100 98 L95 75 Z"] } : {}}
+        transition={{ duration: 1.2, repeat: Infinity, ease: "linear", delay: 0.9 }}
+        d="M85 75 L90 98 L100 98 L95 75 Z" fill="white" 
+      />
+
+      {/* Head & Trunk - Facing RIGHT */}
+      <path d="M95 35 C 115 35, 120 50, 115 65 C 110 80, 100 85, 100 70 C 100 60, 105 55, 95 55 Z" fill="white" />
       
       {/* Ear */}
-      <path d="M25 30 C 35 25, 45 40, 40 60 C 35 75, 25 70, 25 55 Z" fill="#f5f5f5" stroke="#00000010" strokeWidth="0.5" />
+      <path d="M95 30 C 85 25, 75 40, 80 60 C 85 75, 95 70, 95 55 Z" fill="#f5f5f5" stroke="#00000005" strokeWidth="0.5" />
       
       {/* Eye */}
-      <circle cx="22" cy="45" r="1.5" fill="#000000" fillOpacity="0.6" />
+      <circle cx="98" cy="45" r="1.5" fill="#000000" fillOpacity="0.6" />
       
       {/* Tusk */}
-      <path d="M12 58 C 8 58, 5 65, 8 72" stroke="#d1d1d1" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M108 58 C 112 58, 115 65, 112 72" stroke="#e5e5e5" strokeWidth="1.2" strokeLinecap="round" />
 
       {/* Tail */}
-      <path d="M105 55 C 115 55, 115 75, 110 85" stroke="white" strokeWidth="2" strokeLinecap="round" />
+      <path d="M15 55 C 5 55, 5 75, 10 85" stroke="white" strokeWidth="2" strokeLinecap="round" />
     </svg>
     
-    {/* Spiritual Glow while walking */}
+    {/* Spiritual Dust/Glow Trail */}
     {isMoving && (
-      <div className="absolute bottom-0 right-0 w-full h-8 overflow-hidden pointer-events-none">
-        {[...Array(4)].map((_, i) => (
+      <div className="absolute bottom-0 left-0 w-full h-8 overflow-hidden pointer-events-none translate-x-[-20%]">
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, x: 80, y: 10, scale: 0.5 }}
-            animate={{ opacity: [0, 0.4, 0], x: [80, 20], y: [10, -5], scale: [0.5, 1.5] }}
-            transition={{ duration: 1, repeat: Infinity, delay: i * 0.25 }}
-            className="absolute w-4 h-4 bg-white/30 rounded-full blur-lg"
+            initial={{ opacity: 0, x: 20, y: 15, scale: 0.5 }}
+            animate={{ opacity: [0, 0.3, 0], x: [20, 80], y: [15, 0], scale: [0.5, 2] }}
+            transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.25 }}
+            className="absolute w-4 h-4 bg-white/20 rounded-full blur-xl"
           />
         ))}
       </div>
     )}
-  </div>
+  </motion.div>
 );
 
 /**
