@@ -7,8 +7,8 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
  */
 const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
   <motion.div 
-    animate={isMoving ? { y: [0, -2, 0] } : {}}
-    transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+    animate={isMoving ? { y: [0, -5, 0] } : {}}
+    transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
     className="relative transform"
   >
     <svg width="140" height="200" viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(234,179,8,0.2)] overflow-visible">
@@ -16,15 +16,15 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
       
       {/* Legs - Rear Left */}
       <motion.path 
-        animate={isMoving ? { d: ["M40 140 L43 190 L51 190 L48 140 Z", "M40 140 L35 180 L43 180 L48 140 Z", "M40 140 L43 190 L51 190 L48 140 Z"] } : {}}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 0 }}
+        animate={isMoving ? { d: ["M40 140 L43 190 L51 190 L48 140 Z", "M40 140 L30 170 L35 170 L48 140 Z", "M40 140 L43 190 L51 190 L48 140 Z"] } : {}}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0 }}
         d="M40 140 L43 190 L51 190 L48 140 Z" fill="#B45309" 
       />
       
       {/* Legs - Front Left */}
       <motion.path 
-        animate={isMoving ? { d: ["M95 140 L98 190 L106 190 L103 140 Z", "M95 140 L90 180 L98 180 L103 140 Z", "M95 140 L98 190 L106 190 L103 140 Z"] } : {}}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 0.7 }}
+        animate={isMoving ? { d: ["M95 140 L98 190 L106 190 L103 140 Z", "M95 140 L85 170 L90 170 L103 140 Z", "M95 140 L98 190 L106 190 L103 140 Z"] } : {}}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
         d="M95 140 L98 190 L106 190 L103 140 Z" fill="#B45309" 
       />
 
@@ -40,15 +40,15 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
       
       {/* Legs - Rear Right */}
       <motion.path 
-        animate={isMoving ? { d: ["M55 140 L58 195 L66 195 L63 140 Z", "M55 140 L50 185 L58 185 L63 140 Z", "M55 140 L58 195 L66 195 L63 140 Z"] } : {}}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 1.4 }}
+        animate={isMoving ? { d: ["M55 140 L58 195 L66 195 L63 140 Z", "M55 140 L45 175 L50 175 L63 140 Z", "M55 140 L58 195 L66 195 L63 140 Z"] } : {}}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 1.4 }}
         d="M55 140 L58 195 L66 195 L63 140 Z" fill="#D97706" 
       />
       
       {/* Legs - Front Right */}
       <motion.path 
-        animate={isMoving ? { d: ["M110 140 L113 195 L121 195 L118 140 Z", "M110 140 L105 185 L113 185 L118 140 Z", "M110 140 L113 195 L121 195 L118 140 Z"] } : {}}
-        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 2.1 }}
+        animate={isMoving ? { d: ["M110 140 L113 195 L121 195 L118 140 Z", "M110 140 L100 175 L105 175 L118 140 Z", "M110 140 L113 195 L121 195 L118 140 Z"] } : {}}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 2.1 }}
         d="M110 140 L113 195 L121 195 L118 140 Z" fill="#D97706" 
       />
 
@@ -322,7 +322,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                      filter: "brightness(0.9)"
                    }}
                    transition={{ 
-                     offsetDistance: { duration: 12, ease: [0.16, 1, 0.3, 1] },
+                     offsetDistance: { duration: 12, ease: "easeInOut" },
                      filter: { duration: 6 }
                    }}
                    style={{ 
