@@ -8,7 +8,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
   <motion.div 
     animate={isMoving ? { y: [0, -2, 0] } : {}}
-    transition={{ duration: 0.6, repeat: Infinity, ease: "easeInOut" }}
+    transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
     className="relative transform"
   >
     <svg width="140" height="200" viewBox="0 0 140 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(234,179,8,0.2)] overflow-visible">
@@ -17,14 +17,14 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
       {/* Legs - Rear Left */}
       <motion.path 
         animate={isMoving ? { d: ["M40 140 L43 190 L51 190 L48 140 Z", "M40 140 L35 180 L43 180 L48 140 Z", "M40 140 L43 190 L51 190 L48 140 Z"] } : {}}
-        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0 }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 0 }}
         d="M40 140 L43 190 L51 190 L48 140 Z" fill="#B45309" 
       />
       
       {/* Legs - Front Left */}
       <motion.path 
         animate={isMoving ? { d: ["M95 140 L98 190 L106 190 L103 140 Z", "M95 140 L90 180 L98 180 L103 140 Z", "M95 140 L98 190 L106 190 L103 140 Z"] } : {}}
-        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0.35 }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 0.7 }}
         d="M95 140 L98 190 L106 190 L103 140 Z" fill="#B45309" 
       />
 
@@ -41,21 +41,21 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
       {/* Legs - Rear Right */}
       <motion.path 
         animate={isMoving ? { d: ["M55 140 L58 195 L66 195 L63 140 Z", "M55 140 L50 185 L58 185 L63 140 Z", "M55 140 L58 195 L66 195 L63 140 Z"] } : {}}
-        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 0.7 }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 1.4 }}
         d="M55 140 L58 195 L66 195 L63 140 Z" fill="#D97706" 
       />
       
       {/* Legs - Front Right */}
       <motion.path 
         animate={isMoving ? { d: ["M110 140 L113 195 L121 195 L118 140 Z", "M110 140 L105 185 L113 185 L118 140 Z", "M110 140 L113 195 L121 195 L118 140 Z"] } : {}}
-        transition={{ duration: 1.4, repeat: Infinity, ease: "linear", delay: 1.05 }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: "linear", delay: 2.1 }}
         d="M110 140 L113 195 L121 195 L118 140 Z" fill="#D97706" 
       />
 
       {/* Neck & Head Section */}
       <motion.g
         animate={isMoving ? { rotate: [-1, 2, -1], x: [0, 2, 0] } : {}}
-        transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
         className="origin-[100px_135px]"
       >
         {/* Long Neck */}
@@ -153,15 +153,15 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setProgress(46); // Elephant stops under the tree
+      setProgress(46); // Giraffe stops under the tree
     }, 500);
 
-    const finishTimer = setTimeout(() => setIsDone(true), 5500);
+    const finishTimer = setTimeout(() => setIsDone(true), 12500);
 
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 8500);
+    }, 15500);
 
     return () => {
       clearTimeout(timer);
@@ -262,7 +262,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                  <motion.div 
                    className="absolute z-30 pointer-events-none origin-center scale-[1]"
                    animate={{ offsetDistance: `${progress}%` }}
-                   transition={{ duration: 5, ease: [0.16, 1, 0.3, 1] }}
+                   transition={{ duration: 12, ease: [0.16, 1, 0.3, 1] }}
                    style={{ 
                      offsetPath: `path("${roadPath}")`,
                      offsetRotate: "0deg"
