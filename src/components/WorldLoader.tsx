@@ -55,25 +55,25 @@ const DataVehicle = ({ isMoving }: { isMoving: boolean }) => (
  * High-End Isometric Gas Station (Well-Modeled based on reference image)
  */
 const IsometricGasStation = () => (
-  <svg width="300" height="250" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+  <svg width="300" height="250" viewBox="0 0 160 140" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.15)]">
     {/* Isometric Platform / Base */}
-    <path d="M20 90L80 60L140 90L80 120L20 90Z" fill="#111" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
-    <path d="M20 90V96L80 126L140 96V90L80 120L20 90Z" fill="#080808" stroke="white" strokeWidth="0.5" strokeOpacity="0.2" />
+    <path d="M20 90L80 60L140 90L80 120L20 90Z" fill="#f0f0f0" stroke="white" strokeWidth="0.5" strokeOpacity="0.8" />
+    <path d="M20 90V96L80 126L140 96V90L80 120L20 90Z" fill="#d0d0d0" stroke="white" strokeWidth="0.5" strokeOpacity="0.5" />
 
     {/* Pillars supporting the canopy */}
-    <rect x="45" y="40" width="4" height="60" fill="white" fillOpacity="0.15" />
-    <rect x="111" y="40" width="4" height="60" fill="white" fillOpacity="0.15" />
+    <rect x="45" y="40" width="4" height="60" fill="white" />
+    <rect x="111" y="40" width="4" height="60" fill="white" />
 
     {/* Massive Isometric Canopy (Roof) */}
-    <path d="M10 40L80 10L150 40L80 70L10 40Z" fill="#0c0c0c" stroke="white" strokeWidth="1" strokeOpacity="0.5" />
-    <path d="M10 40V48L80 78L150 48V40L80 70L10 40Z" fill="#151515" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
+    <path d="M10 40L80 10L150 40L80 70L10 40Z" fill="#ffffff" stroke="white" strokeWidth="1" />
+    <path d="M10 40V48L80 78L150 48V40L80 70L10 40Z" fill="#e0e0e0" stroke="white" strokeWidth="0.5" />
     
     {/* "GAS STATION" Banner with light effects */}
-    <rect x="40" y="45" width="80" height="12" rx="1" fill="#111" stroke="white" strokeWidth="0.5" strokeOpacity="0.4" />
+    <rect x="40" y="45" width="80" height="12" rx="1" fill="white" stroke="#080808" strokeWidth="0.5" />
     <motion.text 
-      animate={{ opacity: [0.3, 0.6, 0.3] }}
-      transition={{ duration: 2, repeat: Infinity }}
-      x="80" y="53" fontSize="6" fontFamily="monospace" fill="white" textAnchor="middle" dominantBaseline="middle" className="tracking-[0.3em] font-bold"
+      animate={{ opacity: [0.8, 1, 0.8] }}
+      transition={{ duration: 1, repeat: Infinity }}
+      x="80" y="53" fontSize="6" fontFamily="monospace" fill="black" textAnchor="middle" dominantBaseline="middle" className="tracking-[0.3em] font-bold"
     >
       GAS STATION
     </motion.text>
@@ -82,28 +82,28 @@ const IsometricGasStation = () => (
     <g transform="translate(55, 75)">
        {/* Pump 1 */}
        <motion.path 
-         animate={{ strokeOpacity: [0.2, 0.5, 0.2] }}
+         animate={{ strokeOpacity: [0.8, 1, 0.8] }}
          transition={{ duration: 1.5, repeat: Infinity }}
-         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="#151515" stroke="white" strokeWidth="0.5" 
+         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="white" stroke="#ccc" strokeWidth="0.5" 
        />
-       <rect x="4" y="10" width="16" height="8" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.2" strokeOpacity="0.3" />
+       <rect x="4" y="10" width="16" height="8" fill="black" fillOpacity="0.8" stroke="white" strokeWidth="0.2" />
        {/* Yellow Accent / Detail (Subtle) */}
-       <path d="M4 22H20" stroke="white" strokeWidth="2" strokeOpacity="0.05" />
+       <path d="M4 22H20" stroke="#FFD700" strokeWidth="2" strokeOpacity="1" />
     </g>
     <g transform="translate(90, 75)">
        {/* Pump 2 */}
        <motion.path 
-         animate={{ strokeOpacity: [0.2, 0.5, 0.2] }}
+         animate={{ strokeOpacity: [0.8, 1, 0.8] }}
          transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="#151515" stroke="white" strokeWidth="0.5" 
+         d="M0 8L12 2L24 8V28L12 34L0 28V8Z" fill="white" stroke="#ccc" strokeWidth="0.5" 
        />
-       <rect x="4" y="10" width="16" height="8" fill="white" fillOpacity="0.1" stroke="white" strokeWidth="0.2" strokeOpacity="0.3" />
+       <rect x="4" y="10" width="16" height="8" fill="black" fillOpacity="0.8" stroke="white" strokeWidth="0.2" />
     </g>
 
     {/* Large Totem Sign */}
-    <rect x="145" y="5" width="3" height="110" fill="white" fillOpacity="0.1" />
-    <rect x="138" y="5" width="18" height="25" rx="1" fill="#080808" stroke="white" strokeWidth="0.5" strokeOpacity="0.3" />
-    <circle cx="147" cy="17" r="4" fill="white" fillOpacity="0.05" className="animate-pulse" />
+    <rect x="145" y="5" width="3" height="110" fill="white" />
+    <rect x="138" y="5" width="18" height="25" rx="1" fill="white" stroke="black" strokeWidth="0.5" />
+    <circle cx="147" cy="17" r="4" fill="black" fillOpacity="0.3" className="animate-pulse" />
   </svg>
 );
 
@@ -192,8 +192,8 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
                   <path d={roadPath} fill="none" stroke="white" strokeWidth="2" className="opacity-20" strokeDasharray="20 40" />
                 </svg>
 
-                {/* WELL-MODELED ISOMETRIC GAS STATION */}
-                <div className="absolute top-[38%] left-[28%] z-10 translate-y-[-50%] scale-[1.3] origin-center">
+                {/* WHITE ISOMETRIC GAS STATION - Aligned with the car stop point */}
+                <div className="absolute top-[48%] left-[56%] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center">
                     <IsometricGasStation />
                 </div>
 
