@@ -177,31 +177,37 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
   const [progress, setProgress] = useState(0);
   const [isDone, setIsDone] = useState(false);
   const [hudProgress, setHudProgress] = useState(0);
+  const [isBooting, setIsBooting] = useState(true);
 
   useEffect(() => {
+    // Cinematic Boot Sequence
+    const bootTimer = setTimeout(() => setIsBooting(false), 2500);
+
     // Smoother HUD progress for visual polish
     const hudInterval = setInterval(() => {
         setHudProgress(prev => {
             if (prev >= 100) return 100;
-            return prev + (100 - prev) * 0.05;
+            const step = Math.random() > 0.8 ? 5 : 0.8; // Realistic variable jumps
+            return Math.min(100, prev + (100 - prev) * 0.05 + step);
         });
-    }, 100);
+    }, 120);
 
     const timer = setTimeout(() => {
       setProgress(46); // Giraffe stops under the tree
-    }, 500);
+    }, 3000);
 
     const finishTimer = setTimeout(() => {
         setIsDone(true);
         setHudProgress(100);
-    }, 12500);
+    }, 14500);
 
     const exitTimer = setTimeout(() => {
       setIsExiting(true);
       if (onComplete) setTimeout(onComplete, 1200);
-    }, 15500);
+    }, 17500);
 
     return () => {
+      clearTimeout(bootTimer);
       clearInterval(hudInterval);
       clearTimeout(timer);
       clearTimeout(finishTimer);
@@ -222,6 +228,43 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
           transition={{ duration: 1.2, ease: "easeInOut" }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black overflow-hidden"
         >
+          {/* CINEMATIC BOOT SEQUENCE LOGS */}
+          <AnimatePresence>
+            {isBooting && (
+              <motion.div 
+                exit={{ opacity: 0, scale: 1.1 }}
+                className="absolute inset-0 z-[110] flex flex-col items-center justify-center bg-black p-10 pointer-events-none"
+              >
+                <div className="w-full max-w-lg font-mono text-[10px] text-white/40 space-y-1">
+                    {[
+                        "> INITIALIZING KERNEL_SPIRIT_V2.0",
+                        "> LOADING SECTOR: SAVANNA_PLAINS",
+                        "> CONNECTING TO BIOMETRIC_REPLICA...",
+                        "> SCANNING_ENVIRONMENT: NIGHT_MODE_ACTIVE",
+                        "> ASSET_LOAD: GIRAFFE_MODEL_STABLE",
+                        "> ASSET_LOAD: ACACIA_TREE_STABLE",
+                        "> CALCULATING TRAJECTORY: SPIRIT_PATH_04",
+                        "> BOOT_READY: 0x44A299BF"
+                    ].map((text, i) => (
+                        <motion.div
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: i * 0.15 }}
+                        >
+                            {text}
+                        </motion.div>
+                    ))}
+                    <motion.div 
+                        animate={{ opacity: [0, 1] }} 
+                        transition={{ duration: 0.2, repeat: Infinity }}
+                        className="w-2 h-4 bg-white/40 inline-block mt-2"
+                    />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Static Background Texture */}
           <div className="absolute inset-0 z-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
           
@@ -258,27 +301,51 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
             </svg>
 
             {/* Micro-HUD Telemetry (Top Left) */}
-            <div className="absolute top-[-50px] left-[-30px] flex gap-4 text-[9px] font-mono text-white/40 tracking-wider pointer-events-none">
+            <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 3.5 }}
+                className="absolute top-[-50px] left-[-30px] flex gap-4 text-[9px] font-mono text-white/40 tracking-wider pointer-events-none"
+            >
                 <div className="flex flex-col gap-1">
                     <span className="text-white/60">SYS_INIT: OK</span>
-                    <span>POS: 1.80.350</span>
+                    <span className="flex items-center gap-1">
+                        <motion.div animate={{ opacity: [1, 0] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                        POS: 1.80.350
+                    </span>
                 </div>
                 <div className="w-[1px] h-6 bg-white/10" />
                 <div className="flex flex-col gap-1">
                     <span>LENS_ID: PRM_88</span>
                     <span>TYPE: SAVANNA</span>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Micro-HUD Percentage (Bottom Right) */}
-            <div className="absolute bottom-[-50px] right-[-30px] flex items-end gap-3 pointer-events-none">
+            <motion.div 
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 3.8 }}
+                className="absolute bottom-[-50px] right-[-30px] flex items-end gap-3 pointer-events-none"
+            >
                 <div className="flex flex-col items-end">
                     <div className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Deployment Status</div>
                     <div className="text-2xl font-mono text-white font-light tracking-tighter">
                         {Math.floor(hudProgress)}<span className="text-sm opacity-40 ml-1">%</span>
                     </div>
                 </div>
-            </div>
+            </motion.div>
+
+            {/* Tactical Grid / Coordinates Crosshair Layer */}
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isBooting ? 0 : 0.15 }}
+                className="absolute inset-[-100px] border border-white/5 pointer-events-none z-0"
+                style={{ 
+                    backgroundImage: "radial-gradient(circle, white 0.5px, transparent 0.5px)",
+                    backgroundSize: "30px 30px" 
+                }}
+            />
 
             {/* Centered MODULAR LENS (Increased Size for High Detail) */}
             <motion.div 
