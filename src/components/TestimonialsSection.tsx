@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, Suspense } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 import { Canvas } from '@react-three/fiber';
-import { Environment, Float, ContactShadows, PresentationControls, MeshTransmissionMaterial, Sparkles } from '@react-three/drei';
+import { Environment, Float, ContactShadows, PresentationControls, MeshTransmissionMaterial, Sparkles, Text } from '@react-three/drei';
 
 const channels = [
   {
@@ -195,53 +195,89 @@ const PremiumGlassScene = () => {
   );
 };
 
-/* 3D Floating Glass Sphere Scene for Standby Screen */
+/* 3D Testimonial Quote Scene for Standby Screen */
 const StandbyGlassScene = () => {
   return (
     <Suspense fallback={null}>
-      <ambientLight intensity={0.3} />
+      <ambientLight intensity={0.4} />
       <directionalLight position={[5, 8, 5]} intensity={1.5} />
-      <spotLight position={[-3, 3, 5]} angle={0.3} penumbra={1} intensity={2} color="#60a5fa" />
-      <spotLight position={[3, -3, -5]} angle={0.3} penumbra={1} intensity={1.5} color="#ffffff" />
+      <spotLight position={[-4, 4, 6]} angle={0.25} penumbra={1} intensity={3} color="#60a5fa" />
+      <spotLight position={[4, -2, -4]} angle={0.3} penumbra={1} intensity={1.5} color="#ffffff" />
 
-      <Float speed={1.5} rotationIntensity={0.8} floatIntensity={1}>
-        <group>
-          {/* Main Glass Icosahedron */}
-          <mesh scale={1.8} castShadow>
-            <icosahedronGeometry args={[1, 1]} />
-            <MeshTransmissionMaterial
-              backside
-              samples={4}
-              thickness={2}
-              chromaticAberration={0.8}
-              anisotropy={0.5}
-              distortion={0.3}
-              distortionScale={0.3}
-              temporalDistortion={0.05}
-              iridescence={1}
-              iridescenceIOR={1.2}
-              iridescenceThicknessRange={[0, 1400]}
-              color="#a0c4ff"
-            />
-          </mesh>
+      <PresentationControls
+        global
+        config={{ mass: 2, tension: 400 }}
+        snap={{ mass: 4, tension: 1200 }}
+        rotation={[0.1, 0.2, 0]}
+        polar={[-Math.PI / 6, Math.PI / 6]}
+        azimuth={[-Math.PI / 6, Math.PI / 6]}
+      >
+        <Float speed={1.8} rotationIntensity={0.6} floatIntensity={1.2}>
+          <group>
+            {/* Large Glass Quote Mark - Left */}
+            <Text
+              position={[-0.8, 0.3, 0]}
+              fontSize={4}
+              font="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff"
+              color="#ffffff"
+              anchorX="center"
+              anchorY="middle"
+            >
+              <MeshTransmissionMaterial
+                backside
+                samples={4}
+                thickness={1.5}
+                chromaticAberration={0.6}
+                anisotropy={0.3}
+                distortion={0.4}
+                distortionScale={0.4}
+                temporalDistortion={0.08}
+                iridescence={1}
+                iridescenceIOR={1}
+                iridescenceThicknessRange={[0, 1400]}
+                color="#ffffff"
+              />
+              “
+            </Text>
 
-          {/* Wireframe Inner Shell */}
-          <mesh scale={1.2}>
-            <icosahedronGeometry args={[1, 0]} />
-            <meshStandardMaterial color="#ffffff" emissive="#60a5fa" emissiveIntensity={0.5} wireframe opacity={0.3} transparent />
-          </mesh>
+            {/* Large Glass Quote Mark - Right */}
+            <Text
+              position={[1.2, -0.5, 0.3]}
+              fontSize={4}
+              font="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff"
+              color="#ffffff"
+              anchorX="center"
+              anchorY="middle"
+            >
+              <MeshTransmissionMaterial
+                backside
+                samples={4}
+                thickness={1.5}
+                chromaticAberration={0.6}
+                anisotropy={0.3}
+                distortion={0.4}
+                distortionScale={0.4}
+                temporalDistortion={0.08}
+                iridescence={1}
+                iridescenceIOR={1}
+                iridescenceThicknessRange={[0, 1400]}
+                color="#a0c4ff"
+              />
+              ”
+            </Text>
 
-          {/* Tiny Orbiting Core */}
-          <mesh scale={0.4}>
-            <dodecahedronGeometry args={[1, 0]} />
-            <meshStandardMaterial color="#60a5fa" emissive="#60a5fa" emissiveIntensity={2} />
-          </mesh>
+            {/* Small accent sphere between quotes */}
+            <mesh position={[0.2, -0.1, 0.5]} scale={0.25}>
+              <sphereGeometry args={[1, 32, 32]} />
+              <meshStandardMaterial color="#60a5fa" emissive="#60a5fa" emissiveIntensity={1.5} transparent opacity={0.6} />
+            </mesh>
 
-          {/* Sparkles */}
-          <Sparkles count={80} scale={5} size={2} speed={0.3} opacity={0.6} color="#60a5fa" />
-          <Sparkles count={40} scale={3} size={1.5} speed={0.5} opacity={0.4} color="#ffffff" />
-        </group>
-      </Float>
+            {/* Ambient Sparkles */}
+            <Sparkles count={60} scale={6} size={2} speed={0.3} opacity={0.5} color="#60a5fa" />
+            <Sparkles count={30} scale={4} size={1.5} speed={0.4} opacity={0.3} color="#ffffff" />
+          </group>
+        </Float>
+      </PresentationControls>
 
       <ContactShadows position={[0, -2.5, 0]} opacity={0.3} scale={10} blur={2} far={4} color="#000000" />
       <Environment preset="city" />
