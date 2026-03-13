@@ -101,32 +101,73 @@ const Giraffe = ({ isMoving }: { isMoving: boolean }) => (
 /**
  * Well-Modeled Savanna Acacia Tree - White Edition
  */
-const SavannaTree = () => (
-  <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(34,197,94,0.2)]">
-    {/* Trunk - Darker Green/Brownish */}
-    <path d="M95 180 C 95 150, 85 130, 80 110" stroke="#14532D" strokeWidth="6" strokeLinecap="round" />
-    <path d="M105 180 C 105 150, 115 130, 120 110" stroke="#14532D" strokeWidth="6" strokeLinecap="round" />
+/**
+ * Well-Modeled Savanna Acacia Tree - Dynamic Colors
+ */
+const SavannaTree = ({ isDay }: { isDay: boolean }) => (
+  <svg width="250" height="250" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+    {/* Trunk - Animates from White to Dark Green */}
+    <motion.path 
+      d="M95 180 C 95 150, 85 130, 80 110" 
+      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
+      transition={{ duration: 6 }}
+      strokeWidth="6" strokeLinecap="round" 
+    />
+    <motion.path 
+      d="M105 180 C 105 150, 115 130, 120 110" 
+      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
+      transition={{ duration: 6 }}
+      strokeWidth="6" strokeLinecap="round" 
+    />
     
     {/* Branches */}
-    <path d="M80 110 C 60 90, 40 85, 30 80" stroke="#14532D" strokeWidth="4" strokeLinecap="round" />
-    <path d="M120 110 C 140 90, 160 85, 170 80" stroke="#14532D" strokeWidth="4" strokeLinecap="round" />
-    <path d="M100 110 C 100 90, 100 80, 100 70" stroke="#14532D" strokeWidth="4" strokeLinecap="round" />
+    <motion.path 
+      d="M80 110 C 60 90, 40 85, 30 80" 
+      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
+      transition={{ duration: 6 }}
+      strokeWidth="4" strokeLinecap="round" 
+    />
+    <motion.path 
+      d="M120 110 C 140 90, 160 85, 170 80" 
+      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
+      transition={{ duration: 6 }}
+      strokeWidth="4" strokeLinecap="round" 
+    />
+    <motion.path 
+      d="M100 110 C 100 90, 100 80, 100 70" 
+      animate={{ stroke: isDay ? "#14532D" : "#f0f0f0" }}
+      transition={{ duration: 6 }}
+      strokeWidth="4" strokeLinecap="round" 
+    />
     
-    {/* Canopy - Pure Green */}
+    {/* Canopy - Animates from White to Pure Green */}
     <g className="opacity-100">
-      <ellipse cx="100" cy="65" rx="60" ry="12" fill="#22C55E" />
-      <ellipse cx="60" cy="75" rx="45" ry="10" fill="#16A34A" />
-      <ellipse cx="140" cy="75" rx="45" ry="10" fill="#16A34A" />
+      <motion.ellipse 
+        cx="100" cy="65" rx="60" ry="12" 
+        animate={{ fill: isDay ? "#22C55E" : "#FFFFFF" }}
+        transition={{ duration: 6 }}
+      />
+      <motion.ellipse 
+        cx="60" cy="75" rx="45" ry="10" 
+        animate={{ fill: isDay ? "#16A34A" : "#f8f8f8" }}
+        transition={{ duration: 6 }}
+      />
+      <motion.ellipse 
+        cx="140" cy="75" rx="45" ry="10" 
+        animate={{ fill: isDay ? "#16A34A" : "#f8f8f8" }}
+        transition={{ duration: 6 }}
+      />
     </g>
 
     {/* Leaves clusters */}
     {[...Array(30)].map((_, i) => (
-      <circle 
+      <motion.circle 
         key={i} 
         cx={50 + Math.random() * 100} 
         cy={50 + Math.random() * 30} 
         r={1.5 + Math.random() * 3} 
-        fill="#4ADE80" 
+        animate={{ fill: isDay ? "#4ADE80" : "#FFFFFF" }}
+        transition={{ duration: 6 }}
         className="animate-pulse" 
         style={{ animationDelay: `${Math.random() * 2}s` }}
       />
@@ -362,7 +403,7 @@ const WorldLoader = ({ onComplete }: { onComplete?: () => void }) => {
 
                   {/* WHITE SAVANNA TREE - Repositioned for optimal ground alignment */}
                   <div className="absolute top-[140px] left-[620px] z-10 translate-y-[-50%] translate-x-[-50%] scale-[1.3] origin-center opacity-100">
-                      <SavannaTree />
+                      <SavannaTree isDay={isDay} />
                   </div>
 
                  {/* THE WHITE GIRAFFE */}
